@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kabyle Language Specs</title>
+<meta name="description" content="Specifications for the Kabyle language (Taqbaylit): orthography, input, encoding, and text processing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #EBE5D3;
+    --paper-raised: #F4EFE1;
+    --ink: #202A22;
+    --ink-soft: #4B564A;
+    --line: #C9C0A4;
+    --blue: #2E5C74;
+    --olive: #57682F;
+    --ochre: #B8842B;
+    --yaz: #A34433;
+
+    --display: "Fraunces", serif;
+    --body: "Work Sans", sans-serif;
+    --mono: "IBM Plex Mono", monospace;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: var(--blue); }
+  a:hover{ color: var(--yaz); }
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--yaz);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- header ---------- */
+
+  header{
+    border-bottom: 1px solid var(--line);
+  }
+
+  .header-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 16px;
+    padding: 28px 0;
+  }
+
+  .mark{
+    width: 34px;
+    height: 34px;
+    flex: none;
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+  }
+
+  .brand-text{
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: 0.01em;
+  }
+
+  .brand-text small{
+    display:block;
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  nav a{
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: 1px solid transparent;
+    margin-left: 20px;
+  }
+
+  nav a:hover{
+    color: var(--yaz);
+    border-bottom-color: var(--yaz);
+  }
+
+  /* ---------- hero ---------- */
+
+  .hero{
+    position: relative;
+    padding: 72px 0 56px;
+    overflow: hidden;
+  }
+
+  .hero-mark{
+    position: absolute;
+    right: -40px;
+    top: -30px;
+    width: 320px;
+    height: 320px;
+    opacity: 0.05;
+    pointer-events: none;
+  }
+
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--olive);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    margin: 0 0 14px;
+  }
+
+  h1{
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(2.1rem, 4.4vw, 3.1rem);
+    line-height: 1.08;
+    margin: 0 0 22px;
+    max-width: 15ch;
+  }
+
+  h1 em{
+    font-style: italic;
+    font-weight: 500;
+    color: var(--blue);
+  }
+
+  .lede{
+    font-size: 1.08rem;
+    color: var(--ink-soft);
+    max-width: 56ch;
+    margin: 0 0 28px;
+  }
+
+  .hero-links{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    text-decoration: none;
+    padding: 10px 16px;
+    border: 1px solid var(--ink);
+    border-radius: 3px;
+    color: var(--ink);
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .btn.primary{
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .btn.primary:hover{
+    background: var(--yaz);
+    border-color: var(--yaz);
+    color: var(--paper-raised);
+  }
+
+  .btn:not(.primary):hover{
+    background: var(--ink);
+    color: var(--paper-raised);
+  }
+
+  /* ---------- sections ---------- */
+
+  section{
+    padding: 48px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .section-head{
+    display:flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  h2{
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .section-note{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- spec list ---------- */
+
+  #spec-list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--paper-raised);
+  }
+
+  #spec-list li{
+    display: grid;
+    grid-template-columns: 20px 1fr auto;
+    gap: 14px;
+    align-items: start;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  #spec-list li:last-child{
+    border-bottom: none;
+  }
+
+  .spec-yaz{
+    width: 16px;
+    height: 16px;
+    margin-top: 4px;
+    flex: none;
+    color: var(--yaz);
+  }
+
+  .spec-title{
+    font-weight: 600;
+    margin: 0 0 4px;
+  }
+
+  .spec-title a{
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .spec-title a:hover{
+    color: var(--yaz);
+  }
+
+  .spec-summary{
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  .spec-meta{
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  .status{
+    display:inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+
+  .status.draft{ background: #ECE0C6; color: #7A5A16; }
+  .status.proposed{ background: #DCE6E9; color: var(--blue); }
+  .status.stable{ background: #DEE6D2; color: var(--olive); }
+
+  .empty-state{
+    padding: 40px 18px;
+    text-align: center;
+  }
+
+  .empty-state p{
+    margin: 0 auto 6px;
+    max-width: 42ch;
+    color: var(--ink-soft);
+  }
+
+  .empty-state .mono-hint{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- about / contribute ---------- */
+
+  .about-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+
+  .about-grid h3{
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin: 0 0 8px;
+  }
+
+  .about-grid p{
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  code{
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  /* ---------- footer ---------- */
+
+  footer{
+    border-top: 1px solid var(--line);
+    padding: 28px 0 40px;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  footer, footer a{
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+
+  footer a:hover{ color: var(--yaz); }
+
+  @media (max-width: 640px){
+    .about-grid{ grid-template-columns: 1fr; }
+    #spec-list li{ grid-template-columns: 18px 1fr; }
+    .spec-meta{ grid-column: 2; text-align: left; }
+    .hero-mark{ width: 220px; height: 220px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap header-inner">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <line x1="20" y1="4" x2="20" y2="36" stroke="var(--yaz)" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="20" y1="4" x2="8" y2="14" stroke="var(--yaz)" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="20" y1="4" x2="32" y2="14" stroke="var(--yaz)" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="20" cy="36" r="2.6" fill="var(--yaz)"/>
+      </svg>
+      <div class="brand-text">
+        Kabyle Language Specs
+        <small>Taqbaylit &middot; kabyle/pages</small>
+      </div>
+    </div>
+    <nav>
+      <a href="#specs">Specs</a><a href="#about">About</a><a href="https://github.com/kabyle-specs/kabyle-specs.github.io">Repository</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <svg class="hero-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <line x1="20" y1="4" x2="20" y2="36" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="20" y1="4" x2="8" y2="14" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="20" y1="4" x2="32" y2="14" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="20" cy="36" r="2.6" fill="var(--ink)"/>
+    </svg>
+    <div class="wrap">
+      <p class="eyebrow">Open specifications</p>
+      <h1>Writing down <em>Taqbaylit</em>, precisely.</h1>
+      <p class="lede">
+        This repository collects technical specifications for the Kabyle language:
+        orthography rules, keyboard layouts, encoding and collation, and anything
+        else software needs to handle Kabyle text correctly.
+      </p>
+      <div class="hero-links">
+        <a class="btn primary" href="#specs">Browse specifications</a>
+        <a class="btn" href="https://github.com/kabyle-specs/kabyle-specs.github.io">View on GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="specs">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Specifications</h2>
+        <span class="section-note">sorted by most recently updated</span>
+      </div>
+
+      <ul id="spec-list"><!-- populated by script below --></ul>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>About this repository</h2>
+      </div>
+      <div class="about-grid">
+        <div>
+          <h3>What goes here</h3>
+          <p>
+            Each specification is a single Markdown file describing one piece of
+            the Kabyle language stack: how a rule works, why it was chosen, and
+            what implementers need to know to follow it consistently.
+          </p>
+        </div>
+        <div>
+          <h3>Status</h3>
+          <p>
+            Specs move from <code>draft</code> to <code>proposed</code> to
+            <code>stable</code> as they are discussed and adopted. Anything not
+            listed below is not yet published — check the
+            <a href="https://github.com/kabyle-specs/kabyle-specs.github.io/issues">issue tracker</a>
+            for work in progress.
+          </p>
+        </div>
+        <div>
+          <h3>Contributing</h3>
+          <p>
+            Suggestions and corrections are welcome through
+            <a href="https://github.com/kabyle-specs/kabyle-specs.github.io/pulls">pull requests</a>
+            or the <a href="https://github.com/kabyle-specs/kabyle-specs.github.io/issues">issue tracker</a>.
+          </p>
+        </div>
+        <div>
+          <h3>License</h3>
+          <p>
+            See <a href="https://github.com/kabyle-specs/kabyle-specs.github.io/blob/main/LICENSE">LICENSE</a>
+            in the repository for terms.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; width:100%;">
+    <span>kabyle/pages &middot; built for Codeberg Pages</span>
+    <a href="https://github.com/kabyle-specs/kabyle-specs.github.io">github.com/kabyle-specs/kabyle-specs.github.io</a>
+  </div>
+</footer>
+
+<script>
+  /*
+    HOW TO ADD A SPEC
+    ------------------
+    Add one object per specification to the array below, then commit its
+    Markdown file to the repository at the given `path`. Fields:
+
+      title    - short name of the spec, e.g. "Kabyle Latin Orthography"
+      path     - path to the .md file, relative to the repo root
+                 e.g. "specs/orthography.md"
+      summary  - one sentence describing what the spec covers
+      status   - one of "draft", "proposed", "stable"
+      updated  - date the spec was last changed, "YYYY-MM-DD"
+
+    Example (uncomment and edit once a file exists):
+
+    const specs = [
+      {
+        title: "Kabyle Latin Orthography",
+        path: "specs/orthography.md",
+        summary: "Letters, digraphs, and diacritics used to write Kabyle in Latin script.",
+        status: "draft",
+        updated: "2026-07-29"
+      },
+    ];
+  */
+
+  const specs = [
+    {
+      title: "Expressing time in Kabyle (Taqbaylit)",
+      path: "specs/kabyle-time-specs.md",
+      summary: "Grammar of the Kabyle time-telling system (particle D, u/ɣiṛ, dialectal variants) with a synonym table for date/time parsers.",
+      status: "draft",
+      updated: "2026-07-24"
+    },
+    {
+      title: "Kabyle verb conjugator specification",
+      path: "specs/kabyle-conjugations-specs.md",
+      summary: "Algorithmic blueprint for generating Kabyle verb paradigms across aspects and morphological groups, after Bouamara's model.",
+      status: "draft",
+      updated: "2026-07-29"
+    },
+    {
+      title: "Kabyle grapheme-to-phoneme (orthography2ipa)",
+      path: "specs/kabyle-g2p-specs.md",
+      summary: "Full G2P spec for Kabyle: 34-letter Latin inventory, spirantization and allophony rules, for TTS/ASR systems.",
+      status: "draft",
+      updated: "2026-07-27"
+    },
+    {
+      title: "Kabyle morphological tokenizer",
+      path: "specs/kabyle-morphological-tokenizer-spec.md",
+      summary: "Layered, rule-based tokenizer architecture for Kabyle verb forms, segmenting subject affixes, pronominal clitics, and derivational prefixes.",
+      status: "draft",
+      updated: "2026-07-29"
+    },
+  ];
+
+  const yaz = `<svg class="spec-yaz" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <line x1="20" y1="4" x2="20" y2="36" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+    <line x1="20" y1="4" x2="8" y2="14" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+    <line x1="20" y1="4" x2="32" y2="14" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="20" cy="36" r="4" fill="currentColor"/>
+  </svg>`;
+
+  const list = document.getElementById("spec-list");
+
+  function render(items){
+    list.innerHTML = "";
+
+    if (items.length === 0){
+      const li = document.createElement("li");
+      li.style.display = "block";
+      li.innerHTML = `
+        <div class="empty-state">
+          <p>No specifications published yet.</p>
+          <p class="mono-hint">Add entries to the <code>specs</code> array in this page once the first .md file lands.</p>
+        </div>`;
+      list.appendChild(li);
+      return;
+    }
+
+    items
+      .slice()
+      .sort((a, b) => new Date(b.updated) - new Date(a.updated))
+      .forEach(spec => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          ${yaz}
+          <div>
+            <p class="spec-title"><a href="${spec.path}">${spec.title}</a></p>
+            <p class="spec-summary">${spec.summary}</p>
+          </div>
+          <div class="spec-meta">
+            <span class="status ${spec.status}">${spec.status}</span><br>
+            ${spec.updated}
+          </div>`;
+        list.appendChild(li);
+      });
+  }
+
+  render(specs);
+</script>
+
+</body>
+</html>
