@@ -243,7 +243,7 @@ pure = df[
 
 - Intégrer un **G2P kabyle** pour la validation phonologique des mots inconnus
 - Entraîner un **classifieur CS dédié** (fine-tuning d'un modèle berbère multilingue)
-- Publier le corpus pur sur HuggingFace (`boffire/tatoeba-kabyle-pure`)
+- Publier le corpus pur sur HuggingFace (`boffire/tatoeba-kabyle-mono-cleaned`)
 - Étendre le dictionnaire Hunspell avec les formes verbales des 6 198 verbes du dataset `kabyle-verbs` (344K formes conjuguées)
 
 ---
