@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';">
 <title>Viewer | Kabyle Language Specs</title>
 <meta name="description" content="Markdown viewer for Kabyle Language Specifications.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -329,7 +330,9 @@
 
 <div id="fallback"></div>
 
-<!-- Marked.js v12 (pinned, stable) -->
+<!-- DOMPurify -->
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+<!-- Marked.js v12 (pinned) -->
 <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
 <!-- Highlight.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -342,9 +345,12 @@
     const fileParam = params.get('file');
     const hash = window.location.hash;
 
+    // ---------- hard limits ----------
+    const MAX_BYTES = 2 * 1024 * 1024;   // 2 MiB
+    const TIMEOUT_MS = 10000;             // 10 s
+
     console.log('[viewer] file param:', fileParam);
-    console.log('[viewer] marked loaded?', typeof marked !== 'undefined');
-    console.log('[viewer] hljs loaded?', typeof hljs !== 'undefined');
+    console.log('[viewer] libs — marked:', typeof marked, 'DOMPurify:', typeof DOMPurify, 'hljs:', typeof hljs);
 
     function validatePath(path) {
       if (!path || typeof path !== 'string') return null;
@@ -352,7 +358,6 @@
       if (p.startsWith('/') || p.startsWith('http') || p.startsWith('\\')) return null;
       if (p.includes('..')) return null;
       if (!/\.md$/i.test(p)) return null;
-      // allow letters, digits, dot, underscore, hyphen, slash
       if (!/^[a-zA-Z0-9._\-\/]+$/.test(p)) return null;
       return p;
     }
@@ -381,6 +386,58 @@
         </div>`;
     }
 
+    // ---------- fetch with size guard & timeout ----------
+    async function fetchWithGuard(url, maxBytes, timeoutMs) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+      let response;
+      try {
+        response = await fetch(url, { signal: controller.signal });
+      } catch (err) {
+        clearTimeout(timer);
+        if (err.name === 'AbortError') throw new Error('Request timed out (' + timeoutMs + ' ms)');
+        throw err;
+      }
+      clearTimeout(timer);
+
+      if (!response.ok) {
+        throw new Error(response.status + ' ' + response.statusText);
+      }
+
+      // quick reject via Content-Length header
+      const cl = response.headers.get('content-length');
+      if (cl && parseInt(cl, 10) > maxBytes) {
+        throw new Error('File too large (' + cl + ' bytes > ' + maxBytes + ' bytes limit)');
+      }
+
+      // stream-read with hard byte cap
+      const reader = response.body.getReader();
+      const chunks = [];
+      let received = 0;
+
+      while (true) {
+        let done, value;
+        try {
+          ({ done, value } = await reader.read());
+        } catch (err) {
+          reader.cancel();
+          throw err;
+        }
+        if (done) break;
+        received += value.length;
+        if (received > maxBytes) {
+          reader.cancel();
+          throw new Error('File too large (exceeds ' + maxBytes + ' bytes while streaming)');
+        }
+        chunks.push(value);
+      }
+
+      const blob = new Blob(chunks);
+      return blob.text();
+    }
+
+    // ---------- main ----------
     if (!fileParam) { showEmpty(); return; }
 
     const path = validatePath(fileParam);
@@ -399,17 +456,12 @@
     $('toc-file').textContent = path;
     $('raw-link').href = url;
 
-    console.log('[viewer] fetching:', url);
+    console.log('[viewer] fetching:', url, 'max:', MAX_BYTES, 'timeout:', TIMEOUT_MS);
 
-    fetch(url)
-      .then(r => {
-        console.log('[viewer] fetch status:', r.status, r.statusText);
-        if (!r.ok) throw new Error(r.status + ' ' + r.statusText);
-        return r.text();
-      })
-      .then(md => {
-        console.log('[viewer] markdown length:', md.length);
-        if (!md.trim()) {
+    fetchWithGuard(url, MAX_BYTES, TIMEOUT_MS)
+      .then(text => {
+        console.log('[viewer] received bytes:', text.length);
+        if (!text.trim()) {
           showError('Empty file', 'The requested Markdown file is empty.', path);
           return;
         }
@@ -419,8 +471,20 @@
           return;
         }
 
-        const html = marked.parse(md, { gfm: true, breaks: false });
+        let html = marked.parse(text, { gfm: true, breaks: false });
         console.log('[viewer] parsed html length:', html.length);
+
+        // sanitize with DOMPurify
+        if (typeof DOMPurify !== 'undefined') {
+          html = DOMPurify.sanitize(html, {
+            ALLOWED_TAGS: [
+              'h1','h2','h3','h4','h5','h6','p','br','hr',
+              'ul','ol','li','blockquote','strong','em','code','pre',
+              'table','thead','tbody','tr','th','td','a','img','div','span'
+            ],
+            ALLOWED_ATTR: ['href','src','alt','title','id','class','target','rel']
+          });
+        }
 
         $('content').innerHTML = html;
 
@@ -469,7 +533,7 @@
         }
       })
       .catch(err => {
-        console.error('[viewer] fetch error:', err);
+        console.error('[viewer] error:', err);
         showError('Failed to load file', err.message, url);
       });
 
