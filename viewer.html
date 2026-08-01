@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Viewer | Kabyle Language Specs</title>
+<meta name="description" content="Markdown viewer for Kabyle Language Specifications.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+  :root{
+    --paper: #EBE5D3;
+    --paper-raised: #F4EFE1;
+    --ink: #202A22;
+    --ink-soft: #4B564A;
+    --line: #C9C0A4;
+    --blue: #2E5C74;
+    --olive: #57682F;
+    --ochre: #B8842B;
+    --yaz: #A34433;
+    --display: "Fraunces", serif;
+    --body: "Work Sans", sans-serif;
+    --mono: "IBM Plex Mono", monospace;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: var(--blue); text-decoration: none; }
+  a:hover{ color: var(--yaz); text-decoration: underline; }
+  a:focus-visible{ outline: 2px solid var(--yaz); outline-offset: 3px; }
+
+  /* ---------- header ---------- */
+  header{
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-inner{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 16px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+  }
+  .brand-text{
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+  }
+  .brand-text small{
+    display:block;
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 0.65rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 1px;
+  }
+  .header-actions{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    text-decoration: none;
+    padding: 7px 12px;
+    border: 1px solid var(--ink);
+    border-radius: 3px;
+    color: var(--ink);
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .btn:hover{ background: var(--ink); color: var(--paper-raised); text-decoration: none; }
+  .btn.primary{ background: var(--ink); color: var(--paper); }
+  .btn.primary:hover{ background: var(--yaz); border-color: var(--yaz); color: var(--paper-raised); }
+
+  /* ---------- layout ---------- */
+  .layout{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  /* ---------- sidebar / toc ---------- */
+  aside{
+    position: sticky;
+    top: 80px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+  aside::-webkit-scrollbar{ width: 5px; }
+  aside::-webkit-scrollbar-thumb{ background: var(--line); border-radius: 3px; }
+
+  .toc-title{
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .toc-file{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    word-break: break-all;
+    color: var(--ink);
+    margin-bottom: 16px;
+    padding: 8px;
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+  }
+  .toc ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .toc li{ margin: 0; }
+  .toc a{
+    display: block;
+    font-family: var(--body);
+    font-size: 0.88rem;
+    line-height: 1.35;
+    color: var(--ink-soft);
+    padding: 4px 0;
+    border-left: 2px solid transparent;
+    padding-left: 10px;
+    margin-left: -2px;
+    text-decoration: none;
+  }
+  .toc a:hover{ color: var(--yaz); border-left-color: var(--yaz); }
+  .toc a.active{ color: var(--ink); border-left-color: var(--olive); font-weight: 500; }
+  .toc .level-h3{ padding-left: 22px; font-size: 0.82rem; }
+
+  /* ---------- main article ---------- */
+  main{ min-width: 0; }
+  article{
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 40px 44px;
+    max-width: 820px;
+  }
+
+  /* markdown typography */
+  article h1, article h2, article h3, article h4{
+    font-family: var(--display);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-top: 0;
+    scroll-margin-top: 90px;
+  }
+  article h1{ font-size: 2rem; margin-bottom: 18px; }
+  article h2{ font-size: 1.45rem; margin-top: 36px; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+  article h3{ font-size: 1.15rem; margin-top: 28px; margin-bottom: 10px; color: var(--ink-soft); }
+  article h4{ font-size: 1rem; margin-top: 22px; margin-bottom: 8px; }
+
+  article p{ margin: 0 0 14px; }
+  article ul, article ol{ margin: 0 0 14px; padding-left: 24px; }
+  article li{ margin-bottom: 4px; }
+  article li > ul, article li > ol{ margin-bottom: 4px; }
+
+  article blockquote{
+    margin: 18px 0;
+    padding: 12px 18px;
+    border-left: 3px solid var(--yaz);
+    background: rgba(163,68,51,0.05);
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+  article blockquote p:last-child{ margin-bottom: 0; }
+
+  article code{
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: rgba(0,0,0,0.04);
+    border: 1px solid var(--line);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--ink);
+  }
+  article pre{
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 16px;
+    overflow-x: auto;
+    margin: 18px 0;
+  }
+  article pre code{
+    background: none;
+    border: none;
+    padding: 0;
+    color: #e6e6e6;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  article table{
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 0.92rem;
+  }
+  article th, article td{
+    border: 1px solid var(--line);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  article th{
+    background: var(--paper);
+    font-weight: 600;
+    font-family: var(--display);
+  }
+  article tr:nth-child(even){ background: rgba(0,0,0,0.02); }
+
+  article hr{
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 28px 0;
+  }
+
+  article img{ max-width: 100%; height: auto; border-radius: 3px; }
+
+  /* ---------- error / empty states ---------- */
+  .error-box, .empty-box{
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 40px;
+    text-align: center;
+    max-width: 600px;
+    margin: 60px auto;
+  }
+  .error-box h2, .empty-box h2{
+    font-family: var(--display);
+    font-weight: 600;
+    margin: 0 0 10px;
+  }
+  .error-box p, .empty-box p{
+    color: var(--ink-soft);
+    margin: 0 0 18px;
+  }
+  .mono-hint{
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    background: var(--paper);
+    padding: 10px 14px;
+    border-radius: 3px;
+    display: inline-block;
+    word-break: break-all;
+  }
+
+  /* ---------- mobile ---------- */
+  @media (max-width: 900px){
+    .layout{ grid-template-columns: 1fr; gap: 24px; padding: 20px 18px; }
+    aside{ position: static; max-height: none; border-bottom: 1px solid var(--line); padding-bottom: 16px; }
+    article{ padding: 24px 22px; }
+    article h1{ font-size: 1.6rem; }
+    article h2{ font-size: 1.25rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ transition: none !important; }
+  }
+
+  /* ---------- print ---------- */
+  @media print{
+    header, aside{ display: none; }
+    .layout{ display: block; padding: 0; }
+    article{ border: none; padding: 0; max-width: none; }
+    body{ background: #fff; color: #000; }
+  }
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <line x1="20" y1="4" x2="20" y2="36" stroke="var(--yaz)" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="20" y1="4" x2="8" y2="14" stroke="var(--yaz)" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="20" y1="4" x2="32" y2="14" stroke="var(--yaz)" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="20" cy="36" r="2.6" fill="var(--yaz)"/>
+      </svg>
+      <div class="brand-text">
+        Kabyle Specs
+        <small>Markdown Viewer</small>
+      </div>
+    </div>
+    <div class="header-actions">
+      <a class="btn" id="raw-link" href="#" target="_blank" rel="noopener">Raw</a>
+      <button class="btn" id="copy-link">Copy link</button>
+    </div>
+  </div>
+</header>
+
+<div class="layout" id="layout" style="display:none;">
+  <aside>
+    <div class="toc-title">Table of contents</div>
+    <div class="toc-file" id="toc-file"></div>
+    <nav class="toc" id="toc"><ul></ul></nav>
+  </aside>
+  <main>
+    <article id="content"></article>
+  </main>
+</div>
+
+<div id="fallback"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+  (function() {
+    'use strict';
+
+    const $ = id => document.getElementById(id);
+    const params = new URLSearchParams(window.location.search);
+    const fileParam = params.get('file');
+    const hash = window.location.hash;
+
+    // ---------- helpers ----------
+    function validatePath(path) {
+      if (!path || typeof path !== 'string') return null;
+      const p = path.trim();
+      if (p.startsWith('/') || p.startsWith('http') || p.startsWith('\')) return null;
+      if (p.includes('..')) return null;
+      if (!/\.md$/i.test(p)) return null;
+      if (!/^[a-zA-Z0-9._\\-\/]+$/.test(p)) return null;
+      return p;
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    }
+
+    function showError(title, message, hint) {
+      $('layout').style.display = 'none';
+      $('fallback').innerHTML = `
+        <div class="error-box">
+          <h2>${escapeHtml(title)}</h2>
+          <p>${escapeHtml(message)}</p>
+          ${hint ? `<div class="mono-hint">${escapeHtml(hint)}</div>` : ''}
+        </div>`;
+    }
+
+    function showEmpty() {
+      $('layout').style.display = 'none';
+      $('fallback').innerHTML = `
+        <div class="empty-box">
+          <h2>No file specified</h2>
+          <p>Add a <code>?file=</code> parameter to view a Markdown document.</p>
+          <div class="mono-hint">?file=reports/report_tatoeba_kabyle.md</div>
+        </div>`;
+    }
+
+    // ---------- markdown setup ----------
+    marked.use({
+      gfm: true,
+      breaks: false,
+      headerIds: true,
+      mangle: false
+    });
+
+    // ---------- load & render ----------
+    const path = validatePath(fileParam);
+    if (!fileParam) { showEmpty(); return; }
+    if (!path) {
+      showError(
+        'Invalid path',
+        'The requested file path is not allowed. Only relative .md paths are accepted.',
+        fileParam
+      );
+      return;
+    }
+
+    const url = './' + path;
+    $('toc-file').textContent = path;
+    $('raw-link').href = url;
+
+    fetch(url)
+      .then(r => {
+        if (!r.ok) throw new Error(r.status + ' ' + r.statusText);
+        return r.text();
+      })
+      .then(md => {
+        const html = marked.parse(md);
+        $('content').innerHTML = html;
+
+        // highlight code blocks
+        document.querySelectorAll('pre code').forEach(block => {
+          hljs.highlightElement(block);
+        });
+
+        // rewrite relative .md links to viewer links
+        document.querySelectorAll('article a').forEach(a => {
+          const href = a.getAttribute('href');
+          if (!href) return;
+          // skip anchors, absolute URLs, and non-md files
+          if (href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto:')) return;
+          if (/\.md$/i.test(href)) {
+            a.setAttribute('href', 'viewer.html?file=' + encodeURIComponent(href));
+          }
+        });
+
+        // build TOC from headings
+        const tocUl = $('toc').querySelector('ul');
+        tocUl.innerHTML = '';
+        const headings = $('content').querySelectorAll('h2, h3');
+        if (headings.length === 0) {
+          tocUl.innerHTML = '<li style="color:var(--ink-soft);font-size:0.85rem;">No headings found.</li>';
+        }
+        headings.forEach((h, i) => {
+          const id = 'sec-' + i;
+          h.id = id;
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = '#' + id;
+          a.textContent = h.textContent;
+          a.className = h.tagName.toLowerCase() === 'h3' ? 'level-h3' : '';
+          li.appendChild(a);
+          tocUl.appendChild(li);
+        });
+
+        $('layout').style.display = '';
+
+        // scroll to hash after render
+        if (hash) {
+          const target = document.querySelector(hash);
+          if (target) setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 50);
+        }
+      })
+      .catch(err => {
+        showError(
+          'Failed to load file',
+          err.message,
+          url
+        );
+      });
+
+    // ---------- copy link ----------
+    $('copy-link').addEventListener('click', () => {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        const btn = $('copy-link');
+        const old = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = old, 1500);
+      });
+    });
+
+    // ---------- active TOC on scroll ----------
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const headings = $('content').querySelectorAll('h2, h3');
+          let current = '';
+          headings.forEach(h => {
+            const rect = h.getBoundingClientRect();
+            if (rect.top < 120) current = h.id;
+          });
+          document.querySelectorAll('.toc a').forEach(a => a.classList.remove('active'));
+          if (current) {
+            const active = document.querySelector('.toc a[href="#' + current + '"]');
+            if (active) active.classList.add('active');
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>
