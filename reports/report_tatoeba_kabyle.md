@@ -20,7 +20,7 @@ Ce rapport présente une analyse complète du corpus Tatoeba Kabyle (**789 712 p
 | **Phrases contaminées** (orthographe) | 28 887 (**3,66 %**) |
 | **Phrases "pures"** (export final) | **756 774** (**95,83 %**) |
 | **Couverture dictionnaire Hunspell** | **85,1 %** (3,17M / 3,73M tokens) |
-| **Mismatch kab→tachélit** (DistilBERT) | 67 (**0,67 %** des 10K analysées) |
+| **Mismatch kab→tachelhit** (DistilBERT) | 67 (**0,67 %** des 10K analysées) |
 
 ---
 
@@ -60,7 +60,7 @@ Ce rapport présente une analyse complète du corpus Tatoeba Kabyle (**789 712 p
 | Composant | Rôle | Source |
 |-----------|------|--------|
 | **GlotLID v3** | Identification de langue sentence-level et word-level | [cis-lmu/glotlid](https://huggingface.co/cis-lmu/glotlid) |
-| **DistilBERT** | Classification binaire kabyle / tachélit | [boffire/distilbert-kabyle-tachelhit-classifier-v2](https://huggingface.co/boffire/distilbert-kabyle-tachelhit-classifier-v2) |
+| **DistilBERT** | Classification binaire kabyle / tachelhit | [boffire/distilbert-kabyle-tachelhit-classifier-v2](https://huggingface.co/boffire/distilbert-kabyle-tachelhit-classifier-v2) |
 | **Hunspell kab** | Dictionnaire morphologique (~30 000 lemmes + règles `.aff`) | Belkacem77 / [Imseɣti n tira n teqbaylit](https://addons.mozilla.org/firefox/addon/imseti_n_tira_n_teqbaylit/) |
 | **MaskLID** | Détection de code-switching token-level | Implémentation maison |
 
@@ -166,7 +166,7 @@ La chute drastique du CS (56 % → 0,24 %) s'explique par trois mécanismes :
 | NON_BERBER | 12 | 0,12 % |
 | **Mismatch kab→tach** | **67** | **0,67 %** |
 
-Les 67 mismatches sont des phrases que GlotLID classe kabyle mais DistilBERT classe tachélit avec haute confiance. Exemples :
+Les 67 mismatches sont des phrases que GlotLID classe kabyle mais DistilBERT classe tachelhit avec haute confiance. Exemples :
 
 | Phrase | GlotLID | DistilBERT |
 |--------|---------|------------|
