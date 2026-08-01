@@ -285,6 +285,22 @@
     html{ scroll-behavior: auto; }
     *{ transition: none !important; }
   }
+  .table-wrap{
+    overflow-x: auto;
+    margin: 18px 0;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+  }
+  .table-wrap table{
+    margin: 0;
+    border: none;
+    min-width: 100%;
+  }
+  .table-wrap table th,
+  .table-wrap table td{
+    white-space: nowrap;
+  }
+
   @media print{
     header, aside{ display: none; }
     .layout{ display: block; padding: 0; }
@@ -487,6 +503,15 @@
         }
 
         $('content').innerHTML = html;
+
+        // wrap tables for horizontal scroll on mobile
+        document.querySelectorAll('article table').forEach(table => {
+          if (table.parentElement.classList.contains('table-wrap')) return;
+          const wrap = document.createElement('div');
+          wrap.className = 'table-wrap';
+          table.parentNode.insertBefore(wrap, table);
+          wrap.appendChild(table);
+        });
 
         // highlight code blocks
         if (typeof hljs !== 'undefined') {
