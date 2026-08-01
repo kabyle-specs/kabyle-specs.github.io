@@ -197,7 +197,7 @@ Le pipeline génère automatiquement un dashboard de 6 graphiques :
 5. **Couverture dictionnaire** (pie chart Hunspell vs LID)
 6. **Langues secondaires détectées** (bar chart top emprunts)
 
-![Dashboard](tatoeba_kabyle_dashboard.png)
+![Dashboard d'analyse](assets/tatoeba_kabyle_dashboard.png)
 
 ---
 
