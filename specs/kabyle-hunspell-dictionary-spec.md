@@ -107,13 +107,13 @@ mot/flags po:catégorie st:lemme is:trait
 | `po:tazelɣa` | tazelɣa | particule | 128 |
 | `po:amernu` | amernu | adverbe | 46 |
 | `po:tanzeɣt` | tanzeɣt | préposition | 42 |
-| `po:aferdis_n_ubhat` | aferdis n uβat | nom de partie du corps | 21 |
+| `po:aferdis_n_ubhat` | aferdis n uhat | interjection | 21 |
 | `po:ameskan` | ameskan | démonstratif | 17 |
 | `po:isem_n_tmurt` | isem n tmurt | nom de pays | 13 |
 | `po:isem_uzzig` | isem uzzig | nom propre | 11 |
-| `po:isem_asinan` | isem asinan | nom de plante | 8 |
-| `po:isem_n_umkan` | isem n umkan | nom de métier | 5 |
-| `po:amqim` | amqim | quantifieur | 2 |
+| `po:isem_asinan` | isem asinan | nom double ? | 8 |
+| `po:isem_n_umkan` | isem n umkan | nom de lieu | 5 |
+| `po:amqim` | amqim | pronom | 2 |
 
 **Note** : `po:tazelɣa` désigne les particules en général ; `tazelɣa n tnila` = particule de direction.
 
