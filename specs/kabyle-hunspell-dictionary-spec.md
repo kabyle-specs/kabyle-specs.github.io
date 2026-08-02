@@ -503,7 +503,7 @@ aɣrum	NOUN	N_FREE	yNw	Gender=Masc|Number=Sing|State=Free
 
 ## 11. Feuille de route
 
-### Phase 1 : Nettoyage (✅ TERMINÉ)
+### Phase 1 : Nettoyage (TERMINÉ)
 - [x] Exécuter `clean-kab-dic.py` sur Belkacem v1.0
 - [x] Corriger 3 728 doublons
 - [x] Corriger 37 faux-amis
@@ -561,7 +561,7 @@ Les balises et traits suivants nécessitent une confirmation par un linguiste ou
 
 4. **Németh László**, *Hunspell*, [github.com/hunspell/hunspell/blob/master/docs/hunspell.5.adoc](https://github.com/hunspell/hunspell/blob/master/docs/hunspell.5.adoc). Référence technique.
 
-5. **Athmane Mokraoui (boffire)**, *CV26 Kabyle Contamination Report*, [butterflyoffire.codeberg.page/cv26/](https://butterflyoffire.codeberg.page/cv26/), 2026. Analyse des faux-amis de caractères.
+5. **Athmane Mokraoui (boffire)**, *CV26 Kabyle Contamination Report*, [https://butterflyoffire.codeberg.page/cv26/kabyle_corpus_contamination_report_v2.html](https://butterflyoffire.codeberg.page/cv26/kabyle_corpus_contamination_report_v2.html), 2026. Analyse des faux-amis de caractères.
 
 6. **Kabyle Specs**, [kabyle-specs.github.io](https://kabyle-specs.github.io/). Spécifications interdépendantes : [Keyboard], [Tokenizer], [UD], [G2P], [Color Terms].
 
