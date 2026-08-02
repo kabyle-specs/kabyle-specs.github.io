@@ -14,7 +14,7 @@
 
 Le kabyle (Taqbaylit, code ISO 639-1 `kab`) dispose d'un correcteur orthographique Hunspell développé par M. Belkacem sous licence MIT (v1.0). Ce document expose la structure métadonnées du dictionnaire (`kab.dic`), l'architecture des règles d'affixation (`kab.aff`), inventorie son système de balises morphologiques (`po:`, `st:`, `is:`), documente les anomalies détectées lors de l'analyse automatique, et propose une feuille de route pour la modularisation du fichier `.aff` et la génération automatisée à partir de données structurées.
 
-**Mots-clés** : kabyle, taqbaylit, hunspell, correcteur orthographique, dictionnaire, affixation, métadonnées morphologiques, NLP, boffire, Belkacem.
+**Mots-clés** : kabyle, taqbaylit, hunspell, correcteur orthographique, dictionnaire, affixation, métadonnées morphologiques, NLP.
 
 ---
 
