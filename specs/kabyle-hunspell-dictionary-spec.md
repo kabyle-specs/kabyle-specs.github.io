@@ -6,7 +6,7 @@
 
 **Cible** : Grand public, linguistes, développeurs NLP/TAL, mainteneurs de correcteurs orthographiques.
 
-**Statut** : Draft — en cours de validation après analyse de `imseti_n_tira_n_teqbaylit-1.0.xpi`
+**Statut** : Draft — Phase 1 terminée. Dataset nettoyé publié sur [HuggingFace](https://huggingface.co/datasets/boffire/hunspell-kab).
 
 ---
 
@@ -14,13 +14,15 @@
 
 Le kabyle (Taqbaylit, code ISO 639-1 `kab`) dispose d'un correcteur orthographique Hunspell développé par M. Belkacem sous licence MIT (v1.0). Ce document expose la structure métadonnées du dictionnaire (`kab.dic`), l'architecture des règles d'affixation (`kab.aff`), inventorie son système de balises morphologiques (`po:`, `st:`, `is:`), documente les anomalies détectées lors de l'analyse automatique, et propose une feuille de route pour la modularisation du fichier `.aff` et la génération automatisée à partir de données structurées.
 
+Une version nettoyée du dictionnaire (21 823 entrées, 6 fichiers) est disponible sur HuggingFace : [`boffire/hunspell-kab`](https://huggingface.co/datasets/boffire/hunspell-kab).
+
 **Mots-clés** : kabyle, taqbaylit, hunspell, correcteur orthographique, dictionnaire, affixation, métadonnées morphologiques, NLP.
 
 ---
 
 ## 1. Introduction
 
-Le dictionnaire Hunspell kabyle `imseti_n_tira_n_teqbaylit` (litt. « correcteur d'écriture kabyle ») est le seul correcteur orthographique libre et complet disponible pour la langue kabyle. Distribué sous forme de module Firefox (`.xpi`) et utilisé dans LibreOffice, il repose sur un fichier `.dic` de ~25 500 entrées et un fichier `.aff` définissant ~32 classes d'affixation.
+Le dictionnaire Hunspell kabyle `imseti_n_tira_n_teqbaylit` (litt. « correcteur d'écriture kabyle ») est le seul correcteur orthographique libre et complet disponible pour la langue kabyle. Distribué sous forme de module Firefox (`.xpi`) et utilisé dans LibreOffice, il repose sur un fichier `.dic` de ~25 500 entrées brutes et un fichier `.aff` définissant ~32 classes d'affixation.
 
 Ce document vise à :
 1. **Décrire** la structure métadonnées du dictionnaire pour les linguistes et développeurs.
@@ -82,8 +84,8 @@ imseti_n_tira_n_teqbaylit-1.0.xpi
 | Entrées sans flags | 4 639 |
 | Entrées multi-flags | 14 538 |
 | **Doublons word/flag** | **3 728** |
-| Entrées avec faux-ami (`˚`) | 37 |
-| Mots ≤ 2 caractères | 162 |
+| Entrées avec faux-ami (`˚`) | 36 |
+| Mots ≤ 2 caractères | 199 |
 
 ---
 
@@ -97,33 +99,51 @@ mot/flags po:catégorie st:lemme is:trait
 
 ### 4.1 Niveau 1 : `po:` — catégorie lexicale
 
-| Balise | Kabyle | Français | Occurrences |
-|--------|--------|----------|-------------|
-| `po:isem` | isem amagnu | nom commun | 4 347 |
-| `po:amyag` | amyag | verbe | 3 401 |
-| `po:arbib` | arbib | adjectif | 465 |
-| `po:isem_n_umdan` | isem amaẓlay | nom propre (personne) | 263 |
-| `po:isem_n_tigawt` | isem n tigawt | nom d'outil/instrument | 263 |
-| `po:tazelɣa` | tazelɣa | particule | 128 |
-| `po:amernu` | amernu | adverbe | 46 |
-| `po:tanzeɣt` | tanzeɣt | préposition | 42 |
-| `po:aferdis_n_ubhat` | aferdis n uhat | interjection | 21 |
-| `po:ameskan` | ameskan | démonstratif | 17 |
-| `po:isem_n_tmurt` | isem n tmurt | nom de pays | 13 |
-| `po:isem_uzzig` | isem uzzig | nom propre | 11 |
-| `po:isem_asinan` | isem asinan | nom double ? | 8 |
-| `po:isem_n_umkan` | isem n umkan | nom de lieu | 5 |
-| `po:amqim` | amqim | pronom | 2 |
+Le fichier source brut contient **31 balises `po:` distinctes**, dont **28 confirmées** et **3 typos** corrigés automatiquement lors du nettoyage. Le tableau ci-dessous présente les comptages dans le source brut (avant déduplication), car 392 entrées homographes (même `mot/flags`, `po:` différent) partagent des formes identiques.
 
-**Note** : `po:tazelɣa` désigne les particules en général ; `tazelɣa n tnila` = particule de direction.
+| Balise | Kabyle | Français | Occurrences (brut) | Statut |
+|--------|--------|----------|-------------------|--------|
+| `po:isem` | isem amagnu | nom commun | 6 004 | confirmé |
+| `po:amyag` | amyag | verbe | 3 402 | confirmé |
+| `po:arbib` | arbib | adjectif | 482 | confirmé |
+| `po:tazelɣa` | tazelɣa | particule | 302 | confirmé |
+| `po:isem_n_umdan` | isem amaẓlay | nom propre (personne) | 265 | confirmé |
+| `po:isem_n_tigawt` | isem n tigawt | nom d'outil/instrument | 263 | confirmé |
+| `po:amernu` | amernu | adverbe | 89 | confirmé |
+| `po:tanzeɣt` | tanzeɣt | préposition | 58 | confirmé |
+| `po:aferdis_n_ubhat` | aferdis n uβat | interjection | 56 | confirmé |
+| `po:ameskan` | ameskan | démonstratif | 38 | confirmé |
+| `po:isem_amḍan` | isem amḍan | numéral | 18 | confirmé |
+| `po:amqim` | amqim | quantifieur | 15 | confirmé |
+| `po:isem_n_tmurt` | isem n tmurt | nom de pays | 13 | confirmé |
+| `po:isem_uzzig` | isem uzzig | nom propre | 11 | confirmé |
+| `po:isem_asinan` | isem asinan | nom de plante | 8 | confirmé |
+| `po:awṣil` | awṣil | adjectif qualificatif | 8 | confirmé |
+| `po:isem_n_umkan` | isem n umkan | nom de lieu | 5 | confirmé |
+| `po:tazelɣa_n_wurmir` | tazelɣa n wurmir | particule d'aoriste | 3 | confirmé |
+| `po:tazelɣa_n_tilawt` | tazelɣa n tilawt | particule de manière | 1 | confirmé |
+| `po:tazelɣa_n_tibawt` | tazelɣa n tibawt | particule de négation | 1 | confirmé |
+| `po:tazelɣa_n_usiwel` | tazelɣa n usiwel | particule d'appel | 1 | confirmé |
+| `po:tanzeɣt_n_wallal` | tanzeɣt n wallal | préposition de moyen | 1 | confirmé |
+| `po:tanzeɣt_n_tnila` | tanzeɣt n tnila | préposition de direction | 1 | confirmé |
+| `po:amassaɣ` | amassaɣ | conjonction | 1 | confirmé |
+| `po:tili` | tili | verbe d'existence | 1 | confirmé |
+| `po:tissi` | tissi | *(à confirmer)* | 1 | ? |
+| `po:awṣil_n_yisem` | awṣil n yisem | adjectif nominal | 1 | confirmé |
+| `po:isem_n_ssaɛa` | isem n ssaɛa | nom de temps | 1 | confirmé |
+| `po:tazelɣ` | — | typo pour `tazelɣa` | 1 | corrigé |
+| `po:isemn_tigawt` | — | typo pour `isem_n_tigawt` | 1 | corrigé |
+| `po:tanzeɣṭ` | — | typo pour `tanzeɣt` | 1 | corrigé |
 
-**Total** : 15 balises `po:` distinctes.
+**Note** : `po:tazelɣa` désigne les particules en général ; les sous-catégories (`n_wurmir`, `n_tilawt`, `n_tibawt`, `n_usiwel`) ont été découvertes lors de l'analyse automatique.
+
+**Dans le `.dic` nettoyé** : 20 balises `po:` distinctes restent après déduplication des homographes (Hunspell ne conserve qu'une entrée par `mot/flags`).
 
 ### 4.2 Niveau 2 : `st:` — référence au lemme
 
 | Balise | Occurrences | Fonction |
 |--------|-------------|----------|
-| `st:xxx` | 4 793 distincts | Renvoie au lemme source pour les formes dérivées |
+| `st:xxx` | 5 365 distincts | Renvoie au lemme source pour les formes dérivées |
 
 **Exemple** :
 ```
@@ -182,17 +202,22 @@ imɣuzen/y st:amɣuz is:asget   # pluriel de amɣuz
 
 | Balise | Occurrences | Statut |
 |--------|-------------|--------|
-| `flippedAorist` | 1 623 | aoriste dérivé (vowel alternation ?) |
-| `flippedUrmirUssid` | 515 | aoriste intensif dérivé |
-| `flipped` | 286 | forme dérivée générique |
-| `flippedAoristNZ` | 195 | aoriste dérivé (variante NZ — *à confirmer*) |
-| `flippedFromParticiple` | 61 | dérivé du participe |
-| `flippedNZ` | 22 | forme dérivée (variante NZ — *à confirmer*) |
-| `substitutedFromAorist` | 380 | substitué depuis l'aoriste (*à confirmer*) |
-| `substituted` | 209 | forme substituée (*à confirmer*) |
-| `iaVerb` | 132 | verbe avec pattern i-a (*à confirmer*) |
-| `possibleIaVerb` | 15 | possible i-a (*à confirmer*) |
+| `flippedAorist` | 1 623 | aoriste avec apophonie vocalique (a→u, e→a) |
+| `flippedUrmirUssid` | 515 | aoriste intensif avec apophonie |
+| `flipped` | 286 | apophonie générique |
+| `flippedAoristNZ` | 195 | aoriste apophonique (variante NZ — *à confirmer*) |
+| `flippedFromParticiple` | 61 | apophonie depuis le participe |
+| `flippedNZ` | 22 | apophonie (variante NZ — *à confirmer*) |
+| `substitutedFromAorist` | 380 | substitution consonantique depuis l'aoriste (*à confirmer*) |
+| `substituted` | 209 | substitution consonantique générique (*à confirmer*) |
+| `iaVerb` | 132 | verbe avec pattern C-i-C-a (*à confirmer*) |
+| `possibleIaVerb` | 15 | possible pattern i-a (*à confirmer*) |
 | `asgetOnly` | 5 | pluriel seulement (*à confirmer*) |
+| `flippedAoristAlt1` | 22 | apophonie aoriste variante 1 |
+| `flippedAoristAlt2` | 22 | apophonie aoriste variante 2 |
+| `flippedUrmirUssidAlt1` | 2 | aoriste intensif variante 1 |
+| `flippedUrmirUssidAlt2` | 2 | aoriste intensif variante 2 |
+| `flippedUrmirUssidNZ` | 2 | aoriste intensif (variante NZ) |
 
 #### 4.3.8 Anomalies à normaliser
 
@@ -202,14 +227,17 @@ imɣuzen/y st:amɣuz is:asget   # pluriel de amɣuz
 | `ml` | → `ML` | 12 | minuscule → majuscule |
 | `sf` | → `SF` | 8 | minuscule → majuscule |
 | `urmir_issid` | → `urmir_ussid` | 1 | faute de frappe |
+| `tazelɣ` | → `tazelɣa` | 1 | typo (ɣ final manquant) |
+| `isemn_tigawt` | → `isem_n_tigawt` | 1 | typo (m collé, _n_ manquant) |
+| `tanzeɣṭ` | → `tanzeɣt` | 1 | typo (ṭ final au lieu de t) |
 
 #### 4.3.9 Inconnues (1 occurrence chacune — à vérifier)
 
 | Balise | Hypothèse |
 |--------|-----------|
-| `amɣaɣ` | faute de frappe ou catégorie rare |
-| `flippedAoristAlt1` | forme alternative |
-| `flippedAoristAlt2` | forme alternative |
+| `amɣaɣ` | **faute de frappe probable** → `amyaɣ` (verbe réciproque) |
+| `flippedAoristAlt1` | forme alternative d'apophonie |
+| `flippedAoristAlt2` | forme alternative d'apophonie |
 | `flippedUrmirUssidAlt1` | forme alternative |
 | `flippedUrmirUssidAlt2` | forme alternative |
 | `flippedUrmirUssidNZ` | variante NZ |
@@ -273,16 +301,17 @@ La classe de caractères `[bcčdḍfgǧhḥjklmnpqrṛsṣtṭvwxyzẓɣɛ]` est
 |----------|-------------|--------|------------|
 | **Compteur d'en-tête erroné** | 30 000 déclaré, 25 551 réel | Hunspell ignore les entrées excédentaires | Fixer à 21 823 après nettoyage |
 | **Doublons word/flag** | 3 728 | Gonflement artificiel du dictionnaire | Dédupliquer, garder première occurrence |
-| **Faux-amis (`˚`) dans `.dic`** | 37 | Caractère non kabyle (`ring above` au lieu de `ʷ`) | Remplacer `˚` → `ʷ` |
+| **Faux-amis (`˚`) dans `.dic`** | 36 | Caractère non kabyle (`ring above` au lieu de `ʷ`) | Remplacer `˚` → `ʷ` |
 | **Licence MIT en commentaires `.dic`** | 1 315 lignes | Pollution du fichier source | Déplacer vers README uniquement |
 | **Mots courts dupliqués** | `k/`, `t/`, `aɣ/` ×3–4 | Redondance | Dédupliquer |
+| **Tags PO mal orthographiés** | 3 (`tazelɣ`, `isemn_tigawt`, `tanzeɣṭ`) | Tags non reconnus par un validateur strict | Normaliser (§4.3.8) |
 
 ### 6.2 Problèmes structurels
 
 | Anomalie | Occurrences | Impact | Correction |
 |----------|-------------|--------|------------|
-| Entrées avec métadonnées mais sans flags | 2 952 | Hunspell ne peut pas les fléchir | Ajouter flags appropriés ou marquer invariant |
-| Incohérences de casse (`nt` vs `NT`) | 65 + 12 + 8 | Tags non reconnus par un validateur strict | Normaliser en majuscules |
+| Entrées avec métadonnées mais sans flags | 3 372 | Hunspell ne peut pas les fléchir | Ajouter flags appropriés ou marquer invariant |
+| Incohérences de casse IS (`nt` vs `NT`) | 65 + 12 + 8 | Tags non reconnus par un validateur strict | Normaliser en majuscules |
 | `.aff` inline non modulaire | 50+ répétitions | Maintenance error-prone | Générer depuis un fichier modèle |
 
 ---
@@ -302,8 +331,8 @@ La classe de caractères `[bcčdḍfgǧhḥjklmnpqrṛsṣtṭvwxyzẓɣɛ]` est
 
 ```
 ┌─────────────┐     ┌─────────────────┐     ┌─────────────┐
-│ kab.dic v1.0│────▶│ clean-kab-dic.py│────▶│ kab-clean.dic│
-│ (Belkacem)  │     │                  │     │              │
+│ kab.dic v1.0│────▶│ clean-kab-dic.py│────▶│ kab.dic      │
+│ (Belkacem)  │     │                  │     │ (nettoyé)    │
 └─────────────┘     │ • corrige en-tête│     └─────────────┘
                     │ • déduplique     │
                     │ • répare faux-amis│
@@ -320,10 +349,11 @@ La classe de caractères `[bcčdḍfgǧhḥjklmnpqrṛsṣtṭvwxyzẓɣɛ]` est
 |----------|-------|-------|
 | Entrées | 25 551 | **21 823** |
 | Doublons | 3 728 | **0** |
-| Faux-amis (`˚`) | 37 | **0** |
+| Faux-amis (`˚`) | 36 | **0** |
 | Lignes commentées | 1 315 | **0** |
 | En-tête | 30 000 (erroné) | **21 823 (correct)** |
-| Tags inconnus (après normalisation) | — | **0** |
+| Tags IS normalisés (cas) | 86 | **0 restant** |
+| Tags PO normalisés (typos) | 3 | **0 restant** |
 | Références `st:` manquantes | — | **0** |
 
 ---
@@ -491,13 +521,13 @@ aɣrum	NOUN	N_FREE	yNw	Gender=Masc|Number=Sing|State=Free
 
 ### 10.2 Outils à développer
 
-| Outil | Priorité | Description |
-|-------|----------|-------------|
-| `clean-kab-dic.py` | **P0** | Nettoyage du `.dic` Belkacem |
-| `validate-dic.py` | **P0** | Validation des références `st:` et du vocabulaire `is:` |
-| `build-kabyle-dict.py` | **P1** | Générateur `.dic` + `.aff` + wordlist |
-| `aff-linter.py` | **P1** | Vérification de cohérence du `.aff` |
-| `hf-publish.py` | **P2** | Publication automatique sur HuggingFace |
+| Outil | Priorité | Statut | Description |
+|-------|----------|--------|-------------|
+| `clean-kab-dic.py` | **P0** | Terminé | Nettoyage du `.dic` Belkacem |
+| `validate-dic.py` | **P0** | Terminé | Validation des références `st:` et du vocabulaire `is:` |
+| `build-kabyle-dict.py` | **P1** | En attente | Générateur `.dic` + `.aff` + wordlist |
+| `aff-linter.py` | **P1** | En attente | Vérification de cohérence du `.aff` |
+| `hf-publish.py` | **P2** | Terminé | Publication automatique sur HuggingFace |
 
 ---
 
@@ -506,15 +536,18 @@ aɣrum	NOUN	N_FREE	yNw	Gender=Masc|Number=Sing|State=Free
 ### Phase 1 : Nettoyage (TERMINÉ)
 - [x] Exécuter `clean-kab-dic.py` sur Belkacem v1.0
 - [x] Corriger 3 728 doublons
-- [x] Corriger 37 faux-amis
+- [x] Corriger 36 faux-amis
 - [x] Corriger l'en-tête (30 000 → 21 823)
 - [x] Supprimer les commentaires de licence du `.dic`
 - [x] Valider les références `st:`
-- [x] Normaliser les tags (`nt→NT`, `ml→ML`, `sf→SF`, `urmir_issid→urmir_ussid`)
-- [x] Livrables : `kab-clean.dic` + `cleaning-report.md`
+- [x] Normaliser les tags IS (`nt→NT`, `ml→ML`, `sf→SF`, `urmir_issid→urmir_ussid`)
+- [x] Normaliser les tags PO (`tazelɣ→tazelɣa`, `isemn_tigawt→isem_n_tigawt`, `tanzeɣṭ→tanzeɣt`)
+- [x] Livrables : `kab.dic` nettoyé + `cleaning-report.md` + `tag-vocabulary.md`
+- [x] Publier sur HuggingFace : [`boffire/hunspell-kab`](https://huggingface.co/datasets/boffire/hunspell-kab)
 
 ### Phase 2 : Documentation (1–2 semaines)
 - [ ] Confirmer les balises `is:` restantes (`flippedAorist`, `substituted`, `iaVerb`, `NZ`)
+- [ ] Corriger `amɣaɣ` → `amyaɣ` (1 occurrence, typo évidente)
 - [ ] Mapper les balises `is:` confirmées vers les features UD
 - [ ] Mapper les balises `po:` vers les UPOS UD
 - [ ] Rédiger le vocabulaire contrôlé `kabyle-metadata-vocab.md`
@@ -531,7 +564,7 @@ aɣrum	NOUN	N_FREE	yNw	Gender=Masc|Number=Sing|State=Free
 - [ ] Écrire `build-kabyle-dict.py`
 - [ ] Créer `kabyle-root.tsv` à partir du `.dic` nettoyé
 - [ ] Mettre en place CI/CD (GitHub Actions)
-- [ ] Publier sur HuggingFace (`boffire/kabyle-hunspell`)
+- [ ] Publier sur HuggingFace (`boffire/hunspell-kab`) — **dataset publié en v1.0**
 
 ---
 
@@ -539,15 +572,15 @@ aɣrum	NOUN	N_FREE	yNw	Gender=Masc|Number=Sing|State=Free
 
 Les balises et traits suivants nécessitent une confirmation par un linguiste ou un locuteur natif avant de pouvoir être intégrés dans le vocabulaire contrôlé stable :
 
-| Question | Balises concernées |
-|----------|-------------------|
-| Que décrit exactement le processus « flipped » ? | `flippedAorist` (1 623), `flipped` (286), `flippedFromParticiple` (61) |
-| Que signifie « substituted » ? | `substitutedFromAorist` (380), `substituted` (209) |
-| Que signifie le suffixe `NZ` ? | `flippedAoristNZ` (195), `flippedNZ` (22) |
-| Quel est le pattern du verbe `i-a` ? | `iaVerb` (132), `possibleIaVerb` (15) |
-| `amɣaɣ` est-il une faute de frappe ? | `amɣaɣ` (1) |
-| Le kabyle autorise-t-il l'empilement de clitiques objet (ex. `-as-t`) ? | Nécessite `twofold suffix stripping` si oui |
-| Le nom à l'état annexé (`wəɣrum`) doit-il être dérivé de l'état libre (`aɣrum`) via `_STATE`, ou listé séparément ? | Impact sur la taille du `.dic` |
+| Question | Balises concernées | Hypothèse actuelle |
+|----------|-------------------|-------------------|
+| Que décrit exactement le processus « flipped » ? | `flippedAorist` (1 623), `flipped` (286), `flippedFromParticiple` (61) | Apophonie vocalique (a→u, e→a) |
+| Que signifie « substituted » ? | `substitutedFromAorist` (380), `substituted` (209) | Substitution consonantique (causatif, passif, racine faible) |
+| Que signifie le suffixe `NZ` ? | `flippedAoristNZ` (195), `flippedNZ` (22) | Inconnu — possible variante dialectale ou classe interne de Belkacem |
+| Quel est le pattern du verbe `i-a` ? | `iaVerb` (132), `possibleIaVerb` (15) | Verbes de forme C-i-C-a |
+| `amɣaɣ` est-il une faute de frappe ? | `amɣaɣ` (1) | **Probable typo** → `amyaɣ` (verbe réciproque) |
+| Le kabyle autorise-t-il l'empilement de clitiques objet (ex. `-as-t`) ? | Nécessite `twofold suffix stripping` si oui | À confirmer — reporter en v3.0 si trop complexe pour Hunspell natif |
+| Le nom à l'état annexé (`wəɣrum`) doit-il être dérivé de l'état libre (`aɣrum`) via `_STATE`, ou listé séparément ? | Impact sur la taille du `.dic` | Recommandation : lister séparément (trop irrégulier pour règles générales) |
 
 ---
 
@@ -564,6 +597,8 @@ Les balises et traits suivants nécessitent une confirmation par un linguiste ou
 5. **Athmane Mokraoui (boffire)**, *CV26 Kabyle Contamination Report*, [https://butterflyoffire.codeberg.page/cv26/kabyle_corpus_contamination_report_v2.html](https://butterflyoffire.codeberg.page/cv26/kabyle_corpus_contamination_report_v2.html), 2026. Analyse des faux-amis de caractères.
 
 6. **Kabyle Specs**, [kabyle-specs.github.io](https://kabyle-specs.github.io/). Spécifications interdépendantes : [Keyboard], [Tokenizer], [UD], [G2P], [Color Terms].
+
+7. **Athmane Mokraoui (boffire)**, *hunspell-kab*, dataset HuggingFace, [huggingface.co/datasets/boffire/hunspell-kab](https://huggingface.co/datasets/boffire/hunspell-kab), 2026. Dictionnaire nettoyé (21 823 entrées) + documentation.
 
 ---
 
