@@ -20,7 +20,7 @@ Le kabyle (Taqbaylit, code ISO 639-1 `kab`) dispose d'un correcteur orthographiq
 
 ## 1. Introduction
 
-Le dictionnaire Hunspell kabyle `imseti_n_tira_n_teqbaylit` (litt. « correcteur d'écriture kabyle ») est le seul correcteur orthographique libre et complet disponible pour la langue kabyle. Distribué sous forme de module Firefox (`.xpi`) et utilisé par Weblate, il repose sur un fichier `.dic` de ~25 500 entrées et un fichier `.aff` définissant ~32 classes d'affixation.
+Le dictionnaire Hunspell kabyle `imseti_n_tira_n_teqbaylit` (litt. « correcteur d'écriture kabyle ») est le seul correcteur orthographique libre et complet disponible pour la langue kabyle. Distribué sous forme de module Firefox (`.xpi`) et utilisé dans LibreOffice, il repose sur un fichier `.dic` de ~25 500 entrées et un fichier `.aff` définissant ~32 classes d'affixation.
 
 Ce document vise à :
 1. **Décrire** la structure métadonnées du dictionnaire pour les linguistes et développeurs.
