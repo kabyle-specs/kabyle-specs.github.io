@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';">
 <title>Kabyle Language Specs</title>
 <meta name="description" content="Specifications for the Kabyle language (Taqbaylit): orthography, input, encoding, and text processing.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -316,6 +317,8 @@
     color: var(--ink-soft);
   }
 
+  .empty-state.error p:first-child{ color: var(--yaz); font-weight: 600; }
+
   /* ---------- about / contribute ---------- */
 
   .about-grid{
@@ -499,102 +502,23 @@
 
 <script>
   /*
-    HOW TO ADD A SPEC
-    ------------------
-    Add one object per specification to the array below, then commit its
-    Markdown file to the repository at the given `path`. Fields:
+    DOCUMENT LIST
+    -------------
+    The list of specs and reports now lives in manifest.json, next to this
+    file, instead of being hardcoded here. That file is the single source
+    of truth: viewer.html reads it too, to look up a document's title.
 
-      title    - short name of the spec, e.g. "Kabyle Latin Orthography"
-      path     - path to the .md file, relative to the repo root
-                 e.g. "specs/orthography.md"
-      summary  - one sentence describing what the spec covers
-      status   - one of "draft", "proposed", "stable"
-      updated  - date the spec was last changed, "YYYY-MM-DD"
+    To add a new spec or report:
+      1. Commit its Markdown file under specs/ or reports/.
+      2. Add an entry to the matching array in manifest.json with:
+           title    - short name, e.g. "Kabyle Latin Orthography"
+           path     - path to the .md file, relative to the repo root
+           summary  - one sentence describing what it covers
+           status   - "draft", "proposed", "stable", or "analysis"
+           updated  - "YYYY-MM-DD"
+           author   - optional, mainly used for reports
+    No changes to this script are needed.
   */
-
-  const specs = [
-    {
-      title: "Kabyle Hunspell Dictionary Architecture",
-      path: "specs/kabyle-hunspell-dictionary-spec.md",
-      summary: "Structure, metadata schema, and build pipeline for the Kabyle Hunspell dictionary (kab.dic + kab.aff). Documents the po:/st:/is: tag system, flag inventory, known anomalies, and migration path toward a generated, modular affix architecture inspired by Catalan and Hungarian dictionaries.",
-      status: "draft",
-      updated: "2026-08-02"
-    },
-    {
-      title: "Kabyle color terms",
-      path: "specs/kabyle-color-specs.md",
-      summary: "Canonical color terms for Taqbaylit (Kabyle), their gender/number/state inflections, the constructions used to attach them to nouns, and attested variants that implementers must declare rather than silently mix.",
-      status: "draft",
-      updated: "2026-07-31"
-    },
-    {
-      title: "Kabyle Latin Orthography & Character Normalization",
-      path: "specs/kabyle-orthography-specs.md",
-      summary: "Canonical 33-letter inventory with verified Unicode codepoints, false-friend rejection rules, and quality gates for Kabyle text corpora and AI training pipelines.",
-      status: "draft",
-      updated: "2026-07-30"
-    },
-    {
-      title: "Kabyle Keyboard Layout Specification",
-      path: "specs/kabyle-keyboard-layout-spec.md",
-      summary: "Keyboard layout specification for Kabyle (Taqbaylit): INALCO 1996 character inventory, dead-key input method (KIM), frequency analysis, and OS-specific implementation profiles (AZERTY, QWERTY, Bépo, ErgoL).",
-      status: "draft",
-      updated: "2026-07-29"
-    },
-    {
-      title: "Expressing time in Kabyle (Taqbaylit)",
-      path: "specs/kabyle-time-specs.md",
-      summary: "Grammar of the Kabyle time-telling system (particle D, u/ɣiṛ, dialectal variants) with a synonym table for date/time parsers.",
-      status: "draft",
-      updated: "2026-07-24"
-    },
-    {
-      title: "Kabyle verb conjugator specification",
-      path: "specs/kabyle-conjugations-specs.md",
-      summary: "Algorithmic blueprint for generating Kabyle verb paradigms across aspects and morphological groups, after Bouamara's model.",
-      status: "draft",
-      updated: "2026-07-29"
-    },
-    {
-      title: "Kabyle grapheme-to-phoneme (orthography2ipa)",
-      path: "specs/kabyle-g2p-specs.md",
-      summary: "Full G2P spec for Kabyle: 34-letter Latin inventory, spirantization and allophony rules, for TTS/ASR systems.",
-      status: "draft",
-      updated: "2026-07-27"
-    },
-    {
-      title: "Kabyle morphological tokenizer",
-      path: "specs/kabyle-morphological-tokenizer-spec.md",
-      summary: "Layered, rule-based tokenizer architecture for Kabyle verb forms, segmenting subject affixes, pronominal clitics, and derivational prefixes.",
-      status: "draft",
-      updated: "2026-07-29"
-    },
-    {
-      title: "Kabyle Universal Dependencies (UD)",
-      path: "specs/kabyle-ud-specification.md",
-      summary: "UD annotation framework for Kabyle syntax: VSO order, pro-drop, clitic doubling, copula, and construct state, extending the UD_Kabyle-ADPT treebank.",
-      status: "draft",
-      updated: "2026-07-29"
-    },
-  ];
-
-  /*
-    HOW TO ADD A REPORT
-    -------------------
-    Same structure as specs, with an optional `author` field.
-    Status should usually be "analysis" (renders in warm ochre).
-  */
-
-  const reports = [
-    {
-      title: "Rapport d'analyse du corpus Tatoeba Kabyle",
-      path: "reports/report_tatoeba_kabyle.md",
-      summary: "MaskLID + GlotLID + DistilBERT + Hunspell pipeline v3. 789 712 phrases analysées ; 756 774 pures (95,8 %), 0,24 % code-switching, 3,66 % contamination orthographique, 85,1 % couverture Hunspell. Dashboard + CoNLL-U exports.",
-      status: "analysis",
-      updated: "2026-08-01",
-      author: "boffire / kabyle-specs"
-    }
-  ];
 
   const yaz = `<svg class="card-yaz" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <line x1="20" y1="4" x2="20" y2="36" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
@@ -603,17 +527,21 @@
     <circle cx="20" cy="36" r="4" fill="currentColor"/>
   </svg>`;
 
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  }
+
   function renderList(items, listId, emptyMsg) {
     const list = document.getElementById(listId);
     list.innerHTML = "";
 
-    if (items.length === 0) {
+    if (!items || items.length === 0) {
       const li = document.createElement("li");
       li.style.display = "block";
       li.innerHTML = `
         <div class="empty-state">
-          <p>${emptyMsg}</p>
-          <p class="mono-hint">Add entries to the array in this page once the first file lands.</p>
+          <p>${escapeHtml(emptyMsg)}</p>
+          <p class="mono-hint">Add entries to manifest.json once the first file lands.</p>
         </div>`;
       list.appendChild(li);
       return;
@@ -624,23 +552,49 @@
       .sort((a, b) => new Date(b.updated) - new Date(a.updated))
       .forEach(item => {
         const li = document.createElement("li");
-        const authorTag = item.author ? ` &middot; ${item.author}` : "";
+        const authorTag = item.author ? ` &middot; ${escapeHtml(item.author)}` : "";
+        const viewerHref = "viewer.html?file=" + encodeURIComponent(item.path);
         li.innerHTML = `
           ${yaz}
           <div>
-            <p class="card-title"><a href="${item.path}">${item.title}</a></p>
-            <p class="card-summary">${item.summary}</p>
+            <p class="card-title"><a href="${viewerHref}">${escapeHtml(item.title)}</a></p>
+            <p class="card-summary">${escapeHtml(item.summary)}</p>
           </div>
           <div class="card-meta">
-            <span class="status ${item.status}">${item.status}</span><br>
-            ${item.updated}${authorTag}
+            <span class="status ${escapeHtml(item.status)}">${escapeHtml(item.status)}</span><br>
+            ${escapeHtml(item.updated)}${authorTag}
           </div>`;
         list.appendChild(li);
       });
   }
 
-  renderList(specs, "spec-list", "No specifications published yet.");
-  renderList(reports, "report-list", "No reports published yet.");
+  function renderError(listId, message) {
+    const list = document.getElementById(listId);
+    list.innerHTML = "";
+    const li = document.createElement("li");
+    li.style.display = "block";
+    li.innerHTML = `
+      <div class="empty-state error">
+        <p>Couldn't load the document list.</p>
+        <p class="mono-hint">${escapeHtml(message)}</p>
+      </div>`;
+    list.appendChild(li);
+  }
+
+  fetch("./manifest.json")
+    .then(res => {
+      if (!res.ok) throw new Error(res.status + " " + res.statusText);
+      return res.json();
+    })
+    .then(data => {
+      renderList(data.specs, "spec-list", "No specifications published yet.");
+      renderList(data.reports, "report-list", "No reports published yet.");
+    })
+    .catch(err => {
+      console.error("[index] failed to load manifest.json:", err);
+      renderError("spec-list", err.message);
+      renderError("report-list", err.message);
+    });
 </script>
 
 </body>
