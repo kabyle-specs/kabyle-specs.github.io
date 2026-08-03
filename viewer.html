@@ -154,6 +154,13 @@
     word-break: break-all;
     color: var(--ink-soft);
   }
+  .doc-card .doc-summary{
+    font-family: var(--body);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    margin: 8px 0 0;
+  }
   .doc-card .status{
     display:inline-block;
     padding: 2px 7px;
@@ -487,6 +494,23 @@
       return blob.text();
     }
 
+    // ---------- strip YAML frontmatter (---\n...\n---) before markdown parsing ----------
+    // Returns { body, frontmatter } where frontmatter is a simple key:value map
+    // (only handles flat "key: value" lines, which is all these docs use).
+    function stripFrontmatter(text) {
+      const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+      if (!match) return { body: text, frontmatter: null };
+
+      const raw = match[1];
+      const frontmatter = {};
+      raw.split(/\r?\n/).forEach(line => {
+        const m = line.match(/^([a-zA-Z0-9_-]+):\s*(.*)$/);
+        if (m) frontmatter[m[1]] = m[2].trim();
+      });
+
+      return { body: text.slice(match[0].length), frontmatter };
+    }
+
     // ---------- look up this document's metadata in manifest.json ----------
     // Best-effort only: if manifest.json is missing or the path isn't listed,
     // the viewer still renders the file, just without the pretty title/status.
@@ -503,15 +527,26 @@
       }
     }
 
-    function renderDocCard(path, meta) {
+    let docCardSource = null; // null | 'manifest' | 'frontmatter'
+
+    function renderDocCard(path, meta, source) {
+      // Frontmatter (from the file itself) always wins over manifest.json,
+      // regardless of which async lookup resolves first.
+      if (docCardSource === 'frontmatter' && source !== 'frontmatter') return;
+      docCardSource = source;
+
       const card = $('doc-card');
-      if (meta) {
+      if (meta && meta.title) {
+        const summaryHtml = meta.summary
+          ? `<p class="doc-summary">${escapeHtml(meta.summary)}</p>`
+          : '';
         card.innerHTML = `
           <p class="doc-title">${escapeHtml(meta.title)}</p>
           <div class="doc-path">${escapeHtml(path)}</div>
-          <span class="status ${escapeHtml(meta.status || '')}">${escapeHtml(meta.status || 'unlisted')}</span>`;
+          <span class="status ${escapeHtml(meta.status || '')}">${escapeHtml(meta.status || 'unlisted')}</span>
+          ${summaryHtml}`;
         document.title = meta.title + ' | Kabyle Language Specs';
-      } else {
+      } else if (!card.innerHTML) {
         card.innerHTML = `<div class="doc-path">${escapeHtml(path)}</div>`;
       }
     }
@@ -534,7 +569,7 @@
     const url = './' + path;
     $('raw-link').href = url;
 
-    lookupDocMeta(path).then(meta => renderDocCard(path, meta));
+    lookupDocMeta(path).then(meta => renderDocCard(path, meta, 'manifest'));
 
     console.log('[viewer] fetching:', url, 'max:', MAX_BYTES, 'timeout:', TIMEOUT_MS);
 
@@ -551,7 +586,15 @@
           return;
         }
 
-        let html = marked.parse(text, { gfm: true, breaks: false });
+        const { body, frontmatter } = stripFrontmatter(text);
+        if (frontmatter) {
+          console.log('[viewer] frontmatter:', frontmatter);
+          // Frontmatter in the file itself is the freshest source — merge it
+          // over whatever manifest.json already rendered into the doc card.
+          renderDocCard(path, frontmatter, 'frontmatter');
+        }
+
+        let html = marked.parse(body, { gfm: true, breaks: false });
         console.log('[viewer] parsed html length:', html.length);
 
         // sanitize with DOMPurify
