@@ -92,7 +92,7 @@ Le kabyle standard utilise l'alphabet latin berbère de 34 lettres (INALCO 1996)
 | Grapheme | Phonème | Exemple | Réalisation |
 |----------|---------|---------|-------------|
 | a | /a/ | *axam* | [ɑχːɑm] |
-| e | /ə/ | *tameṭṭut* | [θametˤːθ] |
+| e | /ə/ | *tameṭṭut* | [θamətˤːθ] |
 | i | /i/ | *tifinaɣ* | [θifinɑʁ] |
 | u | /u/ | *tawwurt* | [θawwurθ] |
 | y | /j/ | *Ayyur* | [ɑjːur] |
@@ -296,7 +296,7 @@ L'assimilation nasale en kabyle standard est **limitée aux contextes vélaire e
 | *adrar* | /a-d-r-a-r/ | SPIRANT_D, A_DEFAULT | [aðrar] | montagne |
 | *tafat* | /t-a-f-a-t/ | SPIRANT_T (×2), A_DEFAULT | [θafaθ] | lumière |
 | *tawwurt* | /t-a-wː-u-r-t/ | SPIRANT_T (×2), U_CLOSED | [θawwurθ] | porte |
-| *tameṭṭut* | /t-a-m-e-tˤː-u-t/ | SPIRANT_T (×2), A_DEFAULT | [θametˤːθ] | femme |
+| *tameṭṭut* | /t-a-m-e-tˤː-u-t/ | SPIRANT_T (×2), A_DEFAULT | [θamətˤːθ] | femme |
 | *igenni* | /i-ɡ-e-nː-i/ | SPIRANT_G | [iʝənni] | ciel |
 | *kra* | /k-r-a/ | SPIRANT_K, A_DEFAULT | [çræ] | quelque |
 | *kečč* | /k-e-cː/ | SPIRANT_K | [çət͡ʃː] | toi (emphatique) |
@@ -311,7 +311,7 @@ L'assimilation nasale en kabyle standard est **limitée aux contextes vélaire e
 | *tamellalt* | /t-a-m-e-lː-a-l-t/ | SPIRANT_T (initiale), BLOCK_T_AFTER_L_FINAL, A_DEFAULT | [θaməllalt] | œuf |
 | *Ldi* | /l-d-i/ | BLOCK_D_AFTER_L | [ldi] | ouvre ! |
 | *tasemmumt* | /t-a-s-e-m-m-u-m-t/ | SPIRANT_T (initiale), BLOCK_T_AFTER_M | [tasemmumt] | (nom propre) |
-| *θamda* | /θ-a-m-d-a/ | BLOCK_D_AFTER_M, A_DEFAULT | [θamda] | mare |
+| *tamda* | /t-a-m-d-a/ | BLOCK_D_AFTER_M, SPIRANT_T, A_DEFAULT | [θamda] | mare |
 | *d-ittun* | /d-i-tː-u-n/ | BLOCK_D_WORD_INITIAL | [dittun] | ils sont venus |
 | *tifinaɣ* | /t-i-f-i-n-a-ɣ/ | SPIRANT_T (initiale), GH_UVULAR, A_BACKING_PRECEDING | [θifinɑʁ] | tifinagh |
 | *bbeɣ* | /bː-e-ɣ/ | GH_UVULAR | [bːəʁ] | plonger |
