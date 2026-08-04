@@ -2,9 +2,9 @@
 
 **Auteurs** : Athmane Mokraoui (boffire), locuteur natif kabyle, mainteneur des ressources NLP kabyles ; structuration phonologique, recherche documentaire et vérification native.
 
-**Date** : 27 juillet 2026
+**Date** : 4 août 2026
 
-**Version** : 2026-07-27
+**Version** : 2026-08-04
 
 **Cible** : Linguistes computationnels, développeurs TTS/ASR, ingénieurs phonétiques, chercheurs en linguistique berbère.
 
@@ -23,7 +23,7 @@ Le kabyle (Taqbaylit, code ISO 639-3 `kab`) possède un système phonologique ca
 Le kabyle est une langue chamito-sémitique (afro-asiatique) du groupe berbère, parlée par 5 à 7 millions de locuteurs en Algérie (Kossmann & Stroomer 1997, p. 461). Sa phonologie se distingue par :
 
 1. **Une opposition tension/détension** (consonnes longues vs. consonnes brèves), notée par le redoublement de la lettre.
-2. **La spirantisation** : les occlusives lâches /b d t k g ḍ/ deviennent des fricatives [β ð θ ç ʝ ðˤ] en position post-vocalique et initiale (sauf exceptions).
+2. **La spirantisation** : les occlusives lâches /b d t k g ḍ/ deviennent des fricatives [β ð θ ç ʝ ðˤ] en position post-vocalique et initiale (sauf exceptions documentées).
 3. **Un système vocalique à trois phonèmes** (/a i u/) avec réalisations allophoniques étendues.
 4. **Des assimilations nasales** conditionnées par le point d'articulation du segment suivant (limitées à [ŋ] et [m] ; l'allophone palatal [ɲ] n'est pas attesté intra-morphémique en kabyle standard).
 
@@ -79,7 +79,7 @@ Codification historique de l'orthographe latine du kabyle, sur laquelle repose l
 Démontre que tous les schwas kabyles sont épenthétiques (réparation de clusters mal formés) et que les géminées ne sont jamais brisées par épenthèse.
 
 ### 2.8 Vérification native (MOKRAOUI 2026)
-Sessions de jugement de locuteur natif (Athmane Mokraoui) pour la spirantisation de /b d t k g/ en position initiale, post-vocalique et post-consonantique. Décisions clés : blocage post-consonantique catégorique pour /k/ et /g/ avec l'exception /mʝ/ ; spirantisation de /t/ initiale devant toutes les voyelles y compris /i/ ; rejet de l'allophone [ʃ] pour /k/ ; confirmation de la spirantisation post-/r/ pour /k/ et /g/.
+Sessions de jugement de locuteur natif (Athmane Mokraoui) pour la spirantisation de /b d t k g/ en position initiale, post-vocalique et post-consonantique. Décisions clés : blocage post-consonantique catégorique pour /k/ et /g/ avec l'exception /mʝ/ ; spirantisation de /t/ initiale devant toutes les voyelles y compris /i/ ; rejet de l'allophone [ʃ] pour /k/ ; confirmation de la spirantisation post-/r/ pour /k/ et /g/ ; **clitiques /k/ (kem, kent, k- + voyelle) et emprunt kullec conservent l'occlusive [k]**.
 
 ---
 
@@ -114,7 +114,7 @@ Le kabyle standard utilise l'alphabet latin berbère de 34 lettres (INALCO 1996)
 | h | /h/ | glottale fricative | |
 | ḥ | /ħ/ | pharyngale fricative | |
 | j | /ʒ/ | postalvéolaire fricative | |
-| k | /k/ | vélaire occlusive | Spirantise en [ç] |
+| k | /k/ | vélaire occlusive | Spirantise en [ç] (voir exceptions §4.1.2) |
 | l | /l/ | alvéolaire latérale | |
 | m | /m/ | bilabiale nasale | |
 | n | /n/ | alvéolaire nasale | S'assimile en [ŋ, m] |
@@ -136,13 +136,13 @@ Le kabyle standard utilise l'alphabet latin berbère de 34 lettres (INALCO 1996)
 
 | Grapheme | Phonème | Réalisation | Principe |
 |----------|---------|-------------|----------|
-| bb | /bː/ | [bː] | Jamais spirantisée |
-| dd | /dː/ | [dː] | Jamais spirantisée |
-| tt | /tː/ | [tː] | Jamais spirantisée |
-| kk | /kː/ | [kː] | Jamais spirantisée |
-| gg | /ɡː/ | [ɡː] | Jamais spirantisée |
-| ḍḍ | /dˤː/ | [dˤː] | Jamais spirantisée |
-| ṭṭ | /tˤː/ | [tˤː] | Jamais spirantisée |
+| bb | /bː/ | [bː] | **Jamais spirantisée** |
+| dd | /dː/ | [dː] | **Jamais spirantisée** |
+| tt | /tː/ | [tː] | **Jamais spirantisée** |
+| kk | /kː/ | [kː] | **Jamais spirantisée** |
+| gg | /ɡː/ | [ɡː] | **Jamais spirantisée** |
+| ḍḍ | /dˤː/ | [dˤː] | **Jamais spirantisée** |
+| ṭṭ | /tˤː/ | [tˤː] | **Jamais spirantisée** |
 | ff | /fː/ | [fː] | |
 | ll | /lː/ | [lː] | |
 | mm | /mː/ | [mː] | |
@@ -173,7 +173,7 @@ Le kabyle standard utilise l'alphabet latin berbère de 34 lettres (INALCO 1996)
 
 ### 4.1 La spirantisation (trait signature)
 
-La spirantisation est le processus par lequel les occlusives **lâches** (non-géminées) deviennent des fricatives. Les occlusives **tendues** (géminées) résistent systématiquement.
+La spirantisation est le processus par lequel les occlusives **lâches** (non-géminées) deviennent des fricatives. Les occlusives **tendues** (géminées) résistent systématiquement — **sans exception**.
 
 | Phonème | Allophone | Contexte | Exemple |
 |---------|-----------|----------|---------|
@@ -202,6 +202,19 @@ La spirantisation est le processus par lequel les occlusives **lâches** (non-g�
 
 **Note sur /k/ et /ɡ/ après /r/** : Bedar et al. (2022) ne traitent pas le contexte post-/r/ pour /k/ et /ɡ/. La vérification native (MOKRAOUI 2026) confirme la spirantisation : *taberkant* → [ç], *argaz* → [ʝ].
 
+#### 4.1.2 Exceptions lexicales et morphologiques pour /k/
+
+Le phonème /k/ spirantise en [ç] dans la grande majorité des contextes. Cependant, un petit ensemble de formes clitiques et d'emprunts conserve l'occlusive [k] :
+
+| Forme | Prononciation | Type d'exception | Contexte |
+|-------|---------------|------------------|----------|
+| *kem* | [kem] | Pronom clitique | Standalone (objet, f.sg) |
+| *kent* | [kent] | Pronom clitique | Standalone (objet, f.pl) |
+| *k-* + voyelle | [k-] | Préfixe clitique | Pronom objet préverbal (ex. *k-ufiɣ*, *k-walaɣ*, *k-iwalaɣ*) |
+| *kullec* | [kulːəʃ] | Emprunt lexical | Arabe *kull* — conserve [k] |
+
+**Tout autre /k/ initiaux, médians ou post-vocaliques spirantise en [ç]** : *kra* [çræ], *kečč* [çət͡ʃː], *kcem* [çcem], *kteb* [çteb], *aksum* [açum]. Le pronom suffixe *-k* (m.sg) spirantise également : *a-k* [aç], *iyi-k* [ijiç].
+
 ### 4.2 Allophonie vocalique
 
 #### 4.2.1 Retraction de /a/
@@ -209,7 +222,7 @@ La spirantisation est le processus par lequel les occlusives **lâches** (non-g�
 | Règle | Contexte | Réalisation | Exemple |
 |-------|----------|-------------|---------|
 | KAB_A_BACKING | Avant emphatique/uvulaire | [ɑ] | *axxam* [ɑχːɑm] |
-| KAB_A_BACKING_PRECEDING | Après emphatique/uvulaire | [ɑ] | *qaci* [ɑ] (si /a/ suit /q/) |
+| KAB_A_BACKING_PRECEDING | Après emphatique/uvulaire | [ɑ] | |
 | KAB_A_DEFAULT | Défaut | [æ] | *amcic* [æmçiç] |
 
 #### 4.2.2 Fermeture en syllabe fermée
@@ -252,7 +265,8 @@ L'assimilation nasale en kabyle standard est **limitée aux contextes vélaire e
 | KAB_BLOCK_SPIRANT_D_WORD_INITIAL | Blocage | /d/ | [d] | Initiale absolue | Haute |
 | KAB_BLOCK_SPIRANT_K_AFTER_CONSONANT | Blocage | /k/ | [k] | Précédé par consonne (sauf /r, rˤ/) | Haute |
 | KAB_BLOCK_SPIRANT_G_AFTER_CONSONANT | Blocage | /ɡ/ | [ɡ] | Précédé par consonne (sauf /m, r, rˤ/) | Haute |
-| KAB_SPIRANT_K | Spirantisation | /k/ | [ç] | Post-vocalique, initiale, post-/r/ | Basse |
+| KAB_BLOCK_SPIRANT_K_CLITIC | Blocage | /k/ | [k] | Formes clitiques *kem, kent, k-* + voyelle, et emprunt *kullec* | Haute |
+| KAB_SPIRANT_K | Spirantisation | /k/ | [ç] | Post-vocalique, initiale (sauf clitiques), post-/r/ | Basse |
 | KAB_SPIRANT_B | Spirantisation | /b/ | [β] | Post-vocalique, initiale | Basse |
 | KAB_SPIRANT_D | Spirantisation | /d/ | [ð] | Post-vocalique, intervocalique | Basse |
 | KAB_SPIRANT_T | Spirantisation | /t/ | [θ] | Post-vocalique, initiale | Basse |
@@ -285,8 +299,9 @@ L'assimilation nasale en kabyle standard est **limitée aux contextes vélaire e
 | *tameṭṭut* | /t-a-m-e-tˤː-u-t/ | SPIRANT_T (×2), A_DEFAULT | [θametˤːθ] | femme |
 | *igenni* | /i-ɡ-e-nː-i/ | SPIRANT_G | [iʝənni] | ciel |
 | *kra* | /k-r-a/ | SPIRANT_K, A_DEFAULT | [çræ] | quelque |
-| *kullec* | /k-u-lː-e-c/ | SPIRANT_K | [çʊlːəʃ] | tout |
 | *kečč* | /k-e-cː/ | SPIRANT_K | [çət͡ʃː] | toi (emphatique) |
+| *kcem* | /k-c-e-m/ | SPIRANT_K | [çcem] | entre ! |
+| *kteb* | /k-t-e-b/ | SPIRANT_K | [çteb] | écris ! |
 | *taberkant* | /t-a-b-e-r-k-a-n-t/ | SPIRANT_T (×2), SPIRANT_K (post-/r/), A_DEFAULT | [θabərçant] | (nom propre) |
 | *argaz* | /a-r-ɡ-a-z/ | SPIRANT_G (post-/r/), A_DEFAULT | [arʝaz] | homme |
 | *tamga* | /t-a-m-ɡ-a/ | SPIRANT_T, SPIRANT_G (post-/m/), A_DEFAULT | [θamʝa] | source |
@@ -303,6 +318,11 @@ L'assimilation nasale en kabyle standard est **limitée aux contextes vélaire e
 | *axxam* | /a-xː-a-m/ | A_BACKING (avant /χː/), A_BACKING_PRECEDING (après /χː/) | [ɑχːɑm] | maison |
 | *ankal* | /a-n-k-a-l/ | N_VELAR_ASSIM, BLOCK_K_AFTER_CONSONANT, A_DEFAULT | [aŋkal] | (nom propre) |
 | *anba* | /a-n-b-a/ | N_LABIAL_ASSIM | [amba] | fils de... |
+| *kem* | /k-e-m/ | BLOCK_K_CLITIC | [kem] | toi (f.sg, clitique) |
+| *kent* | /k-e-n-t/ | BLOCK_K_CLITIC | [kent] | vous (f.pl, clitique) |
+| *k-ufiɣ* | /k-u-f-i-ɣ/ | BLOCK_K_CLITIC | [kufiɣ] | je t'ai trouvé(e) |
+| *k-walaɣ* | /k-w-a-l-a-ɣ/ | BLOCK_K_CLITIC | [kwalaɣ] | je t'ai vu(e) |
+| *kullec* | /k-u-lː-e-c/ | BLOCK_K_CLITIC | [kulːəʃ] | tout (emprunt arabe) |
 
 ### 6.2 Exemples d'emprunts (non spirantisés)
 
@@ -371,7 +391,7 @@ L'accent kabyle est largement prédictible (tonicité sur la dernière syllabe o
 **Statut** : Non prioritaire pour la plupart des applications TTS.
 
 ### 8.5 Emprunts récents
-Les emprunts français récents (surtout techniques) peuvent échapper à la spirantisation et conserver leurs occlusives. Cette spécification modélise la phonologie native de manière catégorique.
+Les emprunts français récents (surtout techniques) peuvent échapper à la spirantisation et conserver leurs occlusives. Cette spécification modélise la phonologie native de manière catégorique ; seul *kullec* est documenté comme exception arabe conservant [k].
 
 **Statut** : Nécessite une étiquette d'emprunt ou un lexique d'exceptions.
 
@@ -391,10 +411,17 @@ Les contextes suivants restent à vérifier par jugement de locuteur natif :
 - Clusters *sk-* (type *askar*)
 - *tirmitin* est confirmé [θɪrmiθin] (les deux /t/ spirantisent), mais les emprunts comme *itiknikanen* conservent leurs occlusives en position interne.
 
-### 8.9 Clitique /k/
-Le pronom objet /k/ (k-, -k, kem-, kent-, ak-, akem-, akent-) conserve l'occlusive [k] en parole naturelle, mais c'est une exception morphologique, pas une règle phonologique générale. Le /k/ initial lexical (*kra*, *kullec*, *kečč*) spirantise correctement en [ç].
+### 8.9 Clitique /k/ — EXCEPTIONS DOCUMENTÉES
+Le pronom objet /k/ conserve l'occlusive [k] dans les formes suivantes, vérifiées par jugement natif (MOKRAOUI 2026) :
+- **Standalone** : *kem* [kem], *kent* [kent]
+- **Préfixe préverbal** : *k-ufiɣ* [kufiɣ], *k-walaɣ* [kwalaɣ], *k-iwalaɣ* [kiwalaɣ]
+- **Emprunt lexical** : *kullec* [kulːəʃ]
 
-**Statut** : Doit être géré au niveau du moteur/rescorer, pas par une règle phonologique globale.
+**Le pronom suffixe /-k/ (m.sg) spirantise** : *a-k* [aç], *iyi-k* [ijiç].
+
+Tout autre /k/ lexical ou grammatical spirantise en [ç]. Cette exception est désormais modélisée par la règle `KAB_BLOCK_SPIRANT_K_CLITIC`.
+
+**Statut** : Modélisé dans cette version. Les moteurs qui ne supportent pas les exceptions lexicales doivent implémenter cette liste en dur.
 
 ### 8.10 Spirantisation en finale absolue
 Aucune règle générale de blocage de la spirantisation en position finale absolue n'existe dans cette spécification. Seul le cas spécifique de /t/ après /l/ en finale est bloqué (KAB_BLOCK_SPIRANT_T_AFTER_L_FINAL). La question de savoir si /b, d, k, g, dˤ/ résistent à la spirantisation en position finale absolue reste ouverte.
@@ -421,10 +448,10 @@ Pour implémenter cette spécification dans un système TTS ou ASR, l'architectu
 
 1. **Tokenisation graphemique** : Segmenter le texte en unités graphemiques (lettres simples et digrammes géminés).
 2. **Mapping phonémique** : Convertir chaque grapheme en son phonème sous-jacent via la table `graphemes`.
-3. **Application des règles de blocage** : Tester d'abord les règles `BLOCK_` (priorité haute).
+3. **Application des règles de blocage** : Tester d'abord les règles `BLOCK_` (priorité haute), y compris l'exception clitique `KAB_BLOCK_SPIRANT_K_CLITIC`.
 4. **Application des règles de spirantisation** : Si aucun blocage ne s'applique, appliquer les règles `SPIRANT_`.
 5. **Application des règles allophoniques** : Vowel backing, closed-syllable lowering, nasal assimilation.
-6. **Post-traitement morphologique** : Gérer les exceptions clitiques (/k/ objet) au niveau du rescorer.
+6. **Post-traitement morphologique** : Gérer les exceptions clitiques non capturées par les règles au niveau du rescorer.
 
 ### 9.2 Jeu de données de test recommandé
 
@@ -441,6 +468,7 @@ Pour valider une implémentation, le jeu de test minimal doit inclure :
 | Géminées non spirantisées | *abba, igenni, axxam* | 10 |
 | Backing vocalique | *axxam, tifinaɣ* | 10 |
 | Assimilation nasale | *ankal, anba* | 10 |
+| Exceptions clitiques /k/ | *kem, kent, k-ufiɣ, kullec* | 5 |
 | Emprunts | *itiknikanen, pulu, villa* | 5 |
 
 ### 9.3 Intégration avec le TTS kabyle
