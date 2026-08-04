@@ -195,7 +195,7 @@ La spirantisation est le processus par lequel les occlusives **lâches** (non-g�
 | KAB_BLOCK_SPIRANT_DH_EMPH_AFTER_N | /dˤ/ | Après /n/ | |
 | KAB_BLOCK_SPIRANT_D_AFTER_L | /d/ | Après /l/ | *Ldi* [ldi] |
 | KAB_BLOCK_SPIRANT_T_AFTER_M | /t/ | Après /m/ | *tasemmumt* [tasemmumt] |
-| KAB_BLOCK_SPIRANT_D_AFTER_M | /d/ | Après /m/ | *θamda* [θamda] |
+| KAB_BLOCK_SPIRANT_D_AFTER_M | /d/ | Après /m/ | *tamda* [θamda] |
 | KAB_BLOCK_SPIRANT_D_WORD_INITIAL | /d/ | Initiale absolue | *d-ittun* [dittun] |
 | KAB_BLOCK_SPIRANT_K_AFTER_CONSONANT | /k/ | Après toute consonne **sauf** /r, rˤ/ | *taberkant* [ç] mais *ankal* [ankal] |
 | KAB_BLOCK_SPIRANT_G_AFTER_CONSONANT | /ɡ/ | Après toute consonne **sauf** /m, r, rˤ/ | *argaz* [ʝ] mais *angal* [aŋɡal] |
@@ -490,7 +490,7 @@ Pour valider une implémentation, le jeu de test minimal doit inclure :
 | Catégorie | Exemples attendus | Nombre |
 |-----------|-------------------|--------|
 | Spirantisation simple | *abrid, adrar, tafat, kra, igenni* | 20 |
-| Blocage post-nasal | *zembil, anda, anta, tasemmumt, θamda* | 10 |
+| Blocage post-nasal | *zembil, anda, anta, tasemmumt, tamda* | 10 |
 | Blocage post-/l/ | *tamellalt, Ldi* | 5 |
 | Blocage post-/m/ pour /k,g/ | *tamga* (exception /g/), *ankal* (blocage /k/) | 5 |
 | Spirantisation post-/r/ | *taberkant, argaz* | 5 |
