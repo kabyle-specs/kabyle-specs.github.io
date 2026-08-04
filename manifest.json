@@ -47,7 +47,7 @@
       "path": "specs/kabyle-g2p-specs.md",
       "summary": "Full G2P spec for Kabyle: 34-letter Latin inventory, spirantization and allophony rules, for TTS/ASR systems.",
       "status": "draft",
-      "updated": "2026-07-27"
+      "updated": "2026-08-04"
     },
     {
       "title": "Kabyle morphological tokenizer",
