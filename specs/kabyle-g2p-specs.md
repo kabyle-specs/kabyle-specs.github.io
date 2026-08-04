@@ -210,7 +210,7 @@ Le phonème /k/ spirantise en [ç] dans la grande majorité des contextes. Cepen
 |-------|---------------|------------------|----------|
 | *kem* | [kem] | Pronom clitique | Standalone (objet, f.sg) |
 | *kent* | [kent] | Pronom clitique | Standalone (objet, f.pl) |
-| *k-* + voyelle | [k-] | Préfixe clitique | Pronom objet préverbal (ex. *k-ufiɣ*, *k-walaɣ*, *k-iwalaɣ*) |
+| *k-* + voyelle | [k-] | Préfixe clitique | Pronom objet préverbal (ex. *k-ufiɣ*, *k-walaɣ*) |
 | *kullec* | [kulːəʃ] | Emprunt lexical | Arabe *kull* — conserve [k] |
 
 **Tout autre /k/ initiaux, médians ou post-vocaliques spirantise en [ç]** : *kra* [çræ], *kečč* [çət͡ʃː], *kcem* [çcem], *kteb* [çteb], *aksum* [açum]. Le pronom suffixe *-k* (m.sg) spirantise également : *a-k* [aç], *iyi-k* [ijiç].
@@ -414,7 +414,7 @@ Les contextes suivants restent à vérifier par jugement de locuteur natif :
 ### 8.9 Clitique /k/ — EXCEPTIONS DOCUMENTÉES
 Le pronom objet /k/ conserve l'occlusive [k] dans les formes suivantes, vérifiées par jugement natif (MOKRAOUI 2026) :
 - **Standalone** : *kem* [kem], *kent* [kent]
-- **Préfixe préverbal** : *k-ufiɣ* [kufiɣ], *k-walaɣ* [kwalaɣ], *k-iwalaɣ* [kiwalaɣ]
+- **Préfixe préverbal** : *k-ufiɣ* [kufiɣ], *k-walaɣ* [kwalaɣ]
 - **Emprunt lexical** : *kullec* [kulːəʃ]
 
 **Le pronom suffixe /-k/ (m.sg) spirantise** : *a-k* [aç], *iyi-k* [ijiç].
