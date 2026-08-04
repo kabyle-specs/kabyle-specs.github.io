@@ -215,6 +215,42 @@ Le phonème /k/ spirantise en [ç] dans la grande majorité des contextes. Cepen
 
 **Tout autre /k/ initiaux, médians ou post-vocaliques spirantise en [ç]** : *kra* [çræ], *kečč* [çət͡ʃː], *kcem* [çcem], *kteb* [çteb], *aksum* [açum]. Le pronom suffixe *-k* (m.sg) spirantise également : *a-k* [aç], *iyi-k* [ijiç].
 
+### 4.1.3 Clitiques suffixes pronominaux — frontière orthographique vs phonologique
+
+En orthographe INALCO, les pronoms objets et possessifs sont attachés au mot hôte par un tiret (ex. *fell-i*, *Nniɣ-ak*, *tessawleḍ-as*). Ce tiret est **un marqueur morphologique, pas une frontière phonologique**. Le clitique suffixe forme une unité phonologique avec le mot hôte.
+
+**Conséquence pour le G2P** : Un tokenizer qui segmente sur le tiret produit deux unités prosodiques indépendantes (*fəlː* + *i* au lieu de *fəlli*), ce qui est phonologiquement incorrect. Ces formes nécessitent une **pré-tokenisation morphologique** avant l'application des règles G2P.
+
+**Inventaire des suffixes clitiques attestés** (fréquences du corpus Tatoeba kabyle) :
+
+| Suffixe | Fréquence | Fonction | Exemple |
+|---------|-----------|----------|---------|
+| *-nni* | ~71k | Défini éloigné | *adlis-nni* |
+| *-d* | ~32k | Ventive | *yusa-d* |
+| *-is* | ~21k | Possessif 3sg m | *aɣrum-is* |
+| *-a* | ~18k | Déictique proche | *iseggasen-a* |
+| *-s* | ~16k | Objet 3sg m/f | *ɣur-s* |
+| *-as* | ~13k | Objet datif 3sg | *Tessawleḍ-as* |
+| *-iw* | ~12k | Possessif 1sg | *tmeṭṭut-iw* |
+| *-ik* | ~9k | Possessif 2sg m | *wemddakel-ik* |
+| *-k* | ~8k | Objet 2sg m | *tikti-k* |
+| *-iyi* | ~7k | Objet 1sg | *ssuref-iyi* |
+| *-i* | ~7k | Objet 1sg (post-voyelle) | *fell-i* |
+| *-t* | ~7k | Objet 3sg f | *yeǧǧa-t* |
+| *-tt* | ~4k | Objet 3sg f renforcé | *neǧǧa-tt* |
+| *-nneɣ* | ~5k | Possessif 1pl | *tmurt-nneɣ* |
+| *-aɣ* | ~3k | Objet 1pl | *Tesselmad-aɣ* |
+| *-agi* | ~3k | Déictique renforcé | *axxam-agi* |
+| *-ak* | ~3k | Objet 2sg m (post-voyelle) | *Nniɣ-ak* |
+| *-am* | ~2k | Objet 2sg f (post-voyelle) | *fell-am* |
+| *-asen* | ~4k | Objet datif 3pl m | *gar-asen* |
+| *-kent* | ~2k | Objet 2pl f | *deg-kent* |
+| *-awen* | ~1k | Objet datif 2pl m | *fell-awen* |
+| *-kem* | ~1k | Objet 2sg f | *Ansi-kem* |
+| *-ken* | ~1k | Objet 2pl m | *Aqli-ken* |
+
+**Règle générale** : Le tiret est transparent phonologiquement. Les règles de spirantisation, d'assimilation et de gémination s'appliquent à l'ensemble *mot+clitique* comme s'il s'agissait d'une seule unité lexicale.
+
 ### 4.2 Allophonie vocalique
 
 #### 4.2.1 Retraction de /a/
@@ -373,10 +409,15 @@ Les alternances lexicales/morphologiques où une géminée se réalise différem
 
 **Statut** : Lexical/morphologique. Nécessite un lexique ou un analyseur morphologique.
 
-### 8.2 Sandhi aux frontières de mots
-Les processus de sandhi inter-mots ne sont pas modélisés :
-- /n/ + /w/ → [bb] ou [pp]
-- /d/ + /t/ → [ts]
+### 8.2 Sandhi aux frontières de mots et de clitiques
+
+Les processus de sandhi inter-mots et le traitement des clitiques suffixes (§4.1.3) ne sont pas modélisés :
+
+- /n/ + /w/ → [bb] ou [pp] (sandhi inter-mots)
+- /d/ + /t/ → [ts] (sandhi inter-mots)
+- Les clitiques suffixes pronominaux (*-i*, *-k*, *-s*, *-as*, etc.) nécessitent une pré-tokenisation morphologique qui regroupe *mot+clitique* en une seule unité avant le G2P. Sans cette étape, le tokenizer segmente sur le tiret et produit des transcriptions prosodiquement incorrectes (ex. *fell-i* → `fəlː i` au lieu de `fəlli`).
+
+**Statut** : Nécessite une segmentation en mots et une analyse syntaxique pour le sandhi inter-mots ; nécessite un module de pré-tokenisation morphologique pour les clitiques suffixes.
 
 **Statut** : Nécessite une segmentation en mots et une analyse syntaxique.
 
@@ -476,12 +517,13 @@ Pour comparer cette spécification à d'autres jeux de données ou systèmes TTS
 
 Pour implémenter cette spécification dans un système TTS ou ASR, l'architecture recommandée est :
 
-1. **Tokenisation graphemique** : Segmenter le texte en unités graphemiques (lettres simples et digrammes géminés).
-2. **Mapping phonémique** : Convertir chaque grapheme en son phonème sous-jacent via la table `graphemes`.
-3. **Application des règles de blocage** : Tester d'abord les règles `BLOCK_` (priorité haute), y compris l'exception clitique `KAB_BLOCK_SPIRANT_K_CLITIC`.
-4. **Application des règles de spirantisation** : Si aucun blocage ne s'applique, appliquer les règles `SPIRANT_`.
-5. **Application des règles allophoniques** : Vowel backing, closed-syllable lowering, nasal assimilation.
-6. **Post-traitement morphologique** : Gérer les exceptions clitiques non capturées par les règles au niveau du rescorer.
+1. **Pré-tokenisation morphologique** : Identifier et regrouper les clitiques suffixes pronominaux (§4.1.3) avec leur mot hôte. Le tiret orthographique n'est pas un séparateur de mot phonologique.
+2. **Tokenisation graphemique** : Segmenter le texte en unités graphemiques (lettres simples et digrammes géminés).
+3. **Mapping phonémique** : Convertir chaque grapheme en son phonème sous-jacent via la table `graphemes`.
+4. **Application des règles de blocage** : Tester d'abord les règles `BLOCK_` (priorité haute), y compris l'exception clitique `KAB_BLOCK_SPIRANT_K_CLITIC`.
+5. **Application des règles de spirantisation** : Si aucun blocage ne s'applique, appliquer les règles `SPIRANT_`.
+6. **Application des règles allophoniques** : Vowel backing, closed-syllable lowering, nasal assimilation.
+7. **Post-traitement morphologique** : Gérer les exceptions clitiques non capturées par les règles au niveau du rescorer.
 
 ### 10.2 Jeu de données de test recommandé
 
