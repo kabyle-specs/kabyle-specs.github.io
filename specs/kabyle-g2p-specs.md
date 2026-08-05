@@ -597,22 +597,30 @@ Le tiret orthographique en kabyle standard marque une frontière **morphologique
 
 **Note** : Le clitique `-as` en position oblique (`iqmec-as`) présente une variation libre entre la forme fusionnée réduite (`iqmeʃɛsse`) et la forme segmentée (`ɪqməʃæs`). Les deux sont acceptables selon le débit de parole. Le tokenizer corrigé produit la forme segmentée, qui est la réalisation de base.
 
-### 12.2 Règle morphophonémique : préfixe `t-` + initiale `t-` → `ts` (NOUVEAU)
+### 12.2 Règle morphophonémique : préfixe de conjugaison `t-` + initiale radicale `t-` → `t͡s` (CORRIGÉ)
 
-En kabyle, la séquence orthographique `Tett-` / `tett-` en début de mot (préfixe féminin/2e personne `t-` + initiale radicale `t-`) ne se réalise pas comme une géminée `/tː/`, mais comme l'affriquée `/ts/`.
+En kabyle, la séquence orthographique `Tett-` / `tett-` en début de mot résulte de la rencontre entre le **préfixe de conjugaison/accord `t-`** (marquant la 2e personne féminin singulier/pluriel ou la 3e personne féminin singulier selon le contexte verbal) et une **initiale radicale `t-`**. Cette séquence ne se réalise pas comme une géminée `/tː/`, mais comme l'affriquée `/t͡s/`.
 
 | Orthographe | Réalisation incorrecte | Réalisation correcte | Contexte |
 |---|---|---|---|
-| `Tettidiremt` | `θətːiðirəmt` | `θə[ts]iðirəmt` | Préfixe `t-` + radical `t-` |
-| `tettaruḍ` | `θətːæruðˤ` | `θətsæruðˤ` | Idem |
+| `Tettidiremt` | `θətːiðirəmt` | `θət͡siðirəmt` | Préfixe `t-` + radical `t-` |
+| `tettaruḍ` | `θətːæruðˤ` | `θət͡særuðˤ` | Idem |
+| `Tettawimt` | `θətːæwɪmt` | `θət͡sæwɪmt` | Idem |
 
-**Implémentation** : Cette règle doit être appliquée en **pré-traitement**, avant le G2P proprement dit, car elle est morphophonémique (conditionnée par la morphologie du préfixe), non allophonique.
+**Implémentation** : Cette règle nécessite un **pré-traitement** ET un **post-traitement**, car elle traverse deux niveaux :
 
+1. **Pré-traitement** (orthographique) : empêcher la création d'une fausse géminée `tt` dans le grapheme parser.
 ```python
-# Pré-traitement recommandé
 text = re.sub(r'Tett', 'Tets', text)
 text = re.sub(r'tett', 'tets', text)
 ```
+
+2. **Post-traitement** (phonétique) : corriger la double spirantisation `θəθs` produite par le G2P allophonique, qui traite le `T` initial et le `t` médian comme deux occlusives spirantables indépendantes.
+```python
+ipa = re.sub(r'θəθs', 'θət͡s', ipa)
+```
+
+Sans le post-traitement, `Tetsidiremt` produit `θəθsiðirəmt` (deux spirantes séparées) au lieu de `θət͡siðirəmt` (affriquée unique). Le pré-traitement seul ne suffit pas car la spirantisation initiale de `/t/` et la spirantisation post-vocalique du `/t/` médian sont deux règles allophoniques indépendantes qui s'appliquent légitimement au string `Tets...` — seule la connaissance morphologique du préfixe `t-` + radical `t-` permet de bloquer l'application séparée de ces deux règles.
 
 ### 12.3 Exceptions clitiques pour /k/ (§4.1.2, §8.9) — IMPLEMENTATION PENDING
 
