@@ -2,9 +2,9 @@
 
 **Auteurs** : Athmane Mokraoui (boffire), locuteur natif kabyle, mainteneur des ressources NLP kabyles ; structuration phonologique, recherche documentaire et vérification native.
 
-**Date** : 4 août 2026
+**Date** : 5 août 2026
 
-**Version** : 2026-08-04
+**Version** : 2026-08-05
 
 **Cible** : Linguistes computationnels, développeurs TTS/ASR, ingénieurs phonétiques, chercheurs en linguistique berbère.
 
@@ -301,7 +301,7 @@ L'assimilation nasale en kabyle standard est **limitée aux contextes vélaire e
 | KAB_BLOCK_SPIRANT_D_WORD_INITIAL | Blocage | /d/ | [d] | Initiale absolue | Haute |
 | KAB_BLOCK_SPIRANT_K_AFTER_CONSONANT | Blocage | /k/ | [k] | Précédé par consonne (sauf /r, rˤ/) | Haute |
 | KAB_BLOCK_SPIRANT_G_AFTER_CONSONANT | Blocage | /ɡ/ | [ɡ] | Précédé par consonne (sauf /m, r, rˤ/) | Haute |
-| KAB_BLOCK_SPIRANT_K_CLITIC | Blocage | /k/ | [k] | Formes clitiques *kem, kent, k-* + voyelle, et emprunt *kullec* | Haute |
+| KAB_BLOCK_SPIRANT_K_CLITIC | Blocage (non modélisé) | /k/ | [k] | Formes clitiques *kem, kent, k-* + voyelle — **non implémenté au niveau des `allophone_rules`** ; le schéma actuel n'a pas de mécanisme de correspondance lexicale (mot-spécifique). À gérer au niveau moteur/rescorer via une liste d'exceptions codée en dur. *kullec* seul est couvert, via `KAB_BLOCK_SPIRANT_K_BEFORE_U`. | Haute (prévue) |
 | KAB_SPIRANT_K | Spirantisation | /k/ | [ç] | Post-vocalique, initiale (sauf clitiques), post-/r/ | Basse |
 | KAB_SPIRANT_B | Spirantisation | /b/ | [β] | Post-vocalique, initiale | Basse |
 | KAB_SPIRANT_D | Spirantisation | /d/ | [ð] | Post-vocalique, intervocalique | Basse |
@@ -452,17 +452,18 @@ Les contextes suivants restent à vérifier par jugement de locuteur natif :
 - Clusters *sk-* (type *askar*)
 - *tirmitin* est confirmé [θɪrmiθin] (les deux /t/ spirantisent), mais les emprunts comme *itiknikanen* conservent leurs occlusives en position interne.
 
-### 8.9 Clitique /k/ — EXCEPTIONS DOCUMENTÉES
+### 8.9 Clitique /k/ — EXCEPTIONS DOCUMENTÉES, NON ENCORE MODÉLISÉES
+
 Le pronom objet /k/ conserve l'occlusive [k] dans les formes suivantes, vérifiées par jugement natif (MOKRAOUI 2026) :
 - **Standalone** : *kem* [kem], *kent* [kent]
 - **Préfixe préverbal** : *k-ufiɣ* [kufiɣ], *k-walaɣ* [kwalaɣ]
-- **Emprunt lexical** : *kullec* [kulːəʃ]
+- **Emprunt lexical** : *kullec* [kulːəʃ] — ce cas est couvert par `KAB_BLOCK_SPIRANT_K_BEFORE_U`.
 
 **Le pronom suffixe /-k/ (m.sg) spirantise** : *a-k* [aç], *iyi-k* [ijiç].
 
-Tout autre /k/ lexical ou grammatical spirantise en [ç]. Cette exception est désormais modélisée par la règle `KAB_BLOCK_SPIRANT_K_CLITIC`.
+Tout autre /k/ lexical ou grammatical spirantise en [ç].
 
-**Statut** : Modélisé dans cette version. Les moteurs qui ne supportent pas les exceptions lexicales doivent implémenter cette liste en dur.
+**Statut** : Ces exceptions ne sont **pas** modélisables par le schéma `allophone_rules` actuel, qui ne dispose d'aucun mécanisme de correspondance sur des mots ou clitiques spécifiques (seuls `preceded_by_phoneme`, `followed_by_phoneme`, `word_initial`, `word_final` existent). *kem*, *kent* et *k-* + voyelle restent donc des **exceptions lexicales non implémentées dans `kab.json`**, à charge pour les moteurs consommateurs de les gérer via une liste d'exceptions codée en dur au niveau du rescorer. Une future version pourrait introduire un champ de correspondance lexicale (ex. `word_exceptions`) dans le schéma pour les modéliser nativement.
 
 ### 8.10 Spirantisation en finale absolue
 Aucune règle générale de blocage de la spirantisation en position finale absolue n'existe dans cette spécification. Seul le cas spécifique de /t/ après /l/ en finale est bloqué (KAB_BLOCK_SPIRANT_T_AFTER_L_FINAL). La question de savoir si /b, d, k, g, dˤ/ résistent à la spirantisation en position finale absolue reste ouverte.
@@ -520,7 +521,7 @@ Pour implémenter cette spécification dans un système TTS ou ASR, l'architectu
 1. **Pré-tokenisation morphologique** : Identifier et regrouper les clitiques suffixes pronominaux (§4.1.3) avec leur mot hôte. Le tiret orthographique n'est pas un séparateur de mot phonologique.
 2. **Tokenisation graphemique** : Segmenter le texte en unités graphemiques (lettres simples et digrammes géminés).
 3. **Mapping phonémique** : Convertir chaque grapheme en son phonème sous-jacent via la table `graphemes`.
-4. **Application des règles de blocage** : Tester d'abord les règles `BLOCK_` (priorité haute), y compris l'exception clitique `KAB_BLOCK_SPIRANT_K_CLITIC`.
+4. **Application des règles de blocage** : Tester d'abord les règles `BLOCK_` (priorité haute). **Note** : les exceptions clitiques pour /k/ (*kem, kent, k-* + voyelle) ne sont pas couvertes par une règle `allophone_rules` — elles doivent être appliquées séparément, avant ou après ce moteur de règles, via une liste d'exceptions lexicales au niveau du rescorer.
 5. **Application des règles de spirantisation** : Si aucun blocage ne s'applique, appliquer les règles `SPIRANT_`.
 6. **Application des règles allophoniques** : Vowel backing, closed-syllable lowering, nasal assimilation.
 7. **Post-traitement morphologique** : Gérer les exceptions clitiques non capturées par les règles au niveau du rescorer.
