@@ -215,6 +215,8 @@ Le phonème /k/ spirantise en [ç] dans la grande majorité des contextes. Cepen
 
 **Tout autre /k/ initiaux, médians ou post-vocaliques spirantise en [ç]** : *kra* [çræ], *kečč* [çət͡ʃː], *kcem* [çcem], *kteb* [çteb], *aksum* [açum]. Le pronom suffixe *-k* (m.sg) spirantise également : *a-k* [aç], *iyi-k* [ijiç].
 
+> **Mise à jour août 2026** — Voir §12.3 pour le statut d'implémentation post-validation native.
+
 ### 4.1.3 Clitiques suffixes pronominaux — frontière orthographique vs phonologique
 
 En orthographe INALCO, les pronoms objets et possessifs sont attachés au mot hôte par un tiret (ex. *fell-i*, *Nniɣ-ak*, *tessawleḍ-as*). Ce tiret est **un marqueur morphologique, pas une frontière phonologique**. Le clitique suffixe forme une unité phonologique avec le mot hôte.
@@ -421,6 +423,8 @@ Les processus de sandhi inter-mots et le traitement des clitiques suffixes (§4.
 
 **Statut** : Nécessite une segmentation en mots et une analyse syntaxique.
 
+> **Mise à jour août 2026** — Voir §12.1 pour l'algorithme de pré-tokenisation clitique validé par jugement natif sur 5 000 phrases.
+
 ### 8.3 Allophonie vocalique complète
 Les réalisations [e] pour /i/ et [o] pour /u/ ne sont que partiellement couvertes. Leur distribution exacte (proximité pharyngale, position dans le mot, influence du schwa adjacent) n'est pas modélisée.
 
@@ -464,6 +468,8 @@ Le pronom objet /k/ conserve l'occlusive [k] dans les formes suivantes, vérifi�
 Tout autre /k/ lexical ou grammatical spirantise en [ç].
 
 **Statut** : Ces exceptions ne sont **pas** modélisables par le schéma `allophone_rules` actuel, qui ne dispose d'aucun mécanisme de correspondance sur des mots ou clitiques spécifiques (seuls `preceded_by_phoneme`, `followed_by_phoneme`, `word_initial`, `word_final` existent). *kem*, *kent* et *k-* + voyelle restent donc des **exceptions lexicales non implémentées dans `kab.json`**, à charge pour les moteurs consommateurs de les gérer via une liste d'exceptions codée en dur au niveau du rescorer. Une future version pourrait introduire un champ de correspondance lexicale (ex. `word_exceptions`) dans le schéma pour les modéliser nativement.
+
+> **Mise à jour août 2026** — Voir §12.3 pour le statut d'implémentation post-validation native.
 
 ### 8.10 Spirantisation en finale absolue
 Aucune règle générale de blocage de la spirantisation en position finale absolue n'existe dans cette spécification. Seul le cas spécifique de /t/ après /l/ en finale est bloqué (KAB_BLOCK_SPIRANT_T_AFTER_L_FINAL). La question de savoir si /b, d, k, g, dˤ/ résistent à la spirantisation en position finale absolue reste ouverte.
@@ -562,6 +568,112 @@ Le PER de 0,21 contre VoxCommunis est un artefact de conventions notationnelles 
 
 La richesse dialectale du kabyle — illustrée par le clivage Chemini/Boghni sur l'occlusivation post-/m/ — constitue le principal défi pour une couverture pan-kabyle. Une future version de cette spécification devrait intégrer un paramètre dialectal.
 
+## 12. Mises à jour post-validation native (août 2026)
+
+Cette section consigne les corrections et ajouts validés par sessions de jugement de locuteur natif (MOKRAOUI 2026) sur un échantillon de 5 000 phrases du corpus Tatoeba kabyle (boffire/tatoeba-kabyle-mono-cleaned, N = 756 774).
+
+### 12.1 Pré-tokenisation des clitiques suffixes (NOUVEAU)
+
+Le tiret orthographique en kabyle standard marque une frontière **morphologique**, non **phonologique**. Un tokenizer qui segmente sur le tiret produit des unités prosodiques incorrectes (ex. *fell-i* → `fəlː i` au lieu de `fəlli`).
+
+**Algorithme de pré-tokenisation validé :**
+
+1. **Ne pas regrouper** les particules préverbales (préfixes) : `d-`, `t-`, `n-`, `y-`. Leur regroupement crée des digrammes fantômes (ex. `d-jebden` → `djebden` interprété comme /d͡ʒ/).
+2. **Regrouper systématiquement** les suffixes clitiques : `-t`, `-tt`, `-as`, `-ak`, `-am`, `-is`, `-iw`, `-nni`, `-iyi`, `-d`, etc.
+3. **Insertion épenthétique d'un glide** en cas d'hiatus à la frontière clitique :
+   - Après voyelle antérieure (`a`, `e`, `i`, `ə`) + clitic commençant par `a`/`e`/`ə` → insérer `y` (orthographe) = /j/ (IPA).
+   - Après voyelle postérieure (`u`, `o`) + clitic commençant par `a`/`e`/`ə` → insérer `w` (orthographe) = /w/ (IPA).
+   - **Exception** : les clitiques commençant par `i` ou `u` ne reçoivent pas de glide (la voyelle porte son propre attaque).
+
+**Exemples validés :**
+
+| Orthographe | Tokenizer naïf | Tokenizer corrigé | IPA attendue | Statut |
+|---|---|---|---|---|
+| `twalam-t` | `twalam` + `t` | `twalamt` | `θwælæmt` | Validé |
+| `Tefka-ak-t` | `Tefka` + `ak` + `t` | `Tefkayakt` | `θəfkæjæçθ` | Validé |
+| `Yenɣa-iyi` | `Yenɣa` + `iyi` | `Yenɣayi` | `jəŋʁɑji` | Validé (pas de double glide) |
+| `iqmec-as` | `iqmec` + `as` | `iqmecas` | `ɪqməʃæs` | Validé (variation libre avec `iqmeʃɛsse`) |
+| `Ad d-jebden` | — | `Ad d-jebden` | `æð dʒəβðən` | Préfixe conservé |
+
+**Note** : Le clitique `-as` en position oblique (`iqmec-as`) présente une variation libre entre la forme fusionnée réduite (`iqmeʃɛsse`) et la forme segmentée (`ɪqməʃæs`). Les deux sont acceptables selon le débit de parole. Le tokenizer corrigé produit la forme segmentée, qui est la réalisation de base.
+
+### 12.2 Règle morphophonémique : préfixe `t-` + initiale `t-` → `ts` (NOUVEAU)
+
+En kabyle, la séquence orthographique `Tett-` / `tett-` en début de mot (préfixe féminin/2e personne `t-` + initiale radicale `t-`) ne se réalise pas comme une géminée `/tː/`, mais comme l'affriquée `/ts/`.
+
+| Orthographe | Réalisation incorrecte | Réalisation correcte | Contexte |
+|---|---|---|---|
+| `Tettidiremt` | `θətːiðirəmt` | `θə[ts]iðirəmt` | Préfixe `t-` + radical `t-` |
+| `tettaruḍ` | `θətːæruðˤ` | `θətsæruðˤ` | Idem |
+
+**Implémentation** : Cette règle doit être appliquée en **pré-traitement**, avant le G2P proprement dit, car elle est morphophonémique (conditionnée par la morphologie du préfixe), non allophonique.
+
+```python
+# Pré-traitement recommandé
+text = re.sub(r'Tett', 'Tets', text)
+text = re.sub(r'tett', 'tets', text)
+```
+
+### 12.3 Exceptions clitiques pour /k/ (§4.1.2, §8.9) — IMPLEMENTATION PENDING
+
+Les formes suivantes ont été validées comme conservant l'occlusive [k] **à l'implémentation** :
+
+| Forme | Prononciation | Type | Statut dans kab.json |
+|---|---|---|---|
+| `kem` | [kem] | Pronom clitique standalone | Non implémenté (produit [çem]) |
+| `kent` | [kent] | Pronom clitique standalone | Non implémenté (produit [çent]) |
+| `k-ufiɣ` | [kufiɣ] | Préfixe préverbal | Non implémenté (produit [çufiɣ]) |
+| `k-walaɣ` | [kwalaɣ] | Préfixe préverbal | Non implémenté (produit [çwalaɣ]) |
+| `kullec` | [kulːəʃ] | Emprunt lexical arabe | Couvert par `KAB_BLOCK_SPIRANT_K_BEFORE_U` |
+
+**Recommandation** : Ajouter un champ `word_exceptions` au schéma `orthography2ipa` pour ces formes, ou les gérer via un `LatticeRescorer` au niveau moteur. Le mécanisme `allophone_rules` actuel ne dispose pas de correspondance lexicale.
+
+### 12.4 Suppression des digrammes non standard du grapheme map
+
+Les séquences suivantes, parfois présentes dans des textes non standardisés, **ne doivent pas** être reconnues comme graphemes valides dans la spécification INALCO :
+
+| Séquence | Prétendu | Standard INALCO | Action |
+|---|---|---|---|
+| `gh` | /ɣ/ | `ɣ` | Retirer de `graphemes` |
+| `ch` | /ʃ/ | `c` | Retirer de `graphemes` |
+| `dj` | /d͡ʒ/ | `ǧ` | Retirer de `graphemes` |
+| `tch` | /t͡ʃ/ | `č` | Retirer de `graphemes` |
+| `ts` | /t͡s/ | — (affriquée non standard) | Retirer de `graphemes` |
+| `dz` | /d͡z/ | — (affriquée non standard) | Retirer de `graphemes` |
+
+**Justification** : Ces digrammes sont des approximations pédagogiques ou des conventions d'emprunt. Leur présence dans le G2P légitime des fautes d'orthographe. Le corpus Tatoeba kabyle ne les utilise pas.
+
+### 12.5 Validation des règles allophoniques existantes
+
+Les règles suivantes, déjà documentées dans la spécification, ont été validées comme correctes sur le corpus de test. **Aucune modification requise.**
+
+| ID de règle | Exemple testé | Résultat O2I | Jugement natif |
+|---|---|---|---|
+| `KAB_SPIRANT_T` | `tafat` | `θafaθ` | Correct |
+| `KAB_SPIRANT_D` | `adlis` | `æðlis` | Correct |
+| `KAB_SPIRANT_B` | `Bubbaɣ` | `βʊbːɑʁ` | Correct |
+| `KAB_SPIRANT_K` | `kra` | `çræ` | Correct |
+| `KAB_SPIRANT_G` | `tamga` | `θamʝa` | Correct |
+| `KAB_BLOCK_SPIRANT_T_AFTER_M` | `twalamt` | `t` (pas `θ`) | Correct |
+| `KAB_BLOCK_SPIRANT_K_AFTER_CONSONANT` | `ankal` | `k` (pas `ç`) | Correct |
+| `KAB_A_BACKING` | `aɣerbaz` | `ɑɣər...` | Correct |
+| `KAB_A_DEFAULT` | `azul` | `æzul` | Correct |
+| `KAB_GH_UVULAR_REALIZATION` | `Bubbaɣ` | `...ʁ` | Correct |
+| `KAB_N_VELAR_ASSIM` | `ankal` | `aŋkal` | Correct |
+| `KAB_N_LABIAL_ASSIM` | `anba` | `amba` | Correct |
+
+### 12.6 Changement de qualité recommandé
+
+**Ancien** : `QualityTier.RESEARCH`  
+**Nouveau** : `QualityTier.RESEARCH` (conservé), avec annotation :
+
+> « Noyau allophonique validé par jugement natif sur 5 000 phrases (N = 756 774). Pré-tokenisation clitique et exceptions lexicales `/k/` à implémenter au niveau moteur. »
+
+Le passage à `PRODUCTION` nécessite :
+1. Implémentation native des exceptions `/k/` dans le schéma.
+2. Couverture du sandhi inter-mots (§8.2).
+3. Validation sur un gold set phonétique indépendant (VoxCommunis normalisé ou enregistrements natifs alignés forcés).
+
 ---
 
 ## Références
@@ -589,6 +701,8 @@ La richesse dialectale du kabyle — illustrée par le clivage Chemini/Boghni su
 11. **MOKRAOUI, Athmane (boffire)**, *Native-speaker verification sessions for the Kabyle orthography2ipa spec*, 2026. Jugements de locuteur natif non publiés.
 
 12. **MOKRAOUI, Athmane (boffire)**, *Kabyle corpus audit for cluster attestation and orthographic contamination*, 2026. Données corpus sur HuggingFace : [https://huggingface.co/boffire](https://huggingface.co/boffire)
+
+13. **MOKRAOUI, Athmane (boffire)**, *Sessions de validation native du tokenizer clitique et des règles allophoniques du module kabyle orthography2ipa*, août 2026. Corpus de test : boffire/tatoeba-kabyle-mono-cleaned (756 774 phrases, échantillon 5 000). 
 
 ---
 
