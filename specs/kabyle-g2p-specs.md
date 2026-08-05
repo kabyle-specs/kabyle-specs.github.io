@@ -611,8 +611,8 @@ En kabyle, la séquence orthographique `Tett-` / `tett-` en début de mot résul
 
 1. **Pré-traitement** (orthographique) : empêcher la création d'une fausse géminée `tt` dans le grapheme parser.
 ```python
-text = re.sub(r'Tett', 'Tets', text)
-text = re.sub(r'tett', 'tets', text)
+text = re.sub(r'\bTett', 'Tets', text)
+text = re.sub(r'\btett', 'tets', text)
 ```
 
 2. **Post-traitement** (phonétique) : corriger la double spirantisation `θəθs` produite par le G2P allophonique, qui traite le `T` initial et le `t` médian comme deux occlusives spirantables indépendantes.
