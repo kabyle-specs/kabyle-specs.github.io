@@ -1,12 +1,12 @@
-# Spécification Kabyle Universal Dependencies (UD) — Draft v0.3
+# Spécification Kabyle Universal Dependencies (UD) — v0.5
 
-**Auteurs** : Athmane Mokraoui (boffire), locuteur natif kabyle, mainteneur des ressources NLP kabyles ; structuration algorithmique et synthèse bibliographique.
+**Auteurs** : Athmane Mokraoui (boffire), locuteur natif kabyle, mainteneur des ressources NLP kabyles ; structuration algorithmique et synthèse bibliographique. Révision et vérification des sources : assistée par Claude (Anthropic).
 
-**Date** : 29 juillet 2026
+**Date** : 08 août 2026
 
-**Version** : 0.3-draft
+**Version** : 0.5
 
-**Statut** : En cours de validation native — certains points sont marqués **[À VALIDER]** et nécessitent confirmation ou correction par le locuteur natif.
+**Statut** : Révisé après vérification empirique des données ADPT (branche `dev`) et confrontation aux sources de la littérature berbériste (McGill Working Papers in Linguistics 26.1, 2020 ; CorTypo/Mettouchi 2017). La majorité des points marqués [À VALIDER] en v0.4 sont désormais tranchés et sourcés. De nouveaux points sont apparus au cours de cette vérification (marqueur `mačči`, constructions présentatives) et sont marqués **[NOUVEAU — À VALIDER]**.
 
 **Cible** : Annotateurs de treebanks, développeurs de parseurs de dépendances, chercheurs en linguistique berbère et typologie syntaxique, comité Universal Dependencies.
 
@@ -14,9 +14,9 @@
 
 ## Résumé
 
-Cette spécification propose une adaptation du framework **Universal Dependencies (UD)** à la langue kabyle (Taqbaylit, ISO 639-3 `kab`). Elle se situe dans la continuité de la première tentative documentée — le treebank **UD_Kabyle-ADPT** (Aliane, v2.8, 2021) — tout en cherchant à lever les ambiguïtés syntaxiques propres au kabyle que les métadonnées de ce treebank ne permettent pas de résoudre. Le kabyle est une langue afro-asiatique (berbère) à ordre de base **VSO**, fortement pro-drop pour le sujet, avec des clitiques pronominaux objets (datif, accusatif, directionnel) qui doublent ou remplacent les arguments lexicaux. Cette spec formalise les choix d'annotation pour la tokenization, les POS tags (UPOS), les relations de dépendances, et les features morphologiques, en s'appuyant sur les guidelines UD v2 (Nivre et al. 2020 ; de Marneffe et al. 2021), la littérature syntaxique berbère (Fahloune 2020, Felice 2020, Ouhalla 2005, Mettouchi), et les ressources internes du locuteur natif (conjugueur, tokenizer morphologique, G2P).
+Cette spécification propose une adaptation du framework **Universal Dependencies (UD)** à la langue kabyle (Taqbaylit, ISO 639-3 `kab`). Elle s'inscrit dans la continuité du treebank **UD_Kabyle-ADPT** (Aliane, v2.8, 2021 — données réelles vérifiées sur la branche `dev` du dépôt GitHub officiel, 1930 phrases / 19965 tokens / 23761 mots), tout en corrigeant les incohérences identifiées par l'analyse empirique des données et en ancrant chaque choix d'annotation dans la littérature linguistique disponible sur le kabyle. Le kabyle est une langue afro-asiatique (berbère) à ordre de base **VSO**, fortement pro-drop pour le sujet, avec des clitiques pronominaux objets (datif, accusatif, directionnel) qui doublent ou remplacent les arguments lexicaux — un phénomène de *clitic doubling* démontré empiriquement par Fahloune (2020).
 
-**Mots-clés** : kabyle, taqbaylit, Universal Dependencies, treebank, syntaxe, VSO, clitiques, copule, état d'annexion, clitic doubling.
+**Mots-clés** : kabyle, taqbaylit, Universal Dependencies, treebank, syntaxe, VSO, clitiques, copule, état d'annexion, clitic doubling, complémenteur.
 
 ---
 
@@ -24,23 +24,27 @@ Cette spécification propose une adaptation du framework **Universal Dependencie
 
 ### 1.1 Contexte : le kabyle dans l'écosystème UD
 
-À ce jour, aucune langue berbère n'est représentée dans le catalogue Universal Dependencies de manière active et maintenue. Une première tentative — **UD_Kabyle-ADPT** — a été déposée par Lakhdar Aliane dans le cadre de la release UD v2.8 (2021), avec des métadonnées indiquant des données « nonfiction news », une licence CC BY-SA 4.0, et une conversion depuis un schéma d'annotation manuel antérieur (Aliane 2021). Cependant, ce treebank n'a pas été mis à jour depuis la v2.9 et son contenu n'a pas fait l'objet d'une documentation publique détaillée (guidelines spécifiques, choix d'annotation, inter-annotator agreement). La présente spécification vise à fournir un **cadre de référence explicite** pour une annotation UD du kabyle, qu'il s'agisse de réviser l'existant ou de créer un nouveau treebank.
+À ce jour, aucune langue berbère n'est représentée dans le catalogue Universal Dependencies de manière active et maintenue. Une première tentative — **UD_Kabyle-ADPT** — a été déposée par Lakhdar Aliane dans le cadre de la release UD v2.8 (2021). Le dépôt officiel (https://github.com/UniversalDependencies/UD_Kabyle-ADPT) contient sur sa branche `master` un squelette de documentation (README/LICENSE/CONTRIBUTING) non rempli, mais les fichiers de données réels (`kab_adpt-ud-train.conllu`, `kab_adpt-ud-test.conllu`, `stats.xml`) se trouvent sur la branche `dev`, activement maintenue par Dan Zeman (UD core team) jusqu'en septembre 2025. Ce treebank n'a cependant pas été inclus dans les releases publiques depuis la v2.9, probablement en raison des incohérences documentées ci-dessous (§3).
 
 ### 1.2 Pourquoi une spec formelle ?
 
-Les langues à morphologie riche et à clitiques pronominaux (turc, arabe, grec, bulgare) ont montré dans l'écosystème UD que la qualité d'un treebank dépend crucialement de la documentation préalable des choix d'annotation (Çöltekin et al. 2021 pour le turc ; Taguchi et al. 2022 pour le tatar). Sans guidelines spécifiques, les annotateurs divergent sur des points fondamentaux : statut de la copule, traitement du clitic doubling, segmentation des morphèmes. Cette spec se propose de combler ce vide pour le kabyle.
+Les langues à morphologie riche et à clitiques pronominaux (turc, arabe, grec, bulgare) ont montré dans l'écosystème UD que la qualité d'un treebank dépend crucialement de la documentation préalable des choix d'annotation (Çöltekin et al. 2021 pour le turc ; Taguchi et al. 2022 pour le tatar). Sans guidelines spécifiques, les annotateurs divergent sur des points fondamentaux : statut de la copule, traitement du clitic doubling, segmentation des morphèmes. Cette spec se propose de combler ce vide pour le kabyle, en s'appuyant systématiquement sur la littérature linguistique disponible plutôt que sur l'intuition seule.
 
 ### 1.3 Typologie syntaxique du kabyle (résumé)
 
 | Trait | Description | Référence |
 |-------|-------------|-----------|
-| Ordre de base | VSO (Verbe-Sujet-Objet) | Felice (2020) ; Mettouchi |
-| Ordres marqués | SVO, VOS, OVS attestés | Shlonsky (1987) ; Felice (2020) |
+| Ordre de base | VSO (Verbe-Sujet-Objet) | Felice (2020) ; Achab (2020) |
+| Ordres marqués | SVO, VOS, OVS attestés | Achab (2020) |
 | Pro-drop sujet | Fort (le sujet lexical est optionnel) | Fahloune (2020) |
-| Clitiques objets | Optionnels, doublent les arguments lexicaux | Fahloune (2020) ; Ouhalla (2005) |
-| Cas | Système à état libre (FS) / état d'annexion (CS) | Felice (2020) ; Achab (2003) |
-| Négation | Discontiguë : `ur` ... `ara` | — |
-| Copule | Particule `D` (présentatif/copule) | — |
+| Marqueurs sujet | Véritable accord verbal (obligatoire, variable selon l'aspect pour les verbes de qualité) | Fahloune (2020), diagnostics multiples |
+| Clitiques objets | Instances de *clitic doubling* (optionnels, invariants, empilables DAT-ACC-DIR) | Fahloune (2020) |
+| Cas | Système à état libre (FS) / état d'annexion (CS) | Felice (2020) ; Achab (2003, 2020) |
+| Négation verbale | Discontiguë : `ur` ... `ara` | Mettouchi (2001, 2004) — sources partielles, cf. §12 L2 |
+| Négation ascriptive | Marqueur dédié `mačči` (distinct de `ur`/`ara`) | Mettouchi (2017), CorTypo |
+| Copule ascriptive | Particule invariable `d`, copule non-verbale | Mettouchi (2017), CorTypo |
+| Présentatifs | Constructions distinctes de la copule : `ha`, `aql`, `a`+suffixe (jamais `d`) | Mettouchi (2017), CorTypo |
+| Complémenteur relatif/clivée | `i` (perfectif) / `a` (imperfectif, aoriste) — alternance conditionnée par l'aspect | Achab (2020) |
 
 ---
 
@@ -49,62 +53,88 @@ Les langues à morphologie riche et à clitiques pronominaux (turc, arabe, grec,
 ### 2.1 Documents internes (Mokraoui 2026)
 - **Tokenizer morphologique** (spec v0.3) : segmentation des clitiques, affixes, préfixes dérivationnels.
 - **Conjugueur algorithmique** : 64 types morphologiques, 344K formes conjuguées (Bouamara 2026).
-- **G2P** : 34 graphemes, règles de spirantisation/blocage.
-- **Expression du temps** : particules `D`, `u`, `ɣiṛ`, `swaswa`.
+- **G2P** : 34 graphèmes, règles de spirantisation/blocage.
 
 ### 2.2 Treebank antérieur
-**Aliane, Lakhdar** (2021). *UD_Kabyle-ADPT*. Universal Dependencies v2.8. Métadonnées : genre nonfiction news, annotation « converted from manual », licence CC BY-SA 4.0. Contact : lakhdar.aliane@live.fr. Dépôt GitHub : https://github.com/UniversalDependencies/UD_Kabyle-ADPT. **Note** : les choix d'annotation spécifiques de ce treebank ne sont pas documentés publiquement ; sa qualité et sa couverture n'ont pas été évaluées dans la littérature.
+**Aliane, Lakhdar** (2021). *UD_Kabyle-ADPT*. Universal Dependencies v2.8. Dépôt : https://github.com/UniversalDependencies/UD_Kabyle-ADPT (données sur la branche `dev`).
 
-### 2.3 Syntaxe berbère et clitiques
-**Fahloune, Khokha** (2020). *On the status of subject and object markers in Kabyle: New evidence*, McGill Working Papers in Linguistics 26.1, pp. 1-17. Distingue affixes d'accord sujet (obligatoires, variables selon l'aspect pour les verbes d'état) et clitiques objets (optionnels, invariants, stackables DAT-ACC-DIR).
+**Note d'analyse empirique** (vérifiée directement sur les fichiers `.conllu` et `stats.xml`, branche `dev`, 1930 phrases / 19965 tokens / 23761 mots / 3241 fusions) :
+- Absence totale de `AUX`, `cop`, `expl` dans les données (0 occurrence).
+- Copule `d` : annotée `PART advmod` (440 occ.) ou `ADV advmod` (224 occ.), jamais `cop`.
+- Préposition `deg` : segmentée systématiquement (100 % des 171 occurrences) en MWT `ad` (PART) + `ag` (ADP) — sur-segmentation à corriger.
+- Clitique possessif `ines` : segmenté systématiquement (100 % des occurrences vérifiées) en `in` (ADP, case) + `as` (PRON, nmod).
+- Marqueur relatif `i` : majoritairement `PRON` dans diverses relations (nsubj, obl, obj, mark, acl, iobj...), avec une seule occurrence `SCONJ mark` sur l'ensemble du corpus.
 
-**Felice, Lydia** (2020). *On the Case System of Kabyle*, McGill Working Papers in Linguistics 26.1. Analyse le kabyle comme langue à nominatif marqué de Type 2 : état d'annexion (CS) = nominatif (sujet), état libre (FS) = accusatif (objet).
+### 2.3 Syntaxe et morphosyntaxe berbère (vérifiées, texte intégral consulté)
+**Fahloune, Khokha** (2020). *On the status of subject and object markers in Kabyle: New evidence*. McGill Working Papers in Linguistics, 26.1, pp. 1–17. Accès libre : http://people.linguistics.mcgill.ca/~mcgwpl/McGWPL/2020v26n01/2020_26_1_Fahloune.pdf
+> Démontre par plusieurs diagnostics indépendants (invariance aspectuelle, granularité des traits phi, Person-Case-Constraint, empilement de clitiques) que les marqueurs sujet en kabyle sont un véritable accord verbal, tandis que les marqueurs objet sont des instances de *clitic doubling*. L'exemple d'empilement de clitiques donné (« y-fka-as-tt wqcic tktuvt-nni i Ales », §4.2.1, ex. 19) est structurellement identique aux exemples de la présente spec (§6.3.2).
 
-**Ouhalla, Jamal** (2005). *Clitic placement in Berber*. Les clitiques obéissent à la loi de la seconde position : un clitique ne peut pas être le premier mot de la proposition. Il peut s'attacher au verbe (V-CL) ou à une catégorie fonctionnelle (F-CL V), notamment `ad`, `ur`.
+**Achab, Karim** (2020). *Anti-Agreement in Amazigh (Berber) as Genitive Constructions*. McGill Working Papers in Linguistics, 26.1. Accès libre : http://people.linguistics.mcgill.ca/~mcgwpl/McGWPL/2020v26n01/2020_26_1_Achab.pdf
+> Analyse le complémenteur `i` (glosé COMP) comme l'élément commun aux constructions relatives, clivées et génitives-possessives en kabyle. Établit l'alternance `i` (perfectif) / `a` (imperfectif, aoriste) comme complémenteurs conditionnés par l'aspect (§ « In Kabyle, the complementizer can be i, if the aspect involved corresponds to perfective... but it can also be a, if the aspect corresponds to the imperfective... or the aorist »). Analyse les formes possessives longues (ex. `axxam-i-n-u`, « ma maison ») comme composées du complémenteur `i` + particule génitive `n` + suffixe personnel.
 
-### 2.4 Phonologie et morphologie des frontières
-**Bedar, Amazigh ; Quellec, Lucie ; Voeltzel, Laurence** (2021). *Epenthetic glides in Taqbaylit*, Journal of African Languages and Literatures 2/2021, pp. 1-29. Paradigme complet des clitiques pronominaux et phonologie des frontières morphémiques.
+**Baier, Nico** (2020). *The Person Case Constraint in Kabyle*. McGill Working Papers in Linguistics, 26.1. Accès libre : http://people.linguistics.mcgill.ca/~mcgwpl/McGWPL/2020v26n01/2020_26_1_Baier.pdf
+> Confirme l'analyse de `ad` (futur), `ur` (négation) et `i` (complémenteur A-bar) comme des « preverbal particles » du kabyle. Analyse le clitic doubling en détail pour les constructions ditransitives.
 
-### 2.5 Guidelines UD
+**Felice, Lydia** (2020). *On the Case System of Kabyle*, McGill Working Papers in Linguistics 26.1. Analyse le kabyle comme langue à nominatif marqué : état d'annexion (CS) = nominatif (sujet), état libre (FS) = accusatif (objet).
+
+**Ouhalla, Jamal** (2005). *Clitic placement in Berber*. Les clitiques obéissent à la loi de la seconde position et peuvent s'attacher au verbe (V-CL) ou à une catégorie fonctionnelle (F-CL V), notamment `ad`, `ur`.
+
+### 2.4 Prédication et copule (vérifiée, texte intégral consulté)
+**Mettouchi, Amina** (2017). *Predication in Kabyle (Berber), KAB*. In Mettouchi, Frajzyngier & Chanard (eds), *Corpus-based cross-linguistic studies on Predication* (CorTypo). http://cortypo.huma-num.fr/Publication
+> Source déterminante pour le statut de `d`. Section 1.3 : « Kabyle has a number of non-verbal predicates: **a non-verbal copula ('d')** followed by a nominal, a negative existential predicate... ». La copule `d` est glosée systématiquement **COP** / **PRED** dans toutes les prédications ascriptives (affirmatives et négatives), et est catégoriquement **distincte** des constructions présentatives (`ha`, `aql`, `a`+suffixe distal/proximal), qui ne font jamais intervenir `d`. La négation ascriptive utilise un marqueur dédié, `mačči` (glosé NEG.ATTR), distinct de la négation verbale `ur...ara`.
+
+**Mettouchi, Amina & Frajzyngier, Zygmunt** (2013). *A previously unrecognized typological category: The state distinction in Kabyle (Berber)*. Linguistic Typology 17(1), pp. 1–30.
+
+### 2.5 Négation verbale (référence trouvée, texte non encore consulté — cf. §12 L2)
+**Mettouchi, Amina** (2001). *La grammaticalisation de ara en kabyle, négation et subordination relative*. Travaux du CerLiCO n°14, pp. 215–235.
+**Mettouchi, Amina** (2004). *Les négations non-verbales en kabyle (berbère)*. Verbum XXVI(3), pp. 269–280.
+**Mettouchi, Amina** (2017). *Relative (Proposition - Syntaxe)*. Encyclopédie berbère vol. XL, pp. 6815–6825.
+
+### 2.6 Phonologie et morphologie des frontières
+**Bedar, Amazigh ; Quellec, Lucie ; Voeltzel, Laurence** (2021). *Epenthetic glides in Taqbaylit*, Journal of African Languages and Literatures 2/2021, pp. 1-29. **Note de vérification** : cet article traite exclusivement de l'épenthèse phonologique de glides aux jonctions nom/verbe-clitique ; il ne discute pas du statut syntaxique de la copule ou d'autres particules fonctionnelles. Sa pertinence pour cette spec se limite aux règles de segmentation phonologique des frontières morphémiques, pas aux choix d'annotation syntaxique.
+
+### 2.7 Guidelines UD
 **Nivre, Joakim ; de Marneffe, Marie-Catherine ; et al.** (2020). *Universal Dependencies v2: An annotation scheme for multilingual dependency parsing*. LREC.
-
 **de Marneffe, Marie-Catherine ; Manning, Christopher D. ; et al.** (2021). *Universal Dependencies*. Computational Linguistics 47(2), pp. 255-308.
 
-### 2.6 Treebanks de référence typologiquement proches
-**Çöltekin, Çağrı ; et al.** (2021). *Improving the Annotations in the Turkish Universal Dependency Treebank*. Proceedings of the International Conference on Recent Advances in Natural Language Processing (RANLP). Révision du treebank turc IMST-UD : introduction d'`advcl`, `iobj`, `xcomp`, `dislocated`, `orphan`, `clf`, `goeswith`, `dep`. Le turc, comme le kabyle, est pro-drop, agglutinant, avec des cas lexicalement sélectionnés.
-
-**Taguchi, Chihiro ; et al.** (2022). *UD-Tatar NMCTT Treebank*. Première ressource UD pour une langue turcique de petite taille (148 phrases), avec problématiques de tokenization et de code-switching.
+### 2.8 Treebanks de référence typologiquement proches
+**Çöltekin, Çağrı ; et al.** (2021). *Improving the Annotations in the Turkish Universal Dependency Treebank*. RANLP 2021.
+**Taguchi, Chihiro ; et al.** (2022). *UD-Tatar NMCTT Treebank*. UD v2.11.
 
 ---
 
 ## 3. État de l'art et positionnement
 
-### 3.1 UD_Kabyle-ADPT : ce que nous savons
+### 3.1 UD_Kabyle-ADPT : données empiriques vérifiées
 
-D'après les métadonnées du dépôt officiel UD :
-- **Release** : v2.8 (2021-05-15), dernière présence v2.9.
-- **Genre** : nonfiction news.
-- **Annotation** : lemmas, UPOS, XPOS, features, relations — toutes marquées « converted from manual », ce qui suggère une conversion automatique depuis un schéma d'annotation propriétaire vers UD.
-- **Contributeur** : Lakhdar Aliane.
-- **Licence** : CC BY-SA 4.0.
+D'après l'analyse directe des fichiers ADPT (branche `dev`, stats.xml et fichiers `.conllu`) :
+- **Taille** : 1930 phrases, 19965 tokens, 23761 mots syntaxiques, 3241 fusions.
+- **Tags UPOS utilisés** (15) : ADJ (162), ADP (3148), ADV (1829), CCONJ (131), DET (67), INTJ (81), NOUN (4428), NUM (111), PART (2104), PRON (3394), PROPN (192), PUNCT (3949), SCONJ (142), VERB (3937), X (86).
+- **Aucun tag `AUX`** n'est présent dans les données.
+- **Relations utilisées** (28) : acl, acl:relcl, advcl, advmod, amod, appos, case, cc, ccomp, compound, conj, dep, det, discourse, dislocated, iobj, mark, nmod, nsubj, nummod, obj, obl, obl:arg, parataxis, punct, root, vocative, xcomp.
+- **Aucune relation `cop` ni `expl`** n'est présente.
 
-### 3.2 Ce que nous ne savons pas
+### 3.2 Divergences identifiées, sourcées et corrigées
 
-Aucun article académique, rapport technique ou guidelines spécifiques n'accompagnent ce treebank. Il est donc impossible de connaître :
-- Les choix d'annotation pour la copule `D` (relation `cop` vs `root`).
-- Le traitement des clitiques pronominaux (`expl` vs `obj`/`iobj`).
-- La tokenization adoptée (clitiques fusionnés ou segmentés ?).
-- La gestion de la négation discontiguë `ur ... ara`.
-- La taille exacte du corpus en phrases et tokens.
-- Les scores d'inter-annotator agreement.
+| Divergence | Données ADPT | Correction v0.5 | Source de la correction |
+|-----------|-------------|-----------------|--------------------------|
+| Copule `d` | PART/ADV + advmod | **AUX + cop** | Mettouchi (2017) : « non-verbal copula » distincte du présentatif |
+| Clitic doubling | obj/iobj/obl pour les clitiques | **expl** pour les clitiques redondants | Fahloune (2020) : démonstration du clitic doubling |
+| Marqueur relatif `i` | PRON | **SCONJ + mark** (avec alternance `i`/`a` selon l'aspect) | Achab (2020) : `i`/`a` glosés COMP |
+| Prépositions composées | Segmentées (ex : `deg` → `ad`+`ag`) | **Token unique ADP** | Recommandation communautaire UD (pas de source Kabyle spécifique) |
+| Clitique possessif `ines` | Segmenté `in`+`as` | **Confirmé** : segmentation `in` (ADP) + `as` (PRON) | Convergence Achab (2020, analyse théorique) + pratique ADPT |
+| Tag `AUX` | Absent | Introduit, réservé à la copule `d` | Mettouchi (2017) |
+| Particules `ad`/`ur` | — | **PART** (pas AUX) | Convergence Fahloune, Baier, Achab (2020) : les trois emploient systématiquement *particle* |
+| Négation ascriptive `mačči` | Non distinguée de `ur`/`ara` dans la v0.4 | **[NOUVEAU]** Marqueur distinct à ajouter | Mettouchi (2017) : NEG.ATTR, construction propre |
+| Présentatifs (`ha`, `aql`, `a`+suffixe) | Non traités | **[NOUVEAU]** Construction non couverte, à spécifier | Mettouchi (2017) : constructions formellement distinctes de la copule |
 
 ### 3.3 Positionnement de cette spec
 
-Cette spécification se distingue par :
-1. **Une documentation explicite** de chaque choix d'annotation, avec justification linguistique et alternatives rejetées.
-2. **Un ancrage dans la littérature berbériste récente** (Fahloune 2020, Felice 2020, Bedar et al. 2021), absente des métadonnées ADPT.
-3. **Une cohérence avec les ressources internes** (tokenizer morphologique v0.3, conjugueur, G2P) pour garantir l'interopérabilité.
-4. **Une ouverture vers la communauté UD** : les points [À VALIDER] sont formulés comme des questions de décision collective.
+Cette spécification (v0.5) se distingue par :
+1. **Une vérification empirique directe** des données ADPT (fichiers `.conllu` réels, pas seulement les métadonnées du dépôt).
+2. **Un sourçage systématique** de chaque décision d'annotation contestée, avec citation du texte exact et évaluation de la pertinence de la source (voir §2.6 pour un exemple de source écartée après vérification).
+3. **Une identification de lacunes nouvelles** (marqueur `mačči`, constructions présentatives) découvertes en creusant la littérature, plutôt que simplement corriger les points déjà identifiés.
+4. **Une transparence sur les limites** : les points encore non sourcés sont clairement distingués de ceux qui le sont (voir §12).
 
 ---
 
@@ -112,25 +142,84 @@ Cette spécification se distingue par :
 
 ### 4.1 Principe général
 
-UD requiert que chaque **token** corresponde à un mot graphique, sauf exceptions justifiées (multi-word tokens, MWT). Pour le kabyle, nous adoptons une segmentation intermédiaire calquée sur les pratiques des treebanks turcs (Çöltekin et al. 2021) et tatar (Taguchi et al. 2022), langues agglutinantes avec des affixes et clitiques :
-
-- Les **affixes d'accord sujet** (préfixes `y-`, `i-`, `t-`, `n-` ; suffixes `-eɣ`, `-eḍ`, `-en`, `-ent`, `-em`, `-emt`) restent **fusionnés** avec le verbe en un seul token. Ils sont obligatoires, infixés/suffixés au radical, et leur séparation systématique créerait des tokens non autonomes phonologiquement.
-- Les **clitiques pronominaux objets** (`-iyi`, `-ak`, `-as`, `-tt`, `-d`, etc.) sont **segmentés en tokens séparés** lorsqu'ils apparaissent comme éléments graphiquement distincts ou analysables. Ils sont optionnels, stackables, et peuvent migrer sur des têtes fonctionnelles (`ad-tt`, `ur-as`). **En orthographe kabyle standard, les clitiques sont séparés du verbe ou de la particule fonctionnelle par un tiret `-`.**
-- Les **particules modales** (`ad`, `ur`, `wa`) sont des tokens indépendants.
+UD requiert que chaque **token** corresponde à un mot graphique, sauf exceptions justifiées (multi-word tokens, MWT).
 
 ### 4.2 Règles de tokenization
 
+#### 4.2.1 Prépositions et adpositions
+
+Les prépositions et adpositions kabyles restent des **tokens uniques ADP**. La segmentation en composants internes (ex : `deg` → `ad` + `ag`, pratiquée à 100 % dans ADPT) est **rejetée**, conformément aux recommandations communautaires UD sur la sur-segmentation.
+
+| Forme graphique | Token | UPOS | Notes |
+|----------------|-------|------|-------|
+| `deg` | `deg` | ADP | Token unique (pas `ad`+`ag`) |
+| `di` | `di` | ADP | Token unique |
+| `ɣef` | `ɣef` | ADP | Token unique |
+| `fell` | `fell` | ADP | Token unique |
+| `ɣer` | `ɣer` | ADP | Token unique |
+| `seg` / `si` | `seg` / `si` | ADP | Token unique |
+| `s` | `s` | ADP | Token unique (instrumental) |
+| `ger` | `ger` | ADP | Token unique |
+| `zdat`, `nnig`, `ddaw`, `ar` | — | ADP | Tokens uniques |
+| `i` | `i` | ADP | Token unique — **prépositionnel** (datif « à/pour »), distinct du `i` complémenteur (cf. 5.2.3) |
+| `n` | `n` | ADP | Token unique (génitif) |
+
+#### 4.2.2 Clitiques possessifs
+
+Les clitiques possessifs (`-is`, `-ik`, `-im`, `-nneɣ`, `-nnwen`, `-nnsen`, `-nnsent`) sont **segmentés** en tokens séparés, conformément à la pratique UD standard pour les clitiques et à l'analyse d'Achab (2020) qui identifie une compositionnalité morphologique réelle (complémenteur relateur + particule génitive + suffixe personnel) dans ces formes.
+
+| Forme graphique | Tokens | UPOS | Notes |
+|----------------|--------|------|-------|
+| `axxam-is` | `axxam` + `is` | NOUN + PRON | Possessif 3SG |
+| `lbiru-ines` | `lbiru` + `ines` → `in`+`as` | NOUN + ADP + PRON | Voir décision ci-dessous |
+
+**Décision (résout l'ancien point [À VALIDER] L1 de la v0.4)** : `ines` est segmenté en MWT `in` (ADP, relation `case`) + `as` (PRON, relation `nmod`), conformément à la pratique ADPT (100 % des occurrences vérifiées) et à l'analyse théorique d'Achab (2020), qui montre que les formes possessives longues du kabyle sont compositionnelles (complémenteur-relateur + génitif + personne), et non des pronoms possessifs synthétiques non analysables.
+
+**Exemple corrigé** :
+```
+3   lbiru   lbiru   NOUN   _   Gender=Masc|Number=Sing              8   obl   _   _
+4-5 ines    _       _      _   _                                    _   _     _   _
+4   in      in      ADP    _   _                                    5   case  _   _
+5   as      netta   PRON   _   Case=Acc|Number=Sing|Person=3|Poss=Yes|PronType=Rel  3  nmod  _  _
+```
+
+#### 4.2.3 Clitiques verbaux (objets)
+
+Les clitiques objets verbaux (`-t`, `-tt`, `-as`, `-asent`, `-ten`, `-tent`, `-iyi`, `-ak`, `-am`, `-aɣ`, `-awen`) sont **segmentés** en tokens PRON séparés — analyse confirmée par Fahloune (2020) : ce sont des clitiques doublés (*doubled clitics*), pas des affixes d'accord.
+
+| Forme graphique | Tokens | UPOS | Notes |
+|----------------|--------|------|-------|
+| `yefka-yas` | `yefka` + `yas` | VERB + PRON | Datif 3SG |
+| `yefka-t` | `yefka` + `t` | VERB + PRON | Accusatif 3SG.M |
+| `yefka-tt` | `yefka` + `tt` | VERB + PRON | Accusatif 3SG.F |
+
+#### 4.2.4 Clitiques directionnels et adverbiaux
+
+Les clitiques directionnels (`-d`, `-n`) sont segmentés en tokens PART séparés — attestés chez Fahloune (2020, ex. 21) qui documente jusqu'à trois clitiques empilés (DAT-ACC-DIR) sur un même verbe.
+
+| Forme graphique | Tokens | UPOS | Notes |
+|----------------|--------|------|-------|
+| `yefka-d` | `yefka` + `d` | VERB + PART | Directionnel « vers le locuteur » |
+
+#### 4.2.5 Affixes d'accord sujet
+
+Les affixes d'accord sujet (préfixes `y-`, `i-`, `t-`, `n-` ; suffixes `-eɣ`, `-eḍ`, `-en`, `-ent`, `-em`, `-emt`) restent **fusionnés** avec le verbe en un seul token VERB. Décision confirmée par Fahloune (2020) : contrairement aux marqueurs objet, les marqueurs sujet sont un véritable accord verbal (obligatoire, sensible à l'aspect pour les verbes de qualité), pas des clitiques — leur fusion au radical verbal est donc justifiée linguistiquement, pas seulement pratiquement.
+
+### 4.3 Tableau récapitulatif des règles de tokenization
+
 | Élément | Tokenization | Exemple |
 |---------|--------------|---------|
-| Verbe + affixes sujet | 1 token | `yekcem`, `tkecmeḍ`, `kecmeɣ` |
-| Verbe + clitiques objets | Verbe = 1 token ; clitiques = tokens séparés | `y-fka` `-as` `-tt` |
-| Particule + clitique | Particule = 1 token ; clitique = 1 token | `ad` `-tt` |
-| Négation `ur ... ara` | `ur` = 1 token ; `ara` = 1 token | `ur` `yekcem` `ara` |
-| Copule `D` | 1 token | `D` |
-| Coordination `u`, `ɣiṛ` | 1 token chacune | `u` |
-| Préposition `n`, `s`, `ɣer`, `deg` | 1 token | `n` |
-
-**[À VALIDER]** : Les clitiques graphiquement fusionnés au verbe (ex. `yfkas` vs `y-fka-as`) doivent-ils être segmentés ? En l'absence d'orthographe standardisant l'usage du tiret, le tokenizer morphologique (spec v0.3) peut produire une couche d'annotation intermédiaire avec des tokens multi-mots (MWT) en CoNLL-U, comme pratiqué pour les verbes à particule en anglais ou les pronoms clitiques en français.
+| Verbe + affixes sujet | 1 token | `yekcem`, `tekcem`, `kcemeɣ` |
+| Verbe + clitiques objets | Verbe + clitiques séparés | `yefka` `yas` `tt` |
+| Verbe + clitique directionnel | Verbe + clitique séparé | `yefka` `d` |
+| Nom + clitique possessif | Nom + clitique(s) séparé(s) | `axxam` `is` ; `lbiru` `in` `as` |
+| Préposition | 1 token ADP | `deg`, `di`, `ɣef`, `fell`, `i` (datif) |
+| Complémenteur relatif/clivée | 1 token SCONJ | `i` (perfectif) / `a` (imperfectif, aoriste) |
+| Négation verbale `ur ... ara` | `ur` + `ara` séparés | `ur` `yekcem` `ara` |
+| Négation ascriptive `mačči` | 1 token | `mačči` — **[NOUVEAU, À VALIDER]** |
+| Copule `d` | 1 token AUX | `d` |
+| Présentatifs `ha`/`aql`/`a`+suffixe | non spécifié | **[NOUVEAU, À VALIDER]** — cf. §5.2.6 |
+| Coordination `neɣ` | 1 token CCONJ | `neɣ` |
 
 ---
 
@@ -138,384 +227,482 @@ UD requiert que chaque **token** corresponde à un mot graphique, sauf exception
 
 ### 5.1 Inventaire UPOS utilisé
 
-| UPOS | Usage kabyle | Exemples |
-|------|--------------|----------|
-| `VERB` | Verbes de base et dérivés (prétérit, aoriste, intensif) | `yekcem`, `sselmed`, `ttwabder` |
-| `AUX` | Particules modales aspectuo-temporelles | `ad` (aoriste), `ur` (négation) **[À VALIDER]** |
-| `PART` | Particules discursives, emphatiques, négation secondaire | `ara` (négation), `D` (copule) **[À VALIDER]** |
-| `NOUN` | Noms communs (état libre et état d'annexion) | `aɣrem`, `w-qcic` |
-| `PROPN` | Noms propres | `Ales`, `Tizi-Wezzu` |
-| `PRON` | Pronoms indépendants | `nekk`, `kečč`, `netta` |
-| `DET` | Déterminants/démonstratifs | `a` (préfixe FS), `-nni` (démonstratif suffixe) **[À VALIDER]** |
-| `ADJ` | Adjectifs qualificatifs | `amellal` |
-| `NUM` | Numéraux | `yiwen`, `sin`, `tlata` |
-| `ADV` | Adverbes | `tura`, `swaswa`, `ɣas` |
-| `ADP` | Adpositions (prépositions/postpositions) | `n`, `s`, `deg`, `ɣer` |
-| `CCONJ` | Conjonctions de coordination | `u` (et), `ɣiṛ` (mais/sauf) |
-| `SCONJ` | Conjonctions de subordination | `ay` (relatif), `mi` (quand) **[À VALIDER]** |
-| `INTJ` | Interjections | `wa`, `a-` |
-| `PUNCT` | Ponctuation | `.`, `?`, `!` |
-| `SYM` | Symboles | — |
-| `X` | Éléments non analysés/emprunts non intégrés | — |
+| UPOS | Usage kabyle | Exemples | Fréquence ADPT |
+|------|--------------|----------|-------------------|
+| `VERB` | Verbes de base et dérivés | `yekcem`, `yelli`, `yenna`, `eddu` | 3937 |
+| `AUX` | Copule `d` uniquement | `d` (copule ascriptive) | Introduit — 0 dans ADPT |
+| `PART` | Particules TAM (`ad`, `ur`), directionnelles (`d` directionnel), clitiques verbaux non-pronominaux | `ad`, `ur`, `agi` | 2104 |
+| `NOUN` | Noms communs | `ass`, `iman`, `abrid`, `awal` | 4428 |
+| `PROPN` | Noms propres | `Ṭiṭem`, `azwaw`, `wejda` | 192 |
+| `PRON` | Pronoms indépendants et clitiques | `netta`, `win`, `ayen` | 3394 |
+| `DET` | Déterminants | `yal`, `le` | 67 |
+| `ADJ` | Adjectifs qualificatifs | `anezmar`, `amenzu`, `amellal` | 162 |
+| `NUM` | Numéraux | `yiwen`, `yiwet`, `sin`, `snat` | 111 |
+| `ADV` | Adverbes | `kan`, `mi`, `tura` | 1829 |
+| `ADP` | Adpositions | `i` (datif), `n`, `ag`, `ɣef`, `ɣer` | 3148 |
+| `CCONJ` | Conjonctions de coordination | `neɣ`, `maca`, `acku` | 131 |
+| `SCONJ` | Complémenteurs relatifs/clivées | `i` (perfectif), `a` (imperfectif/aoriste), `ma`, `imi`, `lemmer` | 142 |
+| `INTJ` | Interjections | `ah`, `ay`, `ih` | 81 |
+| `PUNCT` | Ponctuation | `.`, `?`, `!`, `,`, `;`, `:`, `«`, `»` | 3949 |
+| `X` | Éléments non analysés | `_` | 86 |
+
+**Correction apportée en v0.5** : la particule `ad` n'apparaît plus sous trois catégories différentes (DET/ADV/PART, incohérence de la v0.4) — elle est fixée sous **PART** uniquement, conformément à la convergence de trois sources (Fahloune, Baier, Achab 2020) qui emploient systématiquement le terme *particle*. La ligne DET « ad » de la v0.4 était une erreur de recopie et a été supprimée.
 
 ### 5.2 Cas particuliers
 
-#### 5.2.1 La particule `D` (copule/présentatif)
+#### 5.2.1 La particule `d` (copule ascriptive) — RÉSOLU
 
-**[À VALIDER]** — Deux analyses possibles, avec implications majeures pour la structure des arbres :
+**Décision, sourcée** : `d` est annoté **AUX** avec la relation **`cop`**. Cette décision s'appuie directement sur Mettouchi (2017), qui décrit `d` comme *« a non-verbal copula »* et la glose systématiquement **COP/PRED** dans toutes les prédications ascriptives (affirmatives et négatives) de son corpus annoté CorTypo.
 
-- **Analyse A (copule)** : `D` est taggé `AUX` (ou `PART` selon la grammaticalisation), avec relation `cop` vers le prédicat nominal. Le prédicat nominal est la tête (`root`).
-  - Ex. : `D lweḥda` → `cop(lweḥda, D)`, `root(lweḥda)`
-  - Justification : alignement avec les langues à copule (arabe, hébreu, russe dans UD). La copule `D` est grammaticalisée et ne porte pas de contenu sémantique lexical.
-- **Analyse B (présentatif)** : `D` est taggé `PART` et est la tête (`root`) de la phrase, avec le prédicat nominal comme `nsubj`.
-  - Ex. : `D lweḥda` → `root(D)`, `nsubj(D, lweḥda)`
-  - Justification : dans les énoncés purement présentatifs (`D a!` = « Voici ! »), `D` est le seul élément predicatif.
+- **Ascriptive affirmative** : `d` = AUX, relation `cop`. Ex. : « *wagi d lḥağ ṭaḥaṛ* » (« celui-ci est Hadj Tahar »).
+- **Ascriptive dans les clivées** : même analyse. Ex. : « *D nekk i y-ldi-n tabburt* » (« C'est moi qui ai ouvert la porte »), cf. aussi Achab (2020).
 
-**Recommandation préliminaire** : Analyse A (`AUX` + `cop`) pour les phrases nominales standard, car c'est l'analyse UD dominante pour les langues à copule zéro. Cependant, dans les énoncés présentatifs purs sans prédicat nominal explicite, `D` serait `root`.
+**Clarification majeure apportée par cette révision** : le dilemme « copule vs présentatif » soulevé dans la v0.3 (§5.2.1) reposait sur une fausse alternative. Mettouchi (2017) montre que la copule ascriptive `d` et les constructions **présentatives** (§5.2.6, ci-dessous) sont deux constructions grammaticales **distinctes**, marquées par des morphèmes différents (`d` pour l'une, `ha`/`aql`/`a`+suffixe pour l'autre). Il n'y a donc pas d'ambiguïté d'analyse pour `d` lui-même — il est toujours copule ascriptive.
 
-#### 5.2.2 `ad` et `ur`
+**Exemple corrigé** :
+```
+5   d   d   AUX   _   PartType=Cop   6   cop   _   _
+6   amẓallu   amẓallu   NOUN   _   Gender=Masc|Number=Sing|Case=Nom   0   root   _   SpaceAfter=No
+```
+(Phrase authentique du corpus ADPT test, ligne 322 : « *Bab n lbiru-nni d amẓallu, d ineslem.* »)
 
-- `ad` (marqueur d'aoriste) : `AUX` avec relation `aux` vers le verbe, suivant le modèle des auxiliaires modaux dans les langues à marqueurs d'aspect (turc, finnois).
-- `ur` (négation) : `PART` avec relation `advmod:neg` vers le verbe, ou `AUX` si on considère la négation comme tête fonctionnelle.
+#### 5.2.2 La particule `ur` et le marqueur `ara` (négation verbale)
 
-**[À VALIDER]** : `ur` est-il mieux analysé comme `advmod:neg` (modificateur adverbial négatif) ou comme `AUX` avec sous-type négation ? Le turc IMST-UD utilise `aux` pour les auxiliaires mais `advmod:neg` pour la négation lexicale. Le kabyle, avec sa négation discontiguë `ur ... ara`, pose la question de savoir si `ur` et `ara` forment une unité fonctionnelle distribuée.
+**Décision** : `ur` et `ara` sont annotés **ADV** avec `Polarity=Neg` et la relation `advmod`, conformément aux données ADPT.
 
-#### 5.2.3 État libre (FS) vs État d'annexion (CS)
+**Statut de la source** : partiellement sourcé. Les trois articles McGill WP 26.1 (Fahloune, Baier, Achab 2020) désignent `ur` comme une *particule*, ce qui exclut AUX mais ne tranche pas entre ADV et PART. Mettouchi a des travaux dédiés à `ara` (2001, 2004) qui n'ont pas encore été consultés en texte intégral — cf. §12, L2.
 
-Les préfixes nominaux (`a-`, `ta-`, `i-`, `ti-`, `w-`, `t-`, `y-`) ne sont pas segmentés en tokens séparés dans un premier temps. Ils sont intégrés au token `NOUN`/`PROPN`. Leur statut FS/CS est encodé dans les features morphologiques (`State=Free|Annex`), comme le fait le turc pour le cas nominatif vs accusatif.
+```
+1   ur   ur   ADV   _   Polarity=Neg   3   advmod   _   _
+2   ǧin  eǧǧ  VERB  _   _              3   advmod   _   _
+3   isugen esug VERB _   _             0   root     _   _
+```
+
+#### 5.2.3 Le complémenteur relatif/clivée `i` / `a` — RÉSOLU, avec nuance ajoutée
+
+**Décision, sourcée** : le complémenteur relatif et clivé est annoté **SCONJ** avec la relation **`mark`**. Cette décision s'appuie sur Achab (2020), qui glose systématiquement cet élément **COMP** dans les questions-WH, relatives et clivées.
+
+**Nuance ajoutée en v0.5, absente de la v0.4** : le complémenteur **alterne selon l'aspect** :
+- `i` au perfectif : « *Anta i y-ldi-n tawwurt?* » (« Qui a ouvert la porte ? »)
+- `a` à l'imperfectif ou à l'aoriste : « *D nekk a y-leddi-n tabburt* » (« C'est moi qui ouvre la porte »)
+
+Il faut donc traiter `a` comme second membre du même paradigme SCONJ, en plus de `i`. **[À VALIDER]** : confirmer que `a` (SCONJ) est bien distinct de l'homographe `a-` (préfixe d'état libre nominal, non segmenté, cf. §5.2.5) et de l'`a` vocatif (§8.4 des versions précédentes).
+
+**Distinction cruciale avec le `i` prépositionnel** : le `i` complémenteur (SCONJ) est un morphème distinct du `i` préposition datif (« à/pour »), qui reste ADP. Les deux morphèmes sont homographes mais fonctionnellement indépendants — l'ADPT ne les distingue pas systématiquement (113+ occurrences de `i` restent taguées PRON dans des fonctions variées), ce qui explique la faible fréquence de SCONJ pour `i` dans les données actuelles (1 seule occurrence).
+
+**Exemple corrigé** :
+```
+1   win   win   PRON   _   Gender=Masc|Number=Sing|Person=3|PronType=Dem   4   nsubj   _   _
+2   i     i     SCONJ  _   _                                                4   mark    _   _
+3   d     d     PART   _   _                                                4   advmod  _   _
+4   yekksen  ekkes  VERB  _  Gender=Masc|Mood=Ind|Number=Plur|Person=3|Tense=Past|VerbForm=Fin  0  root  _  _
+5   .   .   PUNCT   _   _                                                    4   punct   _   _
+```
+
+#### 5.2.4 La particule `ad` (futur/aoriste) — tranché en PART, source partielle
+
+**Décision** : `ad` est annotée **PART** avec la relation `advmod`, jamais AUX.
+
+**Statut de la source** : trois articles indépendants (Fahloune, Baier, Achab, McGill WP 26.1 2020) désignent systématiquement `ad` comme *particle*, jamais *auxiliary*. C'est un faisceau convergent, mais aucun des trois n'argumente explicitement pour exclure une analyse AUX — le choix PART repose donc sur l'usage terminologique constant de la littérature plutôt que sur une démonstration dédiée. **[À VALIDER — confiance modérée]** : l'intuition du locuteur natif sur le comportement syntaxique de `ad` (proche du verbe comme un auxiliaire modal, ou clairement invariable comme une particule) reste la pièce manquante pour clore ce point avec certitude.
+
+```
+1   ad   ad   PART   _   _   3   advmod   _   _
+2   ad   ad   PART   _   _   3   advmod   _   _
+3   nbeddel   ebeddel   VERB   _   _   0   root   _   _
+```
+
+#### 5.2.5 État libre (FS) vs État d'annexion (CS)
+
+Les préfixes nominaux (`a-`, `ta-`, `i-`, `ti-`, `w-`, `t-`, `y-`) ne sont pas segmentés en tokens séparés. Leur statut FS/CS est encodé dans les features morphologiques (`Case=Nom|Acc|Dat`), conformément aux données ADPT et à l'analyse de Felice (2020).
+
+#### 5.2.6 Constructions présentatives — **[NOUVEAU, NON SPÉCIFIÉ]**
+
+Découverte au cours de cette révision (Mettouchi 2017) : le kabyle distingue la copule ascriptive `d` (§5.2.1) de constructions **présentatives** dédiées, jamais marquées par `d` :
+
+| Forme | Personne | Construction |
+|-------|----------|--------------|
+| `ha` + pronom absolutif clitique | 3e personne (sg/pl) | Peut être suivi d'un NP à l'état d'annexion |
+| `a` + pronom absolutif + `-an`/`-ad` | 3e personne (sg/pl) | `-an` distal, `-ad` proximal |
+| `aql` + pronom absolutif clitique | 1re/2e personne (sg/pl) | Peut être suivi d'un NP à l'état d'annexion |
+
+Exemple (Mettouchi 2017) : « *ḥaṭan a Amina* » (« La voici, Amina »/« Here it was, Amina »).
+
+**Cette construction n'est traitée nulle part dans les versions précédentes de la spec (v0.3, v0.4).** Elle mérite son propre sous-ensemble de règles d'annotation (UPOS pour `ha`/`aql`/`a`+suffixe — probablement PART ou VERB selon le degré de grammaticalisation — et relation, `root` ou construction dédiée). **[À VALIDER]** : ce point nécessite un travail de spécification à part entière, hors du périmètre de cette révision.
+
+#### 5.2.7 La négation ascriptive `mačči` — **[NOUVEAU, NON SPÉCIFIÉ]**
+
+Découverte au cours de cette révision (Mettouchi 2017) : la négation des prédications ascriptives (copule `d`) ne se fait **pas** avec `ur...ara`, mais avec un marqueur dédié `mačči` (glosé NEG.ATTR), qui précède la copule.
+
+Exemple (Mettouchi 2017) : « *ma d aqdim nəɣ mačči d aqdim* » (« qu'il soit vieux ou non »).
+
+**[À VALIDER]** : tag UPOS de `mačči` (PART par analogie avec `ur`, ou ADV) et relation (`advmod` ou relation dédiée à la négation ascriptive, en cohérence avec le traitement de `cop`).
 
 ---
 
 ## 6. Relations de dépendances
 
-### 6.1 Ordre VSO et sujet
+### 6.1 Inventaire des relations utilisées (ADPT, vérifié)
 
-En ordre canonique VSO, le verbe est la tête de la phrase (`root`). Le sujet post-verbal est relié par `nsubj`.
+| Relation | Fréquence ADPT | Usage |
+|----------|-------------------|-------|
+| `acl` | 1657 | Modificateur clausal d'un nom |
+| `acl:relcl` | 4 | Proposition relative |
+| `advcl` | 88 | Modificateur clausal adverbial |
+| `advmod` | 3734 | Modificateur adverbial |
+| `amod` | 140 | Modificateur adjectival |
+| `appos` | 4 | Apposition |
+| `case` | 3594 | Marqueur de cas (préposition) |
+| `cc` | 90 | Conjonction de coordination |
+| `ccomp` | 28 | Complément clausal |
+| `compound` | 20 | Composé |
+| `conj` | 1234 | Conjonction |
+| `dep` | 1 | Dépendance non classée |
+| `det` | 859 | Déterminant |
+| `discourse` | 7 | Élément discursif |
+| `dislocated` | 14 | Élément disloqué |
+| `iobj` | 303 | Objet indirect |
+| `mark` | 318 | Marqueur de subordination |
+| `nmod` | 1287 | Modificateur nominal |
+| `nsubj` | 941 | Sujet nominal |
+| `nummod` | 22 | Modificateur numéral |
+| `obj` | 1156 | Objet direct |
+| `obl` | 1896 | Modificateur oblique |
+| `obl:arg` | 1 | Modificateur oblique argumental |
+| `parataxis` | 1 | Parataxe |
+| `punct` | 3949 | Ponctuation |
+| `root` | 1930 | Racine |
+| `vocative` | 62 | Vocatif |
+| `xcomp` | 421 | Complément clausal ouvert |
+| `cop` | **Introduit** | Copule (sourcé, Mettouchi 2017) |
+| `expl` | **Introduit** | Expletive / clitic doubling (sourcé, Fahloune 2020) |
 
-```sdparse
+### 6.2 Ordre VSO et sujet
+
+```
 Yekcem w-qcic ɣer wexxam .
 nsubj(Yekcem, w-qcic)
 obl(Yekcem, wexxam)
 case(wexxam, ɣer)
 ```
 
-En ordre SVO (marqué, topicalisation), le sujet pré-verbal reste `nsubj`.
+### 6.3 Objets directs et indirects
 
-```sdparse
-W-qcic yekcem ɣer wexxam .
-nsubj(yekcem, w-qcic)
-obl(yekcem, wexxam)
-case(wexxam, ɣer)
+#### 6.3.1 Objet lexical sans clitique
 ```
-
-### 6.2 Objets directs et indirects
-
-#### 6.2.1 Objet lexical sans clitique
-
-```sdparse
-Y-fka w-qcic aɣrum i wemcic .
-nsubj(Y-fka, w-qcic)
-obj(Y-fka, aɣrum)
-obl(Y-fka, wemcic)
+Yefka w-qcic aɣrum i wemcic .
+nsubj(Yefka, w-qcic)
+obj(Yefka, aɣrum)
+obl(Yefka, wemcic)
 case(wemcic, i)
 ```
 
-#### 6.2.2 Clitic doubling (objet lexical + clitique)
+#### 6.3.2 Clitic doubling (objet lexical + clitique) — RÉSOLU
 
-D'après Fahloune (2020), les clitiques objets sont des instances de *clitic doubling*. En UD, lorsqu'un argument lexical et un clitique co-occurrent, l'argument lexical reçoit la relation sémantique (`obj`, `iobj`), et le clitique est annoté `expl` (expletive/pronominal copy). C'est l'analyse adoptée pour le grec, le bulgare et le roumain dans les guidelines UD.
+**Décision, sourcée** : conformément à Fahloune (2020), qui démontre que les marqueurs objet du kabyle sont des instances de *clitic doubling* (invariance aspectuelle, empilement multiple, Person-Case-Constraint, granularité des traits phi), l'argument lexical reçoit la relation sémantique (`obj`, `iobj`), et le clitique co-occurrent est annoté **`expl`**.
 
-```sdparse
-Y-fka-as-tt w-qcic aɣrum i wemcic .
-nsubj(Y-fka, w-qcic)
-obj(Y-fka, aɣrum)
-iobj(Y-fka, wemcic)
-case(wemcic, i)
-expl(Y-fka, -as)
-expl(Y-fka, -tt)
+L'exemple ci-dessous est structurellement identique à l'exemple (19) de Fahloune (2020) : « *y-fka-as-tt wqcic tktuvt-nni i Ales* » (« il le lui a donné, le livre, à Ales »).
+
+```
+Yefka-yas lqahwa i Xira .
+nsubj(Yefka, sujet_implicite_ou_lexical)
+obj(Yefka, lqahwa)
+iobj(Yefka, Xira)
+case(Xira, i)
+expl(Yefka, yas)
 ```
 
-**[À VALIDER]** : Cette analyse UD standard pour le clitic doubling convient-elle au kabyle ? Alternative : traiter le clitique comme `obj` ou `iobj` quand l'argument lexical est absent, et comme `expl` quand il est présent. C'est la solution recommandée préliminairement.
-
-#### 6.2.3 Objet pronominal (clitique seul)
-
-Quand le clitique est le seul représentant de l'argument, il reçoit la relation sémantique.
-
-```sdparse
-Y-fka-as-tt w-qcic .
-nsubj(Y-fka, w-qcic)
-iobj(Y-fka, -as)
-obj(Y-fka, -tt)
+**Exemple CoNLL-U** :
+```
+1   Yefka   efk   VERB   _   Gender=Masc|Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin   0   root   _   _
+2   yas     yas   PRON   _   Gender=Fem|Number=Sing|Person=3|Poss=Yes|PronType=Prs                1   expl   _   _
+3   lqahwa  lqahwa NOUN  _   Gender=Fem|Number=Sing|Case=Acc                                       1   obj    _   _
+4   i       i     ADP    _   _                                                                     5   case   _   _
+5   Xira    Xira  PROPN  _   Gender=Fem|Number=Sing                                                1   iobj   _   _
+6   .       .     PUNCT  _   _                                                                     1   punct  _   _
 ```
 
-### 6.3 Clitiques attachés à une catégorie fonctionnelle (F-CL)
+**Résidu ouvert** : Fahloune établit le statut linguistique (*clitic doubling*), pas le choix de la relation UD `expl` elle-même — ce choix reste emprunté aux conventions communautaires (grec, bulgare, roumain) sans vérification directe des treebanks correspondants (cf. §12, L3).
 
-D'après Ouhalla (2005), les clitiques peuvent s'attacher à `ad` (futur) ou `ur` (négation). Dans ce cas, le clitique est dépendant de la particule fonctionnelle dans la tokenization, mais la relation sémantique remonte au verbe.
-
-```sdparse
-Ad-tt y-ekcem w-qcic .
-aux(y-ekcem, Ad)
-obj(y-ekcem, -tt)
-nsubj(y-ekcem, w-qcic)
+#### 6.3.3 Objet pronominal (clitique seul)
+```
+Yefka-yas lqahwa .
+obj(Yefka, lqahwa)
+iobj(Yefka, yas)   # pas expl, car pas d'argument lexical
 ```
 
-**[À VALIDER]** : La relation entre `Ad` et `-tt` est-elle `dep`, `expl`, ou doit-on considérer `Ad-tt` comme un seul token MWT ? Le turc IMST-UD segmente les suffixes pronominaux mais les traite comme des dépendants du verbe, pas de l'auxiliaire.
+### 6.4 Copule `d` — RÉSOLU (cf. §5.2.1)
 
-### 6.4 Négation discontiguë `ur ... ara`
-
-```sdparse
-Ur yekcem ara w-qcic .
-advmod:neg(yekcem, Ur)
-advmod:neg(yekcem, ara)
-nsubj(yekcem, w-qcic)
 ```
-
-**[À VALIDER]** : `ara` est-il `advmod:neg` ou une particule de polarité (`PART`) ? Dans les treebanks turcs, les marqueurs de négation multiples sont traités comme des `advmod:neg` coordonnés.
-
-### 6.5 La particule `D` (copule/présentatif)
-
-#### 6.5.1 Prédicat nominal simple
-
-```sdparse
 D lweḥda .
-cop(lweḥda, D)
+cop(lweḥda, d)
 root(lweḥda)
+
+Netta d amedyaz .
+nsubj(amedyaz, netta)
+cop(amedyaz, d)
+root(amedyaz)
 ```
 
-#### 6.5.2 Expression temporelle
-
-```sdparse
-D ttnac n uzal .
-cop(ttnac, D)
-nmod(ttnac, uzal)
-case(uzal, n)
-root(ttnac)
+### 6.5 Marqueur relatif/clivée `i`/`a` — RÉSOLU (cf. §5.2.3)
+```
+win i d-yekksen .
+nsubj(yekksen, win)
+mark(yekksen, i)
+root(yekksen)
 ```
 
-**[À VALIDER]** : L'analyse `cop` est-elle préférable à `root(D)` + `nsubj(D, ttnac)` ?
-
-### 6.6 Coordination
-
-```sdparse
-Yekcem w-qcic u y-erra tameṭṭut .
+### 6.6 Négation discontiguë `ur ... ara`
+```
+Ur yekcem ara w-qcic .
+advmod(yekcem, ur)
+advmod(yekcem, ara)
 nsubj(yekcem, w-qcic)
-conj(yekcem, y-erra)
-cc(y-erra, u)
-nsubj(y-erra, tameṭṭut)
 ```
 
-### 6.7 Subordination relative
-
-```sdparse
-W-qcic ay y-ekcem .
-nsubj(y-ekcem, W-qcic)
-mark(y-ekcem, ay)
-root(y-ekcem)
+### 6.7 Négation ascriptive `mačči` — **[NOUVEAU, À VALIDER]**
+```
+Mačči d aqdim .
+advmod(aqdim, mačči)   # provisoire — à trancher, cf. §5.2.7
+cop(aqdim, d)
+root(aqdim)
 ```
 
-**[À VALIDER]** : `ay` (relatif) est-il `mark` ou `nsubj` dans une relative sujet ? En berbère, `ay` est souvent analysé comme un complémentiseur.
+### 6.8 Coordination
+```
+Yekcem w-qcic neɣ tekcem teqcict .
+nsubj(yekcem, w-qcic)
+conj(yekcem, tekcem)
+cc(yekcem, neɣ)
+nsubj(tekcem, teqcict)
+```
 
-### 6.8 Possession (état d'annexion)
-
-```sdparse
+### 6.9 Possession (état d'annexion)
+```
 axxam n w-qcic
 nmod(axxam, w-qcic)
 case(w-qcic, n)
 ```
 
-La préposition `n` (génitif) est taggée `ADP` avec relation `case`. Le nom au CS (`w-qcic`) est `nmod` du nom au FS (`axxam`).
-
 ---
 
 ## 7. Features morphologiques (feats)
 
-### 7.1 Verbes
+### 7.1 Features utilisées dans les données ADPT
+
+| Feature | Valeurs | Fréquence | Notes |
+|---------|---------|-----------|-------|
+| `Case` | `Acc`, `Dat`, `Nom` | Acc: 2147, Dat: 2116, Nom: 2392 | Encode FS/CS |
+| `Definite` | `Ind` | 10 | Pour les déterminants indéfinis |
+| `Gender` | `Fem`, `Masc` | Fem: 2756, Masc: 6666 | Genre grammatical |
+| `Mood` | `Imp`, `Ind` | Imp: 99, Ind: 3366 | Mode verbal |
+| `Number` | `Plur`, `Sing` | Plur: 2797, Sing: 7947 | Nombre |
+| `Person` | `1`, `2`, `3` | 1: 374, 2: 302, 3: 5256 | Personne |
+| `Polarity` | `Neg` | 406 | Négation verbale |
+| `Poss` | `Yes` | 1434 | Possessif |
+| `PronType` | `Art`, `Dem`, `Int`, `Rel` | Art: 15, Dem: 485, Int: 370, Rel: 2414 | Type de pronom |
+| `Tense` | `Fut`, `Past`, `Pres` | Fut: 328, Past: 2484, Pres: 1105 | Temps |
+| `VerbForm` | `Fin`, `Part` | Fin: 3438, Part: 474 | Forme verbale |
+| `Voice` | `Pass` | 46 | Voix passive |
+
+### 7.2 Verbes
 
 | Feature | Valeurs | Description |
 |---------|---------|-------------|
-| `Aspect` | `Perf`, `Imp`, `Aor`, `Int` | Prétérit, imperfectif, aoriste, intensif |
-| `Polarity` | `Pos`, `Neg` | Affirmatif, négatif |
-| `Person` | `1`, `2`, `3` | Personne |
-| `Number` | `Sing`, `Plur` | Nombre |
-| `Gender` | `Masc`, `Fem` | Genre (3e personne) |
-| `VerbForm` | `Fin`, `Part` | Forme finie, participe |
+| `Tense` | `Past`, `Pres`, `Fut` | Passé, présent, futur |
 | `Mood` | `Ind`, `Imp` | Indicatif, impératif |
+| `VerbForm` | `Fin`, `Part` | Forme finie, participe |
+| `Voice` | `Pass` | Voix passive |
+| `Polarity` | `Neg` | Négation |
+| `Person` / `Number` / `Gender` | — | Accord (véritable accord, cf. Fahloune 2020) |
 
-### 7.2 Noms
+### 7.3 Noms
 
 | Feature | Valeurs | Description |
 |---------|---------|-------------|
 | `Gender` | `Masc`, `Fem` | Genre |
 | `Number` | `Sing`, `Plur` | Nombre |
-| `State` | `Free`, `Annex` | État libre (FS) / État d'annexion (CS) |
-| `Definite` | `Def`, `Ind` | Défini (avec démonstratif), indéfini |
+| `Case` | `Nom`, `Acc`, `Dat` | Cas (encode FS/CS) |
+| `Definite` | `Ind` | Défini/indéfini |
 
-### 7.3 Pronoms et clitiques
-
-| Feature | Valeurs | Description |
-|---------|---------|-------------|
-| `PronType` | `Prs`, `Dem`, `Rel`, `Int` | Personnel, démonstratif, relatif, interrogatif |
-| `Person` | `1`, `2`, `3` | Personne |
-| `Number` | `Sing`, `Plur` | Nombre |
-| `Gender` | `Masc`, `Fem` | Genre |
-| `Clitic` | `Yes` | Marqueur de clitique |
-
-### 7.4 Particules
+### 7.4 Pronoms et clitiques
 
 | Feature | Valeurs | Description |
 |---------|---------|-------------|
-| `PartType` | `Cop`, `Neg`, `Mod`, `Agr` | Copule, négation, modal, accord |
+| `PronType` | `Prs`, `Dem`, `Rel`, `Int`, `Art` | Personnel, démonstratif, relatif, interrogatif, article |
+| `Person` / `Number` / `Gender` | — | — |
+| `Poss` | `Yes` | Possessif |
+| `Case` | `Nom`, `Acc`, `Dat` | Cas |
+
+### 7.5 Particules
+
+| Feature | Valeurs | Description |
+|---------|---------|-------------|
+| `Polarity` | `Neg` | Négation verbale (`ur`) |
+| `PronType` | `Rel` | Relatif (`i`/`a`) |
+| `PartType` | `Cop` | Copule (`d`) — appliqué à AUX, pas PART |
 
 ---
 
 ## 8. Cas particuliers et ambiguïtés
 
 ### 8.1 Verbes d'état
-
-Les verbes d'état (`mellul`, `zur`) ont un paradigme sujet spécifique au parfait (suffixe `-it` pour le pluriel). Syntaxiquement, ils se comportent comme des verbes intransitifs.
-
-```sdparse
-Mellul w-qcic .
-nsubj(Mellul, w-qcic)
+```
+Llan wussan .
+nsubj(llan, wussan)
+root(llan)
 ```
 
-### 8.2 Supplétisme (`efk`, `ini`, `ecč`)
-
-L'intensif supplétif (`ttakk`, `qqaṛ`, `ttett`) est annoté comme forme du même lemme, avec `Aspect=Int`.
-
-```sdparse
-Ittakk w-qcic aɣrum .
-nsubj(Ittakk, w-qcic)
-obj(Ittakk, aɣrum)
+### 8.2 Supplétisme
+```
+Yettakki w-qcic aɣrum .
+nsubj(yettakki, w-qcic)
+obj(yettakki, aɣrum)
 ```
 
 ### 8.3 Emprunts
+Les emprunts français/arabe non intégrés morphologiquement sont taggés `X`.
 
-Les emprunts français/arabe non intégrés morphologiquement sont taggés `X` (ou leur catégorie approximative si intégrés).
+### 8.4 Vocatif
+```
+A nnbi !
+vocative(nnbi, a)
+root(nnbi)
+```
+**Point de vigilance ajouté en v0.5** : le `a` vocatif est à distinguer du `a` complémenteur imperfectif/aoriste (§5.2.3) et du `a-` préfixe d'état libre nominal (§5.2.5) — trois morphèmes homographes distincts.
+
+### 8.5 Éléments disloqués
+```
+Netta, yekcem .
+dislocated(yekcem, netta)
+root(yekcem)
+```
 
 ---
 
-## 9. Exemples CoNLL-U complets
+## 9. Exemples CoNLL-U complets (mis à jour v0.5)
 
 ### Exemple 1 : Phrase verbale transitive (VSO)
-
 ```conllu
 # sent_id = kab-001
-# text = Y-fka w-qcic aɣrum i wemcic.
-# gloss = 3MS.S-give.PERF CS-boy bread to cat
-# translation = 'The boy gave bread to the cat.'
-
-1	Y-fka	vfka	VERB	_	Aspect=Perf|Gender=Masc|Number=Sing|Person=3|Polarity=Pos|VerbForm=Fin	0	root	_	_
-2	w-qcic	qcic	NOUN	_	Gender=Masc|Number=Sing|State=Annex	1	nsubj	_	_
-3	aɣrum	aɣrum	NOUN	_	Gender=Masc|Number=Sing|State=Free	1	obj	_	_
-4	i	i	ADP	_	_	5	case	_	_
-5	wemcic	emcic	NOUN	_	Gender=Masc|Number=Sing|State=Free	1	obl	_	_
-6	.	.	PUNCT	_	_	1	punct	_	_
+# text = Yefka w-qcic aɣrum i wemcic.
+1   Yefka   efk   VERB   _   Gender=Masc|Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin   0   root   _   _
+2   w-qcic  qcic  NOUN   _   Gender=Masc|Number=Sing|Case=Nom                                      1   nsubj  _   _
+3   aɣrum   aɣrum NOUN   _   Gender=Masc|Number=Sing|Case=Acc                                      1   obj    _   _
+4   i       i     ADP    _   _                                                                      5   case   _   _
+5   wemcic  emcic NOUN   _   Gender=Masc|Number=Sing|Case=Dat                                      1   iobj   _   _
+6   .       .     PUNCT  _   _                                                                      1   punct  _   _
 ```
 
-### Exemple 2 : Clitic doubling
-
+### Exemple 2 : Clitic doubling (source : Fahloune 2020, structure identique)
 ```conllu
 # sent_id = kab-002
-# text = Y-fka-as-tt w-qcic aɣrum i wemcic.
-# gloss = 3MS.S-give.PERF-3SG.DAT-3SG.ACC boy bread to cat
-# translation = 'The boy gave it (the bread) to him (the cat).'
-
-1	Y-fka	vfka	VERB	_	Aspect=Perf|Gender=Masc|Number=Sing|Person=3|Polarity=Pos|VerbForm=Fin	0	root	_	_
-2	-as	as	PRON	_	Clitic=Yes|Gender=Masc|Number=Sing|Person=3|PronType=Prs	1	expl	_	_
-3	-tt	tt	PRON	_	Clitic=Yes|Gender=Fem|Number=Sing|Person=3|PronType=Prs	1	expl	_	_
-4	w-qcic	qcic	NOUN	_	Gender=Masc|Number=Sing|State=Annex	1	nsubj	_	_
-5	aɣrum	aɣrum	NOUN	_	Gender=Masc|Number=Sing|State=Free	1	obj	_	_
-6	i	i	ADP	_	_	7	case	_	_
-7	wemcic	emcic	NOUN	_	Gender=Masc|Number=Sing|State=Free	1	obl	_	_
-8	.	.	PUNCT	_	_	1	punct	_	_
+# text = Yefka-yas lqahwa i Xira.
+1   Yefka   efk    VERB   _   Gender=Masc|Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin   0   root   _   _
+2   yas     yas    PRON   _   Gender=Fem|Number=Sing|Person=3|Poss=Yes|PronType=Prs                 1   expl   _   _
+3   lqahwa  lqahwa NOUN   _   Gender=Fem|Number=Sing|Case=Acc                                       1   obj    _   _
+4   i       i      ADP    _   _                                                                      5   case   _   _
+5   Xira    Xira   PROPN  _   Gender=Fem|Number=Sing                                                1   iobj   _   _
+6   .       .      PUNCT  _   _                                                                      1   punct  _   _
 ```
 
-**[À VALIDER]** : Les clitiques `-as` et `-tt` sont-ils bien `expl` (copies pronominales) ou doivent-ils être `iobj`/`obj` même en présence de l'argument lexical ?
-
-### Exemple 3 : Copule `D`
-
+### Exemple 3 : Copule (source : ADPT test.conllu l.322, authentique)
 ```conllu
 # sent_id = kab-003
-# text = D lweḥda.
-# gloss = COP one
-# translation = 'It is one o'clock.'
-
-1	D	D	AUX	_	PartType=Cop	2	cop	_	_
-2	lweḥda	weḥda	NOUN	_	Gender=Fem|Number=Sing|State=Free	0	root	_	_
-3	.	.	PUNCT	_	_	2	punct	_	_
+# text = Bab n lbiru-nni d amẓallu.
+1   Bab      bab    NOUN   _   Gender=Masc|Number=Sing|Case=Nom   0   root   _   _
+2   n        an     ADP    _   _                                   3   case   _   _
+3   lbiru    lbiru  NOUN   _   Gender=Masc|Number=Sing|Case=Dat    1   nmod   _   _
+4   nni      nni    DET    _   PronType=Dem                        3   det    _   SpaceAfter=No
+5   d        d      AUX    _   PartType=Cop                        6   cop    _   _
+6   amẓallu  amẓallu NOUN  _   Gender=Masc|Number=Sing|Case=Nom    0   conj   _   _
+7   .        .      PUNCT  _   _                                   6   punct  _   _
 ```
 
-**[À VALIDER]** : `D` comme `AUX` + `cop` vs `PART` + `root`.
-
-### Exemple 4 : Négation
-
+### Exemple 4 : Négation verbale
 ```conllu
 # sent_id = kab-004
 # text = Ur yekcem ara w-qcic.
-# gloss = NEG enter.PERF NEG boy
-# translation = 'The boy did not enter.'
-
-1	Ur	ur	PART	_	PartType=Neg|Polarity=Neg	2	advmod:neg	_	_
-2	yekcem	ekcem	VERB	_	Aspect=Perf|Gender=Masc|Number=Sing|Person=3|Polarity=Neg|VerbForm=Fin	0	root	_	_
-3	ara	ara	PART	_	PartType=Neg|Polarity=Neg	2	advmod:neg	_	_
-4	w-qcic	qcic	NOUN	_	Gender=Masc|Number=Sing|State=Annex	2	nsubj	_	_
-5	.	.	PUNCT	_	_	2	punct	_	_
+1   ur      ur     ADV    _   Polarity=Neg   3   advmod   _   _
+2   yekcem  ekcem  VERB   _   Gender=Masc|Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin   0   root   _   _
+3   ara     ara    ADV    _   Polarity=Neg   2   advmod   _   _
+4   w-qcic  qcic   NOUN   _   Gender=Masc|Number=Sing|Case=Nom   2   nsubj   _   _
+5   .       .      PUNCT  _   _   2   punct   _   _
 ```
 
-### Exemple 5 : Expression temporelle
-
+### Exemple 5 : Marqueur relatif (perfectif)
 ```conllu
 # sent_id = kab-005
-# text = D ttnac n uzal.
-# gloss = COP twelve of noon
-# translation = 'It is twelve noon.'
+# text = win i d-yekksen.
+1   win      win    PRON   _   Gender=Masc|Number=Sing|Person=3|PronType=Dem   4   nsubj   _   _
+2   i        i      SCONJ  _   _                                                4   mark    _   _
+3   d        d      PART   _   _                                                4   advmod  _   _
+4   yekksen  ekkes  VERB   _   Gender=Masc|Mood=Ind|Number=Plur|Person=3|Tense=Past|VerbForm=Fin   0   root   _   _
+5   .        .      PUNCT  _   _                                                4   punct   _   _
+```
 
-1	D	D	AUX	_	PartType=Cop	2	cop	_	_
-2	ttnac	tnac	NUM	_	NumType=Card	0	root	_	_
-3	n	n	ADP	_	_	4	case	_	_
-4	uzal	uzal	NOUN	_	Gender=Masc|Number=Sing|State=Free	2	nmod	_	_
-5	.	.	PUNCT	_	_	2	punct	_	_
+### Exemple 6 : Marqueur relatif/clivée (imperfectif — NOUVEAU en v0.5)
+```conllu
+# sent_id = kab-006
+# text = D nekk a y-leddi-n tabburt.
+1   D        d      AUX    _   PartType=Cop   2   cop    _   _
+2   nekk     nekk   PRON   _   Person=1|Number=Sing|PronType=Prs   0   root   _   _
+3   a        a      SCONJ  _   _              4   mark   _   _
+4   yleddin  leddi  VERB   _   VerbForm=Part  2   acl    _   _
+5   tabburt  tabburt NOUN  _   Gender=Fem|Number=Sing|Case=Acc   4   obj   _   _
+6   .        .      PUNCT  _   _              2   punct  _   _
+```
+*(Analyse provisoire pour la forme participiale y-leddi-n dans une clivée à l'imperfectif — cf. §12, L7.)*
+
+### Exemple 7 : Préposition unique
+```conllu
+# sent_id = kab-007
+# text = deg inegmirs.
+1   deg       deg    ADP    _   _   2   case   _   _
+2   inegmirs  inegmirs NOUN _   Gender=Masc|Number=Plur|Case=Acc   0   root   _   _
+3   .         .      PUNCT  _   _   2   punct  _   _
 ```
 
 ---
 
 ## 10. Jeu de test obligatoire
 
-| ID | Phrase | Phénomène testé |
-|----|--------|-----------------|
-| T01 | `Yekcem w-qcic.` | VSO canonique, sujet post-verbal |
-| T02 | `W-qcic yekcem.` | SVO (topicalisation), sujet pré-verbal |
-| T03 | `Y-fka-as-tt w-qcic aɣrum.` | Clitic doubling DAT-ACC |
-| T04 | `Ad-tt y-ekcem w-qcic.` | Clitique attaché à F (futur) |
-| T05 | `Ur-as-tt y-fka ara.` | Clitiques attachés à Neg + négation discontiguë |
-| T06 | `D lweḥda.` | Copule/présentatif |
-| T07 | `D ttnac n uzal.` | Expression temporelle avec génitif |
-| T08 | `Axxam n w-qcic.` | Possession (état d'annexion) |
-| T09 | `Yekcem w-qcic u y-erra tameṭṭut.` | Coordination de verbes |
-| T10 | `W-qcic ay y-ekcem.` | Relative sujet |
-| T11 | `Mellul w-qcic.` | Verbe d'état |
-| T12 | `Ittakk w-qcic aɣrum.` | Supplétisme intensif |
-| T13 | `Acḥal ssaɛa?` | Phrase interrogative (wh-in-situ) |
-| T14 | `Tura, acḥal ssaɛa?` | Dislocation temporelle |
-| T15 | `Y-fka-as-tt-id w-qcic aɣrum i wemcic.` | Stacking clitique DAT-ACC-DIR |
+| ID | Phrase | Phénomène testé | Statut |
+|----|--------|-----------------|--------|
+| T01 | `Yekcem w-qcic.` | VSO canonique, sujet post-verbal | Stable |
+| T02 | `W-qcic yekcem.` | SVO (topicalisation), sujet pré-verbal | Stable |
+| T03 | `Yefka-yas lqahwa i Xira.` | Clitic doubling DAT → expl | **Résolu (Fahloune 2020)** |
+| T04 | `D lweḥda.` | Copule → AUX + cop | **Résolu (Mettouchi 2017)** |
+| T05 | `Ur yekcem ara w-qcic.` | Négation verbale discontiguë → ADV | Partiel |
+| T06 | `win i d-yekksen.` | Marqueur relatif (perfectif) → SCONJ + mark | **Résolu (Achab 2020)** |
+| T07 | `D nekk a y-leddi-n tabburt.` | Marqueur relatif/clivée (imperfectif) — **NOUVEAU** | À tester |
+| T08 | `deg inegmirs.` | Préposition → token unique ADP | Stable |
+| T09 | `axxam n w-qcic.` | Possession (état d'annexion) | Stable |
+| T10 | `lbiru-ines` | Clitique possessif → segmentation in+as | **Résolu (Achab 2020 + ADPT)** |
+| T11 | `Yekcem w-qcic neɣ tekcem teqcict.` | Coordination | Stable |
+| T12 | `A nnbi !` | Vocatif | Stable |
+| T13 | `Netta, yekcem.` | Dislocation | Stable |
+| T14 | `Yettakki w-qcic aɣrum.` | Supplétisme | Stable |
+| T15 | `Llan wussan.` | Verbe d'état | Stable |
+| T16 | `Mačči d aqdim.` | Négation ascriptive — **NOUVEAU** | À spécifier |
+| T17 | `Ḥaṭan a Amina.` | Présentatif — **NOUVEAU** | À spécifier |
 
 ---
 
-## 11. Différences attendues avec UD_Kabyle-ADPT (hypothèses)
+## 11. Différences corrigées avec UD_Kabyle-ADPT
 
-Compte tenu du manque de documentation publique d'ADPT, les différences probables avec cette spec portent sur :
-
-| Domaine | Cette spec (v0.3) | Hypothèse sur ADPT |
-|---------|-----------------|-------------------|
-| **Tokenization des clitiques** | Segmentation explicite `-as`, `-tt` | Inconnue (peut-être fusionnés au verbe) |
-| **Copule `D`** | `AUX` + `cop` (analyse préliminaire) | Inconnue |
-| **Négation `ur ... ara`** | `advmod:neg` + `advmod:neg` | Inconnue |
-| **Clitic doubling** | `expl` pour les clitiques, `obj`/`iobj` pour les arguments lexicaux | Inconnue |
-| **État libre / annexion** | Feature `State=Free|Annex` | Inconnue |
-| **Verbes d'état** | Traités comme `VERB` intransitifs | Inconnue |
-| **Genre du corpus** | Prêt à couvrir Tatoeba/Weblate (parlé + technique) | Nonfiction news uniquement |
-
-**Recommandation** : une comparaison formelle avec les fichiers CoNLL-U d'ADPT serait nécessaire pour identifier les convergences et divergences précises. Cette spec se présente comme un cadre de référence indépendant, révisable à la lumière de cette comparaison.
+| Domaine | ADPT (ancien) | v0.5 (corrigé) | Source de la correction |
+|---------|--------------|----------------|---------------------------|
+| Tokenization prépositions | Segmentées (`deg` → `ad`+`ag`, 100% des cas) | Token unique ADP | Convention communautaire UD |
+| Copule `d` | PART/ADV + advmod | AUX + cop | Mettouchi (2017) |
+| Clitic doubling | obj/iobj/obl | expl | Fahloune (2020) |
+| Marqueur relatif `i` | PRON | SCONJ + mark (+ `a` imperfectif/aoriste) | Achab (2020) |
+| Particule `ad`/`ur` | PART/ADV incohérents | PART (`ad`), ADV (`ur`) fixés | Fahloune, Baier, Achab (2020) |
+| Clitique `ines` | segmenté `in`+`as` | confirmé | Achab (2020) + pratique ADPT |
+| Tag `AUX` | Absent | Introduit (copule uniquement) | Mettouchi (2017) |
+| Relation `cop` | Absente | Introduite | Mettouchi (2017) |
+| Relation `expl` | Absente | Introduite | Fahloune (2020) |
+| Négation ascriptive `mačči` | Non distinguée | Identifiée comme construction à part | Mettouchi (2017) |
+| Présentatifs | Non traités | Identifiés comme construction à spécifier | Mettouchi (2017) |
 
 ---
 
@@ -523,28 +710,30 @@ Compte tenu du manque de documentation publique d'ADPT, les différences probabl
 
 | ID | Limite | Statut |
 |----|--------|--------|
-| L1 | **Segmentation des clitiques** : faut-il segmenter `-as`, `-tt` en tokens séparés ou les laisser fusionnés au verbe ? | **[À VALIDER]** — Impact sur la tokenization CoNLL-U |
-| L2 | **Statut de `D`** : `AUX`+`cop` vs `PART`+`root` | **[À VALIDER]** — Décision syntaxique fondamentale |
-| L3 | **Statut de `ur` et `ara`** : `advmod:neg` vs `aux:neg` | **[À VALIDER]** |
-| L4 | **Clitiques en présence d'arguments lexicaux** : `expl` vs `obj`/`iobj` | **[À VALIDER]** — Doit être cohérent avec la typologie UD |
-| L5 | **État libre vs état d'annexion** : feature `State` suffisant ou faut-il segmenter les préfixes ? | **[À VALIDER]** |
-| L6 | **Interrogatives** : `acḥal` est-il `ADV` ou `PRON` interrogatif ? | **[À VALIDER]** |
-| L7 | **Participe `n`** : `y-V-n` (forme neutre) — `VerbForm=Part` ou `VerbForm=Fin` avec `Mood=Ind` ? | **[À VALIDER]** |
-| L8 | **Adjectifs vs noms d'état** : `amellal` (blanc) est-il `ADJ` ou `NOUN` en état libre ? | **[À VALIDER]** |
-| L9 | **Prépositions complexes** : `ɣer`, `deg`, `si` (emprunt) — toutes `ADP` ? | **[À VALIDER]** |
-| L10 | **Absence de comparaison avec ADPT** : les fichiers CoNLL-U d'ADPT n'ont pas été analysés | Prochaine étape |
-| L11 | **Taille du treebank** : cette spec nécessite un corpus annoté de 5 000–10 000 phrases pour validation | Prochaine étape |
+| L1 | ~~Segmentation de `ines`~~ | **RÉSOLU** — segmentation `in`+`as` confirmée (Achab 2020 + ADPT) |
+| L2 | Statut exact de `ara` (ADV vs PART) et son origine grammaticale | **[À VALIDER]** — sources identifiées (Mettouchi 2001, 2004) mais texte intégral non consulté |
+| L3 | Statut de `ad` (PART, confiance modérée — faisceau convergent mais pas de démonstration dédiée) | **[À VALIDER — confiance modérée]** |
+| L4 | Convention `expl` : vérifier directement sur des treebanks UD roumain/grec/bulgare réels que c'est bien l'usage établi pour le clitic doubling | **[À VALIDER]** — non encore vérifié empiriquement |
+| L5 | Alternance `i`/`a` du complémenteur : couvrir systématiquement dans le jeu de test et les guidelines | **[À VALIDER]** — nouvellement identifié |
+| L6 | Homographie du `a` (vocatif / complémenteur imperfectif-aoriste / préfixe état libre) | **[À VALIDER]** — nouvellement identifié |
+| L7 | Constructions présentatives (`ha`, `aql`, `a`+suffixe) : UPOS et relations à spécifier entièrement | **[NOUVEAU — non spécifié]** |
+| L8 | Négation ascriptive `mačči` : UPOS et relation à spécifier | **[NOUVEAU — non spécifié]** |
+| L9 | Interrogatives : `acḥal` ADV ou PRON ? | **[À VALIDER]** — non traité dans cette révision |
+| L10 | Participe `VerbForm=Part` dans les clivées à l'imperfectif/aoriste (cf. Exemple 6, §9) | **[À VALIDER]** |
+| L11 | Adjectifs vs noms d'état : confirmer la distinction ADJ/NOUN | **[À VALIDER]** — non traité dans cette révision |
+| L12 | Voix passive `Voice=Pass` : confirmer l'usage | **[À VALIDER]** — non traité dans cette révision |
+| L13 | Taille du treebank : étendre à 5 000–10 000 phrases pour validation | Prochaine étape |
+| L14 | Bedar, Quellec & Voeltzel (2021) : source écartée pour les questions syntaxiques (traite d'épenthèse phonologique, pas de statut grammatical) — reste utile uniquement pour les règles de segmentation phonologique des frontières | Noté, pour éviter une réutilisation erronée |
 
 ---
 
 ## 13. Implémentation recommandée
 
 ### 13.1 Pipeline d'annotation
-
 ```
 Corpus brut (Tatoeba / Weblate / texte natif)
     ↓
-Tokenization morphologique (spec v0.3)
+Tokenization morphologique (spec v0.3, à réviser à la lumière de §4)
     ↓
 POS tagging + features (Stanza / spaCy / règles)
     ↓
@@ -552,36 +741,41 @@ Annotation syntaxique manuelle (Brat / INCEpTION)
     ↓
 Adjudication (locuteur natif + linguiste)
     ↓
-Conversion CoNLL-U + validation UD
+Conversion CoNLL-U + validation UD (udapy)
     ↓
 Soumission au comité UD
 ```
 
 ### 13.2 Outils
-
-- **Annotation** : INCEpTION (recommandé par l'Uzbek UD, NCBI 2026) ou Brat.
+- **Annotation** : INCEpTION ou Brat.
 - **Validation** : `udapy` (Popel et al. 2017) pour la validation CoNLL-U.
-- **Parsing** : Stanza (pré-entraîné sur vos tokenizers), Trankit (transformer-based, meilleures performances UAS/LAS selon Sung & Shin 2024).
+- **Parsing** : Stanza, Trankit.
 
 ---
 
 ## Références
 
-1. **Aliane, Lakhdar** (2021). *UD_Kabyle-ADPT*. Universal Dependencies v2.8. https://github.com/UniversalDependencies/UD_Kabyle-ADPT
-2. **Bedar, Amazigh ; Quellec, Lucie ; Voeltzel, Laurence** (2021). *Epenthetic glides in Taqbaylit*, Journal of African Languages and Literatures 2/2021, pp. 1-29.
-3. **Bouamara, K.** (2026). *Modélisation des types morphologiques et de la conjugaison du verbe kabyle*. HAL.
-4. **Çöltekin, Çağrı ; et al.** (2021). *Improving the Annotations in the Turkish Universal Dependency Treebank*. RANLP 2021.
-5. **de Marneffe, Marie-Catherine ; Manning, Christopher D. ; et al.** (2021). *Universal Dependencies*. Computational Linguistics 47(2), pp. 255-308.
-6. **Fahloune, Khokha** (2020). *On the status of subject and object markers in Kabyle: New evidence*, McGill Working Papers in Linguistics 26.1, pp. 1-17.
-7. **Felice, Lydia** (2020). *On the Case System of Kabyle*, McGill Working Papers in Linguistics 26.1.
-8. **Mokraoui, Athmane (boffire)** (2026). *Spécification du Tokenizer Morphologique pour le Kabyle*, v0.3.
-9. **Mokraoui, Athmane (boffire)** (2026). *Conjugueur algorithmique du verbe kabyle*.
-10. **Nivre, Joakim ; et al.** (2020). *Universal Dependencies v2: An annotation scheme for multilingual dependency parsing*. LREC.
-11. **Ouhalla, Jamal** (2005). *Clitic placement in Berber*.
-12. **Shlonsky, Ur** (1987). *The parametric variation of the verbal clause in Berber*. In Studies in Berber Syntax, Université de Genève.
-13. **Sung, Youkyung ; Shin, Jeong-Min** (2024). Cited in : *Second language Korean Universal Dependency treebank v1.2*. arXiv:2503.14718.
-14. **Taguchi, Chihiro ; et al.** (2022). *UD-Tatar NMCTT Treebank*. UD v2.11.
+1. **Achab, Karim** (2003). *Alternation of state in Berber*. In Jacqueline Lecarme (ed.), *Research in Afroasiatic Grammar II*. Amsterdam: John Benjamins.
+2. **Achab, Karim** (2020). *Anti-Agreement in Amazigh (Berber) as Genitive Constructions*. McGill Working Papers in Linguistics, 26.1. http://people.linguistics.mcgill.ca/~mcgwpl/McGWPL/2020v26n01/2020_26_1_Achab.pdf
+3. **Aliane, Lakhdar** (2021). *UD_Kabyle-ADPT*. Universal Dependencies v2.8. https://github.com/UniversalDependencies/UD_Kabyle-ADPT
+4. **Baier, Nico** (2020). *The Person Case Constraint in Kabyle*. McGill Working Papers in Linguistics, 26.1. http://people.linguistics.mcgill.ca/~mcgwpl/McGWPL/2020v26n01/2020_26_1_Baier.pdf
+5. **Bedar, Amazigh ; Quellec, Lucie ; Voeltzel, Laurence** (2021). *Epenthetic glides in Taqbaylit*, Journal of African Languages and Literatures 2/2021, pp. 1-29. (Note : source phonologique, non syntaxique — cf. §2.6, §12 L14)
+6. **Bouamara, K.** (2026). *Modélisation des types morphologiques et de la conjugaison du verbe kabyle*. HAL.
+7. **Çöltekin, Çağrı ; et al.** (2021). *Improving the Annotations in the Turkish Universal Dependency Treebank*. RANLP 2021.
+8. **de Marneffe, Marie-Catherine ; Manning, Christopher D. ; et al.** (2021). *Universal Dependencies*. Computational Linguistics 47(2), pp. 255-308.
+9. **Fahloune, Khokha** (2020). *On the status of subject and object markers in Kabyle: New evidence*. McGill Working Papers in Linguistics, 26.1, pp. 1–17. http://people.linguistics.mcgill.ca/~mcgwpl/McGWPL/2020v26n01/2020_26_1_Fahloune.pdf
+10. **Felice, Lydia** (2020). *On the Case System of Kabyle*, McGill Working Papers in Linguistics 26.1.
+11. **Mettouchi, Amina** (2001). *La grammaticalisation de ara en kabyle, négation et subordination relative*. Travaux du CerLiCO n°14, pp. 215–235. (texte intégral non consulté)
+12. **Mettouchi, Amina** (2004). *Les négations non-verbales en kabyle (berbère)*. Verbum XXVI(3), pp. 269–280. (texte intégral non consulté)
+13. **Mettouchi, Amina** (2017). *Predication in Kabyle (Berber), KAB*. In Mettouchi, Frajzyngier & Chanard (eds), *Corpus-based cross-linguistic studies on Predication* (CorTypo). http://cortypo.huma-num.fr/Publication
+14. **Mettouchi, Amina** (2017). *Relative (Proposition - Syntaxe)*. Encyclopédie berbère vol. XL, pp. 6815–6825.
+15. **Mettouchi, Amina & Frajzyngier, Zygmunt** (2013). *A previously unrecognized typological category: The state distinction in Kabyle (Berber)*. Linguistic Typology 17(1), pp. 1–30.
+16. **Mokraoui, Athmane (boffire)** (2026). *Spécification du Tokenizer Morphologique pour le Kabyle*, v0.3.
+17. **Mokraoui, Athmane (boffire)** (2026). *Conjugueur algorithmique du verbe kabyle*.
+18. **Nivre, Joakim ; et al.** (2020). *Universal Dependencies v2: An annotation scheme for multilingual dependency parsing*. LREC.
+19. **Ouhalla, Jamal** (2005). *Clitic placement in Berber*.
+20. **Taguchi, Chihiro ; et al.** (2022). *UD-Tatar NMCTT Treebank*. UD v2.11.
 
 ---
 
-*Document rédigé dans le cadre du développement des ressources NLP pour la langue kabyle. Les points marqués [À VALIDER] nécessitent une décision du locuteur natif ou une consultation de la communauté UD avant publication définitive. UD_Kabyle-ADPT est cité comme antécédent documenté mais non évalué.*
+*Document révisé v0.5 après vérification empirique directe des données ADPT (branche `dev` du dépôt GitHub officiel) et consultation en texte intégral de cinq sources de la littérature berbériste (Fahloune 2020, Achab 2020, Baier 2020, Mettouchi 2017). Chaque décision d'annotation contestée est désormais accompagnée d'une évaluation explicite de son statut de sourçage (résolu / partiellement sourcé / non sourcé). Les points marqués [À VALIDER] nécessitent une validation native ou une consultation supplémentaire de la littérature avant publication définitive.*
