@@ -40,7 +40,7 @@
       "path": "specs/kabyle-conjugations-specs.md",
       "summary": "Algorithmic blueprint for generating Kabyle verb paradigms across aspects and morphological groups, after Bouamara's model.",
       "status": "draft",
-      "updated": "2026-07-29"
+      "updated": "2026-08-11"
     },
     {
       "title": "Kabyle grapheme-to-phoneme (orthography2ipa)",
