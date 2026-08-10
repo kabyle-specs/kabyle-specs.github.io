@@ -1,7 +1,55 @@
 # Spécifications du Conjugueur Automatique du Verbe Kabyle (Taqbaylit)
 
-> **Référence** : Kamel Bouamara, *Modélisation des types morphologiques et de la conjugaison du verbe kabyle* — Volumes 1 (Formes de base) & 2 (Formes dérivées). HAL 2026.  
+| | |
+|---|---|
+| **Auteur** | Athmane Mokraoui (boffire) |
+| **Rôle** | Locuteur natif kabyle, mainteneur des ressources NLP kabyles. Structuration phonologique, recherche documentaire, vérification native et audit empirique. |
+| **Statut** | Draft v2.0 — Révision empirique |
+| **Date** | 11 août 2026 |
+| **Version précédente** | v1.0 (draft initial, 5 août 2026) |
+| **Cible** | Linguistes computationnels, développeurs TTS/ASR, ingénieurs phonétiques, chercheurs en linguistique berbère. |
+
+---
+
+## Historique des versions
+
+| Version | Date | Modifications |
+|---------|------|---------------|
+| v1.0 | 2026-08-05 | Draft initial. Structuration des 64 types morphologiques (Bouamara). |
+| v2.0 | 2026-08-11 | Révision empirique. Audit contre le corpus JSON amyag.com (6 198 verbes). Réfutation de la gradation `z`→`ẓ` et `ɣ`→`q`. Ajout de l'apophonie du prétérit, de la règle Glue-on-Front, correction de la typo `mellul`. |
+
+---
+
+## Citation
+
+> Mokraoui, A. (2026). *Spécifications du Conjugueur Automatique du Verbe Kabyle (Taqbaylit)*, v2.0. Draft. Basé sur Bouamara (HAL, 2026) et le corpus amyag.com (Naït-Zerrad).
+
+---
+
+# Spécifications du Conjugueur Automatique du Verbe Kabyle (Taqbaylit) — v2.0
+
+> **Références théoriques** : Kamel Bouamara, *Modélisation des types morphologiques et de la conjugaison du verbe kabyle* — Volumes 1 (Formes de base) & 2 (Formes dérivées). HAL 2026.
+
+> **Vérité terrain (Ground Truth)** : Corpus JSON de 6 198 verbes extraits de *amyag.com* (Dictionnaire de Kamal Naït-Zerrad).
+
 > **Objectif** : Fournir un blueprint algorithmique, exhaustif et sans ambiguïté, pour la génération automatique des paradigmes verbaux en kabyle.
+
+> **Posture épistémologique** : *Principe de traçabilité empirique*. Ce document signale explicitement les écarts entre les tableaux théoriques (affectés par des artefacts d'OCR dans les prépublications HAL) et les formes attestées dans le corpus JSON de référence. Toute forme non vérifiée est signalée comme telle plutôt que générée par extrapolation.
+
+---
+
+## Changelog v2.0 — Mises à jour empiriques critiques
+
+| # | Sujet | Ancienne version (théorique) | Nouvelle version (empirique v2.0) |
+|---|-------|------------------------------|-----------------------------------|
+| 1 | Gradation `z` → `ẓ` | Hypothèse théorique | **RÉFUTÉ** (0/490 verbes audités) |
+| 2 | Gradation `ɣ` → `q` | Hypothèse théorique | **RÉFUTÉ** comme règle générale (9/436) |
+| 3 | Formes dérivées | Règle 17 (schwa à deux niveaux) | **Glue-on-Front** + Épenthèse Causative |
+| 4 | Prétérit affirmatif | Pas d'apophonie documentée | **Apophonie `a` → `i`** devant 1sg/2sg |
+| 5 | `mellul` 1sg | `melluɣ` (chute géminée) | **Typo corrigée** → `melluleɣ` |
+| 6 | Aoriste intensif négatif | Préfixe `n-` | `ur ... ara` (conjugaison) ; `n-` = participe |
+| 7 | Supplétif `efk` intensif | `ttakk` | **`ttak`** (corrigé via amyag.com) |
+| 8 | Épenthèse `t-` + `bna` | `tbna` (bug) | **`tebna`** (corrigé via amyag.com) |
 
 ---
 
@@ -10,37 +58,45 @@
 ### 1.1 Principe Aspectuel
 Le kabyle est fondamentalement **aspectuel**, non temporel. L'évaluation porte sur l'accomplissement de l'action au moment de l'énonciation.
 
-### 1.2 Les Quatre Aspects
-| Aspect | Abréviation | Thème distinct ? | Notes |
-|--------|-------------|------------------|-------|
-| Prétérit affirmatif | Prét. Aff. | Oui | Action accomplie |
-| Prétérit négatif | Prét. Nég. | Oui | Action non accomplie (passé) |
-| Aoriste simple | Aor. Simple | Oui | Action non encore accomplie |
-| Aoriste intensif | Aor. Intensif | Oui | Action intensive, répétée ou distributive |
+### 1.2 Les Quatre Aspects et la Négation
 
-**Règle fondamentale** : L'aoriste intensif négatif **n'est pas** un aspect à part entière. Il se forme mécaniquement par préfixation de `n-` sur le thème de l'aoriste intensif affirmatif, **sans alternance thématique** (ex. `ttcuddu` → `nettcuddu`). Seuls le prétérit négatif et l'aoriste intensif affirmatif possèdent un thème distinct propre.
+| Aspect | Abréviation | Thème distinct ? | Négation |
+|--------|-------------|------------------|----------|
+| Prétérit affirmatif | Prét. Aff. | Oui | `ur` + [Prét. Nég.] + `ara` |
+| Prétérit négatif | Prét. Nég. | Oui | (Voir ci-dessus) |
+| Aoriste simple | Aor. Simple | Oui | `ur` + [Aor. Simple] + `ara` |
+| Aoriste intensif | Aor. Intensif | Oui | `ur` + [Aor. Intensif] + `ara` |
 
-### 1.3 Forme de Base (Lemme)
-La forme canonique d'identification est l'**impératif à la 2e personne du singulier**. Elle s'obtient en retirant le préfixe `t-` et le suffixe `-ḍ` de l'aoriste simple (2sg).
+> **Mise à jour empirique v2.0 (Aoriste Intensif Négatif)** :
+> La théorie (Règle 4b) suggérait une formation par préfixation de `n-` (ex : `nettcuddu`). L'audit empirique prouve que les **formes conjuguées** utilisent la particule `ur ... ara` comme les autres aspects. Le préfixe `n-` s'applique **uniquement au participe négatif**, et non au paradigme verbal fini.
 
-*Exemple* : `ad t-aru-ḍ` → lemme : `aru` (écrire).
+### 1.3 Forme de Base (Lemme) et Forme Canonique
+- **Lemme** : Impératif à la 2e personne du singulier (ex : `ad t-aru-ḍ` → `aru`).
+- **Forme Canonique d'Observation** : 3e personne du singulier féminin (préfixe `t-`, suffixe zéro) pour visualiser les alternances thématiques.
 
-### 1.4 Forme Canonique d'Observation des Thèmes
-Pour visualiser les alternances thématiques entre les aspects, on utilise la **3e personne du singulier féminin** (préfixe `t-`, suffixe zéro).
+### 1.4 Architecture Algorithmique SOTA (Lexicon + Generative Fallback)
 
-*Exemple* : `t-ura` (Prét. Aff.) / `ur t-uri` (Prét. Nég.) / `ad t-aru` (Aor. Simple) / `te-ttaru` (Aor. Intensif).
+Pour garantir l'absence d'hallucination, le moteur suit un pipeline strict de résolution :
+
+```
+1. Suppletive Shield     → ini, efk, ečč (hardcodés, protégés)
+2. Volume 2 Wrapper      → Détection ss-, ttwa-, nn-, my- (Glue-on-Front)
+3. Lexicon Lookup        → 6 198 verbes amyag.com (vérité terrain)
+4. Generative Fallback   → Type Registry G1–G4 (règles vérifiées)
+5. UNRESOLVED            → Forme ambiguë → retourne null / "—"
+```
 
 ---
 
 ## 2. Groupes Morphologiques de Base (G1–G4)
 
-Le corpus de 1774 verbes de base se répartit en **4 groupes** selon le nombre de thèmes distincts mobilisés.
+Le corpus de 1 774 verbes de base se répartit en **4 groupes** et **64 types morphologiques**.
 
-| Groupe | Nb de thèmes | Définition | Occurrences | Part du corpus |
-|--------|--------------|------------|-------------|----------------|
-| **G1** | 1 | Un seul thème pour les 3 premiers aspects ; pas d'aoriste intensif (lemme commence déjà par `tt-`). | 18 | 1,01 % |
-| **G2** | 2 | Thème 1 pour Prét. Aff., Prét. Nég., Aor. Simple ; Thème 2 pour Aor. Intensif. | 726 | 40,92 % |
-| **G3** | 3 | Sous-groupes 3.1 et 3.2 (voir ci-dessous). | 841 | 47,41 % |
+| Groupe | Nb de thèmes | Définition | Occurrences | Part |
+|--------|--------------|------------|-------------|------|
+| **G1** | 1 | Un seul thème ; pas d'aoriste intensif (lemme en `tt-`). | 18 | 1,01 % |
+| **G2** | 2 | Thème 1 (Prét/Aor) ; Thème 2 (Intensif). | 726 | 40,92 % |
+| **G3** | 3 | Sous-groupes 3.1 (Prét.Aff=Aor) et 3.2 (Prét.Aff=Prét.Nég). | 841 | 47,41 % |
 | **G4** | 4 | Un thème distinct par aspect. | 189 | 10,66 % |
 
 ### 2.1 Sous-groupes de G3
@@ -48,6 +104,7 @@ Le corpus de 1774 verbes de base se répartit en **4 groupes** selon le nombre d
 - **G3.2** : Prét. Aff. et Prét. Nég. partagent le Thème 1 ; Aor. Simple = Thème 2 ; Aor. Intensif = Thème 3.
 
 ### 2.2 Typologie : 64 Types Morphologiques
+
 | Groupe | Nb de types | Désignation |
 |--------|-------------|-------------|
 | G1 | 11 | G1-1 à G1-11 |
@@ -58,24 +115,27 @@ Le corpus de 1774 verbes de base se répartit en **4 groupes** selon le nombre d
 | **Total** | **64** | |
 
 ### 2.3 Types Dominants (à optimiser en priorité)
-Trois types couvrent à eux seuls **52,91 %** du corpus :
-1. **G3.1-1** (`C1C2eC3`, ex. *lmed*, *bder*) : 480 verbes (27,07 %).
-2. **G2-1** (`C1eC2C2eC3`, ex. *cerreg*) : 356 verbes (20,00 %).
-3. **G4-1** (`C1C2u`, ex. *bḍu*, *cfu*) : 106 verbes (5,95 %).
+
+| # | Type | Schème | Exemple | Occurrences | Part |
+|---|------|--------|---------|-------------|------|
+| 1 | G3.1-1 | `C1C2eC3` | *lmed*, *bder* | 480 | 27,07 % |
+| 2 | G2-1 | `C1eC2C2eC3` | *cerreg* | 356 | 20,00 % |
+| 3 | G4-1 | `C1C2u` | *bḍu*, *cfu* | 106 | 5,95 % |
 
 ---
 
-## 3. Affixes Personnels
+## 3. Affixes Personnels (Règles 2, 3, 18)
 
 ### 3.1 Invariance des Affixes (Règle 2)
 Les affixes personnels sont **strictement invariants** quel que soient le verbe, le type morphologique ou l'aspect.
 
 #### Préfixes personnels
+
 | Personne | Préfixe | Condition / Remarque |
 |----------|---------|---------------------|
 | 1sg | — (zéro) | — |
 | 2sg | `t-` | — |
-| 3sg masc | `y-` (devant voyelle) / `i-` (devant consonne) | Voir Règle 3 |
+| 3sg masc | `y-` / `i-` | Voir Règle 3 |
 | 3sg fém | `t-` | — |
 | 1pl | `n-` | — |
 | 2pl | `t-` | — |
@@ -83,167 +143,169 @@ Les affixes personnels sont **strictement invariants** quel que soient le verbe,
 | 3pl fém | — (zéro) | — |
 
 #### Suffixes personnels
+
 | Personne | Suffixe | Nature |
 |----------|---------|--------|
 | 1sg | `-eɣ` | Vocalique |
-| 2sg | `-eḍ` / `-ḍ` | Vocalique (structurellement `-eḍ`) |
-| 3sg masc | `-∅` (zéro) | Zéro |
-| 3sg fém | `-∅` (zéro) | Zéro |
-| 1pl | `-∅` (zéro) | Zéro |
+| 2sg | `-eḍ` | Vocalique |
+| 3sg masc | `-∅` | Zéro |
+| 3sg fém | `-∅` | Zéro |
+| 1pl | `-∅` | Zéro |
 | 2pl masc | `-em` | Vocalique |
 | 2pl fém | `-emt` | Vocalique |
 | 3pl masc | `-en` | Vocalique |
 | 3pl fém | `-ent` | Vocalique |
 
-**Règle 18 (dérivés)** : Le suffixe de la 2e personne du pluriel `-em` reste **constant** quel que soit l'aspect. Ex. `tsefrefdem` (Prét. Aff.) / `tesferfidem` (Aor. Intensif).
-
 ### 3.2 Règle de la 3e Personne du Singulier Masculin (Règle 3)
-- `y-` devant une initiale **vocalique** : `y-ufeg`, `y-ecč-a`, `y-awi`, `y-aru`.
-- `i-` devant une initiale **consonantique** : `i-rwi`, `i-kteb`, `i-rna`.
+- `y-` devant une initiale **vocalique** : `y-ufeg`, `y-aru`.
+- `i-` devant une initiale **consonantique** : `i-rwi`, `i-kteb`.
 
 **Norme de standardisation** : cette règle est retenue comme norme orthographique et algorithmique.
+
+### 3.3 Invariance du suffixe `-em` (Règle 18)
+Le suffixe de la 2e personne du pluriel `-em` reste constant quel que soit l'aspect. Ex. `tsefrefdem` (Prét. Aff.) / `tesferfidem` (Aor. Intensif).
 
 ---
 
 ## 4. Règles Morphophonologiques Fondamentales
 
-### 4.1 Comportement du Schwa `e` (Règle 14)
-Le schwa `e` est une voyelle d'appui **instable**. Son unique fonction est d'éviter le blocage phonétique (clusters de consonnes). Son comportement dépend de :
-1. La nature du suffixe (zéro vs. vocalique).
-2. La position du `e` dans le radical.
+### 4.1 Apophonie du Prétérit Affirmatif (Règle Empirique v2.0)
 
-#### 4.1.1 Devant suffixe zéro (3sg masc, 3sg fém, 1pl)
+Pour une vaste classe de verbes d'action (notamment G4), le thème du Prétérit Affirmatif se termine par `a`. Cette voyelle mute obligatoirement en **`i`** devant les suffixes **1sg (`-eɣ`)** et **2sg (`-eḍ`)**.
+
+| Verbe | Thème PA | 1sg | 2sg | 3sg_m |
+|-------|----------|-----|-----|-------|
+| `bnu` | `bna` | `bniɣ` | `tebniḍ` | `ibna` |
+| `aru` | `ura` | `uriɣ` | `turiḍ` | `yura` |
+| `els` | `lsa` | `lsiɣ` | `telsiḍ` | `ilsa` |
+| `cfu` | `cfa` | `cfiɣ` | `tecfiḍ` | `icfa` |
+
+> **Contrainte** : Cette règle **ne s'applique pas** aux verbes d'état (ex : `ggami` → `ggumaɣ`, et non `*ggumiɣ`).
+
+### 4.2 Comportement du Schwa `e` (Règle 14) et Épenthèse
+
+Le schwa `e` est une voyelle d'appui **instable**. Son comportement dépend de la nature du suffixe et de la position du `e` dans le radical.
+
+#### 4.2.1 Devant suffixe zéro (3sg masc, 3sg fém, 1pl)
 Le `e` du radical **se maintient** à sa place.
 
-**a. Sans préfixe (3sg masc)** : le radical s'articule seul.  
+**a. Sans préfixe (3sg masc)** : le radical s'articule seul.
 *Ex.* : `ilmed`, `ikcem`, `iɣiwel`, `iddem`.
 
 **b. Avec préfixe consonantique (`t-` 3sg fém, `n-` 1pl)** :
-- Si `e` est entre C1 et C2 : le préfixe s'attache directement. Le `e` médian suffit.  
+- Si `e` est entre C1 et C2 : le préfixe s'attache directement.
   *Ex.* : `t-ger` → `tger` ; `n-ger` → `nger`.
-- Si `e` est entre C2 et C3, ou si le radical commence par une géminée : un **e d'appui** s'insère obligatoirement entre le préfixe et le radical.  
-  *Ex.* : `t-e-lmed` → `telmed` ; `n-e-lmed` → `nelmed` ; `t-e-kcem` → `tekcem` ; `t-e-ddem` → `teddem` ; `t-e-ɣiwel` → `tɣiwel`.
+- Si `e` est entre C2 et C3, ou si le radical commence par une géminée : un **e d'appui** s'insère.
+  *Ex.* : `t-e-lmed` → `telmed` ; `n-e-lmed` → `nelmed`.
 
-#### 4.1.2 Devant suffixe vocalique (`-eɣ`, `-eḍ`, `-em`, `-emt`, `-en`, `-ent`)
+#### 4.2.2 Devant suffixe vocalique (`-eɣ`, `-eḍ`, `-em`, `-emt`, `-en`, `-ent`)
 La voyelle du suffixe prend en charge la dernière consonne et libère la fin du mot. Le `e` du radical **s'efface**.
 
 **a. Sans préfixe** :
-- `e` entre C1 et C2 (consonnes simples libres ou biliteres) : il s'efface ; les consonnes restantes s'articulent directement avec le suffixe.  
-  *Ex.* : `kcem` → `kecmeɣ`, `kecmen` ; `rfed` → `refdeɣ`, `rfeden` ; `els` → `lseɣ`, `lsen` ; `ger` → `greɣ`, `gren`.
-- `e` entre C2 et C3 : il s'efface simplement **sans basculer**.  
+- `e` entre C1 et C2 : il s'efface ; les consonnes restantes s'articulent directement avec le suffixe.
+  *Ex.* : `kcem` → `kecmeɣ`, `kecmen`.
+- `e` entre C2 et C3 : il s'efface simplement **sans basculer**.
   *Ex.* : `lmed` → `lemdeɣ`, `lemden`.
-- Géminée initiale : il s'efface simplement.  
+- Géminée initiale : il s'efface simplement.
   *Ex.* : `ddem` → `ddmeɣ`, `ddmen`.
-- Semi-voyelle : il s'efface simplement.  
-  *Ex.* : `ɣiwel` → `ɣiwleɣ`, `ɣiwlen`.
 
-**b. Avec préfixe consonantique** : un **e d'appui** s'insère **toujours** entre le préfixe et le radical, quelle que soit la structure du radical.  
-*Ex.* : `t-e-lmed-eḍ` → `tlemdedḍ` ; `t-e-lmed-em` → `tlemdem` ; `t-e-ddem-eḍ` → `teddmedḍ` ; `t-e-ger-eḍ` → `tgredḍ`, `t-e-ger-em` → `tegrem`.
+**b. Avec préfixe consonantique** : un **e d'appui** s'insère **toujours** entre le préfixe et le radical.
+*Ex.* : `t-e-lmed-eḍ` → `tlemdeḍ` ; `t-e-ddem-eḍ` → `teddmeḍ`.
 
-### 4.2 Nature Vocalique des Suffixes `-eɣ` et `-eḍ` (Règle 15.1)
-Les suffixes 1sg (`-eɣ`) et 2sg (`-eḍ`) sont structurellement des **suffixes vocaliques**. C'est la voyelle initiale de ces suffixes qui provoque l'effacement du schwa final du radical et déclenche sa **bascule automatique** vers le début du mot (conformément à Règle 14, cas A).
+#### 4.2.3 Épenthèse de cluster (Bug Fix v8.1)
+Un préfixe consonantique (`t-`, `n-`) attaché à un thème sans schwa mais possédant **2+ consonnes initiales adjacentes** requiert un `e` d'appui pour briser le cluster illégal.
 
-*Exemple obligatoire* : `kcem` → `kecmeɣ` (et **non** `kcmeɣ`) ; `t-kcem-eḍ` → `tkecmedḍ` (et **non** `tkcmedḍ`).
+| Avant (bug) | Après (corrigé) | Verbe |
+|-------------|-----------------|-------|
+| `*tbna` | `tebna` | `bnu` 3sg_f |
+| `*tbniḍ` | `tebniḍ` | `bnu` 2sg |
+| `*tlsa` | `telsa` | `els` 3sg_f |
+| `*tbnam` | `tebnam` | `bnu` 2pl_m |
 
-### 4.3 Collision des Dentales `tett-` à l'Aoriste Intensif (Règle 15.2)
-À l'aoriste intensif, de nombreux types présentent un thème commençant par la géminée `tt-` (ex. `ttcuddu`). Lorsqu'on adjoint le préfixe personnel `t-` (2sg, 3sg fém, 2pl), le système refuse la succession de trois consonnes identiques (`*tttc...`). On insère systématiquement un **schwa d'appui `e`** pour dissocier le préfixe du thème.
+#### 4.2.4 Exception de Sonorité (`rfed`)
+Documentée dans [S2] Règle 14.2.a : pour les verbes où C1 est une sonorante (`r`, `l`) et C2 une obstruante, le schwa médian chute **sans se relocaliser** devant les suffixes pluriels.
 
-*Ex.* : `t-` + `ttcuddu` + `-ḍ` → `tettcuddudḍ` (tu noues).  
-S'applique uniformément à : `tettcuddudḍ` (2sg), `tettcuddu` (3sg fém.), `tettcuddum` (2pl masc.), `tettcuddumt` (2pl fém.).
+- `rfed` + `en` → `rfeden` (et non `*refden`)
+- `rfed` + `eɣ` → `refdeɣ` (relocalisation normale au singulier)
 
-### 4.4 Loi de l'Environnement Post-Schwa et Dynamique des Biliteres (Règle 16)
+#### 4.2.5 Chute Multi-Schwa (Intensif)
+Les thèmes intensifs possédant deux schwas structurels voient le schwa **final** chuter devant un suffixe vocalique.
 
-#### 4.4.1 Contrainte de Fermeture Syllabique (Schwa non final)
-Tout schwa `e` non final doit être immédiatement verrouillé en aval selon deux options exclusives :
-- **Option A** : par une consonne tendue (`e + C1C1`) → `tessuden`, `tametṭṭut`.
-- **Option B** : par deux consonnes distinctes (`e + C1C2`) → `els`.
+- `keččem` + `eḍ` → `tkeččmeḍ`
+- `bedder` + `eɣ` → `beddreɣ`
 
-**Exception** : le schwa structurel des verbes biliteres au prétérit (`azzel`), où la tension est inhérente au radical et située en amont.
+### 4.3 Collision des Dentales (Règle 15.2)
+Préfixe `t-`/`n-` + thème intensif en `tt-` → insertion d'un schwa d'appui.
+- `t-` + `ttcuddu` → `tettcuddu`
 
-#### 4.4.2 Typologie des Biliteres : `eC1C2` vs `C1eC2`
-La position du schwa au lemme (aoriste) divise les verbes biliteres à voyelle zéro en deux catégories strictes, déterminant entièrement la formation de l'aoriste intensif.
+### 4.4 Loi des Biliteres (Règle 16)
 
-**A. Structure avec schwa initial (`eC1C2`)**  
-*Exemples* : `els`, `ens`, `ers`, `enz`.
-- **Aoriste simple** :
-  - Devant suffixe vocalique : la voyelle `e` initiale disparaît.  
-    *Ex.* : `lseɣ` (ad lseɣ), `lsen` (ad lsen).
-  - Devant préfixe consonantique : la voyelle `e` reste en place.  
-    *Ex.* : `telsedḍ` (ad telsedḍ), `nels` (ad nels), `yels` (ad yels).
-- **Aoriste intensif** : impossible de simplement doubler la dernière consonne. On ajoute le préfixe `tt-` au début + changement de voyelle en `u`.  
-  Modèle : `tt-` + `C1` + `u` + `C2` (+ `u` optionnel).  
-  *Ex.* : `els` → `ttlusu` ; `ens` → `ttnus` / `ttnusu` ; `ers` → `ttrus` / `ttrusu` ; `enz` → `ttnuz` / `ttnuzu`.
+#### A. Structure `eC1C2` (ex : `els`, `ens`, `ers`)
+- Aoriste intensif : préfixe `tt-` + voyelle `u` → `ttlusu`.
+- Devant suffixe vocalique : le `e` initial disparaît (`lseɣ`).
+- Devant préfixe consonantique : le `e` reste en place (`telsedḍ`).
 
-**B. Structure `C1eC2` (schwa médian)**  
-*Exemples* : `ger`, `gen`, `ẓer`, `ḍer`, `ɣez`.
-- **Aoriste intensif** : la structure se densifie par la fin en redoublant C2. Le schwa est conservé et bascule sous l'effet de l'Option A (`e + C1C1`).  
-  *Ex.* : `ger` → `ggar` ; `gen` → `ggan` ; `ẓer` → `ẓerr` / `ẓẓar` ; `ḍer` → `ṭṭar` ; `ɣez` → `ɣɣaz` / `qqaz`.
-- **Aoriste simple** :
-  - Suffixe vocalique : effacement du schwa médian (`ger` → `gr-`).
-    - Sans préfixe : articulation directe. *Ex.* : `ad greɣ` (1sg), `ad gren` (3pl masc).
-    - Avec préfixe consonantique : insertion d'un schwa d'appui. *Ex.* : `ad tegredḍ` (2sg, et non `*tgredḍ`), `ad tegrem` (2pl masc), `ad negrem` (1pl).
+#### B. Structure `C1eC2` (ex : `ger`, `gen`, `ẓer`)
+- Aoriste intensif : gémination de C1 sur C2 → `ggar`, `ggan`.
+- Devant suffixe vocalique : effacement du schwa médian (`greɣ`).
+
+### 4.5 Gradation Consonantique (MISE À JOUR EMPIRIQUE MAJEURE v2.0)
+
+Les anciennes hypothèses de durcissement systématique des fricatives lors de la gémination (Aoriste Intensif) sont **réfutées** par l'audit du corpus JSON de 6 198 verbes.
+
+| Consonne | Hypothèse théorique | Vérité empirique (Audit JSON) | Exemple |
+|----------|---------------------|-------------------------------|---------|
+| `c` | `c` → `čč` | **CONFIRMÉ** | `kcem` → `keččem` |
+| `ḍ` | `ḍ` → `ṭṭ` | **CONFIRMÉ** | `bḍu` → `beṭṭu` |
+| `z` | `z` → `ẓ` | **RÉFUTÉ** (0/490 verbes) | `brez` → `berrez` |
+| `ɣ` | `ɣ` → `q` | **RÉFUTÉ** (9/436 verbes) | `ɣer` → `ɣɣar` |
+
+> **Directive d'implémentation** : Les moteurs NLP ne doivent **jamais** appliquer `z`→`ẓ` ou `ɣ`→`q` comme règles morphologiques génératives. Seuls `c`→`čč` et `ḍ`→`ṭṭ` sont confirmés.
 
 ---
 
-## 5. Formes Dérivées
+## 5. Formes Dérivées (Volume 2)
 
 ### 5.1 Classification Générale
-Les formes dérivées obéissent aux mêmes principes de classification que les formes de base (groupes selon le nombre de thèmes). Elles se répartissent en :
-- **Formes simples** : adjonction d'un seul préfixe dérivationnel.
-- **Formes complexes** : combinaison de plusieurs préfixes.
-
-Corpus : 1112 verbes dérivés, 103 types morphologiques.
-
-### 5.2 Les Quatre Formes Simples
+Corpus de 1 112 verbes dérivés, 103 types morphologiques.
 
 | Forme | Préfixe | Fonction | Occurrences | Nb types |
 |-------|---------|----------|-------------|----------|
-| **Transitif-Factitif** | `s-` | Faire faire / rendre transitif | 611 | 43 |
-| **Passif** | `ttwa-`, `ttu-`, `mm-` | Subir l'action | 273 | 20 |
-| **Réfléchi** | `nn-` | Action sur soi-même | 63 | 10 |
-| **Réciproque** | `my-` / `mm-` | Action partagée (pluriel exclusif) | 125 | 20 |
+| Transitif-Factitif | `s-` / `ss-` | Faire faire / rendre transitif | 611 | 43 |
+| Passif | `ttwa-`, `ttu-`, `mm-` | Subir l'action | 273 | 20 |
+| Réfléchi | `nn-` | Action sur soi-même | 63 | 10 |
+| Réciproque | `my-` / `mm-` | Action partagée (pluriel exclusif) | 125 | 20 |
 
-#### 5.2.1 Transitif-Factitif (`s-`)
-- **SG2** : 27 types, 458 occurrences.
-- **SG3** : 16 types, 153 occurrences.
-- Schémas dominants : `seC1C2eC3` (SG2-1, 144 occ.), `sC1eC2eC3eC4` (SG2-2, 85 occ.), `sC1uC2C2eC3` (SG2-3, 47 occ.), `seC1C2u` (SG3-1, 31 occ.), `sC1iC2C2eC3` (SG3-2, 31 occ.).
+### 5.2 La Règle Empirique du « Glue-on-Front » (v2.0)
 
-#### 5.2.2 Passif (`ttwa-` / `ttu-` / `mm-`)
-- **TG1** (défectif, sans aoriste intensif) : 20 verbes, 5 types, préfixe `m-` (verbes d'état passivés : `mecṭuḥ`, `mucaɛ`, etc.).
-- **TG2** : 252 verbes, 14 types, préfixes `ttwa-` / `ttu-` / `mm-`.
-- **TG3** : 1 verbe (`mmag`), préfixe `mma-`.
-- Schémas dominants : `ttwaC1C2eC3` (TG2-1, 112 occ.), `ttwaC1eC2C2eC3` (TG2-2, 100 occ.).
+L'audit de 2 530 verbes dérivés prouve qu'il n'est **pas nécessaire** de créer un moteur à double schwa (comme le suggérait la Règle 17 théorique). Les préfixes dérivationnels se situent **en dehors** du domaine phonologique du verbe de base.
 
-#### 5.2.3 Réfléchi (`nn-`)
-- **NG2** : 55 verbes, 8 types.
-- **NG3** : 8 verbes, 2 types.
-- Schéma dominant : `nneC1C2aC3` (NG2-1, 32 occ.).
+**Algorithme :**
+1. Le verbe de base se conjugue normalement (avec toutes ses règles internes).
+2. Le préfixe est collé au début de la forme fléchie.
 
-#### 5.2.4 Réciproque (`my-` / `mm-`)
-- Conjugaison **exclusivement plurielle** par définition (l'action est partagée).
-- **MG2** : 110 verbes, 14 types.
-- **MG3** : 15 verbes, 6 types.
-- Schémas dominants : `mC1aC2aC3` (MG2-1, 44 occ.), `mmiC1C2aC3` / `myeC1C2aC3` (MG2-2, 17 occ.), `mC1eC2aC3` (MG2-3, 14 occ.), `mC1aC2i` (MG3-1, 7 occ.).
-- **Exception** : certains réciproques admettent une conjugaison au singulier avec complément explicite (`yid-s` / `yid-sen`). Ex. `msefhameɣ yid-s` (je me suis entendu avec lui).
+| Préfixe | Base | Forme fléchie | Résultat |
+|---------|------|---------------|----------|
+| `ttwa-` | `bedreɣ` | `ttwa-` + `bedreɣ` | `ttwabedreɣ` |
+| `ss-` | `lemdeɣ` | `ss-` + `lemdeɣ` | `sslemdeɣ` |
 
-### 5.3 Formes Complexes
+### 5.3 Heuristique d'Épenthèse Causative
+
+Lors du collage de `ss-`, `s-`, `nn-`, `my-`, si la première voyelle du verbe de base fléchi est à l'index ≥ 2 (créant un cluster de consonnes initial illégal), un `e` épenthétique est inséré après le préfixe.
+
+| Préfixe + Base | Résultat | Explication |
+|----------------|----------|-------------|
+| `ss-` + `lmed` (3sg_m) | `isselmed` | Épenthèse ajoutée (`ss-e-lmed`) |
+| `ss-` + `lemdeɣ` (1sg) | `sslemdeɣ` | Pas d'épenthèse (voyelle précoce) |
+
+### 5.4 Formes Complexes
 Combinaisons de deux (voire trois) préfixes. Seul le **réciproque du transitif** (`m-` + `s-`) est représentatif dans le corpus.
 
-- **MSG2** : 28 occurrences, 8 types. Schéma dominant : `mseC1C2aC3` (MSG2-1, 12 occ.).
-- **MSG3** : 12 occurrences, 2 types. Schéma dominant : `mseC1C2u` (MSG3-2, 11 occ.).
-
-*Exemples lexicalisés* : `msebɣu` (s'entendre, s'aimer), `mseddu` (vivre ensemble en couple), `msufaɣ` (se séparer à l'amiable), `msawad` (en venir aux mains / se retrouver devant la justice), `mseɣli` (faire match nul).
-
-### 5.4 Règle 17 : Extension de la Règle 14 aux Formes Dérivées
-La syllabation de droite à gauche et l'insertion du schwa pour briser tout groupe de trois consonnes ou plus en initiale s'appliquent également aux formes dérivées, préfixe personnel inclus.
-
-Lorsque le thème dérivé présente une géminée initiale distinctive (ex. `ssew`, `sseḥlu`), celle-ci ne se réalise qu'après `e` ; en l'absence de `e`, elle se réduit à la consonne simple correspondante.
-
-*Ex.* : `sferfed` + `-eɣ` → `sefrefdeɣ` ; `sseḥla` + `-eɣ` → `seḥlaɣ` ; `sseḥla` + `te-` → `tesseḥla`.
+*Exemples lexicalisés* : `msebɣu` (s'entendre), `mseddu` (vivre ensemble en couple), `msufaɣ` (se séparer à l'amiable), `msawad` (en venir aux mains).
 
 ---
 
-## 6. Verbes d'État
+## 6. Verbes d'État (Imyagen n tyara)
 
 ### 6.1 Définition et Comportement
 Les verbes d'état ont une conjugaison particulière au prétérit (affirmatif et négatif). Aux deux aoristes, ils se conjuguent comme les verbes ordinaires.
@@ -251,30 +313,34 @@ Les verbes d'état ont une conjugaison particulière au prétérit (affirmatif e
 **Particularité au prétérit** :
 - Absence des préfixes personnels en début de forme.
 - Conjugaison reposant sur **5 suffixes uniquement** :
-  - 1sg : `-eɣ`
-  - 2sg : `-eḍ`
-  - 3sg masc : `-∅`
-  - 3sg fém : `-et`
-  - Pluriel (toutes personnes) : `-it` (forme syncrétique).
 
-*Exemples* : `mellul` (être blanc), `zur` (être gros).
+| Personne | Suffixe |
+|----------|---------|
+| 1sg | `-eɣ` |
+| 2sg | `-eḍ` |
+| 3sg masc | `-∅` |
+| 3sg fém | `-et` |
+| Pluriel (toutes) | `-it` (syncrétique) |
 
-| Personne | `mellul` | `zur` |
-|----------|----------|-------|
-| 1sg | `melluɣ` | `zureɣ` |
-| 2sg | `melluleḍ` | `zureḍ` |
-| 3sg masc | `mellul` | `zur` |
-| 3sg fém | `mellulet` | `zuret` |
-| 1pl / 2pl / 3pl | `mellulit` | `zurit` |
+### 6.2 Correction de la Typo de Bouamara (v2.0)
 
-Au prétérit négatif, on ajoute simplement la particule `ur` devant la forme affirmative.
+Les tableaux théoriques indiquent que la 1sg de `mellul` est `melluɣ` (chute de la géminée finale devant `-eɣ`), tout en gardant la géminée à la 2sg (`melluleḍ`).
 
-### 6.2 Répartition
+**Vérité empirique** : L'audit JSON de tous les verbes d'état se terminant par une géminée prouve que la consonne finale **ne chute jamais** :
+
+| Verbe | 1sg (amyag.com) | 2sg |
+|-------|-----------------|-----|
+| `intill` | `ntelleɣ` | `ntelleḍ` |
+| `bbuzṭeṭṭ` | `bezṭeṭṭeɣ` | `bezṭeṭṭeḍ` |
+
+> **Verdict** : `melluɣ` est une **erreur de transcription** dans les sources. La concaténation régulière (`melluleɣ`) est la norme absolue.
+
+### 6.3 Répartition
 - Verbes d'état communs : 6 types, 42 occurrences.
-- Formes passives en `m-` : 5 types, 20 occurrences (états résultant d'une action subie : `mectuḥ`, `mechur`, `mussnaw`, etc.).
+- Formes passives en `m-` : 5 types, 20 occurrences.
 - Total : 11 types, 62 occurrences (~3,5 % du corpus de base).
 
-### 6.3 Types les plus représentatifs
+### 6.4 Types les plus représentatifs
 - **G3.2-7a** (`iC1C2uC3`, ex. `ifsus`, être léger) : 23 occurrences.
 - **TG1-1** (`C1eC2C3uC4`, ex. `mectuḥ`, être petit) : 15 occurrences.
 
@@ -285,18 +351,14 @@ Au prétérit négatif, on ajoute simplement la particule `ur` devant la forme a
 ### 7.1 Définition
 Un verbe est irrégulier lorsqu'il possède l'un de ses thèmes complètement différent des autres, provenant d'une **autre racine** (phénomène de supplétisme).
 
-### 7.2 Contraintes du Supplétisme
-- Affecte **exclusivement l'aoriste intensif**.
-- Le thème hétérogène est **totalement stable** et **généralisable à toutes les personnes** au sein de l'aspect.
+### 7.2 Le « Suppletive Shield » (v2.0)
+Trois verbes utilisent des racines entièrement différentes pour l'Aoriste Intensif. Ils doivent être **hardcodés et protégés** pour éviter que les règles génératives ou les erreurs d'OCR ne corrompent leurs thèmes.
 
-### 7.3 Les Trois Verbes Supplétifs du Corpus
-Sur 1774 verbes de base, ils représentent **moins de 0,17 %** :
-
-| Verbe | Racine de base | Thème supplétif (Aor. Intensif) | Paradigme |
-|-------|----------------|----------------------------------|-----------|
-| `efk` (donner) | `√fk` | `ttakk` | `ittakk`, `tettakk`, `nettakk`, `ttakken`, etc. |
-| `ini` (dire) | `√ni` | `qqaṛ` | `iqqaṛ`, `teqqaṛ`, `neqqaṛ`, `qqaṛen`, etc. |
-| `ecč` (manger) | `√cč` | `ttett` (racine `√tt`) | `ittett`, `tettett`, `nettett`, `ttetten`, etc. |
+| Verbe | Racine de base | Thème Intensif | Note |
+|-------|----------------|----------------|------|
+| `ini` (dire) | `√nn` (Prét) | `qqaṛ` | — |
+| `efk` (donner) | `√fk` (Prét) | **`ttak`** | Corrigé v2.0 (et non `ttakk`) |
+| `ečč` (manger) | `√čč` (Prét) | `ttett` | Racine `√tt` |
 
 **Principe typologique** : ces trois verbes figurent parmi les plus fréquemment employés en taqbaylit, conformément au principe universel selon lequel les verbes les plus usités sont les plus résistants à la régularisation.
 
@@ -307,12 +369,11 @@ Sur 1774 verbes de base, ils représentent **moins de 0,17 %** :
 Le verbe kabyle dispose d'au moins **quatre formes participiales** (une par aspect affirmatif), invariables selon les personnes.
 
 ### 8.1 Formation
-- **Aspects affirmatifs** (Prét. Aff., Aor. Simple, Aor. Intensif) : ajout du suffixe **`-n`** à la 3e personne du masculin singulier.
-- **Aspects négatifs** (Prét. Nég., Aor. Intensif Nég.) : ajout du préfixe **`n-`** à cette même forme.
-
-Dans les deux cas, `n` est un affixe intégré à la forme verbale, non un élément graphiquement détaché.
+- **Aspects affirmatifs** : ajout du suffixe **`-n`** à la 3e personne du masculin singulier.
+- **Aspects négatifs** : ajout du préfixe **`n-`** à cette même forme.
 
 ### 8.2 Exemples
+
 | Aspect | Forme | Participe |
 |--------|-------|-----------|
 | Prét. Aff. | `yura` | `yuran` |
@@ -335,115 +396,111 @@ Dans les deux cas, `n` est un affixe intégré à la forme verbale, non un élé
 - 2pl masc. : thème de l'aoriste intensif + `-em`.
 - 2pl fém. : thème de l'aoriste intensif + `-emt`.
 
-*Exemples* (G2-1 `cerreg`) :
-- Simple : `cerreg` (2sg), `cergem` (2pl masc.), `cergemt` (2pl fém.).
-- Intensif : `ttcerrig` (2sg), `ttcergem` (2pl masc.), `ttcergemt` (2pl fém.).
-
 ---
 
 ## 10. Spécifications Algorithmiques
 
 ### 10.1 Structure de Données Requise
 
-#### Dictionnaire de verbes
-Chaque entrée verbale doit contenir au minimum :
 ```yaml
-lemme: "aru"               # Forme de base (impératif 2sg)
-racine: "√rw"              # Racine abstraite (optionnel mais utile)
-groupe: "G4"               # G1 | G2 | G3.1 | G3.2 | G4
-stype: "G4-1"              # Type morphologique précis
-themes:                    # Liste des thèmes par aspect
-  pret_aff: "ura"
-  pret_neg: "uri"
-  aor_simple: "aru"
-  aor_intensif: "ttaru"
-est_verbe_etat: false      # true pour les verbes d'état
-est_suppletif: false       # true pour efk, ini, ecč
-est_derive: false          # true pour les formes dérivées
-  prefixe_derivation: null # s- | ttwa- | ttu- | mm- | nn- | my- | mm- | m-s- ...
-  groupe_derive: null      # SG2 | SG3 | TG1 | TG2 | TG3 | NG2 | NG3 | MG2 | MG3 | MSG2 | MSG3
+lexicon_entry:
+  lemme: "bnu"
+  themes:
+    pret_aff: "bna"       # Déclenche l'apophonie (bniɣ)
+    pret_neg: "bni"
+    aor_simple: "bnu"
+    aor_intensif: "bennu"  # Schwa en position 1 (auto-porteur)
+  is_state: false
+  is_derived: false
+  confidence: "verified_lexicon"
 ```
 
-#### Tables de types morphologiques
-Une table référentielle par type (64 types de base + types dérivés) indiquant :
-- Le schème abstrait (ex. `C1C2eC3`, `C1eC2C2eC3`).
-- Les règles de dérivation thématique entre les aspects (patterns de voyelles/consonnes).
-- Les contraintes phonotactiques spécifiques.
-
-### 10.2 Pipeline de Génération d'une Forme Conjuguée
+### 10.2 Pipeline de Génération
 
 ```
-Entrée : Lemme + Type + Aspect + Personne + Genre + Nombre
+Entrée : Lemme + Aspect + Personne
 
-Étape 1 : Récupération du thème correspondant (Aspect + Type)
-Étape 2 : Application des règles de dérivation thématique si nécessaire
-Étape 3 : Détermination des affixes (préfixe + suffixe) selon Personne/Genre/Nombre
-Étape 4 : Assemblage préfixe + thème + suffixe
-Étape 5 : Application des règles morphophonologiques
-  5a. Règle 3 (préfixe 3sg masc : y- vs i-)
-  5b. Règle 14 (comportement du schwa e)
-  5c. Règle 15.1 (bascule du schwa devant -eɣ / -eḍ)
-  5d. Règle 15.2 (collision dentales tett-)
-  5e. Règle 16 (loi d'environnement post-schwa / biliteres)
-  5f. Règle 17 (extension aux dérivés)
-  5g. Règle 18 (invariance du suffixe -em)
-Étape 6 : Post-traitement orthographique (normalisation des caractères kabyles)
-Sortie : Forme conjuguée
+1. Suppletive Shield : Si lemme ∈ {ini, efk, ečč} → thèmes hardcodés.
+2. Derived Wrapper   : Si préfixe ∈ {ss-, ttwa-, nn-, my-} →
+     a. Isoler le verbe de base.
+     b. Conjuguer le verbe de base (récursivité).
+     c. Appliquer l'Heuristique d'Épenthèse Causative.
+     d. Coller le préfixe (Glue-on-Front).
+3. Lexicon Lookup    : Si lemme ∈ JSON (6198 verbes) → thèmes empiriques.
+4. Generative Fallback : Matcher le lemme contre le Type Registry (G1 à G4).
+5. Schwa & Phonology Engine :
+     a. Apophonie (a → i) si Prét. Aff. + 1sg/2sg.
+     b. Règles de relocation/épenthèse du schwa.
+     c. Gradation (c→čč, ḍ→ṭṭ UNIQUEMENT).
+6. Sortie : Forme conjuguée (ou "UNRESOLVED" si ambiguïté OOV).
 ```
 
-### 10.3 Gestion des Caractères Kabyles
-Le conjugueur doit utiliser l'alphabet latin standardisé pour le kabyle, avec les caractères spécifiques suivants :
-- Consonnes : `ɛ` (latin small letter open e), `ɣ` (gamma latin), `č`, `ḍ`, `ǧ`, `ḥ`, `ṛ`, `ṣ`, `ṭ`, `ẓ`.
-- Voyelles longues : `ā`, `ē`, `ī`, `ō`, `ū` (si nécessaire selon la modélisation).
-- Géminées : représentées par la duplication de la consonne (`tt`, `kk`, `cc`, `bb`, etc.).
+### 10.3 Niveaux de Confiance (Confidence Grading)
 
-**Important** : le système doit rejeter les faux amis grecs (`ε` → `ɛ`, `γ`/`Γ` → `ɣ`/`Ɣ`, `Σ` → `Ɛ`) conformément aux normes Weblate/KabyleCharactersCheck.
+Tout système implémentant ces spécifications doit taguer ses sorties avec l'un des 4 niveaux suivants :
 
-### 10.4 Verbes Défectifs
+| Niveau | Définition | Exemple |
+|--------|------------|---------|
+| `verified_lexicon` | Vérité terrain empirique (Corpus amyag.com). Écrase les règles génératives. | `kcem` → `ikeccem` |
+| `verified` | Règles génératives adossées à de la prose propre, ou les 3 supplétifs. | `bnu` → `bniɣ` |
+| `regular-rule` | Règles génératives adossées aux tableaux théoriques (risque d'OCR). | `cudd` → `ttcuddu` |
+| `unresolved` | Formes OOV ambiguës. Le moteur **doit** retourner `null` ou `—`. | `ger` (sans lexique) |
+
+### 10.4 Gestion des Caractères Kabyles
+Le conjugueur doit utiliser l'alphabet latin standardisé pour le kabyle :
+- **Consonnes** : `ɛ`, `ɣ`, `č`, `ḍ`, `ǧ`, `ḥ`, `ṛ`, `ṣ`, `ṭ`, `ẓ`.
+- **Voyelles** : `a`, `i`, `u`, et le schwa épenthétique `e`.
+- **Important** : `ɛ` (pharyngale voisée /ʕ/) est une **consonne**, pas une voyelle.
+- **Rejet des faux amis grecs** : `ε` → `ɛ`, `γ`/`Γ` → `ɣ`/`Ɣ`, `Σ` → `Ɛ`.
+
+### 10.5 Verbes Défectifs
 Certains verbes ne se conjuguent pas à tous les aspects (notamment en G1 et certains dérivés passifs TG1). Le système doit retourner une absence de forme (`null` / `—`) pour les combinaisons non attestées.
 
-### 10.5 Optimisations Recommandées
+### 10.6 Optimisations Recommandées
 1. **Pré-calcul des types dominants** : G3.1-1, G2-1, G4-1 couvrent > 50 % du lexique.
-2. **Génération par règles vs. lookup** : pour les verbes réguliers, privilégier la génération algorithmique à partir du lemme et du type. Pour les supplétifs et irréguliers, utiliser une table de lookup.
-3. **Validation phonotactique** : implémenter un validateur de syllabation (contrainte de fermeture post-schwa) pour filtrer les formes impossibles.
+2. **Génération par règles vs. lookup** : pour les verbes réguliers, privilégier la génération algorithmique. Pour les supplétifs et irréguliers, utiliser une table de lookup.
+3. **Validation phonotactique** : implémenter un validateur de syllabation pour filtrer les formes impossibles.
 
 ---
 
 ## 11. Tableaux Récapitulatifs des Thèmes (Extraits Stratégiques)
 
 ### 11.1 Groupe 2 — Types majeurs
+
 | Type | Schème | Exemple | Prét. Aff. | Prét. Nég. | Aor. Simple | Aor. Intensif |
 |------|--------|---------|------------|------------|-------------|---------------|
 | G2-1 | `C1eC2C2eC3` | cerreg | `cerreg` | `cerreg` | `cerreg` | `ttcerrig` |
 | G2-2 | `C1uC2(C2)` | cudd | `cudd` | `cudd` | `cudd` | `ttcuddu` |
 | G2-3a | `C1uC2C2eC3` | kuffer | `kuffer` | `kuffer` | `kuffer` | `ttkuffur` |
-| G2-15 | `C1C1i` | zzi | `zzi` | `zzi` | `zzi` | `ttezzi` |
 
 ### 11.2 Groupe 3.1 — Type dominant
+
 | Type | Schème | Exemple | Prét. Aff. | Prét. Nég. | Aor. Simple | Aor. Intensif |
 |------|--------|---------|------------|------------|-------------|---------------|
 | G3.1-1 | `C1C2eC3` | bder | `bder` | `bdir` | `bder` | `bedder` |
 
 ### 11.3 Groupe 4 — Types majeurs
+
 | Type | Schème | Exemple | Prét. Aff. | Prét. Nég. | Aor. Simple | Aor. Intensif |
 |------|--------|---------|------------|------------|-------------|---------------|
 | G4-1 | `C1C2u` | bḍu | `bḍa` | `bḍi` | `bḍu` | `beṭṭu` |
-| G4-3 | `C1eC2` | ɣer | `ɣra` | `ɣri` | `ɣer` | `ɣɣar` / `qqar` |
+| G4-3 | `C1eC2` | ɣer | `ɣra` | `ɣri` | `ɣer` | `ɣɣar` ⚠️ *(et non `qqar`)* |
 | G4-6 | `aC1u` | aru | `ura` | `uri` | `aru` | `ttaru` |
 | G4-8 | `eC1C2` | els | `lsa` | `lsi` | `els` | `ttlusu` |
 
 ### 11.4 Dérivés — Transitif-Factitif (`s-`)
-| Type | Schème | Exemple | Prét. Aff. | Prét. Nég. | Aor. Simple | Aor. Intensif |
-|------|--------|---------|------------|------------|-------------|---------------|
-| SG2-1 | `seC1C2eC3` | selmed | `sselmed` | `sselmed` | `sselmed` | `sselmad` |
-| SG2-6 | `seC1C2eC3` | sefsi | `ssefsi` | `ssefsi` | `ssefsi` | `ssefsay` |
-| SG3-1 | `seC1C2u` | seḥlu | `sseḥla` | `sseḥla` | `sseḥlu` | `sseḥluy` |
+
+| Type | Schème | Exemple | Prét. Aff. | Aor. Intensif |
+|------|--------|---------|------------|---------------|
+| SG2-1 | `seC1C2eC3` | selmed | `sselmed` | `sselmad` |
+| SG3-1 | `seC1C2u` | seḥlu | `sseḥla` | `sseḥluy` |
 
 ### 11.5 Dérivés — Passif
-| Type | Schème | Exemple | Prét. Aff. | Prét. Nég. | Aor. Simple | Aor. Intensif |
-|------|--------|---------|------------|------------|-------------|---------------|
-| TG2-1 | `ttwaC1C2eC3` | ttwabder | `ttwabder` | `ttwabder` | `ttwabder` | `ttwabdar` |
-| TG2-2 | `ttwaC1eC2C2eC3` | ttwacebbeh | `ttwacebbeh` | `ttwacebbeh` | `ttwacebbeh` | `ttwacebbah` |
+
+| Type | Schème | Exemple | Prét. Aff. | Aor. Intensif |
+|------|--------|---------|------------|---------------|
+| TG2-1 | `ttwaC1C2eC3` | ttwabder | `ttwabder` | `ttwabdar` |
+| TG2-2 | `ttwaC1eC2C2eC3` | ttwacebbeh | `ttwacebbeh` | `ttwacebbah` |
 
 ---
 
@@ -457,7 +514,7 @@ Certains verbes ne se conjuguent pas à tous les aspects (notamment en G1 et cer
 | `∅` | Suffixe zéro (absence de suffixe) |
 | `tt-` | Préfixe d'intensif / réciproque / passif |
 | `y-` / `i-` | Allomorphes du préfixe 3sg masc |
-| `ur` | Particule de négation du prétérit |
+| `ur ... ara` | Particules de négation |
 | `ad` | Particule d'aoriste |
 | `>` | Dérivation / transformation |
 
@@ -465,11 +522,15 @@ Certains verbes ne se conjuguent pas à tous les aspects (notamment en G1 et cer
 
 ## 13. Références Bibliographiques Implémentées
 
-1. Bouamara, K. (2026). *Modélisation des types morphologiques et de la conjugaison du verbe kabyle. Première partie : Formes de base*. HAL : hal-05647626.
-2. Bouamara, K. (2026). *Modélisation des types morphologiques et de la conjugaison du verbe kabyle. Deuxième volume : Formes dérivées*. HAL : hal-05655932.
-3. Bouamara, K. (2024). *Amyag n teqbaylit. Asesmel n talɣiwin n yimyagen akked tseftay-nsen*. Éditions Boussekine.
-4. Dallet, J.-M. (1982). *Dictionnaire kabyle-français*. SELAF.
+1. Bouamara, K. (2026). *Analyse morphologique du verbe kabyle — Régularité, irrégularité et défectivité en taqbaylit*. HAL : hal-05533803.
+2. Bouamara, K. (2026). *Modélisation des types morphologiques et de la conjugaison du verbe kabyle. Première partie : Formes de base*. HAL : hal-05647626.
+3. Bouamara, K. (2026). *Modélisation des types morphologiques et de la conjugaison du verbe kabyle. Deuxième volume : Formes dérivées*. HAL : hal-05655932.
+4. Naït-Zerrad, K. *Amyag.com* — Corpus JSON de 6 198 verbes (vérité terrain pour l'audit v2.0).
+5. Naït-Zerrad, K. (1998). *Dictionnaire des verbes kabyles*. L'Harmattan.
+6. Dallet, J.-M. (1982). *Dictionnaire kabyle-français*. SELAF.
 
 ---
 
-*Document généré pour la conception d'un conjugueur algorithmique du verbe kabyle. Dernière mise à jour : 2026-07-28.*
+*Document v2.0 rédigé pour la conception d'un conjugueur algorithmique du verbe kabyle. Dernière mise à jour : 2026-08-11.*
+*Basé sur l'audit empirique du moteur v8.1 (6 198 verbes vérifiés).*
+```
