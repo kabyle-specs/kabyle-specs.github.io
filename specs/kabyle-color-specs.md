@@ -8,9 +8,9 @@ summary: Termes de couleur canoniques pour le kabyle (Taqbaylit), leurs flexions
 
 **Auteurs** : Athmane Mokraoui (boffire), locuteur natif kabyle, mainteneur des ressources NLP kabyles ; recherche documentaire, structuration morphologique et vérification native.
 
-**Date** : 31 juillet 2026
+**Date** :  15 août 2026
 
-**Version** : 2026-07-31
+**Version** : 2026-08-15
 
 **Cible** : Lexicographes, développeurs d'applications d'apprentissage, ingénieurs i18n/l10n, linguistes computationnels, annotateurs de corpus.
 
@@ -39,12 +39,15 @@ Les adjectifs de couleur kabyles se fléchissent comme les adjectifs kabyles ord
 - La règle d'accord qui produit ces formes
 - Les deux constructions utilisées pour attacher une couleur à un nom (attributive, prédicative avec `d`)
 - Les variantes attestées et les conventions que les implémenteurs doivent déclarer lorsqu'ils choisissent parmi elles
+- Les modificateurs de nuance natifs (clair, foncé, blanchâtre)
 
 **Hors périmètre** (noté uniquement pour référence croisée) :
 - Les formes verbales (inchoatives) de couleur, ex. « devenir rouge »
 - Les détails d'encodage tifinagh — reportés à une future spécification d'orthographe
 - Les idiotismes et emplois figurés de couleur
 - Les mots évaluatifs/esthétiques qui apparaissent dans les études d'idiomes aux côtés des termes de couleur mais ne sont pas eux-mêmes des termes de couleur (voir §3.7)
+
+---
 
 ## Spécification
 
@@ -83,6 +86,12 @@ Les règles pour les adjectifs de couleur sont identiques à celles des autres a
 | `aṛanǧi` | `uṛanǧi` | après préposition |
 | `ačini` | `učini` | après préposition |
 | `amelliɣdi` | `umelliɣdi` | après préposition |
+| `aberqac` | `uberqac` | après préposition |
+| `aɣiɣdan` | `uɣiɣdan` | après préposition |
+| `aḥcayci` | `uḥcayci` | après préposition |
+| `acemlax` | `ucemlax` | après préposition |
+| `aqesḥan` | `uqesḥan` | après préposition |
+| `acamlal` | `ucamlal` | après préposition |
 
 Les adjectifs de couleur féminins en `ta-…-t` perdent la voyelle initiale à l'état d'annexion :
 
@@ -94,6 +103,12 @@ Les adjectifs de couleur féminins en `ta-…-t` perdent la voyelle initiale à 
 | `tawraɣt` | `twraɣt` |
 | `tazegzawt` | `tzegzawt` |
 | `taẓeṛqaqt` | `tẓeṛqaqt` |
+| `taberqact` | `tberqact` |
+| `taɣiɣdant` | `tɣiɣdant` |
+| `taḥcaycit` | `tḥcaycit` |
+| `tacemlaxt` | `tcemlaxt` |
+| `taqesḥant` | `tqesḥant` |
+| `tacamlalt` | `tcamlalt` |
 
 Exemples en contexte :
 
@@ -112,13 +127,14 @@ Taqcict n tzegzawt.             « Une fille de vert. » (annexion après n)
 | noir | `aberkan` | `taberkant` | `iberkanen` | `tiberkanin` | |
 | rouge | `azeggaɣ` | `tazeggaɣt` | `izeggaɣen` | `tizeggaɣin` | Aussi graphié `azegwaɣ`, `azggaɣ` selon les sources ; voir §3.8 |
 | jaune | `awraɣ` | `tawraɣt` | `iwraɣen` | `tiwraɣin` | Aussi graphié `aweṛaɣ` ; voir §3.8 |
-| vert | `azegzaw` | `tazegzawt` | `izegzawen` | `tizegzawin` | Voir §3.1 (bleu/vert) et §3.2 (variante régionale) |
-| bleu | `azegzaw` (traditionnel) / `aẓeṛqaq` (terme distinct) | `tazegzawt` / `taẓeṛqaqt` | `izegzawen` / `iẓeṛqaqen` | `tizegzawin` / `tiẓeṛqanin` | Voir §3.1 (bleu/vert). Noter que le pluriel féminin de `aẓeṛqaq` est `tiẓeṛqanin` (q→n), et non le `tiẓeṛqaqin` attendu ; voir §3.6 |
-| marron | `aqahwi` | `taqahwit` | `iqahwiyen` | `tiqahwiyin` | De `qahwa`, « café ». Variante fém. `taqahwitt` attestée mais non recommandée |
-| rose | `axuxi` | `taxuxit` | `ixuxiyen` | `tixuxiyin` | De `xux`, « pêche » |
-| violet | `arẓaẓ` | `tarẓaẓt` | `irẓaẓen` | `tirẓaẓin` | Peu standardisé entre les sources ; `azenǧari`/`aǧenǧari` attesté comme synonyme régional, voir §3.3 |
-| orange | `aṛanǧi` (emprunt du nom de la couleur) ou `ačini`/`atchini` (emprunt via le nom du fruit) | `taṛanǧit` | `iṛanǧiyen` | `tiṛanǧiyin` | Deux emprunts indépendamment attestés, non un seul terme établi avec variantes graphiques ; voir §3.4 |
-| gris | `amelliɣdi` (aussi graphié `amlliɣdi`, `abraɣdi`) | *non confirmé* | *non confirmé* | *non confirmé* | D'origine empruntée/composée ; voir §3.5 |
+| bleu-vert | `azegzaw` | `tazegzawt` | `izegzawen` | `tizegzawin` | Voir §3.1 (bleu/vert) et §3.2 (variante régionale) |
+| gris | `aɣiɣdan` | `taɣiɣdant` | `iɣiɣden` | *non confirmé* | Natif, dérivé de `iɣed` « cendre ». Variante non fléchie : `amelliɣdi` (§3.5) |
+| bariolé, multicolore, tacheté | `aberqac` | `taberqact` | `iberqacen` | `tiberqacin` | Natif. Source : Olivier (1878). Variante régionale `aberbac` |
+| vert (alt.) | `aḥcayci` | `taḥcaycit` | `iḥcayciyen` | `tiḥcayciyin` | Natif, dérivé de `leḥcic` « herbe verte ». Variante régionale du Soummam : `adal` (§3.2) |
+| marron | `aqahwi` | `taqahwit` | `iqahwiyen` | `tiqahwiyin` | **Emprunt arabe** : `qahwa`, « café ». Variante fém. `taqahwitt` attestée mais non recommandée |
+| rose | `axuxi` | `taxuxit` | `ixuxiyen` | `tixuxiyin` | **Emprunt arabe** : `xux`, « pêche » |
+| violet | `arẓaẓ` | `tarẓaẓt` | `irẓaẓen` | `tirẓaẓin` | Natif, mais ambigu avec « guêpe » ; peu standardisé. `azenǧari`/`aǧenǧari` attesté comme synonyme régional, voir §3.3 |
+| orange | `aṛanǧi` (emprunt du nom de la couleur) ou `ačini`/`atchini` (emprunt via le nom du fruit) | `taṛanǧit` | `iṛanǧiyen` | `tiṛanǧiyin` | **Emprunts arabes**. Deux emprunts indépendamment attestés, non un seul terme établi avec variantes graphiques ; voir §3.4 |
 
 Les entrées marquées *non confirmé* ne doivent pas être traitées comme établies tant qu'elles ne sont pas corroborées par une source de locuteur natif ou un corpus ; voir Questions ouvertes.
 
@@ -169,11 +185,11 @@ Le kabyle ne semble pas disposer d'un terme de base hérité (non emprunté) pou
 
 Les deux sont attestés indépendamment l'un de l'autre comme traductions de « orange », il s'agit donc de deux emprunts concurrents plutôt que d'un seul mot établi avec variantes graphiques. Comme pour la coupure bleu/vert, les implémenteurs doivent en choisir un et le déclarer plutôt que de mélanger les deux dans le même jeu de données.
 
-#### 3.5 Gris : `amelliɣdi`
+#### 3.5 Gris : `aɣiɣdan`
 
-`Amelliɣdi` (aussi graphié `amlliɣdi`, `abraɣdi`) est attesté comme terme pour le gris dans les listes de vocabulaire amazigh général. L'étymologie proposée est `am` (« comme ») + `iɣed`/`iɣd` (« cendre »), c'est-à-dire « de couleur cendre » — une formation transparente et plausible, qui correspond à un motif translinguistique très courant pour nommer le gris (l'arabe رمادي, *ramadi*, est construit de la même manière, littéralement « de couleur cendre », de *ramad* « cendre »).
+Le gris ne dispose pas d'un terme natif universel dans les sources lexicographiques anciennes. La forme `amelliɣdi` (aussi `amlliɣdi`, `abraɣdi`) apparaît dans des listes de vocabulaire amazigh général, mais son étymologie (`am` + `iɣed` « cendre ») n'a pas pu être confirmée indépendamment comme mot kabyle autonome, et son paradigme de flexion n'est attesté dans aucune source consultée.
 
-Cela dit, cette spécification a pu confirmer indépendamment le *mot de couleur* `amelliɣdi`/`amlliɣdi`, mais pas la racine sous-jacente `iɣed` « cendre » comme mot kabyle autonome — cette partie de l'étymologie est plausible et cohérente avec le motif de dénomination observé ailleurs, mais doit être traitée comme non vérifiée plutôt qu'établie jusqu'à corroboration dans un dictionnaire ou un corpus. Les formes féminine et pluriel ne sont pas attestées dans les sources consultées ; n'assumez pas que le modèle régulier `t...t` / `i...en` / `ti...in` s'applique tant que ce n'est pas confirmé, car les termes de couleur dérivés d'emprunts et de composés dans cette spécification (par ex. `aqahwi`, `axuxi`, `aṛanǧi`) ne se fléchissent pas tous de manière identique.
+L'enquête de terrain de la thèse UMMTO (géolinguistique, 30 points en Kabylie) donne **`aɣiɣdan`** (m.sg.), **`taɣiɣdant`** (f.sg.), **`iɣiɣden`** (m.pl.), dérivé nominal **natif** de `iɣed` « cendre ». Cette spécification recommande **`aɣiɣdan`** comme terme canonique pour le gris. La forme `amelliɣdi` est conservée en référence comme variante non fléchie issue de sources lexicales générales amazighes.
 
 #### 3.6 `aẓeṛqaq` utilisé généralement pour la couleur des yeux
 
@@ -194,6 +210,53 @@ Il apparaît à côté de `amellal` dans les collections d'idiomes parce que les
 Le terme rouge présente trois graphies attestées : `azeggaɣ` (canonique dans cette spécification), `azegwaɣ`, et `azggaɣ`. Le verbe d'état sous-jacent est `izwiɣ` (« être rouge »), mais la dérivation adjectivale n'est pas entièrement transparente d'une source à l'autre. Le `gg` de `azeggaɣ` représente une géminée /gː/ ; le `ɣ` final est la consonne radicale. `Azegwaɣ` insère une glide `w` qui peut refléter une prononciation dialectale ou une analyse radicale alternative. `Azggaɣ` supprime la voyelle épenthétique. Cette spécification traite `azeggaɣ` comme canonique et les autres comme variantes orthographiques ; les implémenteurs doivent lemmatiser les trois vers `azeggaɣ`.
 
 Le terme jaune présente `awraɣ` (canonique) et `aweṛaɣ`. Le `e` de `aweṛaɣ` est épenthétique, rompant le groupe `w-r`. Le féminin `tawraɣt` confirme `awraɣ` comme radical de base. Les implémenteurs doivent accepter les deux graphies mais lemmatiser vers `awraɣ`.
+
+#### 3.9 Nuances : clair, foncé et blanchâtre
+
+Le kabyle dispose de modificateurs natifs pour exprimer les nuances d'une couleur. Ils suivent la couleur qu'ils modifient (postposition) et s'accordent en genre et nombre avec le nom tête.
+
+| Nuance | Masc. sg. | Fém. sg. | Masc. pl. | Fém. pl. | Sens |
+|---|---|---|---|---|---|
+| clair | `acemlax` | `tacemlaxt` | `icemlaxen` | `ticemlaxin` | teinte atténuée |
+| foncé | `aqesḥan` | `taqesḥant` | `iqesḥanen` | `tiqesḥanin` | teinte soutenue, sombre |
+| blanchâtre | `acamlal` | `tacamlalt` | `icamlalen` | `ticamlalin` | blanc cassé |
+
+**Syntaxe** : `[Nom] [Couleur] [Nuance]` — les trois éléments s'accordent en genre et nombre.
+
+```
+tajeǧǧigt-nni tazeggaɣt taqesḥant    « la fleur rouge foncée »
+aberkan aqesḥan                         « noir foncé »
+azeggaɣ acemlax                         « rouge clair »
+azegzaw aqesḥan                         « vert foncé »
+amellal acemlax                         « blanc clair / blanc cassé »
+```
+
+**Note sur `acamlal`** : en dehors du domaine chromatique, `acamlal` est attesté comme nom de variété d'olivier. En contexte de couleur, il désigne la nuance blanchâtre de `amellal`.
+
+#### 3.10 Bariolé, multicolore, tacheté
+
+Le kabyle ne dispose pas d'un adjectif de couleur de base signifiant « multicolore » au sens abstrait. Le terme natif **`aberqac`** (m.sg.), **`taberqact`** (f.sg.), **`iberqacen`** (m.pl.), **`tiberqacin`** (f.pl.) est employé avec les sens de « bariolé, bigarré, tacheté ».
+
+Attesté chez Olivier (1878) sous les graphies `aberqac` et `aberquc`, avec le pluriel `ib-cen` (résolu en `iberqacen`). Le féminin et le pluriel féminin ont été confirmés par locuteur natif. Variante régionale `aberbac` (spirantisation / affrication du `q`).
+
+**Usage** : le terme s'applique initialement aux tissus et étoffes, mais des locuteurs de certaines régions l'étendent à tout objet présentant plusieurs couleurs.
+
+#### 3.11 Annexe : emprunts arabes attestés
+
+Les termes suivants sont attestés dans la littérature ou les enquêtes de terrain, mais sont d'origine arabe. Ils sont documentés ici pour référence, mais ne font pas partie du tableau canonique §2.
+
+| Couleur | Masc. sg. | Fém. sg. | Masc. pl. | Fém. pl. | Origine arabe |
+|---|---|---|---|---|---|
+| marron | `aqahwi` | `taqahwit` | `iqahwiyen` | `tiqahwiyin` | `qahwa` |
+| rose | `axuxi` | `taxuxit` | `ixuxiyen` | `tixuxiyin` | `xawx` |
+| rose (alt.) | `awerdi` | `tawerditt` | `iwerdiyen` | `tiwerdiyin` | `ward` |
+| orange | `aṛanǧi` | `taṛanǧit` | `iṛanǧiyen` | `tiṛanǧiyin` | `nāranj` |
+| orange (alt.) | `ačinawi` | `tačinawitt` | `ičinawiyen` | `tičinawiyin` | via `ččina` |
+| bleu (distinct) | `aẓeṛqaq` | `taẓeṛqaqt` | `iẓeṛqaqen` | `tiẓeṛqanin` | `azraq` |
+| mauve / indigo | `anili` | `tanilit` | `iniliyen` | `tiniliyin` | `nīla` |
+| doré | `adehbi` | `tadehbit` | `idehbiyen` | `tidehbiyin` | `dhahab` |
+| grenat | `aṛemmani` | `taremmanit` | `iṛemmaniyen` | `tiremmaniyin` | `rummān` |
+| violet (alt.) | `abanafsaji` | `tabanafsajit` | `ibanafsajiyen` | `tibanafsajiyin` | `banafsaj` |
 
 ### 4. Attacher une couleur à un nom
 
@@ -256,16 +319,23 @@ Pour les implémenteurs construisant des validateurs, des dictionnaires ou des l
 | `HOMONYM_CHECK` | `arẓaẓ` ne doit pas être lemmatisé vers « violet » sans contexte (désambiguïser de « guêpe »). | avertissement |
 | `CONVENTION_DECLARATION` | Le jeu de données doit déclarer s'il utilise le bleu/vert unifié (`azegzaw` seul) ou séparé (`azegzaw` + `aẓeṛqaq`). | info |
 | `NOT_A_COLOR` | `acebḥan` ne doit pas être admis dans un lexique de couleur comme synonyme de blanc. | erreur |
+| `NUANCE_AGREEMENT` | Le modificateur de nuance (`acemlax`, `aqesḥan`, `acamlal`) doit suivre la couleur et s'accorder en genre/nombre avec le nom tête. | erreur |
+| `NATIVE_CANONICAL` | Le tableau §2 ne doit contenir que des termes natifs berbères ; les emprunts arabes doivent être relégués au §3.11. | erreur |
+| `NUANCE_PREDICTABLE` | Les formes fléchies de `acamlal` sont prédictibles mais non confirmées par locuteur natif ; les validateurs doivent les accepter avec une note. | avertissement |
 
 ## Questions ouvertes
 
-- La racine `iɣed`/`iɣd` (« cendre ») sous-jacente à `amelliɣdi` (§3.5) n'a pas pu être confirmée indépendamment comme mot kabyle autonome dans les sources consultées — il vaut la peine de vérifier dans un dictionnaire (par ex. Dallet 1982) avant de traiter l'étymologie comme établie plutôt que plausible.
-- Les formes plurielles de `amelliɣdi` (gris) ne sont toujours pas confirmées dans les sources consultées — c'est maintenant la seule couleur de la table sans au moins un féminin singulier attesté.
+- La racine `iɣed`/`iɣd` (« cendre ») sous-jacente à `aɣiɣdan` (§3.5) n'a pas pu être confirmée indépendamment comme mot kabyle autonome dans les sources consultées — il vaut la peine de vérifier dans un dictionnaire (par ex. Dallet 1982) avant de traiter l'étymologie comme établie plutôt que plausible.
+- Les formes plurielles de `amelliɣdi` (gris) ne sont toujours pas confirmées dans les sources consultées — remplacé par `aɣiɣdan` dans le tableau canonique.
 - Le bleu/vert devrait-il constituer une seule ligne de table avec une étiquette dialectale, ou deux lignes séparées ? Nécessite une décision, pas seulement une documentation (voir §3.1).
 - Pour le violet et l'orange, le choix entre synonymes (`arẓaẓ`/`azenǧari` ; `aṛanǧi`/`ačini`) est-il réellement régional, ou simplement une variation libre/générationnelle (emprunt ancien vs. emprunt récent) ? Il vaut la peine de vérifier dans un atlas dialectal ou en interrogeant des locuteurs de plusieurs régions avant de le traiter comme une coupure formelle comme le font les §3.1 et §3.2.
 - L'usage bleu/vert-neutre de `aẓeṛqaq` s'étend-il au-delà de la couleur des yeux (§3.6) à d'autres domaines, ou est-il spécifique aux yeux ? Il vaut la peine de vérifier avant de généraliser la note.
 - Le pluriel de `adal` : est-ce `adalen`/`tadalin` (sans changement vocalique) ou `idalen`/`tidalin` (changement vocalique, conforme à la règle générale du §1) ? Deux sources sont en désaccord ; cela nécessite une résolution plutôt qu'un choix silencieux, car cela affecte le traitement de `adal` comme pluriel régulier ou irrégulier. Cette spécification recommande `idalen`/`tidalin` par défaut.
 - Un exemple de phrase d'un dictionnaire kabyle-français décrivant les couleurs d'une robe traditionnelle a listé plusieurs termes non encore couverts par cette spécification : `aẓerfan` (« argent »), `agennaw` (« turquoise »), `ademdam` (« violet » — un troisième terme pour le violet, distinct à la fois de `arẓaẓ` et de `azenǧari`/`aǧenǧari` du §3.3), et `amekzay` (« mauve »). Ceux-ci sont hors du périmètre actuel (le §2 ne couvre que les couleurs déjà discutées) mais méritent un passage dédié ultérieurement plutôt que d'être silencieusement absorbés dans des lignes existantes — `ademdam` en particulier signifie que cette spécification pourrait nécessiter un traitement à trois voies, pas deux, du « violet ».
+- `qessiḥen` — rapport exact avec `aqesḥan` (participe, variante dialectale, ou terme distinct ?) Nécessite clarification.
+- `amidadi` — attesté oralement comme « bleu foncé », non trouvé dans les sources écrites d'autorité (Dallet, Olivier, UMMTO). À vérifier avant intégration.
+- Étymologie de `aẓerwal` (bleu clair), `aṣenfari` (jaune très clair), `amuri` (bleu marine) — natifs berbères ou emprunts ? À vérifier.
+- Pluriel féminin de `aɣiɣdan` — prédictible (`tiɣiɣdin` ?) mais non attesté par écrit dans la thèse UMMTO.
 
 ## Références
 
@@ -277,15 +347,15 @@ Pour les implémenteurs construisant des validateurs, des dictionnaires ou des l
 - Wiktionnaire (fr), [discussion sur la catégorie Couleurs en kabyle](https://fr.wiktionary.org/wiki/Discussion_cat%C3%A9gorie:Couleurs_en_kabyle) — `adal` glossé comme « vert militaire » ; `atchini` = orange ; `azendjari` = violet
 - Wiktionnaire (fr), [entrée « orange », table de traduction](https://fr.wiktionary.org/wiki/orange) — kabyle `aṛanǧi`, `aččini`
 - Wiktionnaire (fr), [Catégorie:Couleurs en kabyle](https://fr.wiktionary.org/wiki/Cat%C3%A9gorie:Couleurs_en_kabyle)
-- Glosbe, [français–kabyle « beauté »](https://fr.glosbe.com/fr/kab/beaut%C3%A9) — `ccbaḥa` = « beauté »
-- Berbèrosphère, [« Comment traduire 'tu es belle' en kabyle ? »](https://berberosphere.org/blogs/culture-kabyle/belle-en-kabyle) — `Acḥal i tcebḥeḍ!`
-- Kichou & Imarazène, [« À propos de la couleur dans les expressions idiomatiques kabyles »](https://aleph.edinum.org/15719), *Aleph* Vol 12(4), 2025 — jumelage `acebḥan`/`amellal` et son usage figuré (non chromatique)
-- Mesmunawal, [« Les couleurs en amazigh »](https://mesmunawal.blogspot.com/2020/04/les-couleurs-en-amazigh.html) — `amllighdi`/`abraghdi` = gris
-- Glosbe, [kabyle–français « Orange »](https://fr.glosbe.com/fr/kab/Orange) — `ččina`/`ccina` (fruit), `ačini` (couleur), phrases exemples
-- PolyglotClub, [« Kabyle Vocabulary – Animal »](https://polyglotclub.com/wiki/Language/Kabyle/Vocabulary/Animal) — `arẓaẓ` = « guêpe »
+- Glosbe / DiKab, [dictionnaire kabyle](https://fr.glosbe.com/fr/kab/)
+- Scribd, *Irman n yiniten deg tmaziɣt* (Couleurs en Tamazight et Kabyle)
 - Tagounits village blog, [« février 2009 »](http://tagounitsvillage.blogspot.com/2009_02_01_archive.html) — formes plurielles `arẓaẓ`/`tirẓaẓin` et note sur le sens de couleur largement archaïque vs. le sens insecte d'usage courant
 - Wiktionary, [أزرق (azraq)](https://en.wiktionary.org/wiki/%D8%A3%D8%B2%D8%B1%D9%82) — arabe « bleu », source de `aẓeṛqaq`
 - KALIMAH, [« Colors in Arabic »](https://kalimah-center.com/colors-in-arabic/) — رمادي (*ramadi*, « gris ») comme « de couleur cendre », cité pour le parallèle de motif de dénomination translinguistique avec `amelliɣdi`
+- Olivier (A.), *Dictionnaire français-kabyle*, 1878 — `aberqac`, `aberquc`
+- Thèse UMMTO, *Traitement géolinguistique des noms des couleurs en kabyle* — `aɣiɣdan`, `aḥcayci`, `awerdi`, `anili`, `adehbi`, `aṛemmani`, `abanafsaji`, `ačinawi`
+- Encyclopédie berbère, S. Chaker — `uraɣ` (or)
+- ANAMEK / DiKab — `aẓref` (argent)
 
 ---
 
