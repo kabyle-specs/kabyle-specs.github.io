@@ -43,16 +43,16 @@ Ouvrage historique utilisant une orthographe latine de l'époque (alphabet fran�
 
 ### 2.3 Assimil, *Le Kabyle de poche*, 2005
 **Fadhma Amazit-Hamidchi** et **Mohand Lounaci**, *Le Kabyle de poche*, collection Assimil Évasion, Chennevières-sur-Marne, 2005 (rééd. 2011). Page 120 : leçon « Demander et donner l'heure ». Atteste :
-* **nefs** (demie) : *D jug u nefs* = « Il est deux heures et demie ».
+* **nefs** (demie) : *D juǧ u nefs* = « Il est deux heures et demie ».
 * **ɣir** (moins) : *D lweḥda ɣir xemsa* = « Il est une heure moins cinq ».
-* **u** (et) : *D jug u rbeɛ* = « Il est deux heures et quart ».
+* **u** (et) : *D juǧ u rbeɛ* = « Il est deux heures et quart ».
 * **ddqayeq** (minutes) : *ɣir snat ddqayeq* = « moins deux minutes ».
 * **wac** (un peu) : *D lweḥda u wac* = « Il est un peu plus d'une heure ».
 
 ### 2.4 Unicode CLDR (Common Locale Data Repository)
 Le kabyle (`kab`) est intégré dans le Unicode CLDR depuis la version 32 (2017). Le CLDR v48.2 fournit des formats numériques standardisés et des champs lexicaux techniques (`Tamert` pour « heure », `Tamrect` pour « minute », `n tufat` / `n tmeddit` pour les day periods). Cependant, le CLDR ne documente pas le système oral d'expression de l'heure (particule **D**, conjonctions **u** / **ɣir**, fractions **rbeɛ** / **neṣṣ**) qui fait l'objet du présent article. Les données CLDR sont complémentaires : elles standardisent les interfaces informatiques, tandis que les sources grammaticales et lexicographiques (Boulifa 1910, Dallet 1982, Assimil 2005) et les attestations natives documentent la parole réelle.
 
-**Note importante sur le CLDR** : Certaines versions anciennes du CLDR ont introduit des formes erronées pour les jours de la semaine (`Yanass`, `Sanass`, `Kraḍass`, `Kuẓass`, `Samass`, `Sḍisass`, `Sayass`). Il s'agit de néologismes numéraux artificiels non attestés dans l'usage locuteur kabyle. Les formes correctes sont documentées en section 10 de ce document.
+**Note importante sur le CLDR** : Certaines versions anciennes du CLDR ont introduit des formes artificielles et erronées pour les jours de la semaine (`Yanass`, `Sanass`, `Kraḍass`, `Kuẓass`, `Samass`, `Sḍisass`, `Sayass`). Il s'agit de néologismes numéraux artificiels non attestés dans l'usage locuteur kabyle. Les formes correctes sont documentées en section 10 de ce document.
 
 ---
 
@@ -109,7 +109,7 @@ Cette construction elliptique fonctionne comme une **approximation soustractive 
 
 ### 4.4 Variantes régionales pour « deux heures »
 Le nombre « deux » présente une variation dialectale notable dans le contexte horaire :
-* **jug** : Forme d'emprunt (attestée dans Assimil 2005 : *D jug u nefs*).
+* **juǧ** : Forme d'emprunt (attestée dans Assimil 2005 : *D juǧ u nefs*).
 * **ssaɛtin** : Forme propre à certaines régions, notamment la **vallée de la Soummam** (ex. *D ssaɛtin ɣir xemsa* = « Il est deux heures moins cinq »). Dans cette variante, le mot *ssaɛa* (« heure ») est intégré dans le syntagme numéral au pluriel (*ssaɛtin* = « des heures »), ce qui distingue cette région des parlers où le nombre seul suffit.
 
 ### 4.5 L'expression de la soustraction (les minutes)
@@ -149,19 +149,19 @@ La formation des nombres de 11 à 59 obéit à des règles précises que le pars
 
 1. **Accord féminin** : Le mot minute (*ddqiqa*) étant féminin, les unités prennent la forme féminine (*yiwet, snat, tlata, tmanya, tesɛa*, etc.).
 2. **11 et 12** : Formes uniques, non composees (*hḍac*, *tnac*).
-3. **13 à 19** : Formes fusionnées (portemanteaux) en *-ṭṭac* (*tleṭṭac*, *rebeɛaṭac*, *xemseṭṭac*, *seṭṭac*, *sbeɛṭac*, *tmenṭac*, *tseɛṭac*).
+3. **13 à 19** : Formes fusionnées (portemanteaux) en *-ṭṭac* (*telṭac*, *rbeɛṭac*, *xemseṭṭac*, *seṭṭac*, *sbeɛṭac*, *tmenṭac*, *tseɛṭac*).
 4. **20 à 59** : Structure inversée **[unité] + u + [dizaine]**. L'unité précède la dizaine, reliée par la conjonction *u* (et).
    - 21 min = *waḥed u ɛecrin* (et non *ɛecrin d waḥed*)
    - 32 min = *tnayn u tlatin*
-   - 45 min = *xemsa u rebeɛin*
+   - 45 min = *xemsa u rebɛin*
    - 59 min = *tesɛa u xemsin*
 
 **Exemple complet** : 13h21 se dira **D lweḥda u waḥed u ɛecrin n ddqayeq n uzal**.
 
 ### 4.7 Lecture des heures numériques (Cas TTS)
 Lorsqu'une interface affiche une heure numérique (ex: `13:04`), deux modes de lecture coexistent en kabyle :
-1. **Lecture naturelle (recommandée)** : Conversion en cycle de 12h avec la grammaire orale. -> *D lweḥda u rebeɛa n ddqayeq n uzal*.
-2. **Lecture chiffre par chiffre (digit-by-digit)** : Parfois utilisée pour les horaires de transport ou les contextes très formels. -> *Waḥed, tlata, u rebeɛa* (1, 3, et 4) ou *Tleṭṭac u rebeɛa* (treize et quatre).
+1. **Lecture naturelle (recommandée)** : Conversion en cycle de 12h avec la grammaire orale. -> *D lweḥda u rebɛa n ddqayeq n uzal*.
+2. **Lecture chiffre par chiffre (digit-by-digit)** : Parfois utilisée pour les horaires de transport ou les contextes très formels. -> *Yiwen, tlata, u rebɛa* (1, 3, et 4) ou *Telṭac u rebɛa* (treize et quatre).
 *Recommandation NLP* : Privilégier systématiquement la **lecture naturelle** (mode 1) pour la synthèse vocale (TTS), car elle correspond à la parole réelle et évite les sorties robotiques.
 
 ---
@@ -182,9 +182,9 @@ Le kabyle distingue les périodes de la journée par des termes spécifiques qui
 
 * **ṣṣbeḥ** (avec redoublement de ṣ) désigne le **petit matin**, les premières heures du jour (approximativement 4h–8h). L'expression *Af ttlata n ṣṣbeḥ* (« à trois du petit matin ») est courante pour les heures nocturnes/matinales précoces.
 
-* **ssbeḥ** désigne le **matin** proprement dit (approximativement 8h–12h). *D ttnac n tsaɛtin n ssbeḥ* = « il est douze du matin » = midi (12:00 PM).
+* Désigne également le **matin** proprement dit (approximativement 8h–12h). *D ttnac n ṣṣbeḥ* = « il est douze du matin » = midi (12:00 PM).
 
-* **uzal** désigne la **période où la lumière du soleil est la plus intense**, approximativement de **12h à 14h**. Ce terme ne se limite pas à l'instant de midi : il couvre les heures où le soleil est au zénith. *D ttnac n uzal* = « il est douze de la pleine lumière » = 12:00 pile. On peut aussi dire *D jug n uzal* pour 14:00 (deux heures de l'après-midi intense). À partir de **15h**, on passe systématiquement à **tameddit**.
+* **uzal** désigne la **période où la lumière du soleil est la plus intense**, approximativement de **12h à 14h**. Ce terme ne se limite pas à l'instant de midi : il couvre les heures où le soleil est au zénith. *D ttnac n uzal* = « il est douze de la pleine lumière » = 12:00 pile. On peut aussi dire *D juǧ n uzal* pour 14:00 (deux heures de l'après-midi intense). À partir de **15h**, on passe systématiquement à **tameddit**.
 
 * **tameddit** couvre l'**après-midi et le début de soirée** (approximativement 15h–19h). Le seuil de transition est marqué : dès que la lumière solaire commence à décliner significativement (après 14h–15h), on quitte *uzal* pour *tameddit*. *D lxemsa n tmeddit* = « il est cinq de l'après-midi » = 17:00.
 
@@ -216,9 +216,9 @@ Pour exprimer qu'une certaine quantité de temps s'est écoulée, le kabyle util
 * **Yekka kraḍ n swayeɛ** = « Il a passé trois heures » / « Trois heures se sont écoulées »
 * **Yekka snat n swayeɛ** = « Deux heures se sont écoulées »
 
-**Note sur la syntaxe** : Après le verbe *yekka*, le nombre « deux » prend la forme féminine **snat** (et non *jug*), et le mot « heure » apparaît au pluriel **swayeɛ** (et non *ssaɛtin*). La construction utilise la préposition **n** (génitif) : *kraḍ n swayeɛ* = « trois d'heures » = « trois heures [de temps] ».
+**Note sur la syntaxe** : Après le verbe *yekka*, le nombre « deux » prend la forme féminine **snat** (et non *juǧ*), et le mot « heure » apparaît au pluriel **swayeɛ** (et non *ssaɛtin*). La construction utilise la préposition **n** (génitif) : *kraḍ n swayeɛ* = « trois d'heures » = « trois heures [de temps] ».
 
-Cette structure diffère de l'expression horaire ponctuelle (où le nombre seul suffit : *D jug u rbeɛ* = « Il est deux heures et quart »).
+Cette structure diffère de l'expression horaire ponctuelle (où le nombre seul suffit : *D juǧ u rbeɛ* = « Il est deux heures et quart »).
 
 ---
 
@@ -396,7 +396,7 @@ Le nouvel an berbère (**Yennayer**) correspond au **~12 janvier grégorien**
 | 9:55 | D lɛecra ɣir xemsa | `D` + `[nombre]` + `ɣir` + `xemsa` | `TIME_EXACT` |
 | 03:00 | Af ttlata n ṣṣbeḥ | `Af` + `[nombre]` + `n` + `ṣṣbeḥ` | `TIME_EXACT` |
 | 12:00 | D ttnac n uzal | `D` + `[nombre]` + `n` + `uzal` | `TIME_EXACT` |
-| 14:00 | D jug n uzal | `D` + `jug` + `n` + `uzal` | `TIME_EXACT` |
+| 14:00 | D juǧ n uzal | `D` + `juǧ` + `n` + `uzal` | `TIME_EXACT` |
 | 17:00 | D lxemsa n tmeddit | `D` + `[nombre]` + `n` + `tameddit` | `TIME_EXACT` |
 | 00:00 | D ttnac n yiḍ | `D` + `[nombre]` + `n` + `iḍ` | `TIME_EXACT` |
 | 00:00 | Nṣaf n yiḍ | `Nṣaf` + `n` + `iḍ` (variante régionale) | `TIME_EXACT` |
@@ -419,10 +419,10 @@ Le module actuel `dates_kab.py` génère des heures numériques strictes et manq
    * `HALF_PAST = {"neṣṣ", "nefṣ", "nefs", "azgen", "nofc", "nofç", "nnefs", "nsaf"}`
    * `QUARTER = {"rbeɛ", "roba'"}`
    * `MINUS = {"ɣir", "ɣir", "r'ir"}`
-   * `EXACT = {"swaswa", "soua soua"}`
+   * `EXACT = {"swaswa", "gedged"}`
    * `APPROX = {"wac", "ci"}`
    * `MINUTES = {"ddqiqa", "ddqayeq", "tesdidin", "tisdidin", "eddeq'iq'a"}`
-   * `TWO_HOURS = {"jug", "sin", "ssaɛtin"}` (variante régionale Soummam)
+   * `TWO_HOURS = {"juǧ", "sin", "ssaɛtin"}` (variante régionale Soummam)
 
 2. **Intégrer les marqueurs de période** pour la désambiguïsation AM/PM :
    * `DAY_PERIODS = {"ṣṣbeḥ", "ssbeḥ", "uzal", "tameddit", "iḍ"}`
@@ -442,9 +442,9 @@ Le module actuel `dates_kab.py` génère des heures numériques strictes et manq
 6. **Intégrer les jours et mois** :
    * `WEEKDAYS = {"letnayen", "ttlata", "larebɛa", "lexmis", "lğemɛa", "ssebt", "lḥedd"}`
    * `WEEKDAYS_ALT = {"Arim", "Aram", "Ahad", "Amhad", "Sem", "Sed", "Acer"}`
-   * `MONTHS = {"Yennayer", "Furar", "Meɣres", "Yebrir", "Mayyu", "Yunyu", "Yulyu", "Ɣuct", "Ctember", "Tuber", "Nunember", "Duğember"}`
+   * `MONTHS = {"Yennayer", "Furar", "Meɣres", "Yebrir", "Mayyu", "Yunyu", "Yulyu", "Ɣuct", "Ctember", "Tuber", "Wamber", "Duğember"}`
 
-7. **Désambiguïser le format 12h/24h — piège « D jug »** :
+7. **Désambiguïser le format 12h/24h — piège « D juǧ »** :
    * La forme *D juǧ* (« il est deux heures ») est ambiguë entre 2h et 14h. Seule la présence explicite d'un marqueur de période (*n uzal*, *n tmeddit*, etc.) permet de trancher : *D juǧ n uzal* = 14:00, alors que *D juǧ* seul doit être interprété par défaut comme 2h (format 12h).
    * Règle pratique pour le parseur : en l'absence de marqueur de période explicite, toujours résoudre vers le format 12h ; ne convertir vers le format 24h que si un marqueur de période est présent dans l'énoncé.
 
