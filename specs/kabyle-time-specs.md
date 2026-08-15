@@ -236,7 +236,7 @@ C'est la série utilisée naturellement dans la parole courante en Kabylie. Les 
 | Mardi | **ttlata** | ttl |
 | Mercredi | **larebɛa** | lar |
 | Jeudi | **lexmis** | lex |
-| Vendredi | **lğemɛa** | lğe |
+| Vendredi | **lǧemɛa** | lǧe |
 | Samedi | **ssebt** | sse |
 | Dimanche | **lḥedd** | lḥe |
 
@@ -254,7 +254,7 @@ Ces formes ont été créées par l'**Académie berbère** pour « réparer » l
 | Jeudi | **Amhad** | Amh |
 | Vendredi | **Sem** | Sem |
 | Samedi | **Sed** | Sed |
-| Dimanche | **Acer / Acer** | Ace |
+| Dimanche | **Acer** | Ace |
 
 **Attestation** : Wikipedia — *Calendrier berbère*, section « Néologisme et traditions » ; Académie berbère.
 
@@ -284,10 +284,10 @@ Les noms des mois en kabyle sont hérités du calendrier berbère traditionnel, 
 | Août | **Ɣuct** | Ɣuc | Ɣ |
 | Septembre | **Ctember** | Cte | C |
 | Octobre | **Tuber** | Tub | T |
-| Novembre | **Nunember** | Nun | N |
-| Décembre | **Duğember** | Duğ | D |
+| Novembre | **Wamber** | Wam | W |
+| Décembre | **Duǧember** | Duğ | D |
 
-**Variante kabyle** : `Buğember` (Décembre, forme alternative usuelle).
+**Variante kabyle** : `Buǧember` (Décembre, forme alternative usuelle).
 
 **Attestation** : Wikipedia — *Calendrier berbère* (tableau des variations linguistiques, colonne Kabyle) ; CLDR locale `kab` (versions corrigées) ; ScriptSource — Entry « Names of Months and Days in Kabyle ».
 
@@ -330,11 +330,10 @@ Ces expressions sont essentielles pour le parsing NLP (extraction de dates à pa
 
 | Expression | Sens | Exemple d'usage | Source |
 |------------|------|-----------------|--------|
-| **ass-a** / **assa** | aujourd'hui | *Ass-a yelha lhal.* | Glosbe, cours kabyle, these Kessai 2019 |
+| **ass-a**  | aujourd'hui | *Ass-a yelha lhal.* | Glosbe, cours kabyle, these Kessai 2019 |
 | **azekka** | demain | *Azekka ad d-uğaleɣ.* | Glosbe, cours kabyle, these Kessai 2019 |
 | **iḍelli** | hier | *Iḍelli, ur d-ufiɣ ara.* | Glosbe, cours kabyle |
 | **tura** | maintenant | *Bğiɣ adebsi tura.* | Cours kabyle |
-| **dimarday** | maintenant (variante touaregue/kabyle) | — | These Kessai 2019 |
 | **ticki** | plus tard | *Ad d-aseɣ ticki.* | Cours kabyle |
 | **zik** | tôt / autrefois | *Yekker zik.* | Cours kabyle |
 
@@ -342,16 +341,16 @@ Ces expressions sont essentielles pour le parsing NLP (extraction de dates à pa
 
 | Expression | Sens | Plage approximative | Source |
 |------------|------|---------------------|--------|
-| **taṣbeht** | matinée | 6h–10h | Cours kabyle (taṣbeht = matinée) |
+| **taṣebḥit** | matinée | 6h–10h | Cours kabyle (taṣbeht = matinée) |
 | **tameddit** | après-midi / soir | 15h–19h | Document actuel + Dallet 1982 |
 
 ### 10.3 Références à la semaine
 
 | Expression | Sens | Source |
 |------------|------|--------|
-| **d lğemɛa** | vendredi (jour de la semaine) | Usage courant |
-| **d lğemɛa i d-iteddun** | vendredi prochain | Construction analytique |
-| **d lğemɛa i d-yeḍran** | vendredi dernier | Construction analytique |
+| **d lǧemɛa** | vendredi (jour de la semaine) | Usage courant |
+| **d lǧemɛa i d-iteddun** | vendredi prochain | Construction analytique |
+| **d lǧemɛa iɛeddan** | vendredi dernier | Construction analytique |
 
 ---
 
@@ -364,19 +363,19 @@ Ces expressions sont essentielles pour le parsing NLP (extraction de dates à pa
 | Hiver | **Tagrest** | Déc–Janv–Fév | Wikipedia — Calendrier berbère |
 | Printemps | **Tafsut** | Mars–Avr–Mai | Wikipedia — Calendrier berbère |
 | Été | **Anebdu** | Juin–Juil–Août | Wikipedia — Calendrier berbère |
-| Automne | **Iweğğiben** | Sept–Oct–Nov | Wikipedia — Calendrier berbère |
+| Automne | **Lexṛif** | Sept–Oct–Nov | Wikipedia — Calendrier berbère |
 
 ### 11.2 Le calendrier berbère traditionnel
 
-**Note culturelle** : Le calendrier berbère agricole traditionnel dérive du calendrier julien. Il comporte un **décalage de 13 jours** avec le calendrier grégorien.
+**Note culturelle** : Le calendrier berbère agricole traditionnel dérive du calendrier julien. Il comporte un **décalage de 12 jours** avec le calendrier grégorien.
 
-Le nouvel an berbère (**Yennayer**) correspond au **~14 janvier grégorien** (et non au 12 janvier, date parfois erronément diffusée par certaines associations culturelles en Algérie).
+Le nouvel an berbère (**Yennayer**) correspond au **~12 janvier grégorien**
 
 **Source** : Wikipedia — *Calendrier berbère*, section « Opération ».
 
 | Événement | Date grégorienne | Nom kabyle | Source |
 |-----------|-----------------|------------|--------|
-| Nouvel an berbère | ~14 janvier | **Yennayer** / **Ixf useggwas** | Wikipedia — Calendrier berbère |
+| Nouvel an berbère | ~12 janvier | **Yennayer** / **Ixf useggwas** | Wikipedia — Calendrier berbère |
 | Nuits noires (période froide) | 25 déc – 13 janv | **Uḍan iberkanen** | Wikipedia — Calendrier berbère |
 | Nuits blanches | 14 janv – 2 fév | **Uḍan imellalen** | Wikipedia — Calendrier berbère |
 
@@ -446,7 +445,7 @@ Le module actuel `dates_kab.py` génère des heures numériques strictes et manq
    * `MONTHS = {"Yennayer", "Furar", "Meɣres", "Yebrir", "Mayyu", "Yunyu", "Yulyu", "Ɣuct", "Ctember", "Tuber", "Nunember", "Duğember"}`
 
 7. **Désambiguïser le format 12h/24h — piège « D jug »** :
-   * La forme *D jug* (« il est deux heures ») est ambiguë entre 2h et 14h. Seule la présence explicite d'un marqueur de période (*n uzal*, *n tmeddit*, etc.) permet de trancher : *D jug n uzal* = 14:00, alors que *D jug* seul doit être interprété par défaut comme 2h (format 12h).
+   * La forme *D juǧ* (« il est deux heures ») est ambiguë entre 2h et 14h. Seule la présence explicite d'un marqueur de période (*n uzal*, *n tmeddit*, etc.) permet de trancher : *D juǧ n uzal* = 14:00, alors que *D juǧ* seul doit être interprété par défaut comme 2h (format 12h).
    * Règle pratique pour le parseur : en l'absence de marqueur de période explicite, toujours résoudre vers le format 12h ; ne convertir vers le format 24h que si un marqueur de période est présent dans l'énoncé.
 
 8. **Gérer la syntaxe directionnelle** :
