@@ -160,8 +160,10 @@ La formation des nombres de 11 à 59 obéit à des règles précises que le pars
 
 ### 4.7 Lecture des heures numériques (Cas TTS)
 Lorsqu'une interface affiche une heure numérique (ex: `13:04`), deux modes de lecture coexistent en kabyle :
+
 1. **Lecture naturelle (recommandée)** : Conversion en cycle de 12h avec la grammaire orale. -> *D lweḥda u rebɛa n ddqayeq n uzal*.
 2. **Lecture chiffre par chiffre (digit-by-digit)** : Parfois utilisée pour les horaires de transport ou les contextes très formels. -> *Yiwen, tlata, u rebɛa* (1, 3, et 4) ou *Telṭac u rebɛa* (treize et quatre).
+
 *Recommandation NLP* : Privilégier systématiquement la **lecture naturelle** (mode 1) pour la synthèse vocale (TTS), car elle correspond à la parole réelle et évite les sorties robotiques.
 
 ---
