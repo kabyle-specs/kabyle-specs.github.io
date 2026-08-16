@@ -1,4 +1,4 @@
-# kabyle-lemmatization-spec.md
+# Kabyle Lemmatization Specification
 
 **Version** : 1.3.2  
 **Auteur** : Athmane Mokraoui. Spec rédigée et révisée par relecture critique croisée ; corrections v1.3.1 (locuteur natif) et v1.3.2 (auditabilité et cohérence formelle) intégrées.  
