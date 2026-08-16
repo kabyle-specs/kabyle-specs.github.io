@@ -1,6 +1,13 @@
 {
   "specs": [
     {
+      "title": "Kabyle Lemmatization Specification",
+      "path": "specs/kabyle-lemmatization-spec.md",
+      "summary": "Rules for Kabyle (Taqbaylit) lemmatization in an NLP pipeline: citation forms by POS (impératif 2sg for verbs, masculine singular free state for nouns), apophony normalization, broken plural tables, state-of-annexion remapping, negative apophony, and JSON output schema with status/confidence tracking. Depends on kabyle-conjugations-specs, kabyle-orthography-specs, kabyle-hunspell-dictionary-spec, and kabyle-negation-spec.",
+      "status": "draft",
+      "updated": "2026-08-16"
+    },
+    {
       "title": "Kabyle Hunspell Dictionary Architecture",
       "path": "specs/kabyle-hunspell-dictionary-spec.md",
       "summary": "Structure, metadata schema, and build pipeline for the Kabyle Hunspell dictionary (kab.dic + kab.aff). Documents the po:/st:/is: tag system, flag inventory, known anomalies, and migration path toward a generated, modular affix architecture inspired by Catalan and Hungarian dictionaries.",
