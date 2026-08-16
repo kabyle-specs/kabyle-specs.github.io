@@ -116,7 +116,7 @@ Cette ressource contient les formes fléchies de 6 000 verbes selon les 64 types
 | Lemme | Impératif 2sg | Aoriste 1sg | Prétérit 3sg | Divergence |
 |---|---|---|---|---|
 | `kcem` | `kcem` | `ad kcemɣ` | `ikcem` | Aucune |
-| `efka` | `efka` | `ad efkeɣ` | `yefka` | Aucune |
+| `efk` | `efk` | `ad efkeɣ` | `yefka` | Aucune |
 | `aru` | `aru` | `ad aruɣ` | `yaru` | Aucune |
 | `ečč` | `ečč` | `ad eččeɣ` | `yečča` | Aucune |
 | `afeg` | `afeg` | `ad afgeɣ` | `yufeg` | Aucune |
@@ -209,9 +209,9 @@ Le lemmatizer prend en entrée un token et produit un lemme + traits morphologiq
 | Aspect | Indices à supprimer | Exemple | status |
 |---|---|---|---|
 | Aoriste | Préfixes `y-`, `t-`, `n-`, `a-`… | `[À COMPLÉTER]` | needs-native-review |
-| Prétérit | Préfixes + suffixes personne | `yefka` → `efka` | verified |
-| Impératif | Suffixes `-(a)θ`, `-m`, `-mθ`, `-n`, `-nt` | `fk-aθ` → `efka` (par table) | candidate |
-| Participe | Préfixes `i-`/`t-` + suffixes `-n`/`-t` | `ifkan` → `efka` (par table) | candidate |
+| Prétérit | Préfixes + suffixes personne | `yefka` → `efk` | verified |
+| Impératif | Suffixes `-(a)θ`, `-m`, `-mθ`, `-n`, `-nt` | `fk-aθ` → `efk` (par table) | candidate |
+| Participe | Préfixes `i-`/`t-` + suffixes `-n`/`-t` | `ifkan` → `efk` (par table) | candidate |
 
 **Étape 3** : normalisation de l'apophonie.
 
@@ -305,8 +305,8 @@ Pour garantir l'auditabilité, les formes promues au statut `verified` doivent �
 ```json
 {
   "token": "yefka-yas-t",
-  "lemma": "efka",
-  "root": "efka",
+  "lemma": "efk",
+  "root": "efk",
   "pos": "VERB",
   "morph": {
     "aspect": "preterite",
