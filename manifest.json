@@ -3,7 +3,14 @@
     {
       "title": "Kabyle Lemmatization Specification",
       "path": "specs/kabyle-lemmatization-spec.md",
-      "summary": "Rules for Kabyle (Taqbaylit) lemmatization in an NLP pipeline: citation forms by POS (impératif 2sg for verbs, masculine singular free state for nouns), apophony normalization, broken plural tables, state-of-annexion remapping, negative apophony, and JSON output schema with status/confidence tracking. Depends on kabyle-conjugations-specs, kabyle-orthography-specs, kabyle-hunspell-dictionary-spec, and kabyle-negation-spec.",
+      "summary": "Rules for Kabyle (Taqbaylit) lemmatization in an NLP pipeline: citation forms by POS, apophony normalization, broken plural tables, state-of-annexion remapping, negative apophony, and JSON output schema with status/confidence tracking. Depends on kabyle-conjugations-specs, kabyle-orthography-specs, kabyle-hunspell-dictionary-spec, and kabyle-negation-spec.",
+      "status": "draft",
+      "updated": "2026-08-16"
+    },
+    {
+      "title": "Kabyle negation specification",
+      "path": "specs/kabyle-negation-spec.md",
+      "summary": "Formalization of Kabyle verbal negation: the discontinuous structure ur … ara, negative apophony modeling, UD polarity traits, and lemmatization rules for negative particles. Amorce - most detailed rules remain open for native-speaker validation.",
       "status": "draft",
       "updated": "2026-08-16"
     },
