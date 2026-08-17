@@ -75,7 +75,7 @@
       "path": "specs/kabyle-ud-specification.md",
       "summary": "UD annotation framework for Kabyle syntax: VSO order, pro-drop, clitic doubling, copula, and construct state, extending the UD_Kabyle-ADPT treebank.",
       "status": "draft",
-      "updated": "2026-08-08"
+      "updated": "2026-08-17"
     }
   ],
   "reports": [
