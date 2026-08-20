@@ -1,6 +1,13 @@
 {
   "specs": [
     {
+  "title": "Kabyle Braille Transcription",
+  "path": "specs/kabyle-braille-spec.md",
+  "summary": "Braille transcription specification for Kabyle (Taqbaylit): CBFU-based grade-1 mapping, two extension modes (indicator and dedicated) for 11 berber-specific characters, Unicode Braille / BRF / Liblouis output formats, and pre-normalization pipeline integration with the kabyle orthography spec.",
+  "status": "draft",
+  "updated": "2026-08-20"
+    },
+    {
       "title": "Kabyle Lemmatization Specification",
       "path": "specs/kabyle-lemmatization-spec.md",
       "summary": "Rules for Kabyle (Taqbaylit) lemmatization in an NLP pipeline: citation forms by POS, apophony normalization, broken plural tables, state-of-annexion remapping, negative apophony, and JSON output schema with status/confidence tracking. Depends on kabyle-conjugations-specs, kabyle-orthography-specs, kabyle-hunspell-dictionary-spec, and kabyle-negation-spec.",
