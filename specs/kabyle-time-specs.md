@@ -2,7 +2,7 @@
 
 **Auteurs** : Athmane Mokraoui (boffire), locuteur natif kabyle, mainteneur des ressources NLP kabyles ; recherche documentaire, structuration et optimisation des données.
 
-**Date** : 15 août 2026
+**Date** : 20 août 2026
 
 **Cible** : Grand public, linguistes, développeurs NLP/TAL
 
@@ -213,12 +213,13 @@ Ces expressions parallélisent la structure *D ttnac n yiḍ* (« douze de la nu
 
 ## 6. Les durées et le temps écoulé
 
-Pour exprimer qu'une certaine quantité de temps s'est écoulée, le kabyle utilise le verbe **yekka** (« il a passé, il a consommé ») suivi du nombre d'heures.
+Pour exprimer qu'une certaine quantité de temps s'est écoulée, le kabyle utilise le verbe **yekka** ou bien **yewwet** (« il a passé, il a consommé ») suivi du nombre d'heures.
 
 * **Yekka kraḍ n swayeɛ** = « Il a passé trois heures » / « Trois heures se sont écoulées »
 * **Yekka snat n swayeɛ** = « Deux heures se sont écoulées »
+* **Yewwet tala n swayeɛ, netta din** = « Il a passé trois heures durant au même endroit »
 
-**Note sur la syntaxe** : Après le verbe *yekka*, le nombre « deux » prend la forme féminine **snat** (et non *juǧ*), et le mot « heure » apparaît au pluriel **swayeɛ** (et non *ssaɛtin*). La construction utilise la préposition **n** (génitif) : *kraḍ n swayeɛ* = « trois d'heures » = « trois heures [de temps] ».
+**Note sur la syntaxe** : Après le verbe *yekka* / *yewwet*, le nombre « deux » prend la forme féminine **snat** (et non *juǧ*), et le mot « heure » apparaît au pluriel **swayeɛ** (et non *ssaɛtin*). La construction utilise la préposition **n** (génitif) : *kraḍ n swayeɛ* = « trois d'heures » = « trois heures [de temps] ».
 
 Cette structure diffère de l'expression horaire ponctuelle (où le nombre seul suffit : *D juǧ u rbeɛ* = « Il est deux heures et quart »).
 
@@ -258,7 +259,7 @@ Ces formes ont été créées par l'**Académie berbère** pour « réparer » l
 | Samedi | **Sed** | Sed |
 | Dimanche | **Acer** | Ace |
 
-**Attestation** : Wikipedia — *Calendrier berbère*, section « Néologisme et traditions » ; Académie berbère.
+**Attestation** : Wikipedia — *Calendrier berbère*, section « Néologisme et traditions » ; Académie berbère. Formes recommandées dans les systèmes de calendriers informatiques modernes (recommandation selon locuteur natif).
 
 ### 7.3 Recommandation pour l'implémentation
 
@@ -333,11 +334,11 @@ Ces expressions sont essentielles pour le parsing NLP (extraction de dates à pa
 | Expression | Sens | Exemple d'usage | Source |
 |------------|------|-----------------|--------|
 | **ass-a**  | aujourd'hui | *Ass-a yelha lhal.* | Glosbe, cours kabyle, these Kessai 2019 |
-| **azekka** | demain | *Azekka ad d-uğaleɣ.* | Glosbe, cours kabyle, these Kessai 2019 |
-| **iḍelli** | hier | *Iḍelli, ur d-ufiɣ ara.* | Glosbe, cours kabyle |
-| **tura** | maintenant | *Bğiɣ adebsi tura.* | Cours kabyle |
+| **azekka** | demain | *Azekka ad d-uɣaleɣ.* | Glosbe, cours kabyle, these Kessai 2019 |
+| **iḍelli** | hier | *Iḍelli, ur d-ffiɣeɣ ara.* | Glosbe, cours kabyle |
+| **tura** | maintenant | *Bɣiɣ adebsi tura.* | Cours kabyle |
 | **ticki** | plus tard | *Ad d-aseɣ ticki.* | Cours kabyle |
-| **zik** | tôt / autrefois | *Yekker zik.* | Cours kabyle |
+| **zik** | tôt / autrefois | *Yekker-d zik.* | Cours kabyle |
 
 ### 10.2 Références à la période du jour
 
