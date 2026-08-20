@@ -54,7 +54,7 @@
       "path": "specs/kabyle-time-specs.md",
       "summary": "Grammar of the Kabyle time-telling system (particle D, u/ghir, dialectal variants) with a synonym table for date/time parsers.",
       "status": "draft",
-      "updated": "2026-08-15"
+      "updated": "2026-08-20"
     },
     {
       "title": "Kabyle verb conjugator specification",
