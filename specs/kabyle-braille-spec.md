@@ -2,7 +2,7 @@
 
 **Auteurs** : Athmane Mokraoui (boffire), locuteur natif kabyle, mainteneur des ressources NLP kabyles ; recherche documentaire braille et structuration technique.
 
-**Date** : 20 août 2026
+**Date** : 21 août 2026
 
 **Version** : 0.2-draft (corrigée)
 
