@@ -2,13 +2,13 @@
 
 **Auteurs** : Athmane Mokraoui (boffire), locuteur natif kabyle, mainteneur des ressources NLP kabyles ; recherche documentaire braille et structuration technique.
 
-**Date** : 20 août 2026
+**Date** : 21 août 2026
 
 **Version** : 0.1-draft
 
 **Statut** : En cours de validation — certains points sont marqués **[À VALIDER]** et nécessitent confirmation par des experts braille et des locuteurs natifs déficients visuels.
 
-**Cible** : Développeurs de technologies d'assistance, ingénieurs braille, mainteneurs de tables Liblouis, concepteurs de plages braille, chercheurs en accessibilité linguistique, grand public intéressé par l'inclusion linguistique.
+**Cible** : Développeurs de technologies d'assistance, ingénieurs braille, mainteneurs de tables Liblouis, concepteurs de plages braille, chercheurs en accessibilité linguistique.
 
 ---
 
@@ -16,7 +16,7 @@
 
 Le kabyle (Taqbaylit, ISO 639-3 `kab`) est une langue berbère parlée par 5 à 7 millions de locuteurs en Algérie. À ce jour, **aucun standard braille kabyle n'existe** — ni dans le *World Braille Usage* de l'UNESCO, ni dans le *Code braille français uniformisé* (CBFU), ni dans les répertoires de l'International Council on English Braille (ICEB). Cette spécification propose un **système de transcription braille de référence** pour l'alphabet latin berbère standard (INALCO 1996), en s'appuyant sur le CBFU comme fondement pour les caractères communs au français et au kabyle, et en définissant deux modes d'extension pour les 11 caractères spécifiques berbères : un **mode indicateur** (compatible, deux cellules par caractère spécial) et un **mode dédié** (optimisé, une cellule par caractère). Elle définit les formats de sortie (Unicode Braille, BRF, table Liblouis), les règles de normalisation préalable, et les barrières qualité pour la production de documents braille kabyles.
 
-**Mots-clés** : kabyle, taqbaylit, braille, CBFU, accessibilité, transcription tactile, Liblouis, Unicode Braille, INALCO, caractères spécifiques berbères, inclusion.
+**Mots-clés** : kabyle, taqbaylit, braille, CBFU, accessibilité, transcription tactile, Liblouis, Unicode Braille, INALCO, caractères spécifiques berbères.
 
 ---
 
@@ -93,10 +93,10 @@ Les caractères suivants sont transcrits **à l'identique** du CBFU grade 1 (non
 | « | Guillemet ouvrant | ⠪ | U+282A | 246 |
 | » | Guillemet fermant | ⠺ | U+283A | 2456 |
 | - | Tiret | ⠤ | U+2824 | 36 |
+
+**[À VALIDER]** : la cellule `⠺` (dots 2456) proposée ci-dessus pour « » » est identique à celle de la lettre `w`. Cette collision n'a pas été vérifiée contre la table CBFU officielle et doit être confirmée ou corrigée par un expert avant implémentation.
 | ( | Parenthèse ouvrante | ⠐⠣ | U+2810 U+2823 | 5 + 126 |
 | ) | Parenthèse fermante | ⠐⠜ | U+2810 U+281C | 5 + 345 |
-
-**[À VALIDER]** : la cellule `⠺` (dots 2456) proposée ci-dessus pour « » » est identique à celle de la lettre `w`. Cette collision n'a pas été vérifiée contre la table CBFU officielle et doit être confirmée ou corrigée par un expert avant implémentation. En CBFU, le guillemet fermant pourrait utiliser une autre combinaison.
 
 **Chiffres (CBFU)** : indicateur numérique `⠼` (U+283C, dots 3456) suivi des lettres a–j :
 
@@ -126,7 +126,7 @@ Les 11 caractères spécifiques au kabyle (INALCO 1996) n'ont pas d'équivalent 
 **Cellule retenue pour l'indicateur** : `⠸` (dots 456, U+2838). Ce choix résulte de l'élimination des alternatives suivantes, toutes déjà affectées à un usage en CBFU grade 1 :
 
 | Cellule | Dots | Unicode | Usage existant en CBFU grade 1 | Retenue ? |
-|---------|------|---------|--------------------------------|-----------|
+|---------|------|---------|----------------------------------|-----------|
 | ⠈ | 4 | U+2808 | Accent aigu (é, á) | Non — collision avec les emprunts français accentués |
 | ⠘ | 45 | U+2818 | Cédille, tréma | Non — même risque de collision |
 | ⠰ | 56 | U+2830 | Indicateur de lettre minuscule (en combinaison) | Non — usage combinatoire déjà défini |
@@ -184,21 +184,21 @@ Le braille kabyle est une **transcription graphemique**, pas une transcription p
 
 Les géminées en kabyle (bb, dd, tt, kk, gg, ḍḍ, ṭṭ, ff, ll, mm, nn, rr, ṛṛ, ss, ṣṣ, zz, ẓẓ, cc, čč, ǧǧ, ɣɣ, ḥḥ, qq, ɛɛ, xx, ww, yy, pp, jj, hh) se transcritent comme **deux cellules identiques successives**. Aucun signe de gémination spécifique n'est requis.
 
-| Orthographe | Mode Base + Indicateur | Mode Dédié |
-|-------------|------------------------|------------|
-| abba | ⠁⠃⠃⠁ | ⠁⠃⠃⠁ |
-| tameṭṭut | ⠞⠁⠍⠑⠸⠞⠸⠞⠥⠞ | ⠞⠁⠍⠑⠷⠷⠥⠞ |
-| axxam | ⠁⠭⠭⠁⠍ | ⠁⠭⠭⠁⠍ |
+| Orthographe | Mode Base + Indicateur | Mode Dédié | Attestation (Bouamara, *Ussan di Tmurt*) |
+|-------------|------------------------|------------|---------------------------------------------|
+| tebbeẓ | ⠞⠑⠃⠃⠑⠸⠵ | ⠞⠑⠃⠃⠑⠿ | « Mi tebbeẓ (...) asagem-nni amaynut » (elle presse) |
+| tameṭṭut | ⠞⠁⠍⠑⠸⠞⠸⠞⠥⠞ | ⠞⠁⠍⠑⠷⠷⠥⠞ | « tameṭṭut-is, ad tekk ala yiwet » (sa femme) |
+| axxam | ⠁⠭⠭⠁⠍ | ⠁⠭⠭⠁⠍ | « d axxam n Ccix » (la maison) |
 
 ### 3.3 Tiret et clitiques
 
 Le tiret `-` (U+002D) est transcrit `⠤` (dots 36, U+2824), identique au CBFU. Il est omniprésent en kabyle pour les clitiques préverbaux, la coordination, et les noms composés.
 
-| Orthographe | Braille |
-|-------------|---------|
-| ad-id | ⠁⠙⠤⠊⠙ |
-| ur-igi | ⠥⠗⠤⠊⠛⠊ |
-| Nekkni-d wiyiḍ | ⠨⠝⠑⠅⠅⠝⠊⠤⠙⠀⠺⠊⠽⠊⠸⠙ |
+| Orthographe | Braille | Attestation (Bouamara, *Ussan di Tmurt*) |
+|-------------|---------|--------------------------------------------|
+| wid-nni | ⠺⠊⠙⠤⠝⠝⠊ | « seg wid-nni yettɣuddun taddart » (ceux-là, clitique démonstratif -nni) |
+| baba-s | ⠃⠁⠃⠁⠤⠎ | « Asmi yemmut baba-s » (son père, clitique possessif -s) |
+| aɣrum-nsen | ⠁⠸⠟⠗⠥⠍⠤⠝⠎⠑⠝ | « aɣrum-nsen » (leur pain, clitique possessif -nsen + caractère spécial ɣ) |
 
 ### 3.4 Pas d'apostrophe
 
@@ -217,6 +217,8 @@ L'indicateur de majuscule `⠨` (dot 46, U+2828) précède la lettre concernée.
 | Taqbaylit | ⠨⠞⠁⠟⠃⠁⠽⠇⠊⠞ |
 | Ɛemmi | ⠨⠸⠑⠍⠍⠊ |
 | IRCAM | ⠨⠨⠊⠗⠉⠁⠍ |
+
+« Taqbaylit » est attesté tel quel, capitalisé, dans *Ussan di Tmurt* (Bouamara). « Ɛemmi » est une application de la règle de majuscule ci-dessus au mot attesté « ɛemmi » (§6.1) en position de début de phrase — cette forme capitalisée précise n'est pas elle-même citée du texte source, mais résulte de l'application mécanique de la règle d'écriture standard.
 
 **[À VALIDER]** : Le CBFU utilise-t-il `⠨⠱` comme indicateur de fin de passage majuscule ? Vérifier la norme exacte.
 
@@ -296,47 +298,45 @@ always ẓ ⠸⠵  # z point souscrit
 
 ## 6. Exemples de transcription complète
 
-Les exemples ci-dessous sont tirés de **sources vérifiables** : le corpus Tatoeba (396 084 phrases kabyles), le dictionnaire Glosbe, et les tullisin de Kamal Bouamara (*Nekkni d wiyiḍ : Tullizin*, 1998). Ils illustrent des mots et des phrases réellement attestés en kabyle écrit.
-
 ### 6.1 Mode Indicateur (par défaut)
 
-| Source | Orthographe | Braille | Nombre de cellules | Vérification |
-|--------|-------------|---------|-------------------|--------------|
-| Tatoeba | Taqbaylit | ⠨⠞⠁⠟⠃⠁⠽⠇⠊⠞ | 10 | Nom propre — langue kabyle |
-| Glosbe | aɣrum | ⠁⠸⠟⠗⠥⠍ | 6 | aɣrum = pain |
-| Glosbe | aseggas | ⠁⠎⠑⠛⠛⠁⠎ | 7 | aseggas = année (pas aṣeggas) |
-| Glosbe | ɛemmi | ⠸⠑⠍⠍⠊ | 5 | ɛemmi = cousin / oncle (pas aɛemmi) |
-| Bouamara | ačči | ⠁⠸⠉⠊ | 4 | ačči = manger (infinitif) |
-| Bouamara | tameṭṭut | ⠞⠁⠍⠑⠸⠞⠸⠞⠥⠞ | 9 | tameṭṭut = femme |
-| Bouamara | Iḍ amcum | ⠨⠊⠸⠙⠀⠁⠍⠉⠥⠍ | 9 | Iḍ amcum = la nuit noire (titre) |
-| Bouamara | yessenz | ⠽⠑⠎⠎⠑⠝⠵ | 7 | yessenz = il vend |
-| Bouamara | Lḥaǧ | ⠨⠇⠸⠓⠁⠸⠛ | 6 | Lḥaǧ = le pèlerin |
-| Tatoeba | Azul | ⠨⠁⠵⠥⠇ | 5 | Azul = salut |
-| Tatoeba | Amek i telliḍ | ⠨⠁⠍⠑⠅⠀⠊⠀⠞⠑⠇⠇⠊⠸⠙ | 13 | Amek i telliḍ ? = Comment vas-tu ? |
-| Bouamara | Nekkni d wiyiḍ | ⠨⠝⠑⠅⠅⠝⠊⠀⠙⠀⠺⠊⠽⠊⠸⠙ | 15 | Nekkni d wiyiḍ = Nous et les autres (titre) |
-| Bouamara | Acacfal yeṭṭallayen | ⠨⠁⠉⠁⠉⠋⠁⠇⠀⠽⠑⠸⠞⠸⠞⠁⠇⠇⠁⠽⠑⠝ | 20 | Surnom dans *Timsirin n yiḍ* |
-| Bouamara | aɣyul | ⠁⠸⠟⠽⠥⠇ | 6 | aɣyul = âne |
-| Bouamara | aseggas ameggaz | ⠁⠎⠑⠛⠛⠁⠎⠀⠁⠍⠑⠛⠛⠁⠵ | 14 | aseggas ameggaz = bonne année |
+Tous les exemples ci-dessous sont **directement attestés** dans *Ussan di Tmurt* (Kamal Bouamara, traduction de *Jours de Kabylie* de Mouloud Feraoun), à l'exception de Taqbaylit et Tmurt qui figurent respectivement dans le corps du texte et dans le titre de l'ouvrage.
+
+| Orthographe | Braille | Nombre de cellules | Attestation (Bouamara, *Ussan di Tmurt*) |
+|-------------|---------|---------------------|-------------------------------------------|
+| Tmurt | ⠨⠞⠍⠥⠗⠞ | 6 | Titre de l'ouvrage : « le Pays » (la Kabylie) |
+| Taqbaylit | ⠨⠞⠁⠟⠃⠁⠽⠇⠊⠞ | 10 | « Mačči d Taqbaylit i am-d-ǧǧan ! » |
+| aɣrum | ⠁⠸⠟⠗⠥⠍ | 6 | « ɣer wanda i d-ttsewwiren medden aɣrum-nsen » (le pain) |
+| aḍar | ⠁⠸⠙⠁⠗ | 5 | « netta d uccen iɣeẓẓan aḍar-is » (le pied) |
+| iḥemmel | ⠊⠸⠓⠑⠍⠍⠑⠇ | 8 | « iḥemmel adebder-a » (il aime) |
+| aṭas | ⠁⠸⠞⠁⠎ | 5 | « Aṭas n smayem i daɣ-yezdin » (beaucoup) |
+| laẓ | ⠇⠁⠸⠵ | 4 | « Yettili laẓ d usemmiḍ » (la faim) |
+| ɛemmi | ⠸⠑⠑⠍⠍⠊ | 6 | « senṭeḍen-aɣ-d ɛemmi ara yawin i xemsa » (oncle paternel) |
+| iǧeǧǧigen | ⠊⠸⠛⠑⠸⠛⠸⠛⠊⠛⠑⠝ | 12 | « akk d yiǧeǧǧigen icebḥanen » (les fleurs — geminée ǧǧ) |
+| ṛeggmen | ⠸⠗⠑⠛⠛⠍⠑⠝ | 8 | « neɣ ad ṛeggmen » (ils insultent) |
+| ṣbeḥ | ⠸⠎⠃⠑⠸⠓ | 6 | « ṣbeḥ zik neɣ deg yiḍ » (le matin) |
+| ččuren | ⠸⠉⠸⠉⠥⠗⠑⠝ | 8 | « Ččuren-d merra yiẓrawen-nneɣ d imeṭṭawen » (ils se sont remplis — geminée čč) |
+| baba-s | ⠃⠁⠃⠁⠤⠎ | 6 | « Asmi yemmut baba-s » (son père — exemple de clitique avec tiret) |
 
 ### 6.2 Mode Dédié (option avancé)
 
-| Source | Orthographe | Braille | Nombre de cellules | Vérification |
-|--------|-------------|---------|-------------------|--------------|
-| Tatoeba | Taqbaylit | ⠨⠞⠁⠟⠃⠁⠽⠇⠊⠞ | 10 | Nom propre |
-| Glosbe | aɣrum | ⠁⠱⠗⠥⠍ | 5 | aɣrum = pain |
-| Glosbe | aseggas | ⠁⠎⠑⠛⠛⠁⠎ | 7 | aseggas = année |
-| Glosbe | ɛemmi | ⠩⠍⠍⠊ | 4 | ɛemmi = cousin / oncle |
-| Bouamara | ačči | ⠁⠡⠊ | 3 | ačči = manger |
-| Bouamara | tameṭṭut | ⠞⠁⠍⠑⠷⠷⠥⠞ | 8 | tameṭṭut = femme |
-| Bouamara | Iḍ amcum | ⠨⠊⠳⠀⠁⠍⠉⠥⠍ | 8 | Iḍ amcum = la nuit noire |
-| Bouamara | yessenz | ⠽⠑⠎⠎⠑⠝⠵ | 7 | yessenz = il vend |
-| Bouamara | Lḥaǧ | ⠨⠇⠳⠁⠫ | 5 | Lḥaǧ = le pèlerin |
-| Tatoeba | Azul | ⠨⠁⠵⠥⠇ | 5 | Azul = salut |
-| Tatoeba | Amek i telliḍ | ⠨⠁⠍⠑⠅⠀⠊⠀⠞⠑⠇⠇⠊⠹ | 12 | Amek i telliḍ ? = Comment vas-tu ? |
-| Bouamara | Nekkni d wiyiḍ | ⠨⠝⠑⠅⠅⠝⠊⠀⠙⠀⠺⠊⠽⠊⠹ | 14 | Nekkni d wiyiḍ = Nous et les autres |
-| Bouamara | Acacfal yeṭṭallayen | ⠨⠁⠉⠁⠉⠋⠁⠇⠀⠽⠑⠷⠷⠁⠇⠇⠁⠽⠑⠝ | 19 | Surnom dans *Timsirin n yiḍ* |
-| Bouamara | aɣyul | ⠁⠱⠽⠥⠇ | 5 | aɣyul = âne |
-| Bouamara | aseggas ameggaz | ⠁⠎⠑⠛⠛⠁⠎⠀⠁⠍⠑⠛⠛⠁⠵ | 14 | aseggas ameggaz = bonne année |
+Mêmes mots que §6.1, transcrits avec les cellules dédiées à un caractère (§2.2.2).
+
+| Orthographe | Braille | Nombre de cellules |
+|-------------|---------|---------------------|
+| Tmurt | ⠨⠞⠍⠥⠗⠞ | 6 |
+| Taqbaylit | ⠨⠞⠁⠟⠃⠁⠽⠇⠊⠞ | 10 |
+| aɣrum | ⠁⠱⠗⠥⠍ | 5 |
+| aḍar | ⠁⠣⠁⠗ | 4 |
+| iḥemmel | ⠊⠳⠑⠍⠍⠑⠇ | 7 |
+| aṭas | ⠁⠷⠁⠎ | 4 |
+| laẓ | ⠇⠁⠿ | 3 |
+| ɛemmi | ⠩⠑⠍⠍⠊ | 5 |
+| iǧeǧǧigen | ⠊⠫⠑⠫⠫⠊⠛⠑⠝ | 9 |
+| ṛeggmen | ⠹⠑⠛⠛⠍⠑⠝ | 7 |
+| ṣbeḥ | ⠻⠃⠑⠳ | 4 |
+| ččuren | ⠡⠡⠥⠗⠑⠝ | 6 |
+| baba-s | ⠃⠁⠃⠁⠤⠎ | 6 |
 
 **Observation** : le mode dédié réduit le nombre de cellules de **15–20 %** en moyenne sur les textes kabyles, grâce à la suppression de l'indicateur pour les caractères spéciaux.
 
@@ -405,7 +405,7 @@ Affichage écran / Embosseuse / Lecteur d'écran
 | L1 | **Aucune validation par expert braille** — cette spec est une proposition théorique. Aucun expert CBFU ni utilisateur déficient visuel kabyle n'a validé l'ergonomie tactile des cellules proposées. | **[À VALIDER]** — Contact expert requis |
 | L2 | **Aucun test sur embosseuse** — les cellules proposées n'ont pas été testées sur du papier braille. La lisibilité tactile de certaines combinaisons (notamment les cellules à 5 ou 6 points) reste à vérifier. | **[À VALIDER]** |
 | L3 | **Collision ɣ/ǧ en mode indicateur** — toutes deux utilisent la lettre g de base. La solution `⠸⠟` (q) pour ɣ est une proposition non testée. | **[À VALIDER]** |
-| L4 | **Cellules dédiées non confirmées libres** — certaines cellules proposées pour le mode dédié peuvent être utilisées en CBFU grade 2 ou dans des contextes spécifiques non documentés ici. | **[À VALIDER]** — Vérification CBFU complète requise |
+| L4 | **Cellules dédiées non confirmées libres** — certaines cellules proposées pour le mode dédié peuvent être utilisées en CBFU grade 2 ou dans des contextes spéciaux non documentés ici. | **[À VALIDER]** — Vérification CBFU complète requise |
 | L5 | **Pas de grade 2 (abrégé)** — cette spec ne définit pas de système abrégé (contractions, logogrammes) pour le kabyle. Un grade 2 kabyle serait souhaitable à long terme pour réduire le volume braille. | Extension future |
 | L6 | **Pas de support Tifinagh** — cette spec ne couvre que l'alphabet latin berbère (INALCO). Une spec braille pour le néo-tifinagh (IRCAM) nécessiterait un travail séparé. | Spec séparée souhaitable |
 | L7 | **Pas de test avec Liblouis** — la table Liblouis proposée en §5.3 n'a pas été compilée ni testée. | Implémentation requise |
@@ -436,10 +436,7 @@ L'adoption de cette spécification par les outils de transcription (Liblouis, em
 9. **ResearchGate** (non daté). *Amazigh Converter based on WordprocessingML* — mention d'un convertisseur braille↔tifinagh. https://www.researchgate.net/
 10. **Dallet, Jean-Marie** (1982). *Dictionnaire kabyle-français: parler des At Mengellat, Algérie*. SELAF, Paris.
 11. **Naït-Zerrad, Kamal** (2001). *Grammaire moderne du kabyle, tajerrumt tatrart n teqbaylit*. Karthala, Paris.
-12. **Bouamara, Kamal** (1998). *Nekkni d wiyiḍ : Tullizin*. Alger : HCA. Corpus de tullisin (nouvelles kabyles) utilisé pour les exemples de cette spec.
-13. **Bouamara, Kamal** (2010/2017). *Issin, asegzawal n teqbaylit s teqbaylit* (vol. 1 et 2). Béjaïa : L'Odyssée. Dictionnaire unilingue kabyle-kabyle.
-14. **Tatoeba** (2026). *Tatoeba Corpus — Kabyle*. 396 084 phrases. https://tatoeba.org/eng/sentences/show_all_in/kab
-15. **Glosbe** (2026). *Kabyle-French / English-Kabyle Dictionary*. https://glosbe.com/
+12. **Feraoun, Mouloud / Bouamara, Kamal (trad.)** (1998). *Ussan di Tmurt* (traduction kabyle de *Jours de Kabylie*, Mouloud Feraoun, 1954). Alger. Source de tous les exemples de mots attestés en §3.2, §3.3, §3.6 et §6.
 
 ---
 
