@@ -2,7 +2,7 @@
 
 **Auteurs** : Athmane Mokraoui (boffire), locuteur natif kabyle, mainteneur des ressources NLP kabyles ; recherche documentaire braille et structuration technique.
 
-**Date** : 21 août 2026
+**Date** : 20 août 2026
 
 **Version** : 0.2-draft (corrigée)
 
@@ -100,7 +100,7 @@ Les caractères suivants sont transcrits **à l'identique** du CBFU grade 1 (non
 | ( | Parenthèse ouvrante | ⠐⠣ | U+2810 U+2823 | 5 + 126 |
 | ) | Parenthèse fermante | ⠐⠜ | U+2810 U+281C | 5 + 345 |
 
-**Source CBFU** : Dans l'immense majorité des cas, le CBFU emploie le symbole (points 2-3-5-6) pour représenter le guillemet ouvrant ou fermant, quel que soit le caractère typographique utilisé dans le document d'origine. cite🛠web_search:6#6:~:text=Dans l'immense majorité des cas, on emploie le symbole...quel que soit le caractere typographique utilisé dans le document d'origine.
+**Source CBFU** : Dans l'immense majorité des cas, le CBFU emploie le symbole (points 2-3-5-6) pour représenter le guillemet ouvrant ou fermant, quel que soit le caractère typographique utilisé dans le document d'origine. citeweb_search:6#6:~:text=Dans l'immense majorité des cas, on emploie le symbole...quel que soit le caractere typographique utilisé dans le document d'origine.
 
 **Chiffres (CBFU)** :
 
@@ -147,7 +147,7 @@ Le CBFU prescrit la **notation Antoine** comme système principal : le modificat
 | Début de passage majuscule (≥ 4 mots) | ⠘⠨ | 2-5 + 4-6 |
 | Fin de passage majuscule | ⠨ devant le dernier mot | 46 |
 
-**Source CBFU** : L'indicateur de majuscule simple (points 4-6) précède immédiatement le mot dont l'initiale ou dont toutes les lettres sont en majuscules. À partir de quatre mots consécutifs entièrement en majuscule, on place le symbole (points 2-5, 4-6) devant le premier mot et le symbole (points 4-6) devant le dernier mot. cite🛠web_search:2#2:~:text=L'indicateur de majuscule...points 4-6...À partir de quatre mots...points 2-5, 4-6...points 4-6
+**Source CBFU** : L'indicateur de majuscule simple (points 4-6) précède immédiatement le mot dont l'initiale ou dont toutes les lettres sont en majuscules. À partir de quatre mots consécutifs entièrement en majuscule, on place le symbole (points 2-5, 4-6) devant le premier mot et le symbole (points 4-6) devant le dernier mot. citeweb_search:2#2:~:text=L'indicateur de majuscule...points 4-6...À partir de quatre mots...points 2-5, 4-6...points 4-6
 
 ### 2.2 Caractères spécifiques berbères : mode indicateur
 
@@ -157,9 +157,9 @@ Les 10 caractères spécifiques au kabyle (INALCO 1996) n'ont pas d'équivalent 
 
 Un **modificateur** CBFU standard — le **modificateur 2** (`⠐`, dot 5, U+2810) — précède la lettre de base la plus proche phonétiquement. Cela produit deux cellules braille par caractère spécial, mais garantit une **compatibilité totale** avec les lecteurs CBFU existants : un lecteur francophone peut, au pire, ignorer le modificateur et reconnaître la lettre de base.
 
-**Justification du choix du modificateur 2** : Le CBFU définit le modificateur 2 (point 5) comme un symbole qui change la valeur du ou des caractères qui suivent immédiatement, notamment pour les symboles composés (©, °, §, ®, ™, etc.) et les lettres étrangères (§2.5). cite🛠web_search:2#2:~:text=Les modificateurs 1 et 2...servent à former des symboles composes... Le CBFU prévoit explicitement que « de nouveaux symboles composés pourront être créés ultérieurement à l'aide de ces modificateurs si nécessaire ». cite🛠web_search:3#5:~:text=De nouveaux symboles composes pourront etre crees ulterieurement a l'aide de ces modificateurs si necessaire. L'utilisation du modificateur 2 pour les lettres kabyles s'inscrit donc dans la logique d'extension du CBFU.
+**Justification du choix du modificateur 2** : Le CBFU définit le modificateur 2 (point 5) comme un symbole qui change la valeur du ou des caractères qui suivent immédiatement, notamment pour les symboles composés (©, °, §, ®, ™, etc.) et les lettres étrangères (§2.5). citeweb_search:2#2:~:text=Les modificateurs 1 et 2...servent à former des symboles composes... Le CBFU prévoit explicitement que « de nouveaux symboles composés pourront être créés ultérieurement à l'aide de ces modificateurs si nécessaire ». citeweb_search:3#5:~:text=De nouveaux symboles composes pourront etre crees ulterieurement a l'aide de ces modificateurs si necessaire. L'utilisation du modificateur 2 pour les lettres kabyles s'inscrit donc dans la logique d'extension du CBFU.
 
-**Vérification des collisions** : Le tableau des symboles composés du CBFU (Tableau 3) liste les combinaisons existantes avec le modificateur 2. Les combinaisons retenues ci-dessous (`⠐⠙`, `⠐⠑`, `⠐⠛`, `⠐⠟`, `⠐⠓`, `⠐⠗`, `⠐⠎`, `⠐⠞`, `⠐⠵`) ne figurent pas dans le CBFU 2008 comme symboles assignés. cite🛠web_search:3#5:~:text=Tableau 3 Les symboles composees...
+**Vérification des collisions** : Le tableau des symboles composés du CBFU (Tableau 3) liste les combinaisons existantes avec le modificateur 2. Les combinaisons retenues ci-dessous (`⠐⠙`, `⠐⠑`, `⠐⠛`, `⠐⠟`, `⠐⠓`, `⠐⠗`, `⠐⠎`, `⠐⠞`, `⠐⠵`) ne figurent pas dans le CBFU 2008 comme symboles assignés. citeweb_search:3#5:~:text=Tableau 3 Les symboles composees...
 
 | Caractère | Phonème | Séquence Braille | Justification |
 |-----------|---------|------------------|---------------|
@@ -178,7 +178,7 @@ Un **modificateur** CBFU standard — le **modificateur 2** (`⠐`, dot 5, U+281
 
 #### 2.2.2 Mode dédié (option avancée) — reporté
 
-Une transcription en **une seule cellule braille** par caractère spécial kabyle serait souhaitable pour optimiser la vitesse de lecture et réduire le volume. Cependant, le CBFU grade 1 (6 points) utilise les 63 cellules non vides : les 26 lettres de base, 13 voyelles accentuées, et les symboles de ponctuation et de composition. cite🛠web_search:2#2:~:text=Caractère braille : chacune des 63 combinaisons de points qu'offre la cellule braille. Aucune cellule 6-dot n'est disponible sans entrer en collision avec un caractère CBFU existant (notamment les voyelles accentuées françaises : â=⠡, ê=⠣, î=⠩, ô=⠹, û=⠱, ë=⠫, ï=⠻, ü=⠳, œ=⠪, é=⠿, à=⠷, è=⠮, ù=⠾). cite🛠web_search:3#0:~:text=â, ⠡, 16...ê, ⠣, 126...î, ⠩, 146...ô, ⠹, 1456...û, ⠱, 156...ë, ⠫, 1246...ï, ⠻, 12456...ü, ⠳, 1256...œ, ⠪, 246...é, ⠿, 123456...à, ⠷, 12356...è, ⠮, 2346...ù, ⠾, 23456
+Une transcription en **une seule cellule braille** par caractère spécial kabyle serait souhaitable pour optimiser la vitesse de lecture et réduire le volume. Cependant, le CBFU grade 1 (6 points) utilise les 63 cellules non vides : les 26 lettres de base, 13 voyelles accentuées, et les symboles de ponctuation et de composition. citeweb_search:2#2:~:text=Caractère braille : chacune des 63 combinaisons de points qu'offre la cellule braille. Aucune cellule 6-dot n'est disponible sans entrer en collision avec un caractère CBFU existant (notamment les voyelles accentuées françaises : â=⠡, ê=⠣, î=⠩, ô=⠹, û=⠱, ë=⠫, ï=⠻, ü=⠳, œ=⠪, é=⠿, à=⠷, è=⠮, ù=⠾). citeweb_search:3#0:~:text=â, ⠡, 16...ê, ⠣, 126...î, ⠩, 146...ô, ⠹, 1456...û, ⠱, 156...ë, ⠫, 1246...ï, ⠻, 12456...ü, ⠳, 1256...œ, ⠪, 246...é, ⠿, 123456...à, ⠷, 12356...è, ⠮, 2346...ù, ⠾, 23456
 
 Par conséquent, le mode dédié 6-dot est **hors périmètre** de cette version de la spécification. Une extension future pourra explorer :
 - L'utilisation de cellules **8-dot** (plage U+2840–U+28FF, dots 7 et/ou 8), garanties hors périmètre CBFU 6-dot et supportées par les afficheurs braille informatiques modernes.
@@ -359,7 +359,7 @@ Un texte français inséré dans un document kabyle (citation, emprunt) doit se 
 | œuvre | ⠪⠧⠗⠑ | CBFU standard (œ = ⠪, dots 246) |
 | à | ⠷ | CBFU standard (à = ⠷, dots 12356) |
 
-**Note** : Les voyelles accentuées françaises (à, â, ç, é, è, ê, ë, î, ï, ô, œ, ù, ü) ont des cellules CBFU fixes et ne doivent en aucun cas être réassignées à des caractères kabyles. cite🛠web_search:3#0:~:text=à, ⠷, 12356...â, ⠡, 16...ç, ⠯, 12346...é, ⠿, 123456...è, ⠮, 2346...ê, ⠣, 126...ë, ⠫, 1246...î, ⠩, 146...ï, ⠻, 12456...ô, ⠹, 1456...œ, ⠪, 246...ù, ⠾, 23456...ü, ⠳, 1256
+**Note** : Les voyelles accentuées françaises (à, â, ç, é, è, ê, ë, î, ï, ô, œ, ù, ü) ont des cellules CBFU fixes et ne doivent en aucun cas être réassignées à des caractères kabyles. citeweb_search:3#0:~:text=à, ⠷, 12356...â, ⠡, 16...ç, ⠯, 12346...é, ⠿, 123456...è, ⠮, 2346...ê, ⠣, 126...ë, ⠫, 1246...î, ⠩, 146...ï, ⠻, 12456...ô, ⠹, 1456...œ, ⠪, 246...ù, ⠾, 23456...ü, ⠳, 1256
 
 ---
 
