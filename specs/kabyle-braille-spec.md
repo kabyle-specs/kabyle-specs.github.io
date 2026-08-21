@@ -1,6 +1,6 @@
 # Spécification de Transcription Braille pour le Kabyle (Taqbaylit)
 
-**Auteurs** : Athmane Mokraoui (boffire), locuteur natif kabyle, mainteneur des ressources NLP kabyles ; recherche documentaire braille et structuration technique.
+**Auteurs** : Athmane Mokraoui (butterflyoffire), locuteur natif kabyle, mainteneur des ressources NLP kabyles ; recherche documentaire braille et structuration technique.
 
 **Date** : 21 août 2026
 
@@ -24,7 +24,7 @@ Le kabyle (Taqbaylit, ISO 639-3 `kab`) est une langue berbère parlée par 5 à 
 
 ### 1.1 Le vide normatif
 
-Contrairement au braille arabe (standardisé par l'UNESCO dans les années 1950), au braille français (codifié par le *Code braille français uniformisé*, CBFU, adopté par la Commission Évolution du Braille Français le 3 octobre 2008 et rendu obligatoire en France par arrêté du 17 août 2006), au braille anglais (Unified English Braille, UEB), au braille espagnol, au braille allemand, et à plus de 130 autres systèmes braille répertoriés dans le *World Braille Usage* (UNESCO 2013), **le braille berbère/amazigh n'apparaît dans aucune nomenclature internationale**. Les recherches sur le dspace UMMTO (Université Mouloud Mammeri de Tizi Ouzou), les bases académiques internationales, et les associations de déficients visuels algériennes n'ont révélé aucun travail de standardisation braille pour le kabyle en alphabet latin.
+Contrairement au braille arabe (standardisé par l'UNESCO dans les années 1950), au braille français (codifié par le *Code braille français uniformisé*, CBFU, 2ᵉ édition septembre 2008, rendu obligatoire en France par arrêté du 17 août 2006), au braille anglais (Unified English Braille, UEB), au braille espagnol, au braille allemand, et à plus de 130 autres systèmes braille répertoriés dans le *World Braille Usage* (UNESCO 2013), **le braille berbère/amazigh n'apparaît dans aucune nomenclature internationale**. Les recherches sur le dspace UMMTO (Université Mouloud Mammeri de Tizi Ouzou), les bases académiques internationales, et les associations de déficients visuels algériennes n'ont révélé aucun travail de standardisation braille pour le kabyle en alphabet latin.
 
 Un travail académique documenté existe pour le **tifinaghe marocain** (Yakoubi et al., 2016) : il propose un système braille complet pour les 33 caractères tifinaghes IRCAM, avec un indicateur de graphie spécifique, une règle d'emphase par ajout du point 6, et un convertisseur automatique avec clavier virtuel parlant. Cependant, **aucun équivalent n'existe pour l'alphabet latin berbère** (INALCO 1996) utilisé en Kabylie. De plus, le système tifinaghe-braille repose sur une logique de points propres au tifinaghe (fréquence, emphase par point 6) qui n'est pas directement transposable à l'alphabet latin kabyle sans adaptation.
 
@@ -34,7 +34,7 @@ Un article académique isolé mentionne un « convertisseur automatique de brail
 
 Fournir une **spécification de transcription braille de référence** qui :
 
-1. S'appuie sur le **CBFU** (*Code braille français uniformisé*) pour tous les caractères communs au français et au kabyle (22 lettres de base, ponctuation, chiffres, tiret).
+1. S'appuie sur le **CBFU** (*Code braille français uniformisé*) pour tous les caractères communs au français et au kabyle (26 lettres latines de base, ponctuation, chiffres, tiret).
 2. Définisse un **mode indicateur** pour les 10 caractères spécifiques berbères (č, ḍ, ɛ, ǧ, ɣ, ḥ, ṛ, ṣ, ṭ, ẓ), documentés avec justification phonétique et en utilisant un mécanisme d'extension compatible avec le CBFU (modificateur 2, dot 5).
 3. Établisse les **règles de normalisation préalable** (alignement sur la spec orthography) pour garantir que le texte source est canonique avant transcription.
 4. Définisse les **formats de sortie** : Unicode Braille (U+2800–U+28FF), BRF (Braille Ready Format), et table Liblouis.
@@ -43,13 +43,13 @@ Fournir une **spécification de transcription braille de référence** qui :
 
 ### 1.3 Principe directeur : ne pas réinventer la roue
 
-Le braille est un **code d'encodage tactile**, pas une écriture autonome. La règle d'or de la conception braille est la **compatibilité ascendante** : tout lecteur braille francophone doit pouvoir lire le kabyle en braille sans apprentissage préalable des 22 lettres de base. Seuls les 10 caractères spécifiques nécessitent un apprentissage additionnel.
+Le braille est un **code d'encodage tactile**, pas une écriture autonome. La règle d'or de la conception braille est la **compatibilité ascendante** : tout lecteur braille francophone doit pouvoir lire le kabyle en braille sans apprentissage préalable des 26 lettres de base. Seuls les 10 caractères spécifiques nécessitent un apprentissage additionnel.
 
 ---
 
 ## 2. Inventaire des caractères braille kabyles
 
-### 2.1 Base CBFU (22 lettres + ponctuation + chiffres)
+### 2.1 Base CBFU (26 lettres + ponctuation + chiffres)
 
 Les caractères suivants sont transcrits **à l'identique** du CBFU grade 1 (non abrégé). Tout lecteur braille francophone les reconnaît instantanément.
 
@@ -82,7 +82,7 @@ Les caractères suivants sont transcrits **à l'identique** du CBFU grade 1 (non
 | y | Y | ⠽ | U+283D | 13456 |
 | z | Z | ⠵ | U+2835 | 1356 |
 
-**Note sur le v** : la lettre `v` n'est pas native à l'alphabet kabyle INALCO, mais elle est présente dans le CBFU et peut apparaître dans des emprunts français. Elle se transcrit `⠧`.
+**Note sur p et v** : ces lettres ne sont pas natives à l'alphabet kabyle INALCO, mais elles sont présentes dans le CBFU et peuvent apparaître dans des emprunts français. Elles se transcritent respectivement `⠏` et `⠧`.
 
 **Ponctuation (CBFU)** :
 
@@ -100,7 +100,7 @@ Les caractères suivants sont transcrits **à l'identique** du CBFU grade 1 (non
 | ( | Parenthèse ouvrante | ⠐⠣ | U+2810 U+2823 | 5 + 126 |
 | ) | Parenthèse fermante | ⠐⠜ | U+2810 U+281C | 5 + 345 |
 
-**Source CBFU** : Dans l'immense majorité des cas, le CBFU emploie le symbole (points 2-3-5-6) pour représenter le guillemet ouvrant ou fermant, quel que soit le caractère typographique utilisé dans le document d'origine. citeweb_search:6#6:~:text=Dans l'immense majorité des cas, on emploie le symbole...quel que soit le caractere typographique utilisé dans le document d'origine.
+**Source CBFU** : Dans l'immense majorité des cas, le CBFU emploie le symbole (points 2-3-5-6) pour représenter le guillemet ouvrant ou fermant, quel que soit le caractère typographique utilisé dans le document d'origine.
 
 **Chiffres (CBFU)** :
 
@@ -142,12 +142,12 @@ Le CBFU prescrit la **notation Antoine** comme système principal : le modificat
 
 | Règle | Séquence Braille | Dots |
 |-------|------------------|------|
-| Majuscule simple | ⠨ | 46 |
-| Majuscules multiples (sigle, mot entier) | ⠨⠨ | 46 + 46 |
-| Début de passage majuscule (≥ 4 mots) | ⠘⠨ | 2-5 + 4-6 |
+| Majuscule simple (initiale ou lettre isolée) | ⠨ | 46 |
+| Mot ou sigle entièrement en majuscules | ⠨⠨ | 46 + 46 |
+| Début de passage majuscule (≥ 4 mots consécutifs) | ⠘⠨ | 2-5 + 4-6 |
 | Fin de passage majuscule | ⠨ devant le dernier mot | 46 |
 
-**Source CBFU** : L'indicateur de majuscule simple (points 4-6) précède immédiatement le mot dont l'initiale ou dont toutes les lettres sont en majuscules. À partir de quatre mots consécutifs entièrement en majuscule, on place le symbole (points 2-5, 4-6) devant le premier mot et le symbole (points 4-6) devant le dernier mot. citeweb_search:2#2:~:text=L'indicateur de majuscule...points 4-6...À partir de quatre mots...points 2-5, 4-6...points 4-6
+**Source CBFU** : L'indicateur de majuscule simple (points 4-6) précède immédiatement le mot dont l'initiale ou dont toutes les lettres sont en majuscules. À partir de quatre mots consécutifs entièrement en majuscule, on place le symbole (points 2-5, 4-6) devant le premier mot et le symbole (points 4-6) devant le dernier mot.
 
 ### 2.2 Caractères spécifiques berbères : mode indicateur
 
@@ -157,28 +157,33 @@ Les 10 caractères spécifiques au kabyle (INALCO 1996) n'ont pas d'équivalent 
 
 Un **modificateur** CBFU standard — le **modificateur 2** (`⠐`, dot 5, U+2810) — précède la lettre de base la plus proche phonétiquement. Cela produit deux cellules braille par caractère spécial, mais garantit une **compatibilité totale** avec les lecteurs CBFU existants : un lecteur francophone peut, au pire, ignorer le modificateur et reconnaître la lettre de base.
 
-**Justification du choix du modificateur 2** : Le CBFU définit le modificateur 2 (point 5) comme un symbole qui change la valeur du ou des caractères qui suivent immédiatement, notamment pour les symboles composés (©, °, §, ®, ™, etc.) et les lettres étrangères (§2.5). citeweb_search:2#2:~:text=Les modificateurs 1 et 2...servent à former des symboles composes... Le CBFU prévoit explicitement que « de nouveaux symboles composés pourront être créés ultérieurement à l'aide de ces modificateurs si nécessaire ». citeweb_search:3#5:~:text=De nouveaux symboles composes pourront etre crees ulterieurement a l'aide de ces modificateurs si necessaire. L'utilisation du modificateur 2 pour les lettres kabyles s'inscrit donc dans la logique d'extension du CBFU.
+**Justification du choix du modificateur 2** : Le CBFU définit le modificateur 2 (point 5) comme un symbole qui change la valeur du ou des caractères qui suivent immédiatement, notamment pour les symboles composés (©, °, §, ®, ™, etc.) et les lettres étrangères (§2.5). Le CBFU prévoit explicitement que « de nouveaux symboles composés pourront être créés ultérieurement à l'aide de ces modificateurs si nécessaire ». L'utilisation du modificateur 2 pour les lettres kabyles s'inscrit donc dans la logique d'extension du CBFU.
 
-**Vérification des collisions** : Le tableau des symboles composés du CBFU (Tableau 3) liste les combinaisons existantes avec le modificateur 2. Les combinaisons retenues ci-dessous (`⠐⠙`, `⠐⠑`, `⠐⠛`, `⠐⠟`, `⠐⠓`, `⠐⠗`, `⠐⠎`, `⠐⠞`, `⠐⠵`) ne figurent pas dans le CBFU 2008 comme symboles assignés. citeweb_search:3#5:~:text=Tableau 3 Les symboles composees...
+**Vérification des collisions** : Le tableau des symboles composés du CBFU (Tableau 3) liste certaines combinaisons avec le modificateur 2. Parmi les combinaisons retenues pour le kabyle :
+
+- **Libres en CBFU 2008** : `⠐⠙`, `⠐⠑`, `⠐⠛`, `⠐⠓`, `⠐⠎`, `⠐⠵`, `⠐⠟` — aucune affectation documentée.
+- **Déjà assignées en CBFU** : `⠐⠉` = ©, `⠐⠗` = ®, `⠐⠞` = ™ — ces symboles composés existent dans le CBFU grade 1.
+
+Les combinaisons libres sont utilisées sans ambiguïté. Pour les trois combinaisons déjà assignées (`⠐⠉`, `⠐⠗`, `⠐⠞`), leur réutilisation pour le kabyle crée une **ambiguïté contextuelle** documentée en §9 (L4). Dans un texte kabyle standard (hors emprunts techniques), le contexte littéraire désambiguise : un lecteur CBFU ne rencontrera pas ©, ® ou ™ au milieu d'un mot kabyle.
 
 | Caractère | Phonème | Séquence Braille | Justification |
 |-----------|---------|------------------|---------------|
-| č | /t͡ʃ/ | ⠐⠉ (modificateur 2 + c) | c de base + modification. **[À VALIDER]** : `⠐⠉` n'est pas utilisé en CBFU grade 1, mais `⠐` + `⠉` (©) est une séquence documentée. Vérifier qu'aucun lecteur CBFU n'interprète `⠐⠉` comme © dans un contexte littéraire. |
+| č | /t͡ʃ/ | ⠐⠉ (modificateur 2 + c) | c de base + modification. **[À VALIDER]** : `⠐⠉` = © en CBFU. Contexte littéraire kabyle vs. symbole de copyright à valider. |
 | ḍ | /dˤ/ | ⠐⠙ (modificateur 2 + d) | d de base + modification. `⠐⠙` n'est pas assigné en CBFU. |
 | ɛ | /ʕ/ | ⠐⠑ (modificateur 2 + e) | e de base + modification. `⠐⠑` n'est pas assigné en CBFU. |
 | ǧ | /d͡ʒ/ | ⠐⠛ (modificateur 2 + g) | g de base + modification. `⠐⠛` n'est pas assigné en CBFU. |
 | ɣ | /ɣ/ | ⠐⠟ (modificateur 2 + q) | Voir note ci-dessous : q est utilisé à la place de g pour éviter la collision avec ǧ. `⠐⠟` n'est pas assigné en CBFU. |
 | ḥ | /ħ/ | ⠐⠓ (modificateur 2 + h) | h de base + modification. `⠐⠓` n'est pas assigné en CBFU. |
-| ṛ | /rˤ/ | ⠐⠗ (modificateur 2 + r) | r de base + modification. **[À VALIDER]** : `⠐⠗` n'est pas assigné en CBFU, mais `⠐` + `⠗` (®) est une séquence documentée. Vérifier l'absence d'ambiguïté. |
+| ṛ | /rˤ/ | ⠐⠗ (modificateur 2 + r) | r de base + modification. **[À VALIDER]** : `⠐⠗` = ® en CBFU. Contexte littéraire kabyle vs. symbole registered à valider. |
 | ṣ | /sˤ/ | ⠐⠎ (modificateur 2 + s) | s de base + modification. `⠐⠎` n'est pas assigné en CBFU. |
-| ṭ | /tˤ/ | ⠐⠞ (modificateur 2 + t) | t de base + modification. **[À VALIDER]** : `⠐⠞` n'est pas assigné en CBFU, mais `⠐` + `⠞` (™) est une séquence documentée. Vérifier l'absence d'ambiguïté. |
+| ṭ | /tˤ/ | ⠐⠞ (modificateur 2 + t) | t de base + modification. **[À VALIDER]** : `⠐⠞` = ™ en CBFU. Contexte littéraire kabyle vs. symbole trademark à valider. |
 | ẓ | /zˤ/ | ⠐⠵ (modificateur 2 + z) | z de base + modification. `⠐⠵` n'est pas assigné en CBFU. |
 
 **Note sur ɣ (résolution de la collision ǧ/ɣ)** : phonétiquement, `ǧ` (/d͡ʒ/) et `ɣ` (/ɣ/) seraient tous deux les plus proches de `g`, ce qui produirait la même séquence (`⠐⠛`) pour deux caractères distincts. Cette spécification retient donc `⠐⠟` (modificateur 2 + q) pour `ɣ`, par analogie avec la touche `q` du KIM (*Kabyle Input Method*, voir `kabyle-keyboard-layout-spec.md` §4.2). **[À VALIDER]** : cette substitution est une proposition non testée auprès de locuteurs et de lecteurs braille kabyles ; elle est appliquée de façon cohérente dans le reste de cette spécification (§5.3, §6.1).
 
 #### 2.2.2 Mode dédié (option avancée) — reporté
 
-Une transcription en **une seule cellule braille** par caractère spécial kabyle serait souhaitable pour optimiser la vitesse de lecture et réduire le volume. Cependant, le CBFU grade 1 (6 points) utilise les 63 cellules non vides : les 26 lettres de base, 13 voyelles accentuées, et les symboles de ponctuation et de composition. citeweb_search:2#2:~:text=Caractère braille : chacune des 63 combinaisons de points qu'offre la cellule braille. Aucune cellule 6-dot n'est disponible sans entrer en collision avec un caractère CBFU existant (notamment les voyelles accentuées françaises : â=⠡, ê=⠣, î=⠩, ô=⠹, û=⠱, ë=⠫, ï=⠻, ü=⠳, œ=⠪, é=⠿, à=⠷, è=⠮, ù=⠾). citeweb_search:3#0:~:text=â, ⠡, 16...ê, ⠣, 126...î, ⠩, 146...ô, ⠹, 1456...û, ⠱, 156...ë, ⠫, 1246...ï, ⠻, 12456...ü, ⠳, 1256...œ, ⠪, 246...é, ⠿, 123456...à, ⠷, 12356...è, ⠮, 2346...ù, ⠾, 23456
+Une transcription en **une seule cellule braille** par caractère spécial kabyle serait souhaitable pour optimiser la vitesse de lecture et réduire le volume. Cependant, le CBFU grade 1 (6 points) utilise les 63 cellules non vides : les 26 lettres de base, 13 voyelles accentuées, et les symboles de ponctuation et de composition. Aucune cellule 6-dot n'est disponible sans entrer en collision avec un caractère CBFU existant (notamment les voyelles accentuées françaises : â=⠡, ê=⠣, î=⠩, ô=⠹, û=⠱, ë=⠫, ï=⠻, ü=⠳, œ=⠪, é=⠿, à=⠷, è=⠮, ù=⠾).
 
 Par conséquent, le mode dédié 6-dot est **hors périmètre** de cette version de la spécification. Une extension future pourra explorer :
 - L'utilisation de cellules **8-dot** (plage U+2840–U+28FF, dots 7 et/ou 8), garanties hors périmètre CBFU 6-dot et supportées par les afficheurs braille informatiques modernes.
@@ -220,17 +225,17 @@ Conformément à `kabyle-orthography-specs.md` §6.4, le kabyle **n'utilise pas*
 
 ### 3.5 Espaces
 
-L'espace ` ` (U+0020) se transcrit en `⠀` (U+2800, braille pattern blank). Les espaces multiples sont réduits à un seul `⠀` avant transcription.
+L'espace ` ` (U+0020) se transcrit en `⠀` (U+2800, braille pattern blank). Les espaces multiples sont réduites à un seul `⠀` avant transcription.
 
 ### 3.6 Majuscules
 
-L'indicateur de majuscule `⠨` (dot 46, U+2828) précède la lettre concernée. Pour un passage en majuscules (ex. acronyme, titre), l'indicateur double `⠨⠨` est utilisé pour les majuscules multiples, et le passage étendu utilise `⠘⠨` en début et `⠨` devant le dernier mot.
+L'indicateur de majuscule `⠨` (dot 46, U+2828) précède la lettre concernée. Pour un mot ou un sigle entièrement en majuscules, l'indicateur double `⠨⠨` est utilisé. Pour un passage étendu (≥ 4 mots consécutifs en majuscules), le début est marqué par `⠘⠨` et la fin par `⠨` devant le dernier mot.
 
-| Orthographe | Braille |
-|-------------|---------|
-| Taqbaylit | ⠨⠞⠁⠟⠃⠁⠽⠇⠊⠞ |
-| Ɛemmi | ⠨⠐⠑⠍⠍⠊ |
-| IRCAM | ⠘⠨⠊⠗⠉⠁⠍⠨ |
+| Orthographe | Braille | Règle appliquée |
+|-------------|---------|-----------------|
+| Taqbaylit | ⠨⠞⠁⠟⠃⠁⠽⠇⠊⠞ | Majuscule initiale (⠨) |
+| Ɛemmi | ⠨⠐⠑⠑⠍⠍⠊ | Majuscule initiale + caractère spécial (⠨ + ⠐⠑ pour Ɛ, puis ⠑ pour e) |
+| IRCAM | ⠨⠨⠊⠗⠉⠁⠍ | Sigle en majuscules (⠨⠨) |
 
 « Taqbaylit » est attesté tel quel, capitalisé, dans *Ussan di Tmurt* (Bouamara). « Ɛemmi » est une application de la règle de majuscule ci-dessus au mot attesté « ɛemmi » (§6.1) en position de début de phrase — cette forme capitalisée précise n'est pas elle-même citée du texte source, mais résulte de l'application mécanique de la règle d'écriture standard.
 
@@ -286,22 +291,24 @@ Avant toute transcription braille, le texte source doit être normalisé conform
 # Auteur: kabyle-specs
 # Version: 0.2-draft
 
-include fr-bfu-comp6.utb  # Inclusion de la base CBFU grade 1
+# [À VALIDER] : vérifier le nom exact de la table CBFU grade 1 dans
+# la distribution Liblouis (fr-bfu-g1.utb, fr-bfu-comp6.utb, etc.)
+include fr-bfu-g1.utb  # Inclusion de la base CBFU grade 1
 
 # Mode Indicateur (par défaut)
 # Utilisation du modificateur 2 (dot 5, U+2810) comme préfixe
 # pour les caractères spécifiques berbères, conformément au
 # mécanisme d'extension du CBFU §1.9 et §2.5.
 
-always č ⠐⠉  # c caron — [À VALIDER] collision potentielle avec ©
+always č ⠐⠉  # c caron — [À VALIDER] : collision avec © en CBFU
 always ḍ ⠐⠙  # d point souscrit
 always ɛ ⠐⠑  # e ouvert
 always ǧ ⠐⠛  # g caron
 always ɣ ⠐⠟  # gamma — modificateur 2 + q, résolution de la collision avec ǧ
 always ḥ ⠐⠓  # h point souscrit
-always ṛ ⠐⠗  # r point souscrit — [À VALIDER] collision potentielle avec ®
+always ṛ ⠐⠗  # r point souscrit — [À VALIDER] : collision avec ® en CBFU
 always ṣ ⠐⠎  # s point souscrit
-always ṭ ⠐⠞  # t point souscrit — [À VALIDER] collision potentielle avec ™
+always ṭ ⠐⠞  # t point souscrit — [À VALIDER] : collision avec ™ en CBFU
 always ẓ ⠐⠵  # z point souscrit
 ```
 
@@ -352,6 +359,8 @@ Tout document braille kabyle produit par un système automatique doit passer par
 
 Un texte français inséré dans un document kabyle (citation, emprunt) doit se transcrire **à l'identique** en CBFU grade 1. Les règles kabyles ne doivent pas affecter le français.
 
+**Important** : ces tests supposent un texte français **hors pipeline de normalisation kabyle** (§4). La règle N6 (suppression des diacritiques français) s'applique au texte kabyle standard, pas aux citations françaises intégrées.
+
 | Texte français | Braille attendu | Test |
 |----------------|-----------------|------|
 | Bonjour | ⠨⠃⠕⠝⠚⠕⠥⠗ | CBFU standard |
@@ -359,7 +368,7 @@ Un texte français inséré dans un document kabyle (citation, emprunt) doit se 
 | œuvre | ⠪⠧⠗⠑ | CBFU standard (œ = ⠪, dots 246) |
 | à | ⠷ | CBFU standard (à = ⠷, dots 12356) |
 
-**Note** : Les voyelles accentuées françaises (à, â, ç, é, è, ê, ë, î, ï, ô, œ, ù, ü) ont des cellules CBFU fixes et ne doivent en aucun cas être réassignées à des caractères kabyles. citeweb_search:3#0:~:text=à, ⠷, 12356...â, ⠡, 16...ç, ⠯, 12346...é, ⠿, 123456...è, ⠮, 2346...ê, ⠣, 126...ë, ⠫, 1246...î, ⠩, 146...ï, ⠻, 12456...ô, ⠹, 1456...œ, ⠪, 246...ù, ⠾, 23456...ü, ⠳, 1256
+**Note** : Les voyelles accentuées françaises (à, â, ç, é, è, ê, ë, î, ï, ô, œ, ù, ü) ont des cellules CBFU fixes et ne doivent en aucun cas être réassignées à des caractères kabyles.
 
 ---
 
@@ -398,7 +407,7 @@ Affichage écran / Embosseuse / Lecteur d'écran
 | L1 | **Aucune validation par expert braille** — cette spec est une proposition théorique. Aucun expert CBFU ni utilisateur déficient visuel kabyle n'a validé l'ergonomie tactile des cellules proposées. | **[À VALIDER]** — Contact expert requis |
 | L2 | **Aucun test sur embosseuse** — les cellules proposées n'ont pas été testées sur du papier braille. La lisibilité tactile de certaines combinaisons reste à vérifier. | **[À VALIDER]** |
 | L3 | **Collision ɣ/ǧ en mode indicateur** — toutes deux utilisent la lettre g de base. La solution `⠐⠟` (q) pour ɣ est une proposition non testée. | **[À VALIDER]** |
-| L4 | **Collisions potentielles modificateur 2** — `⠐⠉` (©), `⠐⠗` (®), `⠐⠞` (™) existent en CBFU. Les combinaisons kabyles correspondantes doivent être validées pour éviter toute ambiguïté contextuelle. | **[À VALIDER]** — Vérification CBFU complète requise |
+| L4 | **Collisions modificateur 2 avec symboles CBFU** — `⠐⠉` = ©, `⠐⠗` = ®, `⠐⠞` = ™ existent en CBFU grade 1. Leur réutilisation pour le kabyle crée une ambiguïté contextuelle à documenter. | **[À VALIDER]** — Vérification CBFU complète requise |
 | L5 | **Pas de grade 2 (abrégé)** — cette spec ne définit pas de système abrégé (contractions, logogrammes) pour le kabyle. Un grade 2 kabyle serait souhaitable à long terme pour réduire le volume braille. | Extension future |
 | L6 | **Pas de mode dédié 6-dot** — toutes les cellules 6-dot sont utilisées par le CBFU grade 1. Un mode dédié nécessitera du braille 8-dot ou une réforme du CBFU. | Extension future |
 | L7 | **Pas de support Tifinagh** — cette spec ne couvre que l'alphabet latin berbère (INALCO). Une spec braille pour le néo-tifinagh (IRCAM) nécessiterait un travail séparé. | Spec séparée souhaitable |
