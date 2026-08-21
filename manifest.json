@@ -5,7 +5,7 @@
   "path": "specs/kabyle-braille-spec.md",
   "summary": "Braille transcription specification for Kabyle (Taqbaylit): CBFU-based grade-1 mapping, two extension modes (indicator and dedicated) for 11 berber-specific characters, Unicode Braille / BRF / Liblouis output formats, and pre-normalization pipeline integration with the kabyle orthography spec.",
   "status": "draft",
-  "updated": "2026-08-20"
+  "updated": "2026-08-21"
     },
     {
       "title": "Kabyle Lemmatization Specification",
