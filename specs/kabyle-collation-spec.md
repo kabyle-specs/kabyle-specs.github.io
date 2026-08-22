@@ -295,29 +295,29 @@ A Ɛ B C Č D Ḍ E F G Ǧ H Ḥ I J K L M N Q Ɣ R Ṛ S Ṣ T Ṭ U W X Y Z �
 Avec la collation kabyle correcte, une liste de mots doit respecter l’ordre suivant :
 
 ```text
-Amud
-Ɛin
+Awi
+Ɛrek
 Ger
-Ǧaɛ
+Ǧelleb
 Qim
 Ɣur
-Ruh
-Ṛwi
-Zriɣ
+Rnu
+Ṛkeḍ
+Zwir
 Ẓer
 ```
 
 | Mot | Position attendue | Règle appliquée |
 |---|---|---|
-| Amud | après A | lettre de base A |
-| Ɛin | après A, avant B | Ɛ est une consonne radicale, placée juste après A |
+| Awi | après A | lettre de base A |
+| Ɛrek | après A, avant B | Ɛ est une consonne radicale, placée juste après A |
 | Ger | après G | lettre de base G |
-| Ǧaɛ | après G | Ǧ suit G |
+| Ǧelleb | après G | Ǧ suit G |
 | Qim | après N | lettre de base Q |
 | Ɣur | après Q | Ɣ suit Q |
-| Ruh | après Ɣ | lettre de base R |
-| Ṛwi | après R | Ṛ suit R |
-| Zriɣ | après Y | lettre de base Z |
+| Rnu | après Ɣ | lettre de base R |
+| Ṛkeḍ | après R | Ṛ suit R |
+| Zwir | après Y | lettre de base Z |
 | Ẓer | après Z | Ẓ suit Z |
 
 ---
