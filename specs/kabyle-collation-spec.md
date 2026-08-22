@@ -81,7 +81,7 @@ Il comporte **33 lettres**.
 
 ## 3. Logique de l’ordre alphabétique
 
-L’ordre kabyle n’est pas une simple copie de l’ordre latin français. Il repose sur une logique accessible à un public non spécialiste, mais suffisamment précise pour être implémentée dans des logiciels.
+L’ordre kabyle n’est pas une simple copie de l’ordre alphabétique latin (anglais ou français). Il repose sur une logique accessible à un public non spécialiste, mais suffisamment précise pour être implémentée dans des logiciels.
 
 ### 3.1. Lettre de base, puis lettre modifiée
 
