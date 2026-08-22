@@ -1,6 +1,13 @@
 {
   "specs": [
     {
+  "title": "Kabyle Collation Specification",
+  "path": "specs/kabyle-collation-spec.md",
+  "summary": "Alphabetical ordering and collation rules for Kabyle (Taqbaylit): 33-letter sequence with Ɛ placed after A and Ɣ after Q, base-letter-then-modified-letter rule, geminate handling, loanword letter positions (O/P/V), and ready-to-use ICU/CLDR and glibc kab_DZ implementation rules.",
+  "status": "draft",
+  "updated": "2026-08-22"
+    },
+    {
   "title": "Kabyle Braille Transcription",
   "path": "specs/kabyle-braille-spec.md",
   "summary": "Braille transcription specification for Kabyle (Taqbaylit): CBFU-based grade-1 mapping, two extension modes (indicator and dedicated) for 11 berber-specific characters, Unicode Braille / BRF / Liblouis output formats, and pre-normalization pipeline integration with the kabyle orthography spec.",
