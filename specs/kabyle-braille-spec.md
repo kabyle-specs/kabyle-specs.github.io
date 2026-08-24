@@ -1,8 +1,8 @@
 # Spécification de transcription braille pour le kabyle (Taqbaylit)
 
-**Version :** 0.3.1-draft
+**Version :** 0.3.2-draft
 
-**Date :** 23 août 2026
+**Date :** 24 août 2026
 
 **Statut :** proposition de référence en cours de validation
 
@@ -119,7 +119,7 @@ La ponctuation ci-dessous suit la base CBFU/Liblouis `fr-bfu-comp6.utb` retenue 
 | `;` | `⠆` | 23 |
 | `:` | `⠒` | 25 |
 | `.` | `⠲` | 256 |
-| `?` | `⠦` | 236 |
+| `?` | `⠢` | `26` |
 | `!` | `⠖` | 235 |
 | `«` ou `»` | `⠶` | 2356 |
 | `-` | `⠤` | 36 |
@@ -128,7 +128,7 @@ La ponctuation ci-dessous suit la base CBFU/Liblouis `fr-bfu-comp6.utb` retenue 
 
 La similarité entre certaines cellules de ponctuation est une propriété du profil CBFU et doit être interprétée selon le contexte syntaxique. Les espaces multiples DEVRAIENT être normalisés en espaces simples avant la transcription lorsque le document cible le profil linguistique kabyle canonique.
 
-*(Informative)* En rétrotraduction, certaines cellules CBFU sont partagées par plusieurs caractères source (`?`/`(`, `!`/`+`, `"`/`«`/`»`/`=`, `-`/`–`/`—`). Un moteur autonome qui ne dispose pas d'analyse syntaxique DOIT choisir explicitement la forme la plus probable en contexte kabyle littéraire : `?`, `!`, `-` et `"` respectivement.
+*(Informative)* En rétrotraduction, certaines cellules CBFU sont partagées par plusieurs caractères source (`!`/`+`, `"`/`«`/`»`/`=`, `-`/`–`/`—`). Un moteur autonome qui ne dispose pas d'analyse syntaxique DOIT choisir explicitement la forme la plus probable en contexte kabyle littéraire : `!` et `"` respectivement. Le point d'interrogation (`26`) et la parenthèse ouvrante (`236`) ne partagent pas de cellule dans le profil CBFU et n'ont donc pas besoin d'une telle heuristique.
 
 Le kabyle orthographique de référence n'utilise pas l'apostrophe. Un normaliseur DEVRAIT signaler ou traiter une apostrophe avant la transcription. La table Liblouis peut néanmoins conserver la règle CBFU héritée afin de rester utilisable avec des citations ou des textes mixtes.
 
