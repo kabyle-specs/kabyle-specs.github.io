@@ -1,17 +1,26 @@
 # Kabyle negation specification
 
-**Version** : 0.1.0
-**Date** : 2026-08-16
-**Statut** : DRAFT — amorce. La quasi-totalité des règles fines sont des questions ouvertes marquées `needs-native-review`. Seul le fait grammatical large de la négation discontinue est présenté comme établi, sous réserve de vérification finale.
+**Version** : 0.2.0-draft
+**Date** : 2026-08-29
+**Statut** : DRAFT — amorce corrigée. Le noyau structural de la négation discontinue est établi, mais la particule postverbale `ara` est désormais traitée comme optionnelle et homographe, sur la base des données de Mettouchi (2001, 2021). Les règles fines restent des questions ouvertes marquées `needs-native-review`.
 **Dépendances** :
 - `kabyle-lemmatization-spec.md` (v1.3.2-rev ou ultérieure)
 - `kabyle-conjugations-specs.md`
-- `kabyle-ud-specification.md`
+- `kabyle-ud-specification.md` (v0.7 ou ultérieure)
 - `kabyle-morphological-tokenizer-spec.md`
 
 ---
 
 ## Changelog
+
+**v0.2.0** (correction majeure — 2026-08-29)
+- **Correction critique** : `ara` n'est plus présenté comme obligatoire dans la négation discontinue. Elle est désormais traitée comme un renforcement postverbal optionnel (présent dans ~52 % des négations en corpus, absent dans ~48 % selon Mettouchi 2021).
+- **Homographe** : introduction du statut d'homographe pour `ara` (négation vs. particule modale aoriste / subordination relative).
+- **Distribution contextuelle** : ajout d'une table des contextes d'absence et d'obligation de `ara` (§3.1bis).
+- **Négations non verbales** : ajout de `mačči` et `ulac` dans l'inventaire des items négatifs (§5.1), avec renvoi documenté.
+- **Mise à jour UD** : ajout des deux fonctions de `ara` dans la représentation proposée (§6).
+- **Nouvelle référence** : Mettouchi (2001, 2021), Encyclopédie berbère (2015).
+- **Nouveau code d'erreur** : E013 `HOMOGRAPHE_ARA_MISCLASSIFIED`.
 
 **v0.1.0** (amorce)
 - Établissement du noyau structural : négation discontinue `ur … ara`.
@@ -39,28 +48,28 @@ Ce document ne duplique pas les règles déjà posées dans `kabyle-lemmatizatio
 
 ## 2. Fait établi : négation verbale discontinue
 
-La négation verbale kabyle est **discontinue** : elle est formée d'un élément préverbal et d'un élément postverbal qui encadrent le verbe. C'est un trait bien documenté de la description du berbère (cf. Chaker 1983, 1995, déjà cités dans `kabyle-lemmatization-spec.md` §9).
+La négation verbale kabyle est **discontinue** : elle est formée d'un élément préverbal obligatoire et d'un élément postverbal qui encadrent le verbe. L'élément postverbal est **optionnel** dans de nombreux contextes ; seul l'élément préverbal est le négateur proprement dit (Mettouchi 2021 : §4).
 
 **Structure générale** :
 
 ```text
-ur + verbe au prétérit négatif + ara
+ur + verbe au prétérit négatif (+ ara optionnel)
 ```
 
-| Particule | Position | Lemme | status |
-|-----------|----------|-------|--------|
-| `ur` | préverbal | `ur` | verified |
-| `ara` | postverbal | `ara` | verified |
+| Particule | Position | Obligation | Lemme | Statut |
+|-----------|----------|------------|-------|--------|
+| `ur` | préverbal | obligatoire | `ur` | verified |
+| `ara` | postverbal | optionnel (conditionnée, voir §3.1bis) | `ara` | verified (homographe) |
 
-Ce noyau structural — la discontinuité elle-même, et l'identité des deux particules `ur`/`ara` — est repris tel quel de `kabyle-lemmatization-spec.md` §4.8.A, où il est déjà marqué `verified` sur la base d'une description grammaticale large et convergente. Tout ce qui suit dans ce document (variantes, contraintes fines, exceptions) reste, en revanche, à documenter.
+> **Note critique** : Contrairement à une description simplifiée, `ara` n'est **pas** un constituant obligatoire de la négation. Son absence ne supprime pas la polarité négative de la clause. La négation est portée par `ur` + le stem verbal négatif. `ara` fonctionne comme un renforcement postverbal (postneg) en cours de grammaticalisation (Mettouchi 2001, 2021).
 
 ---
 
 ## 3. Règles de lemmatisation des particules négatives
 
-### 3.1 Règle générale
+### 3.1 Règle générale — `ur`
 
-Chaque particule négative est son propre lemme ; aucune n'est fusionnée avec le lemme verbal qu'elle encadre.
+La particule préverbale `ur` est son propre lemme ; elle n'est jamais fusionnée avec le lemme verbal.
 
 ```json
 {
@@ -77,6 +86,12 @@ Chaque particule négative est son propre lemme ; aucune n'est fusionnée avec l
 }
 ```
 
+### 3.1bis Règle générale — `ara` (homographe)
+
+Le token `ara` est un **homographe** : deux lemmes fonctionnels distincts partagent la même forme orthographique. Le pipeline de lemmatisation doit désambiguïser par le contexte syntaxique (présence/absence de `ur` dans la clause, mode du verbe, type de subordination).
+
+#### Fonction A — Renforcement négatif postverbal
+
 ```json
 {
   "token": "ara",
@@ -84,13 +99,34 @@ Chaque particule négative est son propre lemme ; aucune n'est fusionnée avec l
   "root": null,
   "pos": "PART",
   "morph": { "polarity": "Neg", "part_type": "PostverbalNegative" },
+  "condition": "co-occurrence avec ur dans la même clause",
   "dialect": null,
   "status": "verified",
-  "confidence": 0.95,
+  "confidence": 0.90,
   "source": "rule",
   "error": null
 }
 ```
+
+#### Fonction B — Particule modale aoriste (non négative)
+
+```json
+{
+  "token": "ara",
+  "lemma": "ara",
+  "root": null,
+  "pos": "PART",
+  "morph": { "mood": "Irr", "part_type": "AoristModal" },
+  "condition": "absence de ur dans la clause ; typiquement en subordination relative restrictive ou en complétive deontique avec aoriste",
+  "dialect": null,
+  "status": "candidate",
+  "confidence": 0.70,
+  "source": "rule",
+  "error": null
+}
+```
+
+> **Source** : La fonction modale de `ara` est attestée dans la littérature berbériste comparative (Encyclopédie berbère 2015 : « particules modales de l'aoriste » ; Mettouchi 2001 : grammaticalisation de `ara` dans la subordination relative). Son statut reste `candidate` dans le kabyle central en l'absence d'attestation directe dans le corpus Tatoeba ou le CorpAfroAs.
 
 ### 3.2 Non-fusion avec le verbe
 
@@ -99,7 +135,9 @@ Le lemme verbal en contexte négatif reste le lemme positif correspondant (cf. �
 - des traits morphologiques (`Polarity=Neg`) sur le verbe ;
 - une relation syntaxique de négation dans la couche dépendances (§6.2).
 
-**Principe** : `ur` + forme verbale négative + `ara` → un seul verbe lemmatisé (lemme positif) + deux particules lemmatisées séparément. Aucune règle ne doit produire un lemme verbal distinct pour la forme négative, sauf cas lexicalisé documenté (§5.4).
+**Principe** : `ur` + forme verbale négative (+ `ara`) → un seul verbe lemmatisé (lemme positif) + une ou deux particules lemmatisées séparément. Aucune règle ne doit produire un lemme verbal distinct pour la forme négative, sauf cas lexicalisé documenté (§5.4).
+
+> L'absence de `ara` ne change pas le statut négatif de la clause. Le lemme verbal reste le lemme positif même en contexte `ur` seul.
 
 ---
 
@@ -109,8 +147,8 @@ La forme négative du prétérit peut présenter une apophonie spécifique par r
 
 **Exemple hérité de `kabyle-lemmatization-spec.md` §5.2, étape 3** (statut inchangé : `candidate`, non re-vérifié) :
 
-| Forme négative | Lemme | Alternance | status |
-|-----------------|-------|------------|--------|
+| Forme négative | Lemme | Alternance | Statut |
+|----------------|-------|------------|--------|
 | `ur ufigeɣ ara` | `afeg` | a → u (prétérit) + a → i (négatif) | candidate |
 | `ur tufigeḍ ara` | `afeg` | — | candidate |
 
@@ -161,9 +199,21 @@ Certaines descriptions berbères associent la négation à des phénomènes cons
 
 ### 5.1 Inventaire des items négatifs au-delà de `ur … ara`
 
-Ce document ne couvre, avec un statut `verified`, que le noyau discontinu `ur … ara`. Une description complète de la négation kabyle devrait aussi couvrir :
-- la négation d'attribution/présentation (équivalent de « ce n'est pas ») ;
-- la négation d'existence (équivalent de « il n'y a pas ») ;
+Ce document ne couvre, avec un statut `verified`, que le noyau discontinu `ur (+ ara)`. Une description complète de la négation kabyle devrait aussi couvrir :
+
+#### 5.1.1 Négations non verbales (documentées, hors périmètre détaillé)
+
+| Item | Fonction | Origine | Statut |
+|------|----------|---------|--------|
+| `mačči` | Négation attributive / équative / cleft négatif | Emprunt arabe (ma-…-š) | documented |
+| `ulac` | Négation existentielle / locative / possessive | `ur` + `illi` + `ša` | documented |
+
+> **Sources** : Mettouchi 2021 §4 ; Chaker 1983. Ces items sont répertoriés ici pour cohérence inter-spécifications mais leur traitement détaillé relève d'une spécification de prédication non verbale séparée.
+
+#### 5.1.2 Autres items à documenter
+
+- la négation d'attribution/présentation (équivalent de « ce n'est pas ») → voir `mačči` ci-dessus ;
+- la négation d'existence (équivalent de « il n'y a pas ») → voir `ulac` ci-dessus ;
 - les quantifieurs négatifs (« rien », « personne », etc.) ;
 - la négation nominale ;
 - la négation à l'impératif, si elle diffère structurellement de la négation à l'indicatif ;
@@ -203,10 +253,6 @@ Polarity=Neg
 
 La relation UD standard pour la négation (`advmod:neg` dans les guidelines UD généralistes, ou son équivalent choisi par `kabyle-ud-specification.md`) doit être utilisée de façon cohérente entre les deux documents.
 
-```text
-[À COMPLÉTER — choisir la relation exacte en cohérence avec kabyle-ud-specification.md et documenter chaque cas (particule préverbale, particule postverbale, éventuels items de §5.1)]
-```
-
 ### 6.3 Lemme verbal en contexte négatif
 
 Principe (cf. §3.2) : le verbe en contexte négatif conserve son lemme positif.
@@ -216,6 +262,40 @@ forme négative → lemme verbal positif + traits négatifs (Polarity=Neg)
 ```
 
 La négation ne doit jamais créer un lemme verbal distinct, sauf cas lexicalisé explicitement documenté et sourcé (aucun cas de ce type n'est actuellement recensé dans ce document).
+
+### 6.4 Exemples UD commentés
+
+#### Exemple 1 — Négation standard avec `ara`
+
+```text
+ur t-zwiʤ ara
+NEG SBJ3.SG.F-marry:PFVNEG POSTNEG
+"Elle n'était pas mariée"
+```
+
+- `ur` → `PART` + `Polarity=Neg`
+- `t-zwiʤ` (prétérit négatif) → lemme `zwiʤ`, `Polarity=Neg` sur le verbe
+- `ara` → `PART` + `Polarity=Neg` (fonction A, renforcement négatif)
+
+#### Exemple 2 — Négation standard sans `ara`
+
+```text
+ur=dd zwiʤ-ɣ
+NEG=PROX marry:PFVNEG-SBJ.1SG
+"Je jure de ne pas me marier"
+```
+
+- `ur` → `PART` + `Polarity=Neg`
+- `zwiʤ-ɣ` → lemme `zwiʤ`, `Polarity=Neg`
+- Pas de `ara` : la polarité négative est pleinement assurée par `ur` + stem négatif.
+
+#### Exemple 3 — `ara` en fonction modale aoriste (homographe, non négatif)
+
+```text
+[À compléter — attestation corpus requise]
+```
+
+> Hypothèse : dans une subordination relative restrictive positive avec aoriste, `ara` pourrait apparaître comme marqueur d'irréel sans `ur`. Dans ce cas : `ara` → `PART` + `Mood=Irr`, **sans** `Polarity=Neg`.
 
 ---
 
@@ -228,15 +308,16 @@ Toute règle de négation introduite dans ce document doit suivre les mêmes por
 3. Validation Hunspell si la règle produit un lemme (`kabyle-lemmatization-spec.md` §3.4).
 4. Validation par locuteur natif pour toute forme candidate avant passage au statut `verified`.
 
-Codes d'erreur pertinents (repris de `kabyle-lemmatization-spec.md` §7bis, avec un code additionnel spécifique à ce document) :
+Codes d'erreur pertinents (repris de `kabyle-lemmatization-spec.md` §7bis, avec deux codes additionnels spécifiques à ce document) :
 
 | Code | Nom | Déclencheur | Document |
 |------|-----|-------------|----------|
 | E007 | `NEGATIVE_APOPHONY_UNVERIFIED` | Apophonie négative non vérifiable (§4) | `kabyle-lemmatization-spec.md` §7bis |
 | E009 | `AMBIGUOUS_LEMMA` | Plusieurs lemmes candidats pour un item négatif | `kabyle-lemmatization-spec.md` §7bis |
 | E012 | `NEGATION_ITEM_NOT_IN_INVENTORY` | Item négatif rencontré en corpus mais absent de l'inventaire de §5.1 | **présent document** |
+| E013 | `HOMOGRAPHE_ARA_MISCLASSIFIED` | Le token `ara` est tagué comme négatif dans un contexte sans `ur`, ou comme modal dans un contexte avec `ur` | **présent document** |
 
-> **Note de cohérence inter-spécifications** : Le code E012 est réservé à la spécification de négation. Il n'est pas utilisé par `kabyle-lemmatization-spec.md`, qui laisse E012 vacant (cf. `kabyle-lemmatization-spec.md` §7bis : « E012 — Réservé par kabyle-negation-spec.md »). Aucun conflit de numérotation n'existe entre les deux documents.
+> **Note de cohérence inter-spécifications** : Le code E012 est réservé à la spécification de négation. Il n'est pas utilisé par `kabyle-lemmatization-spec.md`, qui laisse E012 vacant (cf. `kabyle-lemmatization-spec.md` §7bis : « E012 — Réservé par kabyle-negation-spec.md »). Le code E013 est nouveau en v0.2.0. Aucun conflit de numérotation n'existe entre les documents.
 
 ---
 
@@ -245,17 +326,24 @@ Codes d'erreur pertinents (repris de `kabyle-lemmatization-spec.md` §7bis, avec
 La négation doit être évaluée séparément, dans le cadre du jeu de test défini par `kabyle-lemmatization-spec.md` §10bis, avec des métriques dédiées :
 
 - exactitude de détection de `ur` ;
-- exactitude de détection de `ara` ;
+- exactitude de détection de `ara` (taux de faux positifs sur la fonction négative) ;
 - exactitude du lemme verbal produit en contexte négatif (doit rester le lemme positif) ;
 - taux d'erreur de l'apophonie négative, par type morphologique (une fois §4.1 rédigé) ;
 - taux de confusion entre négation verbale discontinue et les autres items négatifs de §5.1 ;
-- taux de formes négatives non résolues (renvoyant à `E012`).
+- taux de formes négatives non résolues (renvoyant à `E012`) ;
+- **taux de désambiguïsation correcte de l'homographe `ara`** (renvoyant à `E013`).
 
 ---
 
 ## 9. Références
 
-Reprises de `kabyle-lemmatization-spec.md` §9, pour la partie directement pertinente à la négation et à l'apophonie :
+### Sources primaires directement citées dans ce document
+
+- Mettouchi, A. (2001). « La grammaticalisation de ara en kabyle, négation et subordination relative », dans *Travaux du CerLiCO* n°14, Col G. et Roulland D. (eds), P.U. Rennes, pp. 215-235.
+- Mettouchi, A. (2021). *Negation in Kabyle (Berber)*. JaLaLit (Journal of African Languages and Literatures) n° 2, pp. 30-79. https://doi.org/10.6092/jalalit.v2i2.8059
+- Encyclopédie berbère (2015). « Participe (formes régionales) », document 43, en ligne sur https://journals.openedition.org/encyclopedieberbere/3160
+
+### Sources reprises de `kabyle-lemmatization-spec.md` §9
 
 - Chaker, S. (1983). *Un parler berbère d'Algérie (Kabylie) : syntaxe*, thèse d'État, Université de Provence.
 - Chaker, S. (1995). *Linguistique berbère : études de syntaxe et de diachronie*.
@@ -265,7 +353,7 @@ Reprises de `kabyle-lemmatization-spec.md` §9, pour la partie directement perti
 - Mammeri, M. (1976/1989). *Tajerrumt n tmaziɣt*.
 - Dallet, J.-M. (1982). *Dictionnaire kabyle-français* (parler des At Mangellat).
 
-**⚠️** Ces références sont reprises par renvoi à `kabyle-lemmatization-spec.md` §9, où leur pertinence générale est déjà établie. Leur pertinence *spécifique* à chaque règle de négation détaillée dans ce document (pages exactes, passages traitant explicitement de la négation) reste à vérifier et à citer précisément avant publication normative.
+**⚠️** Les références de `kabyle-lemmatization-spec.md` sont reprises par renvoi, où leur pertinence générale est déjà établie. Leur pertinence *spécifique* à chaque règle de négation détaillée dans ce document (pages exactes, passages traitant explicitement de la négation) reste à vérifier et à citer précisément avant publication normative.
 
 ```text
 [À COMPLÉTER — références exactes, pages, liens d'accès, et vérification de la disponibilité de chaque source]
@@ -275,7 +363,7 @@ Reprises de `kabyle-lemmatization-spec.md` §9, pour la partie directement perti
 
 ## 10. Statut final
 
-Ce document est une **amorce** qui fixe le cadre, l'interface avec `kabyle-lemmatization-spec.md`, et les questions ouvertes. Il ne doit **pas** être considéré comme normatif. Toute règle détaillée (apophonie par type morphologique, inventaire complet des items négatifs, variation dialectale) devra être validée par double vérification — source académique et corpus, ou confirmation par locuteur natif — avant intégration dans une version stable.
+Ce document est une **amorce corrigée** qui fixe le cadre, l'interface avec `kabyle-lemmatization-spec.md`, et les questions ouvertes. La correction majeure de la v0.2.0 (optionnalité de `ara`, statut d'homographe) est fondée sur des données de corpus publiées (Mettouchi 2021) et doit être intégrée dans tout pipeline de lemmatisation ou d'annotation UD. Toute règle détaillée (apophonie par type morphologique, inventaire complet des items négatifs, variation dialectale) devra être validée par double vérification — source académique et corpus, ou confirmation par locuteur natif — avant intégration dans une version stable.
 
 ---
 
