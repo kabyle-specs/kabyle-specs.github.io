@@ -26,7 +26,7 @@
       "path": "specs/kabyle-negation-spec.md",
       "summary": "Formalization of Kabyle verbal negation: the discontinuous structure ur … ara, negative apophony modeling, UD polarity traits, and lemmatization rules for negative particles. Amorce - most detailed rules remain open for native-speaker validation.",
       "status": "draft",
-      "updated": "2026-08-16"
+      "updated": "2026-08-29"
     },
     {
       "title": "Kabyle Hunspell Dictionary Architecture",
