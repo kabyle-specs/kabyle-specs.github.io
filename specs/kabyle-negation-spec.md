@@ -1,8 +1,11 @@
 # Kabyle negation specification
 
 **Version** : 0.2.0-draft
+
 **Date** : 2026-08-29
+
 **Statut** : DRAFT — amorce corrigée. Le noyau structural de la négation discontinue est établi, mais la particule postverbale `ara` est désormais traitée comme optionnelle et homographe, sur la base des données de Mettouchi (2001, 2021). Les règles fines restent des questions ouvertes marquées `needs-native-review`.
+
 **Dépendances** :
 - `kabyle-lemmatization-spec.md` (v1.3.2-rev ou ultérieure)
 - `kabyle-conjugations-specs.md`
