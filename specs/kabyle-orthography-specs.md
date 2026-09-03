@@ -1,543 +1,482 @@
-# Spécification d'Orthographe et de Normalisation des Caractères pour le Kabyle (Taqbaylit)
+# Spécification de notation, Unicode et normalisation pour le kabyle
 
-**Auteurs** : Athmane Mokraoui (boffire), locuteur natif kabyle, mainteneur des ressources NLP kabyles ; recherche documentaire et vérification Unicode.
-
-**Date** : 30 juillet 2026
-
-**Version** : 0.2-draft
-
-**Statut** : En cours de validation — certains points sont marqués **[À VALIDER]** et nécessitent confirmation par le locuteur natif.
-
-**Cible** : Développeurs NLP/TAL, ingénieurs système d'exploitation, mainteneurs de correcteurs orthographiques, traducteurs Weblate, concepteurs de polices de caractères, chercheurs en IA.
-
----
+**Identifiant proposé :** `kabyle-orthography-spec`  
+**Version :** 0.3-draft  
+**Date :** 3 septembre 2026  
+**Statut :** proposition de publication — validation linguistique et reproductibilité des mesures encore requises  
+**Langue du document :** français  
+**Script couvert par cette version :** alphabet latin berbère  
+**Code ISO 639-3 :** `kab`
 
 ## Résumé
 
-Le kabyle (Taqbaylit, ISO 639-3 `kab`) utilise l'alphabet latin berbère standardisé par l'INALCO en 1996, composé de 33 lettres dont 11 caractères spécifiques (č, ḍ, ɛ, ǧ, ɣ, ḥ, ṛ, ṣ, ṭ, ẓ) et leurs capitales. L'absence historique de normalisation informatique a conduit à une contamination massive des corpus par des faux amis typographiques — caractères grecs (ε, γ, Γ, Σ), cyrilliques (Ԑ, ԑ), turcs (ğ, ı, İ), et substituts visuels. Cette spécification définit l'inventaire canonique des caractères kabyles avec leurs points de code Unicode vérifiés, établit les règles de normalisation pour le traitement automatique, et propose des barrières qualité pour les corpus d'entraînement de l'IA.
-
-**Mots-clés** : kabyle, taqbaylit, orthographe, normalisation, Unicode, INALCO, faux amis, contamination orthographique, corpus, NLP.
-
----
-
-## 1. Introduction et périmètre
-
-### 1.1 Le problème : contamination des corpus
-
-L'absence de spécification orthographique informatique pour le kabyle a généré une crise d'encodage documentée dans le rapport CV26 (Mokraoui 2026) : sur 609 940 clips validés de Common Voice 26.0 Kabyle, **13 135 clips (2,15 %) sont contaminés** par des caractères non-kabyles. L'analyse du corpus Tatoeba kabyle confirme ce phénomène à l'échelle textuelle : **25 069 phrases sur 790 617 (3,17 %) contiennent au moins un faux ami**.
-
-Ces contaminations rendent les corpus inutilisables pour l'entraînement de modèles NLP sans un pipeline de nettoyage préalable. Pire, les modèles de langage apprennent des équivalences erronées (ε = ɛ, γ = ɣ) qui se propagent ensuite dans les sorties de génération de texte.
-
-### 1.2 Objectif de cette spec
-
-Fournir une **spécification orthographique de référence** qui :
-1. Définisse l'**inventaire canonique** des 33 caractères kabyles avec leurs points de code Unicode exacts.
-2. Établisse les **règles de normalisation** pour le traitement automatique (NFC, case folding, rejet des faux amis, ponctuation, espacement).
-3. Définisse des **barrières qualité** pour les corpus d'entraînement de l'IA.
-4. Guide les **exigences de rendu** pour les polices de caractères et les systèmes d'exploitation.
-5. S'intègre avec les outils de validation existants (Weblate KabyleCharactersCheck) et les pipelines NLP.
-
----
-
-## 2. Inventaire canonique des caractères kabyles
-
-### 2.1 Alphabet complet (33 lettres)
-
-L'alphabet kabyle standard, tel qu'il est utilisé aujourd'hui dans les livres, la presse, les sites web et les logiciels, se compose de 33 lettres.
-
-**22 lettres latines de base :**
-
-| Majuscule | Unicode | Minuscule | Unicode | Nom | Phonème |
-|-----------|---------|-----------|---------|-----|---------|
-| A | U+0041 | a | U+0061 | A | /a/ |
-| B | U+0042 | b | U+0062 | Bé | /b/ |
-| C | U+0043 | c | U+0063 | Cé | /ʃ/ ~ /k/ ~ /s/ |
-| D | U+0044 | d | U+0064 | Dé | /d/ |
-| E | U+0045 | e | U+0065 | E | /ə/ |
-| F | U+0046 | f | U+0066 | Éf | /f/ |
-| G | U+0047 | g | U+0067 | Gé | /g/ |
-| H | U+0048 | h | U+0068 | Hach | /h/ |
-| I | U+0049 | i | U+0069 | I | /i/ |
-| J | U+004A | j | U+006A | Ji | /ʒ/ |
-| K | U+004B | k | U+006B | Ka | /k/ |
-| L | U+004C | l | U+006C | El | /l/ |
-| M | U+004D | m | U+006D | Em | /m/ |
-| N | U+004E | n | U+006E | En | /n/ |
-| Q | U+0051 | q | U+0071 | Qaf | /q/ |
-| R | U+0052 | r | U+0072 | Er | /r/ |
-| S | U+0053 | s | U+0073 | Ess | /s/ |
-| T | U+0054 | t | U+0074 | Té | /t/ |
-| U | U+0055 | u | U+0075 | U | /u/ |
-| W | U+0057 | w | U+0077 | Waw | /w/ |
-| X | U+0058 | x | U+0078 | Xa | /χ/ |
-| Y | U+0059 | y | U+0079 | Yé | /j/ |
-| Z | U+005A | z | U+007A | Zéd | /z/ |
-
-**11 lettres spécifiques au kabyle :**
-
-| Majuscule | Unicode | Minuscule | Unicode | Nom | Phonème |
-|-----------|---------|-----------|---------|-----|---------|
-| Č | U+010C | č | U+010D | Čé | /t͡ʃ/ |
-| Ḍ | U+1E0C | ḍ | U+1E0D | Ḍé | /ðˤ/ |
-| Ɛ | U+0190 | ɛ | U+025B | Ɛayn | /ʕ/ |
-| Ǧ | U+01E6 | ǧ | U+01E7 | Ǧé | /d͡ʒ/ |
-| Ɣ | U+0194 | ɣ | U+0263 | Ɣayn | /ɣ/ ~ /ʁ/ |
-| Ḥ | U+1E24 | ḥ | U+1E25 | Ḥa | /ħ/ |
-| Ṛ | U+1E5A | ṛ | U+1E5B | Ṛa | /rˤ/ |
-| Ṣ | U+1E62 | ṣ | U+1E63 | Ṣad | /sˤ/ |
-| Ṭ | U+1E6C | ṭ | U+1E6D | Ṭa | /tˤ/ |
-| Ẓ | U+1E92 | ẓ | U+1E93 | Ẓa | /zˤ/ |
-
-**Notes :**
-- La lettre **E e** représente le schwa /ə/. C'est une lettre de base, pas un diacritique.
-- Les lettres **P, O, V** n'existent pas dans l'alphabet kabyle natif. Elles n'apparaissent que dans les emprunts (noms propres, termes techniques).
-- Le **tiret** `-` (U+002D) est omniprésent en kabyle (clitiques préverbaux, coordination, noms composés) et doit être traité comme un caractère obligatoire du système d'écriture.
-- L'**apostrophe** `'` (U+0027) et ses variantes typographiques `‘` `’` `ʼ` **n'existent pas** en kabyle. Le coup de glotte n'est pas représenté dans l'orthographe.
-
-### 2.2 Phonèmes distincts
-
-Les paires suivantes sont des **phonèmes distincts** et ne doivent jamais être confondus :
-
-- `e` (schwa fermé /ə/) vs `ɛ` (e ouvert /ɛ/) — utiliser `e` à la place de `ɛ` est une **erreur sémantique**, pas seulement typographique.
-- `g` (vélaire /g/) vs `ǧ` (affriquée /dʒ/)
-- `c` (/k/ ou /s/ selon le contexte) vs `č` (/tʃ/)
-- `r` (alvéolaire) vs `ṛ` (emphatique/uvulaire)
-- `s` vs `ṣ`, `t` vs `ṭ`, `d` vs `ḍ`, `z` vs `ẓ` — paires emphatiques
-
-### 2.3 Caractères absents de l'orthographe kabyle standard
-
-Les caractères suivants **ne font pas partie** de l'orthographe kabyle telle qu'elle est pratiquée aujourd'hui dans les livres, la presse et le numérique :
-
-| Caractère | Unicode | Usage réel | Statut |
-|-----------|---------|------------|--------|
-| ʷ | U+02B7 | Notation linguistique uniquement | **Exclu** — jamais utilisé dans le texte courant |
-| ř | U+0158 / U+0159 | Autres variétés berbères (tuareg) | **Exclu** — n'appartient pas au kabyle |
-| ţ | U+0162 / U+0163 | Pré-Unicode, remplacé par ṭ | **Exclu** — forme obsolète |
-| z̧ | — | Pré-Unicode, remplacé par ẓ | **Exclu** — forme obsolète |
-| ç / Ç | U+00E7 / U+00C7 | Français | **Exclu** — jamais utilisé en kabyle |
-| ' | U+0027 | Apostrophe ASCII | **Exclu** — jamais utilisé en kabyle ; supprimer ou réviser minutieusement |
-| ' | U+2018 | Guillemet simple gauche | **Exclu** — jamais utilisé en kabyle ; supprimer ou réviser minutieusement |
-| ' | U+2019 | Guillemet simple droit | **Exclu** — jamais utilisé en kabyle ; supprimer ou réviser minutieusement |
-| ʼ | U+02BC | Lettre modificateur apostrophe | **Exclu** — jamais utilisé en kabyle ; supprimer ou réviser minutieusement |
-| ñ / Ñ | U+00F1 / U+00D1 | Espagnol | **Exclu** — jamais utilisé en kabyle |
-| ṇ / Ṇ | U+1E47 / U+1E46 | Non dans l'inventaire | **Exclu** |
-| ħ / Ħ | U+0127 / U+0126 | Maltais | **Exclu** — jamais utilisé en kabyle |
-| ø / Ø | U+00F8 / U+00D8 | Scandinave | **Exclu** |
-| æ / Æ | U+00E6 / U+00C6 | Non dans l'inventaire | **Exclu** |
-| œ / Œ | U+0153 / U+0152 | Français | **Exclu** |
-| ß | U+00DF | Allemand | **Exclu** |
-| þ / Þ | U+00FE / U+00DE | Islandais | **Exclu** |
-
----
-
-## 3. Les faux amis : typologie et Unicode
-
-Les faux amis sont des caractères d'autres scripts (grec, cyrillique, turc, polonais, espéranto) qui sont visuellement identiques ou proches des lettres kabyles. Ils doivent être **systématiquement rejetés** dans tout corpus, texte ou entrée utilisateur.
-
-### 3.1 Les 6 familles principales
-
-| # | Faux ami | Code | Cible correcte | Code | Source typique | Occ. Tatoeba | Occ. CV26 |
-|---|----------|------|---------------|------|----------------|-------------|-----------|
-| 1 | ε (epsilon grec minuscule) | U+03B5 | ɛ (latin small letter open e) | U+025B | Clavier grec, copier-coller | **25 395** | 10 806 clips |
-| 2 | Σ (sigma grec majuscule) | U+03A3 | Ɛ (latin capital letter open e) | U+0190 | Clavier grec, AZERTY shift | **1 453** | 343 clips |
-| 3 | γ (gamma grec minuscule) | U+03B3 | ɣ (latin small letter gamma) | U+0263 | Clavier grec, copier-coller | **222** | 1 284 clips |
-| 4 | Γ (gamma grec majuscule) | U+0393 | Ɣ (latin capital letter gamma) | U+0194 | Clavier grec | **129** | 117 clips |
-| 5 | Ԑ (epsilon cyrillique majuscule) | U+0510 | Ɛ (latin capital letter open e) | U+0190 | Clavier cyrillique | **578** | 343 clips |
-| 6 | ԑ (epsilon cyrillique minuscule) | U+0511 | ɛ (latin small letter open e) | U+025B | Clavier cyrillique | **8** | 155 clips |
-
-### 3.2 Faux amis secondaires
-
-#### 3.2.1 `ǧ` / `Ǧ` (G avec caron)
-
-| Faux ami | Codepoint | Source | Remplacement | Sévérité |
-|----------|-----------|--------|--------------|----------|
-| `ğ` | U+011F | Turc | `ǧ` | **Critique** |
-| `ĝ` | U+011D | Espéranto | `ǧ` | **Critique** |
-| `ģ` | U+0123 | Letton | `ǧ` | **Critique** |
-| `ġ` | U+0121 | Maltais | `ǧ` | **Critique** |
-| `ǵ` | U+01F5 | Polonais | `ǧ` | Modérée |
-| `ǧ` | U+0067+U+030C | Décomposé | `ǧ` | Modérée |
-
-#### 3.2.2 `č` / `Č` (C avec caron)
-
-| Faux ami | Codepoint | Source | Remplacement | Sévérité |
-|----------|-----------|--------|--------------|----------|
-| `ć` | U+0107 | Polonais | `č` | **Critique** |
-| `ĉ` | U+0109 | Espéranto | `č` | **Critique** |
-| `ç` | U+00E7 | Français | **REJET** | **Critique** |
-| `Ç` | U+00C7 | Français | **REJET** | **Critique** |
-| `č` | U+0063+U+030C | Décomposé | `č` | Modérée |
-
-#### 3.2.3 `ṭ` / `Ṭ` (T avec point souscrit)
-
-| Faux ami | Codepoint | Source | Remplacement | Sévérité |
-|----------|-----------|--------|--------------|----------|
-| `ť` | U+0165 | Tchèque | `ṭ` | **Critique** |
-| `ţ` | U+0163 | Roumain (legacy) | `ṭ` | **Critique** |
-| `ț` | U+021B | Roumain (moderne) | `ṭ` | **Critique** |
-| `ṫ` | U+1E6B | Point au-dessus | `ṭ` | **Critique** |
-| `ṭ` | U+0074+U+0323 | Décomposé | `ṭ` | Modérée |
-
-#### 3.2.4 `ḍ` / `Ḍ` (D avec point souscrit)
-
-| Faux ami | Codepoint | Source | Remplacement | Sévérité |
-|----------|-----------|--------|--------------|----------|
-| `ď` | U+010F | Tchèque | `ḍ` | **Critique** |
-| `đ` | U+0111 | Croate | `ḍ` | **Critique** |
-| `ð` | U+00F0 | Islandais | `ḍ` | **Critique** |
-| `ḑ` | U+1E11 | Variante cédille | `ḍ` | **Critique** |
-| `ḍ` | U+0064+U+0323 | Décomposé | `ḍ` | Modérée |
-
-#### 3.2.5 `ṣ` / `Ṣ` (S avec point souscrit)
-
-| Faux ami | Codepoint | Source | Remplacement | Sévérité |
-|----------|-----------|--------|--------------|----------|
-| `š` | U+0161 | Tchèque/Baltique | `ṣ` | **Critique** |
-| `ś` | U+015B | Polonais | `ṣ` | **Critique** |
-| `ş` | U+015F | Turc | `ṣ` | **Critique** |
-| `ș` | U+0219 | Roumain | `ṣ` | **Critique** |
-| `ṡ` | U+1E61 | Point au-dessus | `ṣ` | **Critique** |
-| `ṣ` | U+0073+U+0323 | Décomposé | `ṣ` | Modérée |
-
-#### 3.2.6 `ẓ` / `Ẓ` (Z avec point souscrit)
-
-| Faux ami | Codepoint | Source | Remplacement | Sévérité |
-|----------|-----------|--------|--------------|----------|
-| `ž` | U+017E | Tchèque/Baltique | `ẓ` | **Critique** |
-| `ź` | U+017A | Polonais | `ẓ` | **Critique** |
-| `ż` | U+017C | Polonais | `ẓ` | **Critique** |
-| `ƶ` | U+01B6 | Z barré | `ẓ` | Modérée |
-| `ẓ` | U+007A+U+0323 | Décomposé | `ẓ` | Modérée |
-
-#### 3.2.7 `ṛ` / `Ṛ` (R avec point souscrit)
-
-| Faux ami | Codepoint | Source | Remplacement | Sévérité |
-|----------|-----------|--------|--------------|----------|
-| `ř` | U+0159 | Tchèque | `ṛ` | **Critique** |
-| `ŕ` | U+0155 | Polonais | `ṛ` | **Critique** |
-| `ṙ` | U+1E59 | Point au-dessus | `ṛ` | **Critique** |
-| `ŗ` | U+0157 | Letton | `ṛ` | **Critique** |
-| `ṛ` | U+0072+U+0323 | Décomposé | `ṛ` | Modérée |
-
-#### 3.2.8 `i` / `I` (Faux amis turcs)
-
-| Faux ami | Codepoint | Source | Remplacement | Sévérité |
-|----------|-----------|--------|--------------|----------|
-| `ı` | U+0131 | Turc | `i` | **Critique** |
-| `İ` | U+0130 | Turc | `I` | **Critique** |
-
-### 3.3 Mécanisme de contamination
-
-La contamination se produit par trois canaux :
-1. **Saisie directe** : l'utilisateur dispose d'un clavier grec/cyrillique ou d'anciennes dispositions de claviers kabyles non standardisées et saisit visuellement (ε au lieu de ɛ).
-2. **Copier-coller** : texte importé depuis des sources non standardisées (PDF scannés, sites web anciens).
-3. **Conversion automatique** : OCR ou transcription automatique produisant des substituts visuels.
-
----
-
-## 4. Normalisation des diacritiques français
-
-Les emprunts français et la typographie adjacente introduisent souvent des diacritiques absents de l'inventaire kabyle. Dans le texte formel, ceux-ci doivent être normalisés vers leur lettre de base :
-
-| Source | Codepoint(s) | Canonique |
-|--------|--------------|-----------|
-| `á` `à` `â` `ä` `ã` `å` | divers | `a` |
-| `é` `è` `ê` `ë` | divers | `e` |
-| `í` `ì` `î` `ï` | divers | `i` |
-| `ó` `ò` `ô` `ö` `õ` | divers | `o` |
-| `ú` `ù` `û` `ü` | divers | `u` |
-| `ý` `ÿ` | divers | `y` |
-| `ñ` | U+00F1 | `n` |
-| `ç` | U+00E7 | **REJET** (pas `c`) |
-
----
-
-## 5. Digraphes hérités et substituts ASCII
-
-Les digraphes suivants apparaissent dans la saisie informelle kabyle lorsque le caractère Unicode correct n'est pas disponible. **Ils ne doivent PAS être substitués automatiquement.** Ils doivent être signalés pour révision manuelle, car ils entrent en collision avec des noms propres français/anglais/arabe et des emprunts.
-
-| Digraphe | Cible probable | Collision exemple | Action |
-|----------|----------------|-------------------|--------|
-| `ch` | `č` | Français *chose* | **Signaler pour révision** |
-| `dj` | `ǧ` | Arabe *Djamel* | **Signaler pour révision** |
-| `gh` | `ɣ` | Anglais *ghoul* | **Signaler pour révision** |
-| `th` | `ṭ` | Anglais *theater* | **Signaler pour révision** |
-| `dh` | `ḍ` | Anglais *dharma* | **Signaler pour révision** |
-| `sh` | `ṣ` | Anglais *shop* | **Signaler pour révision** |
-| `zh` | `ẓ` | Noms étrangers | **Signaler pour révision** |
-| `rh` | `ṛ` | Anglais *rhetoric* | **Signaler pour révision** |
-| `3` | `ɛ` | Leet/Arabizi | **Signaler pour révision** |
-
-Un outil conforme PEUT proposer un mode de substitution à haute confiance **uniquement** lorsque le contexte ambiant est structurellement kabyle (par exemple, dans un paradigme de conjugaison connu).
-
----
-
-## 6. Ponctuation et espacement
+Cette spécification définit un profil technique pour la représentation, l’échange et le nettoyage de textes kabyles écrits en alphabet latin. Elle distingue quatre opérations qui ne doivent pas être confondues : la notation orthographique, la normalisation Unicode, le nettoyage des corpus et l’identification de la langue.
+
+Le profil de base recommande l’utilisation de l’Unicode en UTF-8, de la normalisation NFC et des caractères latins propres à la notation kabyle retenue. Il fournit également une table de contaminants fréquents, notamment les confusions entre `ɛ` et des caractères grecs ou cyrilliques visuellement proches. Ces confusions peuvent être corrigées automatiquement seulement lorsque le contexte établit avec une confiance suffisante qu’il s’agit d’une erreur d’encodage. Le texte original, les modifications et leur provenance doivent toujours être conservés.
+
+Cette spécification ne prétend pas supprimer la variation dialectale, éditoriale ou liée aux choix d’auteur. Les points disputés sont explicitement marqués et ne doivent pas être arbitrés silencieusement.
+
+> **Principe général :** une normalisation technique peut être automatique ; une correction orthographique ou linguistique doit être traçable et, lorsqu’elle est ambiguë, soumise à une révision humaine compétente en kabyle.
+
+## 1. Périmètre et principes
+
+### 1.1 Périmètre
+
+Cette version couvre :
+
+- les caractères de la notation latine kabyle retenue ;
+- leurs points de code Unicode et leurs relations de casse ;
+- la normalisation NFC et l’encodage UTF-8 ;
+- les espaces, la ponctuation et les séparateurs dans un profil technique ;
+- la détection des confusions interscripts et des graphies héritées ;
+- la conservation de la provenance et des variantes dans les corpus NLP.
+
+Cette version ne couvre pas encore :
+
+- une orthographe complète en tifinagh ou en alphabet arabe ;
+- la translittération réversible entre plusieurs écritures ;
+- la césure typographique en fin de ligne ;
+- la prononciation détaillée de tous les parlers kabyles ;
+- la correction automatique générale des mots ou de la morphologie.
+
+### 1.2 Terminologie
+
+| Terme | Définition opérationnelle |
+|---|---|
+| **Graphème** | Unité écrite pertinente pour la notation, par exemple `ɛ`, `ɣ` ou `ṭ`. |
+| **Caractère** | Unité Unicode. Un graphème peut être représenté par un caractère précomposé ou, dans certains cas, par une séquence canonique. |
+| **Notation** | Convention écrite utilisée pour représenter le kabyle. Cette spécification traite principalement la notation latine usuelle. |
+| **Normalisation Unicode** | Transformation technique telle que NFC ; elle ne constitue pas une correction linguistique. |
+| **Contaminant** | Caractère ou séquence non conforme au profil attendu dans un segment kabyle, sans que sa présence soit nécessairement une erreur dans l’ensemble du document. |
+| **Correction** | Modification linguistique ou orthographique proposée avec justification et provenance. |
+| **Quarantaine** | État d’un segment qui ne doit pas être intégré à un corpus normalisé avant examen. |
+| **Texte mixte** | Segment contenant du kabyle et une ou plusieurs autres langues, scripts ou types de données. |
 
-### 6.1 Espaces
-- **Canonique :** ` ` (U+0020) espace ASCII simple uniquement.
-- **Interdits :** U+00A0 (NBSP), U+202F (NNBSP), U+2007 (figure space), U+2009 (thin space), et tout autre espace typographique.
-- **Règle :** Réduire les espaces multiples (`  `) en un seul espace.
+### 1.3 Principes normatifs
 
-### 6.2 Signes de ponctuation
+1. **Conserver la source.** Toute transformation doit être réversible ou accompagnée de la chaîne originale.
+2. **Ne pas confondre caractère et langue.** Un caractère étranger peut être valide dans un nom propre, une citation, une URL ou une métadonnée.
+3. **Ne pas confondre Unicode et orthographe.** NFC ne décide pas si un mot est correctement écrit.
+4. **Déclarer la convention.** Une ressource doit indiquer la convention orthographique et le profil de normalisation utilisés.
+5. **Préserver la variation documentée.** Une variante attestée ne doit pas être remplacée silencieusement par une autre forme.
+6. **Marquer l’incertitude.** Une correction ambiguë doit être signalée plutôt qu’appliquée automatiquement.
 
-| Canonique | Codepoint | Alternatives interdites |
-|-----------|-----------|------------------------|
-| `,` | U+002C | |
-| `.` | U+002E | |
-| `;` | U+003B | |
-| `:` | U+003A | |
-| `?` | U+003F | |
-| `!` | U+0021 | |
-| `-` | U+002D | `‐` U+2010, `‑` U+2011, `–` U+2013, `—` U+2014 |
-| `«` | U+00AB | |
-| `»` | U+00BB | |
-| `"` | U+0022 | `“` U+201C, `”` U+201D |
-
-**Règles d'espacement (style anglais) :**
-- Pas d'espace avant `?`, `!`, `:`, `;`, `.`, `,`.
-- Un espace après `?`, `!`, `:`, `;`, `.`, `,`.
-- Pas d'espace à l'intérieur des guillemets : `«texte»` ou `"texte"` (pas `« texte »`).
+## 2. Convention orthographique de référence
 
-### 6.3 Usage du tiret
+La présente spécification s’appuie principalement sur la notation usuelle décrite par les recommandations de l’INALCO et par le manuel de notation usuelle du tamazight publié à Béjaïa [1] [2]. Cette base concerne la représentation écrite ; elle ne constitue pas une transcription phonétique exhaustive des parlers kabyles.
 
-Le tiret `-` (U+002D) est utilisé pour :
-- Les limites de clitiques (ex. `ad-id`, `ur-igi`)
-- Les mots composés
-- La césure en fin de ligne
-
-### 6.4 Interdiction de l'apostrophe
-
-Le kabyle **n'utilise pas** l'apostrophe `'` (U+0027) ni ses variantes typographiques `‘` `’` `ʼ` pour aucun phonème, clitique ou signe de ponctuation. Le coup de glotte n'est pas représenté dans l'orthographe. Toute apostrophe rencontrée dans du texte kabyle est une contamination et doit être supprimée ou revue minutieusement.
+Les valeurs phonologiques indiquées ci-dessous sont donc des indications générales. Elles ne doivent pas être utilisées seules pour générer une prononciation, une conjugaison ou une analyse dialectale.
 
----
+## 3. Inventaire des lettres
+
+### 3.1 Lettres de base
 
-## 7. Nombres
+L’inventaire retenu contient **23 lettres latines de base**. Les lettres `O`, `P` et `V` ne font pas partie de cet inventaire de base, mais peuvent apparaître dans des emprunts, des noms propres ou des segments étrangers selon le profil appliqué.
 
-Le kabyle utilise les chiffres arabes `0 1 2 3 4 5 6 7 8 9` (U+0030–U+0039). Aucune autre forme numérale n'est canonique.
+| Majuscule | Minuscule | Nom usuel indicatif | Remarque phonologique générale |
+|---|---|---|---|
+| `A` | `a` | a | voyelle /a/ |
+| `B` | `b` | bé | consonne /b/ |
+| `C` | `c` | cé | généralement /ʃ/ dans la notation kabyle de référence |
+| `D` | `d` | dé | /d/ |
+| `E` | `e` | e | schwa, selon la convention de notation |
+| `F` | `f` | ef | /f/ |
+| `G` | `g` | gué | /g/ |
+| `H` | `h` | ha | /h/ |
+| `I` | `i` | i | /i/ |
+| `J` | `j` | ji | /ʒ/ |
+| `K` | `k` | ka | /k/ |
+| `L` | `l` | el | /l/ |
+| `M` | `m` | em | /m/ |
+| `N` | `n` | en | /n/ |
+| `Q` | `q` | qaf | /q/ |
+| `R` | `r` | er | /r/ ; la réalisation varie selon le contexte |
+| `S` | `s` | ès | /s/ |
+| `T` | `t` | té | /t/ |
+| `U` | `u` | u | /u/ |
+| `W` | `w` | waw | semi-voyelle ou consonne selon le contexte |
+| `X` | `x` | xa | fricative dont la réalisation varie selon la convention descriptive |
+| `Y` | `y` | yé | semi-voyelle /j/ |
+| `Z` | `z` | zé | /z/ |
 
----
+### 3.2 Caractères latins particuliers
 
-## 8. Règles de normalisation
+L’inventaire contient **10 caractères latins particuliers**, soit **33 lettres au total** avec les 23 lettres de base. Les capitales sont incluses afin de permettre la casse, les noms propres et le début des phrases.
 
-### 8.1 Formes canoniques
+| Majuscule | Code Unicode | Minuscule | Code Unicode | Désignation Unicode abrégée | Remarque |
+|---|---:|---|---:|---|---|
+| `Č` | U+010C | `č` | U+010D | C avec caron | affriquée postalvéolaire selon la convention descriptive |
+| `Ḍ` | U+1E0C | `ḍ` | U+1E0D | D avec point souscrit | réalisations [dˤ] ou [ðˤ] attestées selon le contexte et le parler |
+| `Ɛ` | U+0190 | `ɛ` | U+025B | E latin ouvert | consonne pharyngale traditionnellement associée à l’ayn, généralement /ʕ/ ; ce n’est pas la voyelle française /ɛ/ |
+| `Ǧ` | U+01E6 | `ǧ` | U+01E7 | G avec caron | affriquée /d͡ʒ/ selon la convention descriptive |
+| `Ɣ` | U+0194 | `ɣ` | U+0263 | Gamma latin | fricative uvulaire, avec variation phonétique possible |
+| `Ḥ` | U+1E24 | `ḥ` | U+1E25 | H avec point souscrit | pharyngale, généralement /ħ/ |
+| `Ṛ` | U+1E5A | `ṛ` | U+1E5B | R avec point souscrit | statut et distribution à déclarer selon la convention choisie |
+| `Ṣ` | U+1E62 | `ṣ` | U+1E63 | S avec point souscrit | emphatique ; distribution variable selon les conventions |
+| `Ṭ` | U+1E6C | `ṭ` | U+1E6D | T avec point souscrit | emphatique |
+| `Ẓ` | U+1E92 | `ẓ` | U+1E93 | Z avec point souscrit | emphatique |
 
-Tout texte kabyle destiné au stockage, à l'échange ou à l'entraînement de modèles doit respecter les règles suivantes :
+### 3.3 Points encore disputés
 
-| Règle | Description | Justification |
-|-------|-------------|---------------|
-| **R1** | **Formes précomposées uniquement.** Utiliser `č` U+010D, jamais `c` + caron combiné. | Toutes les lettres spécifiques kabyles possèdent un point de code Unicode dédié. |
-| **R2** | **Case mapping explicite.** `Ɛ` U+0190 ↔ `ɛ` U+025B et `Ɣ` U+0194 ↔ `ɣ` U+0263 ne sont pas des paires standard Unicode. | Les implémentations doivent gérer manuellement ces mappings. |
-| **R3** | **NFC obligatoire.** Tout texte doit être normalisé en NFC avant stockage. | Les caractères kabyles sont déjà précomposés ; NFC ne les modifie pas mais uniformise le reste. |
-| **R4** | **UTF-8 obligatoire.** Interdiction des encodages Latin-1, Windows-1252, ou tout autre encodage ne couvrant pas l'Extended Latin Additional. | Les lettres à point souscrit (ḍ, ḥ, ṛ, ṣ, ṭ, ẓ) se trouvent dans le bloc Latin Extended Additional (U+1E00–U+1EFF). |
-| **R5** | **Rejet systématique des faux amis.** Tout texte contenant ε, Σ, γ, Γ, Ԑ, ԑ, ğ, ĝ, ć, ĉ, š, ž, ř, ı, İ, etc. doit être rejeté ou corrigé avant intégration à un corpus. | Ces caractères appartiennent à d'autres scripts et ne sont jamais valides en kabyle. |
-| **R6** | **Espace simple uniquement.** Pas d'espace insécable, pas d'espace fine insécable. | Le kabyle utilise l'espace simple ASCII comme l'anglais. |
-| **R7** | **Pas d'apostrophe.** Toute apostrophe (ASCII ou typographique) est une contamination. | Le kabyle n'a pas de grapheme pour le coup de glotte ; supprimer ou réviser minutieusement. |
+Les questions suivantes ne doivent pas être résolues implicitement par un outil :
 
-### 8.2 Pipeline de normalisation
+| Question | Statut dans cette version | Politique recommandée |
+|---|---|---|
+| Écriture systématique de `ṛ` et `ṣ` | `[disputed]` | déclarer la convention du corpus ; conserver la graphie source dans les autres cas |
+| Position alphabétique de `ɛ` | `[disputed]` | déclarer l’ordre de collation choisi |
+| Statut de `v` dans les emprunts | `[disputed]` | autoriser uniquement si le profil ou la source le justifie |
+| Réalisation de plusieurs consonnes emphatiques | variable | ne pas dériver automatiquement une prononciation de la seule lettre |
+| Variantes dialectales et régionales | attestées | les annoter au niveau du corpus ou du document |
 
-Un préprocesseur conforme doit appliquer les étapes suivantes dans l'ordre :
+### 3.4 Lettres d’emprunts et segments étrangers
 
-#### Étape 1 : Normalisation Unicode NFC
-Appliquer Unicode NFC pour que tous les caractères précomposés (ex. `ṭ` U+1E6D) soient en forme canonique composée. Les séquences décomposées (ex. `ṭ` U+0074+U+0323) doivent être normalisées vers leur équivalent précomposé.
+`O`, `P`, `V` et d’autres caractères absents de l’inventaire de base peuvent être conservés dans les cas suivants :
 
-#### Étape 2 : Substitution des faux amis
-Appliquer les tables de substitution des §3.1 et §3.2 de manière déterministe. Cette étape est **destructive** ; la chaîne originale doit être conservée dans un champ séparé à des fins d'audit.
+- emprunt lexical attesté dans la source étudiée ;
+- nom propre ;
+- titre ou citation ;
+- segment étranger ;
+- identifiant ou métadonnée.
 
-#### Étape 3 : Suppression des diacritiques français
-Appliquer la table de normalisation du §4.
+Leur présence ne suffit donc pas à déclarer un document non kabyle. Un profil strict peut les signaler dans les **mots supposés kabyles**, mais il ne doit pas les supprimer dans le texte source.
 
-#### Étape 4 : Signalement des digraphes
-Scanner les séquences du §5. Enregistrer chaque occurrence pour révision manuelle. Ne **pas** substituer automatiquement.
+## 4. Unicode et représentation canonique
 
-#### Étape 5 : Validation du script
-Après toutes les substitutions, chaque point de code du texte doit appartenir à l'un des sous-ensembles suivants :
+### 4.1 Encodage
 
-| Bloc Unicode | Points de code autorisés |
-|--------------|-------------------------|
-| Basic Latin | `U+0000–U+007F` (exclut `'` U+0027) |
-| Latin Extended-A | `U+010C–U+010D` (`Č č`) uniquement |
-| Latin Extended-B | `U+0190` (`Ɛ`), `U+025B` (`ɛ`), `U+0194` (`Ɣ`), `U+0263` (`ɣ`), `U+01E6–U+01E7` (`Ǧ ǧ`) |
-| Latin Extended Additional | `U+1E0C–U+1E0D` (`Ḍ ḍ`), `U+1E24–U+1E25` (`Ḥ ḥ`), `U+1E5A–U+1E5B` (`Ṛ ṛ`), `U+1E62–U+1E63` (`Ṣ ṣ`), `U+1E6C–U+1E6D` (`Ṭ ṭ`), `U+1E92–U+1E93` (`Ẓ ẓ`) |
+Les fichiers destinés à l’échange ou au stockage doivent être encodés en **UTF-8**. L’absence de BOM peut être exigée par un format de fichier particulier, mais elle ne constitue pas une propriété linguistique.
 
-Tout caractère hors de ces plages doit être enregistré et l'échantillon mis en quarantaine.
+### 4.2 Normalisation NFC
 
-#### Étape 6 : Normalisation des espaces
-Réduire tous les espaces blancs à `U+0020`. Réduire les espaces multiples à un seul.
+Le profil `unicode-canonical` exige la normalisation Unicode **NFC** avant indexation ou comparaison. Cette opération met en cohérence les séquences canoniquement équivalentes ; elle ne remplace pas la correction orthographique.
 
-#### Étape 7 : Vérification de la casse
-Signaler les phrases avec un mélange anormal de casse (ex. `Ɛ` en position médiane sans justification de nom propre).
+Les systèmes peuvent préférer les formes précomposées pour l’indexation. Ils doivent toutefois conserver la chaîne d’origine lorsqu’une séquence combinée est rencontrée.
 
----
+### 4.3 Casse
 
-## 9. Barrières qualité pour les corpus et l'IA
+Les opérations de casse doivent utiliser les tables Unicode officielles et être testées explicitement pour les paires suivantes :
 
-### 9.1 Pipeline de validation obligatoire
+| Majuscule | Minuscule |
+|---|---|
+| `Č` | `č` |
+| `Ḍ` | `ḍ` |
+| `Ɛ` | `ɛ` |
+| `Ǧ` | `ǧ` |
+| `Ɣ` | `ɣ` |
+| `Ḥ` | `ḥ` |
+| `Ṛ` | `ṛ` |
+| `Ṣ` | `ṣ` |
+| `Ṭ` | `ṭ` |
+| `Ẓ` | `ẓ` |
 
-Tout corpus kabyle destiné à l'entraînement de modèles de langage doit passer par les barrières suivantes :
-
-| Étape | Contrôle | Seuil / Action |
-|-------|----------|----------------|
-| **B1** | Whitelist caractères | Seuls les 33 lettres + tiret + ponctuation standard + chiffres sont autorisés. |
-| **B2** | Détection des faux amis | Rejet immédiat si ε, Σ, γ, Γ, Ԑ, ԑ, ğ, ĝ, ć, ĉ, š, ž, ř, ı, İ, etc. détectés. |
-| **B3** | Détection des formes obsolètes | Flag si `ţ`, `z̧`, `ř` détectés ; correction auto vers `ṭ`, `ẓ`. |
-| **B4** | Langue identifiée | GlotLID `kab_Latn` ≥ 0.95 (standard établi par Mokraoui 2026). |
-| **B5** | Longueur minimale | ≥ 3 caractères après suppression des espaces. |
-| **B6** | Normalisation NFC | Vérification que le texte est bien en NFC. |
-| **B7** | Encodage UTF-8 | Vérification que le fichier est encodé en UTF-8 sans BOM. |
-| **B8** | Espace simple | Vérification qu'aucun espace insécable n'est présent. |
-| **B9** | Pas d'apostrophe | Vérification qu'aucune apostrophe (ASCII ou typographique) n'est présente ; supprimer ou réviser minutieusement. |
+Une implémentation doit tester séparément `lowercase`, `uppercase`, `casefold` et NFC. Une comparaison insensible à la casse ne doit pas être confondue avec une comparaison orthographique.
 
-### 9.2 Profils de sévérité par corpus
+### 4.4 Inventaire de validation
 
-| Profil | Cas d'usage | Substitution auto | Digraphes | Normalisation espaces |
-|--------|-------------|-------------------|-----------|----------------------|
-| `strict` | Prompts TTS, entraînement ASR | Requise | Signaler + révision manuelle | Requise |
-| `standard` | Données parallèles MT, treebanks UD | Requise | Signaler + révision manuelle | Requise |
-| `lenient` | Crawling web, réseaux sociaux | Requise | Signaler uniquement | Requise |
+Une validation par blocs Unicode est insuffisante. Les validateurs doivent utiliser une liste explicite de caractères et de catégories autorisés par profil :
 
-### 9.3 Métriques de qualité attendues
+- lettres de base et caractères particuliers de la section 3 ;
+- lettres d’emprunts, si le profil les autorise ;
+- chiffres ;
+- espaces ;
+- ponctuation ;
+- caractères de format autorisés par le format de données ;
+- caractères propres aux métadonnées lorsque celles-ci sont séparées du texte.
 
-Sur la base du rapport CV26 et de l'analyse Tatoeba :
+Les caractères de contrôle non requis, les caractères non attribués et les caractères invisibles non documentés doivent être signalés.
 
-| Métrique | Valeur cible | Tolérance maximale |
-|----------|--------------|--------------------|
-| Taux de faux amis | 0 % | &lt; 0,01 % |
-| Taux de formes obsolètes | 0 % | &lt; 0,05 % |
-| Taux de caractères non-kabyles | &lt; 0,1 % | &lt; 0,5 % |
-| Taux de textes non-kabyle (GlotLID) | 0 % | &lt; 1 % |
+## 5. Contaminants et confusions interscripts
 
----
+### 5.1 Principales confusions
 
-## 10. Exigences de rendu des polices de caractères
+La table suivante décrit des confusions fréquentes. La colonne « action » indique une politique par défaut, et non une conversion inconditionnelle.
 
-### 10.1 Support Unicode minimal
+| Caractère rencontré | Code Unicode | Cible possible | Contexte typique | Action par défaut |
+|---|---:|---|---|---|
+| `ε` | U+03B5 | `ɛ` | grec ou copier-coller | signaler ; corriger si le segment est confirmé kabyle |
+| `Σ` | U+03A3 | `Ɛ` | confusion de capitale | signaler ; corriger si le contexte est confirmé |
+| `γ` | U+03B3 | `ɣ` | grec ou copier-coller | signaler ; corriger si le contexte est confirmé |
+| `Γ` | U+0393 | `Ɣ` | confusion de capitale | signaler ; corriger si le contexte est confirmé |
+| `Ԑ` | U+0510 | `Ɛ` | cyrillique | signaler ; corriger si le contexte est confirmé |
+| `ԑ` | U+0511 | `ɛ` | cyrillique | signaler ; corriger si le contexte est confirmé |
+| `ı` | U+0131 | `i` | turc | signaler ; corriger si la langue et le mot sont confirmés |
+| `İ` | U+0130 | `I` | turc | signaler ; corriger si la langue et le mot sont confirmés |
+| `ğ` | U+011F | `ǧ` ou `ɣ` | turc, ancienne saisie, autre convention | ne jamais choisir la cible sans contexte |
 
-Toute police de caractères destinée au kabyle doit supporter au minimum les blocs suivants :
-- **Basic Latin** (U+0000–U+007F) : lettres de base, chiffres, ponctuation, tiret.
-- **Latin Extended-A** (U+0100–U+017F) : č, Č.
-- **Latin Extended-B** (U+0180–U+024F) : ɛ, Ɛ, ɣ, Ɣ, ǧ, Ǧ.
-- **Latin Extended Additional** (U+1E00–U+1EFF) : ḍ, Ḍ, ḥ, Ḥ, ṛ, Ṛ, ṣ, Ṣ, ṭ, Ṭ, ẓ, Ẓ.
+Une occurrence dans un nom propre, une citation ou un segment étranger doit être conservée et annotée plutôt que corrigée.
 
-### 10.2 Exigences de lisibilité
+### 5.2 Graphies héritées et digraphes
 
-| Exigence | Description | Critère |
-|----------|-------------|---------|
-| **E1** | Le point souscrit doit être clairement visible et distinct du corps de la lettre. | À 11 px et au-dessus, `ḍ` et `d` doivent rester distinguables. |
-| **E2** | Le caron sur `č` et `ǧ` ne doit pas toucher la hampe de la lettre. | Pas de fusion visuelle à taille réduite. |
-| **E3** | L'open E `ɛ` et `Ɛ` ne doivent pas être confondus avec le epsilon grec `ε` ou le E latin `e`. | Forme ouverte en C, pas de barre médiane. |
-| **E4** | Le gamma latin `ɣ` et `Ɣ` ne doivent pas être confondus avec le gamma grec `γ` ou le g latin `g`. | Boucle fermée en bas, pas de crochet. |
-| **E5** | Le `ḥ` et le `h` doivent rester distinguables à taille réduite. | Le point souscrit du `ḥ` doit être visible. |
+Les séquences `ch`, `dj`, `gh`, `th`, `dh`, `sh`, `zh`, `rh` et `3` peuvent correspondre à des habitudes de saisie, à des conventions historiques, à de l’Arabizi ou à une autre langue. Elles ne doivent pas être converties automatiquement dans un texte général.
 
----
+Un outil peut proposer une conversion à haute confiance uniquement si un lexique, un paradigme morphologique ou une annotation humaine confirme la correspondance. Sinon, il retourne un signalement avec position et hypothèses possibles.
 
-## 11. Intégration avec les outils existants
+### 5.3 Caractères étrangers
 
-### 11.1 Weblate
+Les caractères `ç`, `ñ`, `ø`, `œ`, `ß`, `þ`, les lettres grecques et les lettres cyrilliques ne doivent pas être supprimés globalement. Ils sont non conformes à un **segment kabyle strict** lorsqu’ils ne sont pas justifiés, mais peuvent être valides dans un segment étranger ou une métadonnée.
 
-Le **KabyleCharactersCheck** (v5.12+) implémente déjà le rejet des faux amis grecs et cyrilliques. Cette spécification complète le check en :
-- Définissant l'inventaire exact des 33 caractères valides.
-- Spécifiant les règles de normalisation NFC et UTF-8.
-- Fournissant la liste des formes obsolètes à corriger automatiquement.
-- Ajoutant le rejet des espaces insécables et des apostrophes.
+## 6. Ponctuation, espaces et tirets
 
-### 11.2 Common Voice
+### 6.1 Convention d’espacement
 
-Le pipeline de nettoyage CV26 (Mokraoui 2026) doit être aligné sur cette spécification :
-- La whitelist de caractères de la Section 9.1 remplace toute liste ad hoc.
-- Les 29 familles de faux amis sont réduites aux 6 principales documentées ici (les 23 secondaires restent à inventorier).
-- L'interdiction de l'apostrophe et des espaces insécables est ajoutée.
+La rédaction kabyle latine visée par cette spécification suit une convention de ponctuation de type anglais. Cette convention est choisie précisément pour éviter les règles typographiques françaises relatives aux espaces insécables et aux espaces fines insécables.
 
-### 11.3 HuggingFace Datasets
+Dans le profil `kabyle-standard`, l’espace ordinaire U+0020 est l’espace canonique. Il ne doit y avoir aucun espace avant ou après une parenthèse ouvrante ou fermante, ni avant les signes `.`, `,`, `;`, `:`, `?` et `!`. Un espace U+0020 est placé après ces signes lorsqu’un autre mot suit. Les espaces multiples sont réduits à une seule unité hors des blocs préformatés.
 
-Les datasets kabyles doivent inclure dans leur `dataset card` :
-- La référence à cette spécification.
-- Le statut de normalisation (NFC, UTF-8, faux amis corrigés, espaces normalisés).
-- Le score GlotLID moyen du corpus.
+Les caractères U+00A0 et U+202F ne sont pas utilisés comme espaces de ponctuation dans ce profil. Ils doivent être signalés ou convertis en U+0020 dans une copie normalisée, sans modifier le texte source.
 
----
+### 6.2 Ponctuation
 
-## 12. Formes obsolètes et héritées (Contexte historique)
+Le profil de texte courant accepte au minimum les signes suivants et applique la convention d’espacement ci-dessus :
 
-Cette section est informative. Elle recense les formes qui apparaissent dans des textes anciens ou informels mais qui **ne sont pas l'orthographe standard actuelle**.
+| Fonction | Caractères recommandés |
+|---|---|
+| Phrase | `.`, `?`, `!` |
+| Coordination | `,`, `;`, `:` |
+| Citation | guillemets droits ASCII `"..."` |
+| Parenthèses | `(`, `)` |
+| Trait d’union ou séparateur | `-`, selon la convention morphographique déclarée |
 
-| Forme obsolète | Forme actuelle | Contexte d'apparition |
-|----------------|----------------|----------------------|
-| `gh` | `ɣ` | Textes numériques anciens, saisie sans clavier kabyle |
-| `dj` | `ǧ` | Textes numériques anciens, saisie sans clavier kabyle |
-| `ch` | `č` | Textes numériques anciens, saisie sans clavier kabyle |
-| `th` | `ṭ` | Textes numériques anciens, saisie sans clavier kabyle |
-| `sh` | `ṣ` | Textes numériques anciens, saisie sans clavier kabyle |
-| `dh` | `ḍ` | Textes numériques anciens, saisie sans clavier kabyle |
-| `rh` | `ṛ` | Textes numériques anciens, saisie sans clavier kabyle |
-| `zh` | `ẓ` | Textes numériques anciens, saisie sans clavier kabyle |
-| `ε` (grec) | `ɛ` | Erreur de clavier ou copier-coller |
-| `γ` (grec) | `ɣ` | Erreur de clavier ou copier-coller |
-| `ţ` / `ţ` | `ṭ` | Pré-Unicode, cédille au lieu de point souscrit |
-| `z̧` | `ẓ` | Pré-Unicode, cédille au lieu de point souscrit |
-| `e=` / `y=` | `ɛ` / `ɣ` | Séquences de saisie clavier (Lexilogos), non destinées au stockage |
-| `Γ` (grec) | `Ɣ` | Erreur de clavier majuscule |
-| `Σ` (grec) | `Ɛ` | Erreur de clavier majuscule |
+Les guillemets français `« »`, les guillemets courbes et les espaces insécables peuvent être conservés dans une source éditoriale ou une citation, mais ils ne constituent pas la forme canonique du profil kabyle latin standardisé ici. Une implémentation peut proposer un profil d’affichage distinct ; elle ne doit pas le confondre avec le profil de stockage.
 
----
+### 6.3 Apostrophe
 
-## 13. Implémentation de référence (Informative)
+L’apostrophe n’est pas un graphème de l’inventaire kabyle latin retenu. Dans un segment supposé kabyle, elle doit être signalée pour révision. Elle ne doit cependant pas être supprimée dans une citation, un nom propre, un segment étranger ou une métadonnée.
 
-Une implémentation de référence conforme doit exposer :
+### 6.4 Tiret et clitiques
+
+Le tiret est un séparateur morphographique ou typographique ; ce n’est pas une lettre. Son emploi dépend de la convention morphosyntaxique et éditoriale. Un validateur ne doit pas déduire automatiquement qu’un tiret est obligatoire dans toute construction.
+
+Les constructions comportant des clitiques, des particules directionnelles ou des préverbes doivent être traitées par des règles morphologiques documentées. Les règles de cette spécification ne remplacent pas une grammaire ou un tokeniseur kabyle.
+
+## 7. Profils de traitement
+
+Une ressource doit déclarer le profil appliqué.
+
+| Profil | Objectif | Transformations autorisées | Sortie attendue |
+|---|---|---|---|
+| `source-preserving` | conservation documentaire | NFC facultative sur une copie ; aucune correction destructive | original intact + annotations |
+| `unicode-canonical` | échange et indexation | UTF-8, NFC, espaces techniques selon configuration | texte technique + journal de transformations |
+| `kabyle-standard` | texte kabyle révisé | corrections validées et transformations à haute confiance | texte révisé + provenance |
+| `strict-training` | corpus prêt pour entraînement | validation stricte, quarantaine des ambiguïtés, revue humaine | données propres + rapport qualité |
+| `mixed-language` | corpus multilingue | segmentation et annotation des langues | segments conservés avec étiquettes |
+
+Un seul texte peut donc avoir plusieurs représentations : l’original, la forme Unicode canonique, la forme révisée et la forme destinée à l’entraînement.
+
+## 8. Pipeline recommandé
+
+### Étape 1 — Préservation
+
+Conserver le fichier original, son empreinte, sa date d’acquisition, sa source, son encodage déclaré et ses métadonnées.
+
+### Étape 2 — Segmentation
+
+Séparer, lorsque cela est possible, le texte courant, les citations, les noms propres, les URL, les identifiants et les métadonnées. La validation linguistique ne doit pas s’appliquer indistinctement à toutes ces zones.
+
+### Étape 3 — Normalisation Unicode
+
+Convertir une copie en UTF-8 et NFC. Enregistrer les changements de représentation, sans encore modifier les lettres selon des hypothèses linguistiques.
+
+### Étape 4 — Détection
+
+Détecter les caractères, séquences et espaces suspects. Pour chaque occurrence, enregistrer :
+
+- la position dans le segment ;
+- le point de code et le nom Unicode ;
+- la chaîne environnante ;
+- les remplacements possibles ;
+- la confiance ;
+- la règle ayant produit le signalement.
+
+### Étape 5 — Correction à haute confiance
+
+Appliquer uniquement les corrections pour lesquelles le segment est identifié comme kabyle et où la cible est déterminée par une règle explicite. Une correction automatique doit être réversible.
+
+### Étape 6 — Révision
+
+Mettre en quarantaine les cas ambigus. Une validation humaine doit être capable d’accepter, de modifier ou de rejeter la proposition automatique.
+
+### Étape 7 — Contrôle final
+
+Calculer les métriques par segment et par type de données. Publier les taux de correction, de quarantaine et de texte mixte avec le corpus.
+
+## 9. Contrôles qualité pour les corpus NLP
+
+### 9.1 Contrôles minimaux
+
+| Identifiant | Contrôle | Résultat |
+|---|---|---|
+| `Q-UTF8` | Encodage UTF-8 valide | succès ou erreur technique |
+| `Q-NFC` | Texte en NFC | succès ou liste des positions |
+| `Q-INVENTORY` | Caractères compatibles avec le profil | accepté, signalé ou mis en quarantaine |
+| `Q-CONTAMINANT` | Confusions interscripts détectées | liste des occurrences et hypothèses |
+| `Q-MIXED` | Segments étrangers ou mixtes | annotation, non suppression |
+| `Q-SPACE` | Espaces non conformes au profil | rapport et transformation réversible |
+| `Q-PUNCT` | Ponctuation incohérente | signalement éditorial |
+| `Q-PROVENANCE` | Source et transformations conservées | obligatoire pour les corpus publiés |
+| `Q-LANGID` | Indice de langue auxiliaire | score et statut, jamais décision unique |
+
+### 9.2 Identification de langue
+
+Un modèle d’identification de langue peut aider à repérer les segments probablement kabyles, mais son score ne constitue pas une preuve orthographique. Les textes courts, les noms propres, les phrases mixtes et les dialectes peuvent produire des scores peu fiables.
+
+Les résultats doivent être classés au minimum comme suit : `kabyle-probable`, `mixte`, `incertain` ou `non-kabyle-probable`. Un seuil tel que `0,95` ne doit pas être présenté comme un standard établi sans protocole expérimental, jeu de test et intervalle d’incertitude publiés.
+
+### 9.3 Métriques
+
+Toute mesure doit indiquer son dénominateur et son unité. Les rapports doivent distinguer le nombre de documents, phrases, clips, tokens, caractères et occurrences.
+
+| Métrique | Définition recommandée |
+|---|---|
+| Taux de contaminants | occurrences contaminantes / occurrences examinées |
+| Taux de segments contaminés | segments contenant au moins un contaminant / segments examinés |
+| Taux de corrections automatiques | corrections appliquées / corrections proposées |
+| Taux de quarantaine | segments mis en quarantaine / segments examinés |
+| Taux de textes mixtes | segments annotés mixtes / segments examinés |
+| Taux de conformité NFC | segments NFC / segments examinés |
+
+Un taux cible doit être accompagné du corpus, de sa version, de sa date d’extraction, du script de comptage et de la méthode de déduplication.
+
+## 10. Exigences pour les polices et les logiciels
+
+Une police destinée au kabyle doit couvrir les caractères de la section 3 et leurs capitales. Elle doit notamment rendre distincts :
+
+- `d` et `ḍ` ;
+- `h` et `ḥ` ;
+- `r` et `ṛ` ;
+- `s` et `ṣ` ;
+- `t` et `ṭ` ;
+- `z` et `ẓ` ;
+- `c` et `č` ;
+- `g` et `ǧ` ;
+- `ɛ` et `Ɛ` ;
+- `ɣ` et `Ɣ`.
+
+Les tests de rendu doivent être réalisés à plusieurs tailles et sur plusieurs systèmes. Un critère numérique unique, tel que « lisible à 11 px », ne suffit pas à garantir l’accessibilité : la lisibilité dépend également de la police, du moteur de rendu, de l’écran et du contraste.
+
+Les logiciels doivent tester les formes de casse, l’affichage des points souscrits, l’indexation NFC et la copie-coller entre systèmes.
+
+## 11. API indicative
+
+L’API suivante distingue normalisation technique et audit linguistique :
 
 ```python
-def normalize_kabyle(text: str, profile: str = "standard") -> str:
-    """Retourne le texte kabyle normalisé (NFC, faux amis corrigés, espaces normalisés)."""
+from dataclasses import dataclass
+
+@dataclass
+class Finding:
+    start: int
+    end: int
+    value: str
+    codepoints: list[str]
+    category: str
+    suggestions: list[str]
+    confidence: float | None
+    action: str
+
+@dataclass
+class NormalizedText:
+    original: str
+    unicode_text: str
+    findings: list[Finding]
+    changes: list[dict]
+    profile: str
+
+
+def normalize_unicode(text: str) -> str:
+    """Retourne une copie UTF-8 logique normalisée en NFC."""
     ...
 
-def is_canonical_kabyle(text: str) -> bool:
-    """Retourne True si le texte utilise uniquement l'inventaire des 33 lettres et la ponctuation autorisée."""
+
+def audit_kabyle(text: str, profile: str = "unicode-canonical") -> list[Finding]:
+    """Détecte les caractères et séquences suspects sans correction destructive."""
     ...
 
-def list_contaminants(text: str) -> list[Contaminant]:
-    """Retourne tous les points de code non canoniques avec leurs positions et remplacements suggérés."""
+
+def propose_corrections(text: str, findings: list[Finding]) -> list[dict]:
+    """Retourne des propositions réversibles avec justification et confiance."""
     ...
 
-def flag_digraphs(text: str) -> list[DigraphMatch]:
-    """Retourne tous les digraphes hérités nécessitant une révision manuelle."""
+
+def is_canonical_unicode(text: str) -> bool:
+    """Vérifie uniquement les propriétés Unicode du profil, notamment NFC."""
     ...
 ```
 
+La fonction `is_canonical_unicode` ne doit pas être utilisée pour décider si un texte est grammaticalement ou orthographiquement correct en kabyle.
+
+## 12. Jeux de tests minimaux
+
+Une implémentation conforme doit tester au minimum :
+
+| Test | Entrée | Résultat attendu |
+|---|---|---|
+| NFC | forme précomposée et séquence combinée équivalente | même représentation NFC |
+| Casse | toutes les paires de la section 4.3 | conversions Unicode cohérentes |
+| Faux ami grec | `ε`, `γ`, `Σ`, `Γ` dans un segment kabyle confirmé | signalement ou correction traçable |
+| Faux ami cyrillique | `Ԑ`, `ԑ` dans un segment kabyle confirmé | signalement ou correction traçable |
+| Turc | `ğ`, `ı`, `İ` dans un nom propre | conservation ou signalement, pas de conversion aveugle |
+| Citation | segment français contenant `ç` | conservation |
+| Métadonnée | URL contenant des caractères non kabyles | exclusion de la validation linguistique |
+| Texte mixte | phrase kabyle avec citation étrangère | segmentation et conservation |
+| Apostrophe | apostrophe dans un segment kabyle | signalement ; conservation de la source |
+| Espacement | NBSP dans un profil technique | transformation réversible si activée |
+
+## 13. Limitations et travaux futurs
+
+Les travaux suivants restent nécessaires avant une version 1.0 normative :
+
+1. établir un inventaire documenté des variantes orthographiques régionales et éditoriales ;
+2. publier un ordre de collation avec exemples et tests ;
+3. documenter séparément les règles morphographiques des clitiques ;
+4. définir les profils tifinagh et arabe ;
+5. construire un jeu de données annoté pour les contaminants et les textes mixtes ;
+6. reproduire les statistiques Common Voice et Tatoeba avec scripts et versions archivés ;
+7. faire relire les exemples kabyles par plusieurs locuteurs compétents représentant les conventions concernées ;
+8. publier la licence et les conditions de réutilisation des tables et scripts associés.
+
+## 14. Références
+
+[1]: https://hal.science/hal-05530877/ "Bouamara et al., Ilugan n tira n tmaziɣt — Règles de la notation usuelle du tamazight kabyle"
+
+[2]: https://www.centrederechercheberbere.fr/tl_files/doc-pdf/notation.pdf "Salem Chaker, Propositions pour la notation usuelle à base latine du berbère"
+
+[3]: https://www.unicode.org/standard/standard.html "Unicode Consortium, The Unicode Standard"
+
+[4]: https://www.unicode.org/reports/tr15/ "Unicode Standard Annex #15, Unicode Normalization Forms"
+
+[5]: https://www.unicode.org/reports/tr44/ "Unicode Standard Annex #44, Unicode Character Database"
+
+[6]: https://huggingface.co/datasets/boffire/common-voice-scripted-speech-kab-26 "Common Voice Scripted Speech Kabyle 26.0 — dataset reference"
+
+[7]: https://huggingface.co/datasets/boffire/tatoeba-en-kab "Tatoeba English–Kabyle Parallel Corpus — dataset reference"
+
+[8]: https://downloads.tatoeba.org/exports/sentences.tar.bz2 "Tatoeba Project, sentences export"
+
+## Annexe A — Changelog de la version 0.3
+
+La version 0.3 corrige le décompte de l’inventaire, distingue les 23 lettres de base des 10 caractères particuliers, corrige la description de `ɛ`, retire les conversions destructives sans contexte, sépare les profils de traitement, remplace la whitelist par blocs par une validation explicite et introduit la conservation obligatoire de la provenance.
+
+Elle ne tranche pas les questions disputées relatives à `ṛ`, `ṣ`, `v`, à l’ordre alphabétique ou aux variantes dialectales. Ces sujets doivent être traités dans une version ultérieure ou dans des profils explicitement nommés.
+
+## Annexe B — Statut de validation
+
+| Domaine | Statut |
+|---|---|
+| Points de code Unicode | vérification technique requise dans les tests d’implémentation |
+| Inventaire 23 + 10 = 33 | corrigé dans cette version |
+| Notation usuelle de référence | fondée sur [1] et [2] |
+| Valeur phonologique de `ɛ` | corrigée ; revue spécialisée recommandée |
+| Table des contaminants | à valider sur des corpus versionnés |
+| Statistiques de contamination | à reproduire avec protocole publié |
+| Règles de cliticisation | hors périmètre normatif détaillé de cette version |
+| Validation native des exemples | requise avant déclaration de version stable |
+
+> Cette spécification est une base technique publiable comme **proposition 0.3**. Elle ne doit pas être présentée comme une norme définitive tant que les points marqués `[disputed]`, les statistiques et la validation des exemples n’ont pas été documentés.
+
 ---
 
-## 14. Limites connues et feuille de route
+**Auteur et mainteneur proposés :** Athmane Mokraoui.  
+**Licence proposée :** à compléter explicitement avec une licence libre.
 
-| ID | Limite | Statut |
-|----|--------|--------|
-| L1 | **23 familles secondaires de faux amis** : seuls les 6 principaux et les familles secondaires étendues (§3.2) sont documentés ici. L'inventaire complet des 29 familles identifiées dans CV26 reste à formaliser. | Extension nécessaire |
-| L2 | **Ordre de collation** : aucune source ne définit explicitement si `ɛ` se classe après `e` ou à la fin de l'alphabet. | Spécification souhaitée |
-| L3 | **Tifinagh** : cette spec ne couvre pas l'écriture Tifinagh (Neo-Tifinagh). | Spec séparée souhaitable |
-| L4 | **Majuscules spéciales** : la fréquence des capitales spéciales est quasi-nulle en position non-initiale. Leur placement sur `Shift` + touche morte est validé mais non testé en usage réel. | [À VALIDER] |
-| L5 | **Règles de césure** : les règles de coupure de mots en fin de ligne ne sont pas encore standardisées. | Extension nécessaire |
-
----
-
-## 15. Conclusion
-
-Cette spécification établit l'inventaire canonique de 33 caractères pour l'orthographe kabyle standard, avec leurs points de code Unicode vérifiés, et définit les règles de normalisation nécessaires au traitement automatique de la langue. Elle constitue la brique fondamentale sur laquelle reposent toutes les autres spécifications du stack kabyle : clavier, tokenization, annotation syntaxique, et synthèse vocale.
-
-La principale avancée par rapport à l'état actuel est la **formalisation du rejet des faux amis**, la **normalisation des espaces et de la ponctuation**, et l'établissement de barrières qualité mesurables pour les corpus d'entraînement de l'IA. L'adoption de cette spécification par les plateformes de contribution (Weblate, Common Voice, Tatoeba) et les pipelines de dataset (HuggingFace) garantira la cohérence orthographique des ressources numériques kabyles.
-
----
-
-## Références
-
-1. **Chaker, Salem** (1996). *Propositions pour la notation usuelle à base latine du berbère*. INALCO / Centre de Recherche Berbère, Paris. Synthèse de l'atelier du 24–25 juin 1996. https://www.centrederechercheberbere.fr/tl_files/doc-pdf/notation.pdf
-2. **Naït-Zerrad, Kamal** (2001). *Grammaire moderne du kabyle, tajerrumt tatrart n teqbaylit*. Karthala, Paris.
-3. **Adjed, F.** *Vers une Normalisation du Kabyle: Alphabet*. HAL Archives ouvertes. https://hal.science/
-4. **Kabyle.com** (2024). *L'alphabet kabyle*. https://www.kabyle.com/
-5. **Unicode Consortium** (2026). *Unicode Standard, Version 16.0*. https://unicode.org/versions/Unicode16.0.0/
-6. **Weblate** (2026). *KabyleCharactersCheck*. Version 5.12+. https://docs.weblate.org/
-7. **Mokraoui, Athmane (boffire)** (2026). *CV26 Kabyle Contamination Report*. https://butterflyoffire.codeberg.page/cv26/
-8. **Mokraoui, Athmane (boffire)** (2026). *Common Voice Scripted Speech Kabyle 26.0*. HuggingFace. https://huggingface.co/datasets/boffire/common-voice-scripted-speech-kab-26
-9. **Mokraoui, Athmane (boffire)** (2026). *Tatoeba English-Kabyle Parallel Corpus*. HuggingFace. https://huggingface.co/datasets/boffire/tatoeba-en-kab
-10. **Tatoeba Project** (2026). *Sentences dump*. https://downloads.tatoeba.org/exports/sentences.tar.bz2
-
----
-
-*Document rédigé dans le cadre du développement des ressources NLP pour la langue kabyle. Les zones nécessitant une validation native supplémentaire sont signalées [À VALIDER].*
+<!-- Fin du document -->
