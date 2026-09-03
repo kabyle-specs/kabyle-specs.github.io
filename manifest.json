@@ -47,7 +47,7 @@
       "path": "specs/kabyle-orthography-specs.md",
       "summary": "Canonical 33-letter inventory with verified Unicode codepoints, false-friend rejection rules, and quality gates for Kabyle text corpora and AI training pipelines.",
       "status": "draft",
-      "updated": "2026-07-30"
+      "updated": "2026-09-03"
     },
     {
       "title": "Kabyle Keyboard Layout Specification",
