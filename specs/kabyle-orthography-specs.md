@@ -78,28 +78,28 @@ L'inventaire retenu contient **23 lettres latines de base**. Les lettres `O`, `P
 | Majuscule | Minuscule | Nom usuel indicatif | Remarque phonologique générale |
 |---|---|---|---|
 | `A` | `a` | a | voyelle /a/ |
-| `B` | `b` | bé | consonne /b/ |
-| `C` | `c` | cé | valeur notée /ʃ/ dans cette notation de référence¹ |
-| `D` | `d` | dé | /d/ |
+| `B` | `b` | yab | consonne /b/ |
+| `C` | `c` | yash | valeur notée /ʃ/ dans cette notation de référence¹ |
+| `D` | `d` | yad | /d/ |
 | `E` | `e` | e | schwa, selon la convention de notation |
-| `F` | `f` | ef | /f/ |
-| `G` | `g` | gué | /g/ |
-| `H` | `h` | ha | /h/ |
+| `F` | `f` | yaf | /f/ |
+| `G` | `g` | yag | /g/ |
+| `H` | `h` | yah | /h/ |
 | `I` | `i` | i | /i/ |
-| `J` | `j` | ji | /ʒ/ |
-| `K` | `k` | ka | /k/ |
-| `L` | `l` | el | /l/ |
-| `M` | `m` | em | /m/ |
-| `N` | `n` | en | /n/ |
-| `Q` | `q` | qaf | /q/ |
-| `R` | `r` | er | /r/ ; la réalisation varie selon le contexte |
-| `S` | `s` | ès | /s/ |
-| `T` | `t` | té | /t/ |
+| `J` | `j` | yaj | /ʒ/ |
+| `K` | `k` | yak | /k/ |
+| `L` | `l` | yal | /l/ |
+| `M` | `m` | yam | /m/ |
+| `N` | `n` | yan | /n/ |
+| `Q` | `q` | yaq | /q/ |
+| `R` | `r` | yar | /r/ ; la réalisation varie selon le contexte |
+| `S` | `s` | yas | /s/ |
+| `T` | `t` | yat | /t/ |
 | `U` | `u` | u | /u/ |
-| `W` | `w` | waw | semi-voyelle ou consonne selon le contexte |
-| `X` | `x` | xa | fricative dont la réalisation varie selon la convention descriptive |
-| `Y` | `y` | yé | semi-voyelle /j/ |
-| `Z` | `z` | zé | /z/ |
+| `W` | `w` | yaw | semi-voyelle ou consonne selon le contexte |
+| `X` | `x` | yax | fricative dont la réalisation varie selon la convention descriptive |
+| `Y` | `y` | yay | semi-voyelle /j/ |
+| `Z` | `z` | yaz | /z/ |
 
 ¹ *Distinction notation/réalisation (cf. §1.2) : la notation associe systématiquement `c` à /ʃ/, indépendamment de variations de réalisation phonétique propres à certains parlers ou emprunts, qui restent hors périmètre de cette spécification.*
 
