@@ -75,33 +75,35 @@ Les valeurs phonologiques indiquées ci-dessous sont donc des indications géné
 
 L'inventaire retenu contient **23 lettres latines de base**. Les lettres `O`, `P` et `V` ne font pas partie de cet inventaire de base, mais peuvent apparaître dans des emprunts, des noms propres ou des segments étrangers selon le profil appliqué.
 
-| Majuscule | Minuscule | Nom usuel indicatif | Remarque phonologique générale |
-|---|---|---|---|
-| `A` | `a` | a | voyelle /a/ |
-| `B` | `b` | yab | consonne /b/ |
-| `C` | `c` | yash | valeur notée /ʃ/ dans cette notation de référence¹ |
-| `D` | `d` | yad | /d/ |
-| `E` | `e` | e | schwa, selon la convention de notation |
-| `F` | `f` | yaf | /f/ |
-| `G` | `g` | yag | /g/ |
-| `H` | `h` | yah | /h/ |
-| `I` | `i` | i | /i/ |
-| `J` | `j` | yaj | /ʒ/ |
-| `K` | `k` | yak | /k/ |
-| `L` | `l` | yal | /l/ |
-| `M` | `m` | yam | /m/ |
-| `N` | `n` | yan | /n/ |
-| `Q` | `q` | yaq | /q/ |
-| `R` | `r` | yar | /r/ ; la réalisation varie selon le contexte |
-| `S` | `s` | yas | /s/ |
-| `T` | `t` | yat | /t/ |
-| `U` | `u` | u | /u/ |
-| `W` | `w` | yaw | semi-voyelle ou consonne selon le contexte |
-| `X` | `x` | yax | fricative dont la réalisation varie selon la convention descriptive |
-| `Y` | `y` | yay | semi-voyelle /j/ |
-| `Z` | `z` | yaz | /z/ |
+| Majuscule | Minuscule | Nom usuel indicatif (INALCO/Béjaïa) | Nom alternatif rapporté² | Remarque phonologique générale |
+|---|---|---|---|---|
+| `A` | `a` | a | — | voyelle /a/ |
+| `B` | `b` | ba | `yab` `[stated]` | consonne /b/ |
+| `C` | `c` | sha | `yash` `[stated]` | valeur notée /ʃ/ dans cette notation de référence¹ |
+| `D` | `d` | da | `yad` `[stated]` | /d/ |
+| `E` | `e` | e | — | schwa, selon la convention de notation |
+| `F` | `f` | fa | `yaf` `[stated]` | /f/ |
+| `G` | `g` | ga | `yag` `[stated]` | /g/ |
+| `H` | `h` | ha | `yah` `[stated]` | /h/ |
+| `I` | `i` | i | — | /i/ |
+| `J` | `j` | ja | `yaj` `[stated]` | /ʒ/ |
+| `K` | `k` | ka | `yak` `[stated]` | /k/ |
+| `L` | `l` | la | `yal` `[stated]` | /l/ |
+| `M` | `m` | ma | `yam` `[stated]` | /m/ |
+| `N` | `n` | na | `yan` `[stated]` | /n/ |
+| `Q` | `q` | qa | `yaq` `[stated]` | /q/ |
+| `R` | `r` | ra | `yar` `[stated]` | /r/ ; la réalisation varie selon le contexte |
+| `S` | `s` | sa | `yas` `[stated]` | /s/ |
+| `T` | `t` | ta | `yat` `[stated]` | /t/ |
+| `U` | `u` | u | — | /u/ |
+| `W` | `w` | wa | `yaw` `[stated]` | semi-voyelle ou consonne selon le contexte |
+| `X` | `x` | xa | `yax` `[stated]` | fricative dont la réalisation varie selon la convention descriptive |
+| `Y` | `y` | ya | `yay` `[stated]` | semi-voyelle /j/ |
+| `Z` | `z` | za | `yaz` `[stated]` | /z/ |
 
 ¹ *Distinction notation/réalisation (cf. §1.2) : la notation associe systématiquement `c` à /ʃ/, indépendamment de variations de réalisation phonétique propres à certains parlers ou emprunts, qui restent hors périmètre de cette spécification.*
+
+² **Statut à clarifier.** Colonne ajoutée sur indication d'un relecteur se déclarant locuteur natif. Le motif `ya+consonne` est la convention de nommage documentée pour les caractères **tifinagh** (ex. *yaz* pour ⵣ, à l'origine du symbole identitaire amazigh), non pour l'alphabet latin que couvre cette spécification (§1.1 exclut le tifinagh de son périmètre). Deux lectures restent possibles et n'ont pas été départagées : (a) il s'agit d'un usage oral réel de nommage des lettres *latines*, distinct de la convention tifinagh mais non publié ; (b) il s'agit des noms des caractères *tifinagh* correspondants, auquel cas leur place est dans une future spécification tifinagh et non dans ce tableau. `[NEEDS REVIEW]` — à trancher avant toute version stable ; ne pas traiter cette colonne comme équivalente en autorité à la colonne INALCO/Béjaïa sourcée.
 
 ### 3.2 Caractères latins particuliers
 
@@ -193,20 +195,11 @@ Une validation par blocs Unicode est insuffisante. Les validateurs doivent utili
 
 Les caractères de contrôle non requis, les caractères non attribués et les caractères invisibles non documentés doivent être signalés.
 
-### 4.5 Chiffres *(nouvelle section, v0.4)*
+### 4.5 Chiffres *(nouvelle section, v0.4 ; simplifiée après relecture)*
 
-Cette version antérieure (0.3) mentionnait les « chiffres » comme catégorie de validation acceptée (§4.4) sans préciser le jeu de chiffres canonique ni les confusions possibles. Cette section comble ce manque sans introduire de statistique non mesurée.
+Cette version antérieure (0.3) mentionnait les « chiffres » comme catégorie de validation acceptée (§4.4) sans préciser le jeu de chiffres canonique. Cette section comble ce manque.
 
-Le profil de base retient les chiffres arabes (occidentaux) `0123456789` (U+0030–U+0039) comme forme canonique.
-
-Deux jeux de chiffres visuellement ou fonctionnellement proches peuvent apparaître par confusion de saisie ou par habitude éditoriale, notamment chez des rédacteurs alternant avec l'arabe :
-
-| Jeu de chiffres | Plage Unicode | Exemple | Statut dans un segment kabyle strict |
-|---|---|---|---|
-| Chiffres arabes-indiens (arabe standard) | U+0660–U+0669 | ٠١٢٣٤٥٦٧٨٩ | signaler ; ne pas convertir automatiquement en dehors d'un contexte confirmé |
-| Chiffres arabes-indiens étendus (persan/ourdou) | U+06F0–U+06F9 | ۰۱۲۳۴۵۶۷۸۹ | signaler ; ne pas convertir automatiquement en dehors d'un contexte confirmé |
-
-`[candidate]` — Aucune mesure de fréquence de cette confusion dans un corpus kabyle n'est disponible à ce stade ; cette table propose une catégorie de contrôle structurellement symétrique à celle des lettres (§5.1), à valider ou écarter par un audit empirique avant adoption en profil `strict-training`.
+Le profil de base retient les chiffres arabes (occidentaux) `0123456789` (U+0030–U+0039) comme forme canonique unique. `[stated, non sourcé]` — selon un relecteur, l'usage kabyle latin n'emploie jamais d'autre jeu de chiffres ; cette spécification suit ce point à titre d'indication d'usage, sans disposer d'un audit de corpus publié pour le confirmer. Une version antérieure de cette section proposait un contrôle de confusion avec les chiffres arabes-indiens (U+0660–U+0669) et arabes-indiens étendus (U+06F0–U+06F9) ; ce contrôle est retiré ici faute de toute occurrence rapportée, mais pourrait être réintroduit si un audit de corpus futur en montrait l'utilité (voir §13, point 10).
 
 ## 5. Contaminants et confusions interscripts
 
@@ -335,7 +328,7 @@ Calculer les métriques par segment et par type de données. Publier les taux de
 | `Q-NFC` | Texte en NFC | succès ou liste des positions |
 | `Q-INVENTORY` | Caractères compatibles avec le profil | accepté, signalé ou mis en quarantaine |
 | `Q-CONTAMINANT` | Confusions interscripts détectées | liste des occurrences et hypothèses |
-| `Q-DIGITS` | Jeu de chiffres non canonique détecté *(nouveau, v0.4, voir §4.5)* | liste des occurrences et hypothèses |
+| `Q-DIGITS` | Chiffre hors de `0-9` détecté *(nouveau, v0.4, voir §4.5)* | signalement ; catégorie retenue à titre préventif, aucune occurrence rapportée à ce jour |
 | `Q-MIXED` | Segments étrangers ou mixtes | annotation, non suppression |
 | `Q-SPACE` | Espaces non conformes au profil | rapport et transformation réversible |
 | `Q-PUNCT` | Ponctuation incohérente, y compris convention de guillemets non déclarée | signalement éditorial |
@@ -442,7 +435,7 @@ Une implémentation conforme doit tester au minimum :
 | Faux ami grec | `ε`, `γ`, `Σ`, `Γ` dans un segment kabyle confirmé | signalement ou correction traçable |
 | Faux ami cyrillique | `Ԑ`, `ԑ` dans un segment kabyle confirmé | signalement ou correction traçable |
 | Turc | `ğ`, `ı`, `İ` dans un nom propre | conservation ou signalement, pas de conversion aveugle |
-| Chiffres non canoniques *(nouveau, v0.4)* | `٠١٢٣` ou `۰۱۲۳` dans un segment kabyle confirmé | signalement, pas de conversion aveugle (§4.5) |
+| Chiffres | tout caractère numéral hors `0-9` dans un segment kabyle confirmé | signalement (§4.5) — catégorie préventive, aucune occurrence encore rapportée |
 | Citation | segment français contenant `ç` | conservation |
 | Métadonnée | URL contenant des caractères non kabyles | exclusion de la validation linguistique |
 | Texte mixte | phrase kabyle avec citation étrangère | segmentation et conservation |
@@ -462,7 +455,7 @@ Les travaux suivants restent nécessaires avant une version 1.0 normative :
 7. faire relire les exemples kabyles par plusieurs locuteurs compétents représentant les conventions concernées ;
 8. publier la licence et les conditions de réutilisation des tables et scripts associés ;
 9. *(ajout v0.4)* trancher, ou documenter par relecture native, la question du registre par défaut pour les guillemets (§6.2) ;
-10. *(ajout v0.4)* mesurer empiriquement, sur corpus versionné, la fréquence réelle de la confusion des jeux de chiffres (§4.5) avant de fixer un seuil ou un profil de sévérité.
+10. *(ajout v0.4, révisé)* si un besoin apparaît, documenter avec un audit de corpus versionné toute confusion de jeu de chiffres avant de réintroduire un contrôle dédié (§4.5) ; en l'état, `0-9` est retenu comme seul jeu attesté.
 
 ## 14. Références
 
@@ -513,7 +506,7 @@ Elle ne tranche pas les questions disputées relatives à `ṛ`, `ṣ`, `v`, à 
 | Règles de cliticisation | hors périmètre normatif détaillé de cette version |
 | Validation native des exemples | requise avant déclaration de version stable |
 | Convention de guillemets *(v0.4)* | non tranchée ; relecture native requise (§6.2) |
-| Confusion des jeux de chiffres *(v0.4)* | catégorie structurelle ajoutée, non mesurée empiriquement (§4.5) |
+| Jeu de chiffres *(v0.4)* | `0-9` retenu comme seul jeu attesté, sur indication non sourcée d'un relecteur ; aucune confusion rapportée (§4.5) |
 
 > Cette spécification est une base technique publiable comme **proposition**. Elle ne doit pas être présentée comme une norme définitive tant que les points marqués `[disputed]`, les statistiques et la validation des exemples n'ont pas été documentés.
 
@@ -523,9 +516,11 @@ Cette révision a été préparée en réponse à cinq points relevés lors d'un
 
 1. **§6.2 Guillemets.** La v0.3 déclarait les guillemets droits ASCII `"..."` comme forme canonique et reléguait `« »` à un usage éditorial secondaire. Cette hiérarchisation n'est pas cohérente avec l'usage attesté de `« »` dans la presse kabyle et contredit le principe normatif n°4 du document lui-même (« déclarer la convention », déjà appliqué à `ṛ`/`ṣ` et à l'ordre de collation). Le point est retiré de la liste des formes canoniques fixées et déplacé dans la table des points disputés (§3.3), avec statut `[NEEDS REVIEW]` en attente de relecture native.
 2. **§14 Références.** Dans la v0.3, seules les références [1] et [2] étaient effectivement appelées dans le corps du texte ; [3] à [12] figuraient dans la liste sans marqueur d'appel, ce qui contredit le principe n°1 (« conserver la source ») et le contrôle `Q-PROVENANCE`. Cette révision sépare la liste en « sources citées » et « lectures complémentaires » plutôt que d'inventer des appels de citation non vérifiables pour les rattacher à des affirmations précises.
-3. **§4.5 et §9.1 (`Q-DIGITS`) Chiffres.** La v0.3 mentionne les « chiffres » comme catégorie de validation (§4.4) sans jamais préciser le jeu canonique ni les confusions possibles — une omission par rapport à la v0.2 antérieure, qui traitait ce point. La section ajoutée reprend uniquement des faits Unicode vérifiables (plages de blocs) et marque explicitement `[candidate]` l'absence de toute mesure de fréquence, pour éviter de faire passer une catégorie structurelle pour un résultat empirique.
+3. **§4.5 et §9.1 (`Q-DIGITS`) Chiffres.** La v0.3 mentionne les « chiffres » comme catégorie de validation (§4.4) sans jamais préciser le jeu canonique — une omission par rapport à la v0.2 antérieure, qui traitait ce point. Une première version de cette révision proposait aussi un contrôle de confusion avec les chiffres arabes-indiens, marqué `[candidate]` faute de mesure. Après relecture, ce contrôle a été retiré : `0-9` est retenu comme seul jeu attesté en kabyle latin, sur la base d'une indication non sourcée reçue en relecture plutôt que d'un audit de corpus publié — statut noté comme tel plutôt que présenté comme confirmé.
 4. **§3.1, note sur `c`.** La formulation « généralement /ʃ/ » de la v0.3 mélangeait notation et réalisation phonétique, deux notions que le document distingue lui-même en §1.2. La note reformulée précise que c'est la valeur *notée* qui est fixe, la variation concernant la réalisation phonétique hors périmètre du document.
 5. **§3.3, ordre de collation.** Ajout d'un renvoi conditionnel vers une éventuelle spécification de collation distincte au sein du même projet, explicitement marqué comme non vérifié à ce stade plutôt que présenté comme un lien confirmé.
+
+6. **§3.1, colonne « Nom alternatif rapporté ».** Ajout après relecture par un contributeur se déclarant locuteur natif, proposant le motif `ya+consonne` (`yab`, `yash`, `yad`...) comme nommage des lettres latines. Ce motif correspond à la convention documentée de nommage des caractères **tifinagh**, script hors périmètre de cette spécification (§1.1). Ajouté par prudence en colonne séparée et marqué `[stated]`/`[NEEDS REVIEW]` plutôt que substitué au nommage INALCO/Béjaïa déjà sourcé, faute d'avoir départagé s'il s'agit d'un usage oral réel pour le latin ou d'un glissement de script.
 
 Comme pour la v0.3, cette révision ne tranche aucun point disputé restant. Elle ne doit pas être fusionnée dans le dépôt sans revue par le mainteneur du projet et, pour les points 1 et 4, par un locuteur natif compétent.
 
