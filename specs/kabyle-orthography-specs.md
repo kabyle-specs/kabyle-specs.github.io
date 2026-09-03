@@ -84,32 +84,32 @@ L'inventaire retenu contient **23 lettres latines de base**. Les lettres `O`, `P
 | Majuscule | Minuscule | Nom usuel indicatif (INALCO/Béjaïa) | Nom alternatif rapporté² | Remarque phonologique générale |
 |---|---|---|---|---|
 | `A` | `a` | a | — | voyelle /a/ |
-| `B` | `b` | ba | `yab` `[stated]` | consonne /b/ |
-| `C` | `c` | sha | `yash` `[stated]` | valeur notée /ʃ/ dans cette notation de référence¹ |
-| `D` | `d` | da | `yad` `[stated]` | /d/ |
+| `B` | `b` | bé | `yab` `[stated]` | consonne /b/ |
+| `C` | `c` | cé | `yash` `[stated]` | valeur notée /ʃ/ dans cette notation de référence¹ |
+| `D` | `d` | dé | `yad` `[stated]` | /d/ |
 | `E` | `e` | e | — | schwa, selon la convention de notation |
-| `F` | `f` | fa | `yaf` `[stated]` | /f/ |
-| `G` | `g` | ga | `yag` `[stated]` | /g/ |
+| `F` | `f` | ef | `yaf` `[stated]` | /f/ |
+| `G` | `g` | gué | `yag` `[stated]` | /g/ |
 | `H` | `h` | ha | `yah` `[stated]` | /h/ |
 | `I` | `i` | i | — | /i/ |
-| `J` | `j` | ja | `yaj` `[stated]` | /ʒ/ |
+| `J` | `j` | ji | `yaj` `[stated]` | /ʒ/ |
 | `K` | `k` | ka | `yak` `[stated]` | /k/ |
-| `L` | `l` | la | `yal` `[stated]` | /l/ |
-| `M` | `m` | ma | `yam` `[stated]` | /m/ |
-| `N` | `n` | na | `yan` `[stated]` | /n/ |
-| `Q` | `q` | qa | `yaq` `[stated]` | /q/ |
-| `R` | `r` | ra | `yar` `[stated]` | /r/ ; la réalisation varie selon le contexte |
-| `S` | `s` | sa | `yas` `[stated]` | /s/ |
-| `T` | `t` | ta | `yat` `[stated]` | /t/ |
+| `L` | `l` | el | `yal` `[stated]` | /l/ |
+| `M` | `m` | em | `yam` `[stated]` | /m/ |
+| `N` | `n` | en | `yan` `[stated]` | /n/ |
+| `Q` | `q` | qaf | `yaq` `[stated]` | /q/ |
+| `R` | `r` | er | `yar` `[stated]` | /r/ ; la réalisation varie selon le contexte |
+| `S` | `s` | ès | `yas` `[stated]` | /s/ |
+| `T` | `t` | té | `yat` `[stated]` | /t/ |
 | `U` | `u` | u | — | /u/ |
-| `W` | `w` | wa | `yaw` `[stated]` | semi-voyelle ou consonne selon le contexte |
+| `W` | `w` | waw | `yaw` `[stated]` | semi-voyelle ou consonne selon le contexte |
 | `X` | `x` | xa | `yax` `[stated]` | fricative dont la réalisation varie selon la convention descriptive |
-| `Y` | `y` | ya | `yay` `[stated]` | semi-voyelle /j/ |
-| `Z` | `z` | za | `yaz` `[stated]` | /z/ |
+| `Y` | `y` | yé | `yay` `[stated]` | semi-voyelle /j/ |
+| `Z` | `z` | zé | `yaz` `[stated]` | /z/ |
 
 ¹ *Distinction notation/réalisation (cf. §1.2) : la notation associe systématiquement `c` à /ʃ/, indépendamment de variations de réalisation phonétique propres à certains parlers ou emprunts, qui restent hors périmètre de cette spécification.*
 
-² **Statut à clarifier.** Colonne ajoutée sur indication d'un relecteur se déclarant locuteur natif. Le motif `ya+consonne` est la convention de nommage documentée pour les caractères **tifinagh** (ex. *yaz* pour ⵣ, à l'origine du symbole identitaire amazigh), non pour l'alphabet latin que couvre cette spécification (§1.1 exclut le tifinagh de son périmètre). Deux lectures restent possibles et n'ont pas été départagées : (a) il s'agit d'un usage oral réel de nommage des lettres *latines*, distinct de la convention tifinagh mais non publié ; (b) il s'agit des noms des caractères *tifinagh* correspondants, auquel cas leur place est dans une future spécification tifinagh et non dans ce tableau. `[NEEDS REVIEW]` — à trancher avant toute version stable ; ne pas traiter cette colonne comme équivalente en autorité à la colonne INALCO/Béjaïa sourcée.
+² **Statut clarifié après relecture.** Colonne ajoutée sur indication d'un relecteur se déclarant locuteur natif. Le motif `ya+consonne` (`yab`, `yash`, `yad`...) est aussi la convention documentée de nommage des caractères **tifinagh** (ex. *yaz* pour ⵣ), ce qui avait motivé une vérification : le relecteur confirme qu'il s'agit bien, dans son usage, du nom oral des lettres **latines** elles-mêmes, indépendamment du tifinagh. `[stated, locuteur natif — un seul répondant]` : l'ambiguïté de script est levée, mais ce nommage n'est corroboré que par une seule attestation, sans source publiée indépendante ; il reste présenté en colonne séparée du nommage INALCO/Béjaïa plutôt que de s'y substituer.
 
 ### 3.2 Caractères latins particuliers
 
@@ -259,7 +259,7 @@ Le profil de texte courant accepte au minimum les signes suivants et applique la
 | Parenthèses | `(`, `)` |
 | Trait d'union ou séparateur | `-`, selon la convention morphographique déclarée |
 
-**Guillemets — point disputé, non arbitré dans cette version.** La v0.3 de ce document désignait les guillemets droits ASCII `"..."` comme la forme canonique et traitait `« »` comme une simple option éditoriale. Cette révision retire cette hiérarchisation : les deux conventions sont attestées dans l'usage kabyle écrit selon la source et le registre (presse, édition, saisie technique), et le principe normatif n°4 de ce document (« Déclarer la convention ») s'applique ici comme pour `ṛ`/`ṣ` ou l'ordre de collation. Un profil ou un document doit déclarer explicitement lequel des deux il utilise ; aucun outil ne doit convertir l'un vers l'autre sans que cette déclaration soit faite. `[NEEDS REVIEW]` — la question de savoir si un registre par défaut existe réellement (par ex. `« »` en presse vs `"…"` en profil technique/échange de données) devrait être tranchée par relecture native plutôt que par ce document.
+**Guillemets — point disputé, en partie éclairé par relecture.** La v0.3 de ce document désignait les guillemets droits ASCII `"..."` comme la forme canonique et traitait `« »` comme une simple option éditoriale. Cette révision avait retiré cette hiérarchisation en l'absence de tranchage. Un relecteur se déclarant locuteur natif confirme utiliser `"texte"` dans son usage courant (hors registre presse). `[stated, un seul répondant]` — cette attestation corrobore l'hypothèse déjà formulée ici d'une distinction par registre (`« »` en presse, `"…"` en usage technique/quotidien) plutôt que de trancher pour l'ensemble des usages ; elle ne suffit pas à elle seule à rouvrir `"..."` comme forme canonique unique pour tout le profil `kabyle-standard`, puisque l'usage attesté en presse kabyle reste `« »` (cf. principe n°4, « déclarer la convention »). Un profil ou un document doit déclarer explicitement lequel des deux il utilise ; aucun outil ne doit convertir l'un vers l'autre sans que cette déclaration soit faite.
 
 Les espaces insécables associées à l'usage français des guillemets `« »` restent hors du profil canonique de ce document quel que soit le choix retenu pour le signe lui-même (voir §6.1).
 
@@ -511,7 +511,8 @@ Elle ne tranche pas les questions disputées relatives à `ṛ`, `ṣ`, `v`, à 
 | Statistiques de contamination | à reproduire avec protocole publié |
 | Règles de cliticisation | hors périmètre normatif détaillé de cette version |
 | Validation native des exemples | requise avant déclaration de version stable |
-| Convention de guillemets *(v0.4)* | non tranchée ; relecture native requise (§6.2) |
+| Convention de guillemets *(v0.4)* | non tranchée pour l'ensemble du profil ; un relecteur natif atteste `"texte"` en usage courant, ce qui corrobore l'hypothèse d'un registre technique distinct du registre presse (`« »`) sans la trancher (§6.2) |
+| Nom alternatif des lettres latines *(v0.4)* | ambiguïté de script (latin vs tifinagh) levée par relecture native ; nommage `ya+consonne` conservé en colonne séparée, une seule attestation (§3.1) |
 | Jeu de chiffres *(v0.4)* | `0-9` retenu comme seul jeu attesté, sur indication non sourcée d'un relecteur ; aucune confusion rapportée (§4.5) |
 
 > Cette spécification est une base technique publiable comme **proposition**. Elle ne doit pas être présentée comme une norme définitive tant que les points marqués `[disputed]`, les statistiques et la validation des exemples n'ont pas été documentés.
@@ -526,7 +527,7 @@ Cette révision a été préparée en réponse à cinq points relevés lors d'un
 4. **§3.1, note sur `c`.** La formulation « généralement /ʃ/ » de la v0.3 mélangeait notation et réalisation phonétique, deux notions que le document distingue lui-même en §1.2. La note reformulée précise que c'est la valeur *notée* qui est fixe, la variation concernant la réalisation phonétique hors périmètre du document.
 5. **§3.3, ordre de collation.** Ajout d'un renvoi conditionnel vers une éventuelle spécification de collation distincte au sein du même projet, explicitement marqué comme non vérifié à ce stade plutôt que présenté comme un lien confirmé.
 
-6. **§3.1, colonne « Nom alternatif rapporté ».** Ajout après relecture par un contributeur se déclarant locuteur natif, proposant le motif `ya+consonne` (`yab`, `yash`, `yad`...) comme nommage des lettres latines. Ce motif correspond à la convention documentée de nommage des caractères **tifinagh**, script hors périmètre de cette spécification (§1.1). Ajouté par prudence en colonne séparée et marqué `[stated]`/`[NEEDS REVIEW]` plutôt que substitué au nommage INALCO/Béjaïa déjà sourcé, faute d'avoir départagé s'il s'agit d'un usage oral réel pour le latin ou d'un glissement de script.
+6. **§3.1, colonne « Nom alternatif rapporté ».** Ajout après relecture par un contributeur se déclarant locuteur natif, proposant le motif `ya+consonne` (`yab`, `yash`, `yad`...) comme nommage des lettres latines. Ce motif correspond aussi à la convention documentée de nommage des caractères **tifinagh**, d'où une vérification avant intégration. Le relecteur a confirmé qu'il s'agit bien d'un usage oral pour les lettres latines. Conservé en colonne séparée, non fusionné avec le nommage INALCO/Béjaïa sourcé : une seule attestation native, sans publication indépendante, reste une donnée d'usage et non une source équivalente en autorité (norme variée).
 
 Comme pour la v0.3, cette révision ne tranche aucun point disputé restant. Elle ne doit pas être fusionnée dans le dépôt sans revue par le mainteneur du projet et, pour les points 1 et 4, par un locuteur natif compétent.
 
