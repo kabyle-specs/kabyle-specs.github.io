@@ -1,22 +1,24 @@
 # Spécification de notation, Unicode et normalisation pour le kabyle
 
-**Identifiant proposé :** `kabyle-orthography-spec`  
-**Version :** 0.3-draft  
-**Date :** 3 septembre 2026  
-**Statut :** proposition de publication — validation linguistique et reproductibilité des mesures encore requises  
-**Langue du document :** français  
-**Script couvert par cette version :** alphabet latin berbère  
+**Identifiant proposé :** `kabyle-orthography-spec`
+**Version :** 0.4-draft *(proposition de révision non officielle — voir Annexe C)*
+**Base :** révision de la version 0.3-draft (3 septembre 2026) publiée sur kabyle-specs.github.io
+**Statut :** proposition de publication — validation linguistique et reproductibilité des mesures encore requises
+**Langue du document :** français
+**Script couvert par cette version :** alphabet latin berbère
 **Code ISO 639-3 :** `kab`
+
+> **Note sur cette révision.** Ce fichier n'est pas une publication officielle du projet Kabyle Specs. C'est une proposition de correction préparée à la demande d'un utilisateur, à soumettre au mainteneur (Athmane Mokraoui) via pull request ou issue avant toute adoption. Les changements par rapport à la v0.3 sont listés et justifiés en Annexe C ; rien n'a été ajouté qui ne soit soit repris tel quel de la v0.3, soit explicitement marqué `[candidate]`/`[disputed]`/`[NEEDS REVIEW]`.
 
 ## Résumé
 
-Cette spécification définit un profil technique pour la représentation, l’échange et le nettoyage de textes kabyles écrits en alphabet latin. Elle distingue quatre opérations qui ne doivent pas être confondues : la notation orthographique, la normalisation Unicode, le nettoyage des corpus et l’identification de la langue.
+Cette spécification définit un profil technique pour la représentation, l'échange et le nettoyage de textes kabyles écrits en alphabet latin. Elle distingue quatre opérations qui ne doivent pas être confondues : la notation orthographique, la normalisation Unicode, le nettoyage des corpus et l'identification de la langue.
 
-Le profil de base recommande l’utilisation de l’Unicode en UTF-8, de la normalisation NFC et des caractères latins propres à la notation kabyle retenue. Il fournit également une table de contaminants fréquents, notamment les confusions entre `ɛ` et des caractères grecs ou cyrilliques visuellement proches. Ces confusions peuvent être corrigées automatiquement seulement lorsque le contexte établit avec une confiance suffisante qu’il s’agit d’une erreur d’encodage. Le texte original, les modifications et leur provenance doivent toujours être conservés.
+Le profil de base recommande l'utilisation de l'Unicode en UTF-8, de la normalisation NFC et des caractères latins propres à la notation kabyle retenue. Il fournit également une table de contaminants fréquents, notamment les confusions entre `ɛ` et des caractères grecs ou cyrilliques visuellement proches. Ces confusions peuvent être corrigées automatiquement seulement lorsque le contexte établit avec une confiance suffisante qu'il s'agit d'une erreur d'encodage. Le texte original, les modifications et leur provenance doivent toujours être conservés.
 
-Cette spécification ne prétend pas supprimer la variation dialectale, éditoriale ou liée aux choix d’auteur. Les points disputés sont explicitement marqués et ne doivent pas être arbitrés silencieusement.
+Cette spécification ne prétend pas supprimer la variation dialectale, éditoriale ou liée aux choix d'auteur. Les points disputés sont explicitement marqués et ne doivent pas être arbitrés silencieusement.
 
-> **Principe général :** une normalisation technique peut être automatique ; une correction orthographique ou linguistique doit être traçable et, lorsqu’elle est ambiguë, soumise à une révision humaine compétente en kabyle.
+> **Principe général :** une normalisation technique peut être automatique ; une correction orthographique ou linguistique doit être traçable et, lorsqu'elle est ambiguë, soumise à une révision humaine compétente en kabyle.
 
 ## 1. Périmètre et principes
 
@@ -26,7 +28,7 @@ Cette version couvre :
 
 - les caractères de la notation latine kabyle retenue ;
 - leurs points de code Unicode et leurs relations de casse ;
-- la normalisation NFC et l’encodage UTF-8 ;
+- la normalisation NFC et l'encodage UTF-8 ;
 - les espaces, la ponctuation et les séparateurs dans un profil technique ;
 - la détection des confusions interscripts et des graphies héritées ;
 - la conservation de la provenance et des variantes dans les corpus NLP.
@@ -47,9 +49,9 @@ Cette version ne couvre pas encore :
 | **Caractère** | Unité Unicode. Un graphème peut être représenté par un caractère précomposé ou, dans certains cas, par une séquence canonique. |
 | **Notation** | Convention écrite utilisée pour représenter le kabyle. Cette spécification traite principalement la notation latine usuelle. |
 | **Normalisation Unicode** | Transformation technique telle que NFC ; elle ne constitue pas une correction linguistique. |
-| **Contaminant** | Caractère ou séquence non conforme au profil attendu dans un segment kabyle, sans que sa présence soit nécessairement une erreur dans l’ensemble du document. |
+| **Contaminant** | Caractère ou séquence non conforme au profil attendu dans un segment kabyle, sans que sa présence soit nécessairement une erreur dans l'ensemble du document. |
 | **Correction** | Modification linguistique ou orthographique proposée avec justification et provenance. |
-| **Quarantaine** | État d’un segment qui ne doit pas être intégré à un corpus normalisé avant examen. |
+| **Quarantaine** | État d'un segment qui ne doit pas être intégré à un corpus normalisé avant examen. |
 | **Texte mixte** | Segment contenant du kabyle et une ou plusieurs autres langues, scripts ou types de données. |
 
 ### 1.3 Principes normatifs
@@ -59,11 +61,11 @@ Cette version ne couvre pas encore :
 3. **Ne pas confondre Unicode et orthographe.** NFC ne décide pas si un mot est correctement écrit.
 4. **Déclarer la convention.** Une ressource doit indiquer la convention orthographique et le profil de normalisation utilisés.
 5. **Préserver la variation documentée.** Une variante attestée ne doit pas être remplacée silencieusement par une autre forme.
-6. **Marquer l’incertitude.** Une correction ambiguë doit être signalée plutôt qu’appliquée automatiquement.
+6. **Marquer l'incertitude.** Une correction ambiguë doit être signalée plutôt qu'appliquée automatiquement.
 
 ## 2. Convention orthographique de référence
 
-La présente spécification s’appuie principalement sur la notation usuelle décrite par les recommandations de l’INALCO et par le manuel de notation usuelle du tamazight publié à Béjaïa [1] [2]. Cette base concerne la représentation écrite ; elle ne constitue pas une transcription phonétique exhaustive des parlers kabyles.
+La présente spécification s'appuie principalement sur la notation usuelle décrite par les recommandations de l'INALCO et par le manuel de notation usuelle du tamazight publié à Béjaïa [1] [2]. Cette base concerne la représentation écrite ; elle ne constitue pas une transcription phonétique exhaustive des parlers kabyles.
 
 Les valeurs phonologiques indiquées ci-dessous sont donc des indications générales. Elles ne doivent pas être utilisées seules pour générer une prononciation, une conjugaison ou une analyse dialectale.
 
@@ -71,13 +73,13 @@ Les valeurs phonologiques indiquées ci-dessous sont donc des indications géné
 
 ### 3.1 Lettres de base
 
-L’inventaire retenu contient **23 lettres latines de base**. Les lettres `O`, `P` et `V` ne font pas partie de cet inventaire de base, mais peuvent apparaître dans des emprunts, des noms propres ou des segments étrangers selon le profil appliqué.
+L'inventaire retenu contient **23 lettres latines de base**. Les lettres `O`, `P` et `V` ne font pas partie de cet inventaire de base, mais peuvent apparaître dans des emprunts, des noms propres ou des segments étrangers selon le profil appliqué.
 
 | Majuscule | Minuscule | Nom usuel indicatif | Remarque phonologique générale |
 |---|---|---|---|
 | `A` | `a` | a | voyelle /a/ |
 | `B` | `b` | bé | consonne /b/ |
-| `C` | `c` | cé | généralement /ʃ/ dans la notation kabyle de référence |
+| `C` | `c` | cé | valeur notée /ʃ/ dans cette notation de référence¹ |
 | `D` | `d` | dé | /d/ |
 | `E` | `e` | e | schwa, selon la convention de notation |
 | `F` | `f` | ef | /f/ |
@@ -99,15 +101,17 @@ L’inventaire retenu contient **23 lettres latines de base**. Les lettres `O`, 
 | `Y` | `y` | yé | semi-voyelle /j/ |
 | `Z` | `z` | zé | /z/ |
 
+¹ *Distinction notation/réalisation (cf. §1.2) : la notation associe systématiquement `c` à /ʃ/, indépendamment de variations de réalisation phonétique propres à certains parlers ou emprunts, qui restent hors périmètre de cette spécification.*
+
 ### 3.2 Caractères latins particuliers
 
-L’inventaire contient **10 caractères latins particuliers**, soit **33 lettres au total** avec les 23 lettres de base. Les capitales sont incluses afin de permettre la casse, les noms propres et le début des phrases.
+L'inventaire contient **10 caractères latins particuliers**, soit **33 lettres au total** avec les 23 lettres de base. Les capitales sont incluses afin de permettre la casse, les noms propres et le début des phrases.
 
 | Majuscule | Code Unicode | Minuscule | Code Unicode | Désignation Unicode abrégée | Remarque |
 |---|---:|---|---:|---|---|
 | `Č` | U+010C | `č` | U+010D | C avec caron | affriquée postalvéolaire selon la convention descriptive |
 | `Ḍ` | U+1E0C | `ḍ` | U+1E0D | D avec point souscrit | réalisations [dˤ] ou [ðˤ] attestées selon le contexte et le parler |
-| `Ɛ` | U+0190 | `ɛ` | U+025B | E latin ouvert | consonne pharyngale traditionnellement associée à l’ayn, généralement /ʕ/ ; ce n’est pas la voyelle française /ɛ/ |
+| `Ɛ` | U+0190 | `ɛ` | U+025B | E latin ouvert | consonne pharyngale traditionnellement associée à l'ayn, généralement /ʕ/ ; ce n'est pas la voyelle française /ɛ/ |
 | `Ǧ` | U+01E6 | `ǧ` | U+01E7 | G avec caron | affriquée /d͡ʒ/ selon la convention descriptive |
 | `Ɣ` | U+0194 | `ɣ` | U+0263 | Gamma latin | fricative uvulaire, avec variation phonétique possible |
 | `Ḥ` | U+1E24 | `ḥ` | U+1E25 | H avec point souscrit | pharyngale, généralement /ħ/ |
@@ -123,14 +127,18 @@ Les questions suivantes ne doivent pas être résolues implicitement par un outi
 | Question | Statut dans cette version | Politique recommandée |
 |---|---|---|
 | Écriture systématique de `ṛ` et `ṣ` | `[disputed]` | déclarer la convention du corpus ; conserver la graphie source dans les autres cas |
-| Position alphabétique de `ɛ` | `[disputed]` | déclarer l’ordre de collation choisi |
+| Position alphabétique de `ɛ` | `[disputed]` | déclarer l'ordre de collation choisi ; si une spécification de collation distincte existe dans ce projet, s'y référer explicitement plutôt que d'en fixer un ici² |
 | Statut de `v` dans les emprunts | `[disputed]` | autoriser uniquement si le profil ou la source le justifie |
+| Choix entre guillemets français `« »` et guillemets droits ASCII `"…"` | `[disputed]`³ | déclarer la convention du document ; ne pas présenter l'une des deux formes comme la forme canonique unique sans le dire explicitement (voir §6.2) |
 | Réalisation de plusieurs consonnes emphatiques | variable | ne pas dériver automatiquement une prononciation de la seule lettre |
 | Variantes dialectales et régionales | attestées | les annoter au niveau du corpus ou du document |
 
-### 3.4 Lettres d’emprunts et segments étrangers
+² *Ajout v0.4 : ce projet nomme une spécification de collation dans son organisation générale ; son existence et son contenu actuels n'ont pas été vérifiés pour cette révision — à confirmer avant de publier le renvoi comme un lien actif.*
+³ *Ajout v0.4 — voir Annexe C, point 1.*
 
-`O`, `P`, `V` et d’autres caractères absents de l’inventaire de base peuvent être conservés dans les cas suivants :
+### 3.4 Lettres d'emprunts et segments étrangers
+
+`O`, `P`, `V` et d'autres caractères absents de l'inventaire de base peuvent être conservés dans les cas suivants :
 
 - emprunt lexical attesté dans la source étudiée ;
 - nom propre ;
@@ -144,13 +152,13 @@ Leur présence ne suffit donc pas à déclarer un document non kabyle. Un profil
 
 ### 4.1 Encodage
 
-Les fichiers destinés à l’échange ou au stockage doivent être encodés en **UTF-8**. L’absence de BOM peut être exigée par un format de fichier particulier, mais elle ne constitue pas une propriété linguistique.
+Les fichiers destinés à l'échange ou au stockage doivent être encodés en **UTF-8**. L'absence de BOM peut être exigée par un format de fichier particulier, mais elle ne constitue pas une propriété linguistique.
 
 ### 4.2 Normalisation NFC
 
 Le profil `unicode-canonical` exige la normalisation Unicode **NFC** avant indexation ou comparaison. Cette opération met en cohérence les séquences canoniquement équivalentes ; elle ne remplace pas la correction orthographique.
 
-Les systèmes peuvent préférer les formes précomposées pour l’indexation. Ils doivent toutefois conserver la chaîne d’origine lorsqu’une séquence combinée est rencontrée.
+Les systèmes peuvent préférer les formes précomposées pour l'indexation. Ils doivent toutefois conserver la chaîne d'origine lorsqu'une séquence combinée est rencontrée.
 
 ### 4.3 Casse
 
@@ -176,14 +184,29 @@ Une implémentation doit tester séparément `lowercase`, `uppercase`, `casefold
 Une validation par blocs Unicode est insuffisante. Les validateurs doivent utiliser une liste explicite de caractères et de catégories autorisés par profil :
 
 - lettres de base et caractères particuliers de la section 3 ;
-- lettres d’emprunts, si le profil les autorise ;
-- chiffres ;
+- lettres d'emprunts, si le profil les autorise ;
+- chiffres (voir §4.5) ;
 - espaces ;
 - ponctuation ;
 - caractères de format autorisés par le format de données ;
 - caractères propres aux métadonnées lorsque celles-ci sont séparées du texte.
 
 Les caractères de contrôle non requis, les caractères non attribués et les caractères invisibles non documentés doivent être signalés.
+
+### 4.5 Chiffres *(nouvelle section, v0.4)*
+
+Cette version antérieure (0.3) mentionnait les « chiffres » comme catégorie de validation acceptée (§4.4) sans préciser le jeu de chiffres canonique ni les confusions possibles. Cette section comble ce manque sans introduire de statistique non mesurée.
+
+Le profil de base retient les chiffres arabes (occidentaux) `0123456789` (U+0030–U+0039) comme forme canonique.
+
+Deux jeux de chiffres visuellement ou fonctionnellement proches peuvent apparaître par confusion de saisie ou par habitude éditoriale, notamment chez des rédacteurs alternant avec l'arabe :
+
+| Jeu de chiffres | Plage Unicode | Exemple | Statut dans un segment kabyle strict |
+|---|---|---|---|
+| Chiffres arabes-indiens (arabe standard) | U+0660–U+0669 | ٠١٢٣٤٥٦٧٨٩ | signaler ; ne pas convertir automatiquement en dehors d'un contexte confirmé |
+| Chiffres arabes-indiens étendus (persan/ourdou) | U+06F0–U+06F9 | ۰۱۲۳۴۵۶۷۸۹ | signaler ; ne pas convertir automatiquement en dehors d'un contexte confirmé |
+
+`[candidate]` — Aucune mesure de fréquence de cette confusion dans un corpus kabyle n'est disponible à ce stade ; cette table propose une catégorie de contrôle structurellement symétrique à celle des lettres (§5.1), à valider ou écarter par un audit empirique avant adoption en profil `strict-training`.
 
 ## 5. Contaminants et confusions interscripts
 
@@ -207,45 +230,47 @@ Une occurrence dans un nom propre, une citation ou un segment étranger doit êt
 
 ### 5.2 Graphies héritées et digraphes
 
-Les séquences `ch`, `dj`, `gh`, `th`, `dh`, `sh`, `zh`, `rh` et `3` peuvent correspondre à des habitudes de saisie, à des conventions historiques, à de l’Arabizi ou à une autre langue. Elles ne doivent pas être converties automatiquement dans un texte général.
+Les séquences `ch`, `dj`, `gh`, `th`, `dh`, `sh`, `zh`, `rh` et `3` peuvent correspondre à des habitudes de saisie, à des conventions historiques, à de l'Arabizi ou à une autre langue. Elles ne doivent pas être converties automatiquement dans un texte général.
 
 Un outil peut proposer une conversion à haute confiance uniquement si un lexique, un paradigme morphologique ou une annotation humaine confirme la correspondance. Sinon, il retourne un signalement avec position et hypothèses possibles.
 
 ### 5.3 Caractères étrangers
 
-Les caractères `ç`, `ñ`, `ø`, `œ`, `ß`, `þ`, les lettres grecques et les lettres cyrilliques ne doivent pas être supprimés globalement. Ils sont non conformes à un **segment kabyle strict** lorsqu’ils ne sont pas justifiés, mais peuvent être valides dans un segment étranger ou une métadonnée.
+Les caractères `ç`, `ñ`, `ø`, `œ`, `ß`, `þ`, les lettres grecques et les lettres cyrilliques ne doivent pas être supprimés globalement. Ils sont non conformes à un **segment kabyle strict** lorsqu'ils ne sont pas justifiés, mais peuvent être valides dans un segment étranger ou une métadonnée.
 
 ## 6. Ponctuation, espaces et tirets
 
-### 6.1 Convention d’espacement
+### 6.1 Convention d'espacement
 
 La rédaction kabyle latine visée par cette spécification suit une convention de ponctuation de type anglais. Cette convention est choisie précisément pour éviter les règles typographiques françaises relatives aux espaces insécables et aux espaces fines insécables.
 
-Dans le profil `kabyle-standard`, l’espace ordinaire U+0020 est l’espace canonique. Il ne doit y avoir aucun espace avant ou après une parenthèse ouvrante ou fermante, ni avant les signes `.`, `,`, `;`, `:`, `?` et `!`. Un espace U+0020 est placé après ces signes lorsqu’un autre mot suit. Les espaces multiples sont réduits à une seule unité hors des blocs préformatés.
+Dans le profil `kabyle-standard`, l'espace ordinaire U+0020 est l'espace canonique. Il ne doit y avoir aucun espace avant ou après une parenthèse ouvrante ou fermante, ni avant les signes `.`, `,`, `;`, `:`, `?` et `!`. Un espace U+0020 est placé après ces signes lorsqu'un autre mot suit. Les espaces multiples sont réduits à une seule unité hors des blocs préformatés.
 
 Les caractères U+00A0 et U+202F ne sont pas utilisés comme espaces de ponctuation dans ce profil. Ils doivent être signalés ou convertis en U+0020 dans une copie normalisée, sans modifier le texte source.
 
-### 6.2 Ponctuation
+### 6.2 Ponctuation *(révisé, v0.4)*
 
-Le profil de texte courant accepte au minimum les signes suivants et applique la convention d’espacement ci-dessus :
+Le profil de texte courant accepte au minimum les signes suivants et applique la convention d'espacement ci-dessus :
 
 | Fonction | Caractères recommandés |
 |---|---|
 | Phrase | `.`, `?`, `!` |
 | Coordination | `,`, `;`, `:` |
-| Citation | guillemets droits ASCII `"..."` |
+| Citation | voir ci-dessous — convention à déclarer, `[disputed]` |
 | Parenthèses | `(`, `)` |
-| Trait d’union ou séparateur | `-`, selon la convention morphographique déclarée |
+| Trait d'union ou séparateur | `-`, selon la convention morphographique déclarée |
 
-Les guillemets français `« »`, les guillemets courbes et les espaces insécables peuvent être conservés dans une source éditoriale ou une citation, mais ils ne constituent pas la forme canonique du profil kabyle latin standardisé ici. Une implémentation peut proposer un profil d’affichage distinct ; elle ne doit pas le confondre avec le profil de stockage.
+**Guillemets — point disputé, non arbitré dans cette version.** La v0.3 de ce document désignait les guillemets droits ASCII `"..."` comme la forme canonique et traitait `« »` comme une simple option éditoriale. Cette révision retire cette hiérarchisation : les deux conventions sont attestées dans l'usage kabyle écrit selon la source et le registre (presse, édition, saisie technique), et le principe normatif n°4 de ce document (« Déclarer la convention ») s'applique ici comme pour `ṛ`/`ṣ` ou l'ordre de collation. Un profil ou un document doit déclarer explicitement lequel des deux il utilise ; aucun outil ne doit convertir l'un vers l'autre sans que cette déclaration soit faite. `[NEEDS REVIEW]` — la question de savoir si un registre par défaut existe réellement (par ex. `« »` en presse vs `"…"` en profil technique/échange de données) devrait être tranchée par relecture native plutôt que par ce document.
+
+Les espaces insécables associées à l'usage français des guillemets `« »` restent hors du profil canonique de ce document quel que soit le choix retenu pour le signe lui-même (voir §6.1).
 
 ### 6.3 Apostrophe
 
-L’apostrophe n’est pas un graphème de l’inventaire kabyle latin retenu. Dans un segment supposé kabyle, elle doit être signalée pour révision. Elle ne doit cependant pas être supprimée dans une citation, un nom propre, un segment étranger ou une métadonnée.
+L'apostrophe n'est pas un graphème de l'inventaire kabyle latin retenu. Dans un segment supposé kabyle, elle doit être signalée pour révision. Elle ne doit cependant pas être supprimée dans une citation, un nom propre, un segment étranger ou une métadonnée.
 
 ### 6.4 Tiret et clitiques
 
-Le tiret est un séparateur morphographique ou typographique ; ce n’est pas une lettre. Son emploi dépend de la convention morphosyntaxique et éditoriale. Un validateur ne doit pas déduire automatiquement qu’un tiret est obligatoire dans toute construction.
+Le tiret est un séparateur morphographique ou typographique ; ce n'est pas une lettre. Son emploi dépend de la convention morphosyntaxique et éditoriale. Un validateur ne doit pas déduire automatiquement qu'un tiret est obligatoire dans toute construction.
 
 Les constructions comportant des clitiques, des particules directionnelles ou des préverbes doivent être traitées par des règles morphologiques documentées. Les règles de cette spécification ne remplacent pas une grammaire ou un tokeniseur kabyle.
 
@@ -261,17 +286,17 @@ Une ressource doit déclarer le profil appliqué.
 | `strict-training` | corpus prêt pour entraînement | validation stricte, quarantaine des ambiguïtés, revue humaine | données propres + rapport qualité |
 | `mixed-language` | corpus multilingue | segmentation et annotation des langues | segments conservés avec étiquettes |
 
-Un seul texte peut donc avoir plusieurs représentations : l’original, la forme Unicode canonique, la forme révisée et la forme destinée à l’entraînement.
+Un seul texte peut donc avoir plusieurs représentations : l'original, la forme Unicode canonique, la forme révisée et la forme destinée à l'entraînement.
 
 ## 8. Pipeline recommandé
 
 ### Étape 1 — Préservation
 
-Conserver le fichier original, son empreinte, sa date d’acquisition, sa source, son encodage déclaré et ses métadonnées.
+Conserver le fichier original, son empreinte, sa date d'acquisition, sa source, son encodage déclaré et ses métadonnées.
 
 ### Étape 2 — Segmentation
 
-Séparer, lorsque cela est possible, le texte courant, les citations, les noms propres, les URL, les identifiants et les métadonnées. La validation linguistique ne doit pas s’appliquer indistinctement à toutes ces zones.
+Séparer, lorsque cela est possible, le texte courant, les citations, les noms propres, les URL, les identifiants et les métadonnées. La validation linguistique ne doit pas s'appliquer indistinctement à toutes ces zones.
 
 ### Étape 3 — Normalisation Unicode
 
@@ -294,7 +319,7 @@ Appliquer uniquement les corrections pour lesquelles le segment est identifié c
 
 ### Étape 6 — Révision
 
-Mettre en quarantaine les cas ambigus. Une validation humaine doit être capable d’accepter, de modifier ou de rejeter la proposition automatique.
+Mettre en quarantaine les cas ambigus. Une validation humaine doit être capable d'accepter, de modifier ou de rejeter la proposition automatique.
 
 ### Étape 7 — Contrôle final
 
@@ -310,17 +335,18 @@ Calculer les métriques par segment et par type de données. Publier les taux de
 | `Q-NFC` | Texte en NFC | succès ou liste des positions |
 | `Q-INVENTORY` | Caractères compatibles avec le profil | accepté, signalé ou mis en quarantaine |
 | `Q-CONTAMINANT` | Confusions interscripts détectées | liste des occurrences et hypothèses |
+| `Q-DIGITS` | Jeu de chiffres non canonique détecté *(nouveau, v0.4, voir §4.5)* | liste des occurrences et hypothèses |
 | `Q-MIXED` | Segments étrangers ou mixtes | annotation, non suppression |
 | `Q-SPACE` | Espaces non conformes au profil | rapport et transformation réversible |
-| `Q-PUNCT` | Ponctuation incohérente | signalement éditorial |
+| `Q-PUNCT` | Ponctuation incohérente, y compris convention de guillemets non déclarée | signalement éditorial |
 | `Q-PROVENANCE` | Source et transformations conservées | obligatoire pour les corpus publiés |
 | `Q-LANGID` | Indice de langue auxiliaire | score et statut, jamais décision unique |
 
 ### 9.2 Identification de langue
 
-Un modèle d’identification de langue peut aider à repérer les segments probablement kabyles, mais son score ne constitue pas une preuve orthographique. Les textes courts, les noms propres, les phrases mixtes et les dialectes peuvent produire des scores peu fiables.
+Un modèle d'identification de langue peut aider à repérer les segments probablement kabyles, mais son score ne constitue pas une preuve orthographique. Les textes courts, les noms propres, les phrases mixtes et les dialectes peuvent produire des scores peu fiables.
 
-Les résultats doivent être classés au minimum comme suit : `kabyle-probable`, `mixte`, `incertain` ou `non-kabyle-probable`. Un seuil tel que `0,95` ne doit pas être présenté comme un standard établi sans protocole expérimental, jeu de test et intervalle d’incertitude publiés.
+Les résultats doivent être classés au minimum comme suit : `kabyle-probable`, `mixte`, `incertain` ou `non-kabyle-probable`. Un seuil tel que `0,95` ne doit pas être présenté comme un standard établi sans protocole expérimental, jeu de test et intervalle d'incertitude publiés.
 
 ### 9.3 Métriques
 
@@ -335,7 +361,7 @@ Toute mesure doit indiquer son dénominateur et son unité. Les rapports doivent
 | Taux de textes mixtes | segments annotés mixtes / segments examinés |
 | Taux de conformité NFC | segments NFC / segments examinés |
 
-Un taux cible doit être accompagné du corpus, de sa version, de sa date d’extraction, du script de comptage et de la méthode de déduplication.
+Un taux cible doit être accompagné du corpus, de sa version, de sa date d'extraction, du script de comptage et de la méthode de déduplication.
 
 ## 10. Exigences pour les polices et les logiciels
 
@@ -352,13 +378,13 @@ Une police destinée au kabyle doit couvrir les caractères de la section 3 et l
 - `ɛ` et `Ɛ` ;
 - `ɣ` et `Ɣ`.
 
-Les tests de rendu doivent être réalisés à plusieurs tailles et sur plusieurs systèmes. Un critère numérique unique, tel que « lisible à 11 px », ne suffit pas à garantir l’accessibilité : la lisibilité dépend également de la police, du moteur de rendu, de l’écran et du contraste.
+Les tests de rendu doivent être réalisés à plusieurs tailles et sur plusieurs systèmes. Un critère numérique unique, tel que « lisible à 11 px », ne suffit pas à garantir l'accessibilité : la lisibilité dépend également de la police, du moteur de rendu, de l'écran et du contraste.
 
-Les logiciels doivent tester les formes de casse, l’affichage des points souscrits, l’indexation NFC et la copie-coller entre systèmes.
+Les logiciels doivent tester les formes de casse, l'affichage des points souscrits, l'indexation NFC et la copie-coller entre systèmes.
 
 ## 11. API indicative
 
-L’API suivante distingue normalisation technique et audit linguistique :
+L'API suivante distingue normalisation technique et audit linguistique :
 
 ```python
 from dataclasses import dataclass
@@ -416,6 +442,7 @@ Une implémentation conforme doit tester au minimum :
 | Faux ami grec | `ε`, `γ`, `Σ`, `Γ` dans un segment kabyle confirmé | signalement ou correction traçable |
 | Faux ami cyrillique | `Ԑ`, `ԑ` dans un segment kabyle confirmé | signalement ou correction traçable |
 | Turc | `ğ`, `ı`, `İ` dans un nom propre | conservation ou signalement, pas de conversion aveugle |
+| Chiffres non canoniques *(nouveau, v0.4)* | `٠١٢٣` ou `۰۱۲۳` dans un segment kabyle confirmé | signalement, pas de conversion aveugle (§4.5) |
 | Citation | segment français contenant `ç` | conservation |
 | Métadonnée | URL contenant des caractères non kabyles | exclusion de la validation linguistique |
 | Texte mixte | phrase kabyle avec citation étrangère | segmentation et conservation |
@@ -433,13 +460,19 @@ Les travaux suivants restent nécessaires avant une version 1.0 normative :
 5. construire un jeu de données annoté pour les contaminants et les textes mixtes ;
 6. reproduire les statistiques Common Voice et Tatoeba avec scripts et versions archivés ;
 7. faire relire les exemples kabyles par plusieurs locuteurs compétents représentant les conventions concernées ;
-8. publier la licence et les conditions de réutilisation des tables et scripts associés.
+8. publier la licence et les conditions de réutilisation des tables et scripts associés ;
+9. *(ajout v0.4)* trancher, ou documenter par relecture native, la question du registre par défaut pour les guillemets (§6.2) ;
+10. *(ajout v0.4)* mesurer empiriquement, sur corpus versionné, la fréquence réelle de la confusion des jeux de chiffres (§4.5) avant de fixer un seuil ou un profil de sévérité.
 
 ## 14. Références
+
+### 14.1 Sources citées dans le texte
 
 [1]: https://hal.science/hal-05530877/ "Bouamara et al., Ilugan n tira n tmaziɣt — Règles de la notation usuelle du tamazight kabyle"
 
 [2]: https://www.centrederechercheberbere.fr/tl_files/doc-pdf/notation.pdf "Salem Chaker, Propositions pour la notation usuelle à base latine du berbère"
+
+### 14.2 Lectures complémentaires *(non citées explicitement dans le corps du texte — reclassées en v0.4, voir Annexe C, point 2)*
 
 [3]: https://www.unicode.org/standard/standard.html "Unicode Consortium, The Unicode Standard"
 
@@ -463,15 +496,15 @@ Les travaux suivants restent nécessaires avant une version 1.0 normative :
 
 ## Annexe A — Changelog de la version 0.3
 
-La version 0.3 corrige le décompte de l’inventaire, distingue les 23 lettres de base des 10 caractères particuliers, corrige la description de `ɛ`, retire les conversions destructives sans contexte, sépare les profils de traitement, remplace la whitelist par blocs par une validation explicite et introduit la conservation obligatoire de la provenance.
+La version 0.3 corrige le décompte de l'inventaire, distingue les 23 lettres de base des 10 caractères particuliers, corrige la description de `ɛ`, retire les conversions destructives sans contexte, sépare les profils de traitement, remplace la whitelist par blocs par une validation explicite et introduit la conservation obligatoire de la provenance.
 
-Elle ne tranche pas les questions disputées relatives à `ṛ`, `ṣ`, `v`, à l’ordre alphabétique ou aux variantes dialectales. Ces sujets doivent être traités dans une version ultérieure ou dans des profils explicitement nommés.
+Elle ne tranche pas les questions disputées relatives à `ṛ`, `ṣ`, `v`, à l'ordre alphabétique ou aux variantes dialectales. Ces sujets doivent être traités dans une version ultérieure ou dans des profils explicitement nommés.
 
 ## Annexe B — Statut de validation
 
 | Domaine | Statut |
 |---|---|
-| Points de code Unicode | vérification technique requise dans les tests d’implémentation |
+| Points de code Unicode | vérification technique requise dans les tests d'implémentation |
 | Inventaire 23 + 10 = 33 | corrigé dans cette version |
 | Notation usuelle de référence | fondée sur [1] et [2] |
 | Valeur phonologique de `ɛ` | corrigée ; revue spécialisée recommandée |
@@ -479,12 +512,27 @@ Elle ne tranche pas les questions disputées relatives à `ṛ`, `ṣ`, `v`, à 
 | Statistiques de contamination | à reproduire avec protocole publié |
 | Règles de cliticisation | hors périmètre normatif détaillé de cette version |
 | Validation native des exemples | requise avant déclaration de version stable |
+| Convention de guillemets *(v0.4)* | non tranchée ; relecture native requise (§6.2) |
+| Confusion des jeux de chiffres *(v0.4)* | catégorie structurelle ajoutée, non mesurée empiriquement (§4.5) |
 
-> Cette spécification est une base technique publiable comme **proposition 0.3**. Elle ne doit pas être présentée comme une norme définitive tant que les points marqués `[disputed]`, les statistiques et la validation des exemples n’ont pas été documentés.
+> Cette spécification est une base technique publiable comme **proposition**. Elle ne doit pas être présentée comme une norme définitive tant que les points marqués `[disputed]`, les statistiques et la validation des exemples n'ont pas été documentés.
+
+## Annexe C — Changelog de la révision 0.4 (non officielle)
+
+Cette révision a été préparée en réponse à cinq points relevés lors d'une relecture de la v0.3-draft. Chaque changement est listé avec sa justification ; aucun fait linguistique nouveau n'a été introduit.
+
+1. **§6.2 Guillemets.** La v0.3 déclarait les guillemets droits ASCII `"..."` comme forme canonique et reléguait `« »` à un usage éditorial secondaire. Cette hiérarchisation n'est pas cohérente avec l'usage attesté de `« »` dans la presse kabyle et contredit le principe normatif n°4 du document lui-même (« déclarer la convention », déjà appliqué à `ṛ`/`ṣ` et à l'ordre de collation). Le point est retiré de la liste des formes canoniques fixées et déplacé dans la table des points disputés (§3.3), avec statut `[NEEDS REVIEW]` en attente de relecture native.
+2. **§14 Références.** Dans la v0.3, seules les références [1] et [2] étaient effectivement appelées dans le corps du texte ; [3] à [12] figuraient dans la liste sans marqueur d'appel, ce qui contredit le principe n°1 (« conserver la source ») et le contrôle `Q-PROVENANCE`. Cette révision sépare la liste en « sources citées » et « lectures complémentaires » plutôt que d'inventer des appels de citation non vérifiables pour les rattacher à des affirmations précises.
+3. **§4.5 et §9.1 (`Q-DIGITS`) Chiffres.** La v0.3 mentionne les « chiffres » comme catégorie de validation (§4.4) sans jamais préciser le jeu canonique ni les confusions possibles — une omission par rapport à la v0.2 antérieure, qui traitait ce point. La section ajoutée reprend uniquement des faits Unicode vérifiables (plages de blocs) et marque explicitement `[candidate]` l'absence de toute mesure de fréquence, pour éviter de faire passer une catégorie structurelle pour un résultat empirique.
+4. **§3.1, note sur `c`.** La formulation « généralement /ʃ/ » de la v0.3 mélangeait notation et réalisation phonétique, deux notions que le document distingue lui-même en §1.2. La note reformulée précise que c'est la valeur *notée* qui est fixe, la variation concernant la réalisation phonétique hors périmètre du document.
+5. **§3.3, ordre de collation.** Ajout d'un renvoi conditionnel vers une éventuelle spécification de collation distincte au sein du même projet, explicitement marqué comme non vérifié à ce stade plutôt que présenté comme un lien confirmé.
+
+Comme pour la v0.3, cette révision ne tranche aucun point disputé restant. Elle ne doit pas être fusionnée dans le dépôt sans revue par le mainteneur du projet et, pour les points 1 et 4, par un locuteur natif compétent.
 
 ---
 
-**Auteur et mainteneur proposés :** Athmane Mokraoui.  
-**Licence proposée :** à compléter explicitement avec une licence libre.
+**Auteur et mainteneur proposés (document de base, v0.3) :** Athmane Mokraoui.
+**Révision non officielle (v0.4-draft) :** préparée par un tiers à des fins de relecture ; à ne pas attribuer au mainteneur avant validation.
+**Licence proposée :** à compléter explicitement avec une licence libre (inchangé depuis la v0.3).
 
 <!-- Fin du document -->
