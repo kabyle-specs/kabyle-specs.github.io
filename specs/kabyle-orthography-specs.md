@@ -1,11 +1,17 @@
 # Spécification de notation, Unicode et normalisation pour le kabyle
 
 **Identifiant proposé :** `kabyle-orthography-spec`
+
 **Version :** 0.4-draft *(proposition de révision non officielle — voir Annexe C)*
+
 **Base :** révision de la version 0.3-draft (3 septembre 2026) publiée sur kabyle-specs.github.io
+
 **Statut :** proposition de publication — validation linguistique et reproductibilité des mesures encore requises
+
 **Langue du document :** français
+
 **Script couvert par cette version :** alphabet latin berbère
+
 **Code ISO 639-3 :** `kab`
 
 > **Note sur cette révision.** Ce fichier n'est pas une publication officielle du projet Kabyle Specs. C'est une proposition de correction préparée à la demande d'un utilisateur, à soumettre au mainteneur (Athmane Mokraoui) via pull request ou issue avant toute adoption. Les changements par rapport à la v0.3 sont listés et justifiés en Annexe C ; rien n'a été ajouté qui ne soit soit repris tel quel de la v0.3, soit explicitement marqué `[candidate]`/`[disputed]`/`[NEEDS REVIEW]`.
