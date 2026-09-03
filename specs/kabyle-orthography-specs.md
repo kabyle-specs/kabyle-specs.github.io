@@ -534,7 +534,9 @@ Comme pour la v0.3, cette révision ne tranche aucun point disputé restant. Ell
 ---
 
 **Auteur et mainteneur proposés (document de base, v0.3) :** Athmane Mokraoui.
+
 **Révision non officielle (v0.4-draft) :** préparée par un tiers à des fins de relecture ; à ne pas attribuer au mainteneur avant validation.
+
 **Licence proposée :** à compléter explicitement avec une licence libre (inchangé depuis la v0.3).
 
 <!-- Fin du document -->
