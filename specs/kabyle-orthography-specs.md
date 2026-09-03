@@ -447,11 +447,19 @@ Les travaux suivants restent nécessaires avant une version 1.0 normative :
 
 [5]: https://www.unicode.org/reports/tr44/ "Unicode Standard Annex #44, Unicode Character Database"
 
-[6]: https://huggingface.co/datasets/boffire/common-voice-scripted-speech-kab-26 "Common Voice Scripted Speech Kabyle 26.0 — dataset reference"
+[6]: https://www.karthala.com/ "Kamal Naït-Zerrad, Grammaire moderne du kabyle, tajerrumt tatrart n teqbaylit"
 
-[7]: https://huggingface.co/datasets/boffire/tatoeba-en-kab "Tatoeba English–Kabyle Parallel Corpus — dataset reference"
+[7]: https://hal.science/search/index/?q=Vers%20une%20normalisation%20du%20kabyle%20alphabet "F. Adjed, Vers une normalisation du kabyle : alphabet — recherche bibliographique HAL"
 
-[8]: https://downloads.tatoeba.org/exports/sentences.tar.bz2 "Tatoeba Project, sentences export"
+[8]: https://docs.weblate.org/ "Weblate documentation — checks and translation quality"
+
+[9]: https://huggingface.co/datasets/boffire/common-voice-scripted-speech-kab-26 "Athmane Mokraoui, Common Voice Scripted Speech Kabyle 26.0 — dataset reference"
+
+[10]: https://butterflyoffire.codeberg.page/cv26/ "Athmane Mokraoui, CV26 Kabyle Contamination Report"
+
+[11]: https://huggingface.co/datasets/boffire/tatoeba-en-kab "Athmane Mokraoui, Tatoeba English–Kabyle Parallel Corpus — dataset reference"
+
+[12]: https://downloads.tatoeba.org/exports/sentences.tar.bz2 "Tatoeba Project, sentences export"
 
 ## Annexe A — Changelog de la version 0.3
 
