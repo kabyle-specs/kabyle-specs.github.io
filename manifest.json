@@ -8,6 +8,13 @@
   "updated": "2026-08-22"
     },
     {
+  "title": "Kabyle Pronouns and Clitics",
+  "path": "specs/kabyle-pronouns-clitics-specs.md",
+  "summary": "Empirically-validated inventory, ordering, and allomorphy rules for Kabyle pronominal clitics: object (direct/indirect), possessive, directional (ventif/andatif), demonstrative, and reflexive forms. Documents strict clitic ordering [V/Part + IO + DO + DIR], proclisis triggers (ad, ur, i, ara, la, mi, ay), phonologically conditioned allomorphs (-is/-s, -d/-id, -n/-in, aɣ/ɣ, kent/went), and reflexive nouns (iman/yiman) with possessive suffixes. Validated against 756 774 sentences from the Tatoeba Kabyle cleaned corpus and cross-checked with community affix inventories.",
+  "status": "draft",
+  "updated": "2026-09-05"
+    },
+    {
   "title": "Kabyle Braille Transcription",
   "path": "specs/kabyle-braille-spec.md",
   "summary": "Braille transcription specification for Kabyle (Taqbaylit): CBFU-based grade-1 mapping, two extension modes (indicator and dedicated) for 11 berber-specific characters, Unicode Braille / BRF / Liblouis output formats, and pre-normalization pipeline integration with the kabyle orthography spec.",
