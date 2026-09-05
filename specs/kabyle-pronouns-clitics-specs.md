@@ -136,12 +136,12 @@ Les clitiques objets s'attachent au verbe (enclise) ou à une particule préverb
 | 1 | — | pl | `-aɣ` | `aɣ-` / `ɣ-` | `[confirmé]` | `Ɣur-aɣ lḥeqq` (Nous avons raison) |
 | 2 | M | sg | `-k` | `k-` | `[confirmé]` | `Iwala-k Tom` (Tom t'a vu) |
 | 2 | F | sg | `-kem` | `kem-` | `[confirmé]` | `Iwala-kem Tom` (Tom t'a vue) |
-| 2 | M | pl | `-ken` | `ken-` | `[NEEDS REVIEW]` (label à revérifier — pas d'exemple corpus recensé) | — |
+| 2 | M | pl | `-ken` | `ken-` | `[confirmé]` (2 536 occ.) | `ken-terri` (« qu'il te réponde », `Ur ken-terri ara tmara`) |
 | 2 | F | pl | `-kent` | `kent-` | `[confirmé]` | `Aql-ikent am tiyaḍ` (Vous êtes comme les autres) |
 | 3 | M | sg | `-t` | `t-` | `[confirmé]` | `Iwala-t Tom` (Tom l'a vu) |
 | 3 | F | sg | `-tt` | `tt-` | `[confirmé]` | `Iwala-tt Tom` (Tom l'a vue) |
-| 3 | M | pl | `-ten` | `ten-` | `[NEEDS REVIEW]` (label à revérifier — pas d'exemple corpus recensé) | — |
-| 3 | F | pl | `-tent` | `tent-` | `[NEEDS REVIEW]` (label à revérifier — pas d'exemple corpus recensé) | — |
+| 3 | M | pl | `-ten` | `ten-` | `[confirmé]` (16 313 occ.) | `ten-yuɣen` (« qui les a affligés », `D acu akka i ten-yuɣen?`) |
+| 3 | F | pl | `-tent` | `tent-` | `[confirmé]` (14 773 occ.) | `yeǧǧa-tent` (« l'a laissées », `Jipat tiwezzlanin yeǧǧa-tent wakud`) |
 
 ### 4.2 Paradigme des objets indirects (datif)
 
@@ -152,14 +152,14 @@ Les clitiques objets s'attachent au verbe (enclise) ou à une particule préverb
 | 2 | M | sg | `-ak` | `ak-` | `[confirmé]` | `Yenna-yak` (Il t'a dit) — *cf. §9.3, épenthèse `y` à vérifier* |
 | 2 | F | sg | `-am` | `am-` | `[confirmé]` | `Yenna-yam` (Il t'a dit, fém.) — *cf. §9.3* |
 | 2 | M | pl | `-awen` | `awen-` | `[confirmé]` | `Yuzen-awen-d` (Il vous a envoyé) |
-| 2 | F | pl | `-akent` | `akent-` | `[NEEDS REVIEW]` (label à revérifier — pas d'exemple corpus recensé) | — |
+| 2 | F | pl | `-akent` | `akent-` | `[confirmé]` (4 614 occ.) | `fell-akent` (« sur/contre vous, fém. », `Yerfa fell-akent`) |
 | 3 | M/F | sg | `-as` | `as-` | `[confirmé]` | `Yenna-yas` (Il lui a dit) |
-| 3 | M | pl | `-asen` | `asen-` | `[NEEDS REVIEW]` (label à revérifier — pas d'exemple corpus recensé) | — |
+| 3 | M | pl | `-asen` | `asen-` | `[confirmé]` (11 106 occ.) | `fell-asen` (« sur/contre eux », `Nɣan-ten, sakin ttrun fell-asen`) |
 | 3 | F | pl | `-asent` | `asent-` | `[confirmé]` | `tezwi-asent-id` (Elle leur a apporté) |
 
 > **Note sur le syncrétisme :** Les formes de 1ère personne (`iyi`, `aɣ`) présentent un syncrétisme : la même forme est utilisée pour l'objet direct et l'objet indirect. Le contexte syntaxique (type de verbe : transitif direct vs. verbe de parole) est nécessaire pour désambiguïser.
 
-> **Point ouvert :** plusieurs lignes ci-dessus sont marquées `[NEEDS REVIEW]` faute d'exemple corpus déjà recensé dans ce document, bien que la forme soit présente dans la liste Belkacem77. Avant publication, chaque forme sans exemple doit être recherchée explicitement dans le corpus (`voir_exemples()`) et requalifiée en `[confirmé]` ou laissée en `[NEEDS REVIEW]` selon le résultat — le statut ne doit pas être attribué par défaut.
+> **Point résolu (v0.3) :** les cinq formes précédemment marquées `[NEEDS REVIEW]` (`ken`, `ten`, `tent`, `akent`, `asen`) ont toutes été retrouvées en grand nombre dans le corpus (2 500 à 16 000+ occurrences chacune) et requalifiées en `[confirmé]` avec un exemple attesté.
 
 ---
 
@@ -185,16 +185,16 @@ Les suffixes possessifs s'attachent aux noms et à certaines prépositions. Ils 
 
 Le possessif 3ème personne singulier présente deux formes conditionnées par le contexte phonologique.
 
-| Contexte | Forme | Fréquence | Exemple |
-|---|---|---|---|
-| Après voyelle | `-s` | 7 721 | `baba-s` (son père) |
-| Après consonne | `-is` (préféré) ou `-s` | 20 904 pour `-is` | `m-is` (sa mère) |
+| Contexte | `-is` | `-s` | Total | % `-is` | % `-s` |
+|---|---|---|---|---|---|
+| Après voyelle | 216 | 7 686 | 7 902 | 2,7 % | **97,3 %** |
+| Après consonne | 20 883 | 8 031 | 28 914 | **72,2 %** | 27,8 % |
 
-**Règle (hypothèse à retester) :**
-- Après **voyelle** → utiliser `-s` (forme réduite)
-- Après **consonne** → utiliser `-is` (forme pleine)
+**Règle (v0.3 — recalculée correctement, proportion dans chaque contexte) :**
+- Après **voyelle** → `-s` quasi catégorique (97,3 %). Règle solide, comparable à `-d`/`-id`.
+- Après **consonne** → `-is` dominant mais **pas catégorique** (72,2 % contre 27,8 % pour `-s`). Contrairement à `-d`/`-id` (§6.2), la règle n'est ici qu'une **forte tendance**, pas une distribution complémentaire quasi parfaite.
 
-> **⚠️ Point méthodologique non résolu :** les pourcentages affichés dans une version antérieure de ce document (49 %, 99 %) mélangeaient deux bases de calcul différentes (répartition d'une forme entre contextes vs proportion des deux formes à l'intérieur d'un même contexte). Ils ont été retirés en attendant un recalcul propre, sur le même modèle que la règle `-d`/`-id` (§6.2), qui elle est correctement établie. **Ne pas citer de pourcentage pour cette règle avant recalcul.**
+**Statut :** `[confirmé]` pour le sous-cas « après voyelle → `-s` » ; `[confirmé (tendance, pas catégorique)]` pour « après consonne → `-is` préféré ». La marge de 28 % de `-s` après consonne suggère un facteur supplémentaire non encore identifié (peut-être la consonne finale précise, pas seulement la catégorie voyelle/consonne) — à affiner si une version plus fine de la règle est souhaitée, mais non bloquant pour la version actuelle.
 
 ---
 
@@ -295,16 +295,21 @@ Amina Mettouchi (2018) établit, à partir d'un corpus oral annoté, que le clit
 
 ### 8.3 Cas non expliqués par le mode verbal — `[disputed]`
 
-Deux formes à l'**indicatif** (pas à l'impératif) présentent pourtant l'ordre ABS-avant-DAT, contredisant l'hypothèse « l'inversion est déclenchée par l'impératif » :
+**Test élargi (v0.3) :** le paradigme datif testé a été étendu à `ak`/`am` (exclus initialement), portant l'échantillon total ABS-avant-DAT à 28 occurrences. Répartition :
 
-| Forme | Verbe | Analyse | Glose |
-|---|---|---|---|
-| `fukken-t-ak/am/as` | `fukk` (finir) | 3PL accompli (`-en`), indicatif | « ils t'/vous/lui ont fini (ça) » |
-| `ttaran-t-as` | `ttar` (mettre, habituel) | 3PL imperfectif habituel (`-an`) | « elles avaient l'habitude de le lui mettre » |
+| Catégorie | Occurrences | Part |
+|---|---|---|
+| Impératif (`awi`, `semceḥem`/`semcaḥem`, `ini`, `fket`, `fkemt`) | 16 | 57 % |
+| Présentatif `ha`/`Ha` (§8.4, hors règle verbale) | 3 | 11 % |
+| Faux positif d'extraction (`t-id-asen`, §8.5) | 2 | 7 % |
+| Indicatif, non expliqué (`fukken`, `ttaran`, `Ɣlin`) | 6 | 21 % |
+| Ambigu, sans verbe identifiable (`tt-as-d`) | 1 | 4 % |
 
-**Observation non confirmée :** les deux formes verbales se terminent par `-n` (marque de 3e pers. pluriel). C'est peut-être lié à cette terminaison plutôt qu'au mode, mais l'échantillon (2 formes) est trop restreint pour établir une règle. **À vérifier avec une grammaire de référence ou un locuteur natif avant toute généralisation.**
+**Hypothèse `-n` réfutée :** l'hypothèse envisagée en v0.2 (terminaison verbale en `-n`) prédisait que les cas non-impératifs partageraient cette terminaison. Sur l'échantillon élargi, seuls 6 des 28 cas (21,4 %) finissent en `-n` — la plupart des cas ABS-avant-DAT (l'impératif) n'ont pas cette terminaison. L'hypothèse `-n` est donc **abandonnée** : elle expliquait une coïncidence sur 2 exemples, pas un vrai facteur.
 
-**Statut :** `[disputed]` — ne pas encoder de règle basée sur ces deux cas sans validation supplémentaire.
+**Ce qui reste réellement non expliqué :** `fukken-t-ak/am/as` (3PL accompli), `ttaran-t-as` (3PL imperfectif habituel) et `Ɣlin-t-ak` (« tes lunettes te sont tombées » — verbe intransitif, cf. §8.6) sont à l'indicatif et inversent quand même l'ordre. Le point commun entre ces trois verbes (`fukk`, `ttar`, `ɣli`) n'est pas évident à partir des données seules — ni la personne, ni le mode, ni la terminaison ne les distinguent proprement des cas DAT-avant-ABS majoritaires. **Ce point ne peut pas être tranché par le corpus seul** ; il nécessite une consultation grammaticale ou un locuteur natif.
+
+**Statut :** `[disputed]` — ne pas encoder de règle générale à partir de ces 3 verbes ; les traiter comme des exceptions lexicalisées documentées, pas comme un sous-cas systématique.
 
 ### 8.4 Catégorie distincte — Présentatifs
 
@@ -342,6 +347,7 @@ La position du clitique (avant ou après le verbe) dépend de la présence d'une
 | `la` | Aspect progressif/habituel | 1 720 |
 | `mi` | Temporel « quand/lorsque » | 1 414 |
 | `ay` | Emphase/focalisation | 959 |
+| `imi` | « parce que » | *(fréquence globale à mesurer — identifiée via §9.2)* |
 
 **Référence :** Mettouchi (2018), *The interaction of state, prosody and linear order in Kabyle (Berber)*.
 
@@ -376,28 +382,53 @@ Le clitique objet 1ère personne du pluriel `aɣ` subit une **aphérèse** (chut
 
 Le clitique 2ème personne du pluriel féminin `-kent` prend la forme `-went` lorsqu'il est suffixé à certaines bases.
 
-| Contexte | Forme | Fréquence corpus | Exemple |
-|---|---|---|---|
-| Après verbe | `-kent` | — | `[à vérifier]` |
-| Après préposition `yid` (avec) | `-went` | 66 | `Bɣiɣ ad mmeslayeɣ yid-went` (Je veux parler avec vous, fém.) |
-| Après préposition `deg` (dans) | `-went` | 13 | `Deg-went i tres tyita` (C'est parmi vous que frappe l'épidémie) |
-| Après préposition `ttxil` (s'il vous plaît) | `-went` | 11 | `Ttxil-went` (S'il vous plaît, fém.) |
-| Après préposition `seg` (de/parmi) | `-went` | 6 | `Ilaq ad truḥ ɣer din yiwet seg-went` (Il faut que l'une de vous y aille) |
-| Après préposition `ɣur` (chez) | `-went` | 6 | `Ɣur-went axxam deg Ustṛalya?` (Vous avez une maison en Australie ?) |
-| Après préposition `ɣer` (vers) | `-went` | 5 | — |
-| Après nom | `-went` | 1 | `Walaɣ tawlaft-went deg lkaɣeḍ` (J'ai vu votre photo dans le journal) |
+**Extraction complète (v0.3) : 183 occurrences en enclise, 24 en proclise.**
 
-**Preuve empirique :** 108 occurrences totales de `-went` dans le corpus recensées comme suffixe.
+**Enclise — bases déclenchantes observées (extrait) :**
 
-**Point non couvert par le tableau :** une occurrence de `went-` en **proclise** a été observée (`Amek i went-teḍṛa?`, après la particule relative `i`), qui ne rentre dans aucune ligne ci-dessus. À ajouter une fois le mécanisme de proclise de `went` documenté.
+| Base | Fréquence | Exemple |
+|---|---|---|
+| `yid` (avec) | 67 | `Bɣiɣ ad mmeslayeɣ yid-went` (Je veux parler avec vous, fém.) |
+| `deg` (dans) | 14 | `Deg-went i tres tyita` (C'est parmi vous que frappe l'épidémie) |
+| `ttxil` (s'il vous plaît) | 14 | `Ttxil-went` (S'il vous plaît, fém.) |
+| `ḥemmlen` (ils/elles aiment) | 13 | — |
+| `ɣur` (chez) | 8 | `Ɣur-went axxam deg Ustṛalya?` (Vous avez une maison en Australie ?) |
+| `ɣer` (vers) | 8 | — |
+| `seg` (de/parmi) | 8 | `Ilaq ad truḥ ɣer din yiwet seg-went` (Il faut que l'une de vous y aille) |
+| *(~30 autres bases, chacune 1 à 3 occurrences)* | — | verbes très divers (`rran`, `ufiɣ`, `nudaɣ`, noms comme `baba`, `tawlaft`...) |
 
-**Note :** Cette allomorphie est un phénomène de sandhi morphophonologique. La mutation `k → w` se produit systématiquement après certaines bases. La liste complète des déclencheurs reste à préciser. `[NEEDS REVIEW]`
+**Reformulation de l'hypothèse (v0.3) :** la diversité des bases (plus de 35 bases différentes, la plupart avec une seule occurrence) rend peu probable une règle de sandhi phonologique conditionnée par une liste fermée de déclencheurs, comme le suggérait la v0.2. Une hypothèse plus économique : `-went` et `-kent` pourraient être des **variantes libres** (dialectales ou de registre) du même clitique, plutôt que des allomorphes strictement conditionnés par le contexte phonologique. Cette hypothèse reste à confirmer par un locuteur natif — le corpus seul ne permet pas de trancher entre « conditionnement phonologique complexe non identifié » et « variation libre ».
 
-### 9.3 Épenthèse possible sur `ak`/`am` — à vérifier
+**Proclise (nouveau, v0.3) — 24 occurrences, comportement cohérent avec les autres clitiques objets :**
 
-Les exemples `Yenna-yak` et `Yenna-yam` (§4.2) utilisent `yak`/`yam` après un verbe finissant par une voyelle (`Yenna`), et non les formes nues `ak`/`am` indiquées dans le paradigme. Ceci ressemble à la même épenthèse en `y-` déjà établie pour `-d`/`-id` (§6.2). **Non encore vérifié systématiquement** — à traiter avant la version stable.
+| Particule précédente | Exemple |
+|---|---|
+| `ad` (futur) | `Ur zmireɣ ara ad went-iniɣ melmi ara nili nhegga` |
+| `i` (relatif) | `Amek i went-teḍṛa?` |
+| `ur` (négation) | `Ur went-n-ssawleɣ ara` |
+| `ara` (relatif futur) | `Teɛweq d acu ara went-d-terr` |
+| `imi` (« parce que ») | `Surfemt-iyi imi went-ssawleɣ zik` |
 
-**Statut :** `[NEEDS REVIEW]`
+Ces particules (`ad`, `i`, `ur`, `ara`) correspondent exactement à celles déjà identifiées comme déclenchant la proclise pour les autres clitiques (§8.7) — `went` suit donc la même règle de proclise/enclise que le reste du paradigme objet. `imi` est une nouvelle particule à ajouter à la liste du §8.7, qui ne la mentionnait pas encore.
+
+**Statut :** `[confirmé]` pour le comportement proclise/enclise (identique au reste du paradigme) ; `[disputed]` pour la nature de l'alternance `kent`/`went` elle-même (conditionnement phonologique non identifié vs. variation libre) — nécessite un locuteur natif, non résoluble par le corpus seul.
+
+### 9.3 Épenthèse partielle sur `ak`/`am` (v0.3 — vérifié)
+
+Les exemples `Yenna-yak` et `Yenna-yam` (§4.2) utilisent `yak`/`yam` après un verbe finissant par une voyelle. Une vérification systématique sur tout le corpus donne :
+
+| Paire | Après voyelle | Après consonne |
+|---|---|---|
+| `ak` / `yak` | `ak` = 481 (66,1 %) / `yak` = 247 (33,9 %) — n=728 | `ak` = 6 265 (100,0 %) / `yak` = 1 — n=6 266 |
+| `am` / `yam` | `am` = 399 (67,5 %) / `yam` = 192 (32,5 %) — n=591 | `am` = 5 066 (100,0 %) / `yam` = 0 — n=5 066 |
+
+**Conclusion, différente de l'hypothèse initiale :** l'épenthèse `y-` n'est **jamais** obligatoire ici (contrairement à `-id` après consonne, quasi-catégorique). Elle est :
+- **impossible après consonne** (0 à 1 occurrence sur plus de 11 000) ;
+- **optionnelle après voyelle** (environ 1 cas sur 3 seulement prend le `y-`).
+
+Ce n'est donc pas la même règle que `-d`/`-id` (§6.2) : là où `-id` est presque obligatoire après consonne, `yak`/`yam` restent minoritaires même dans le contexte qui les permettrait. Le facteur qui détermine ces cas minoritaires (identité du mot précédent ? registre ? variante individuelle ?) reste à identifier.
+
+**Statut :** `[confirmé]` pour les deux bornes catégoriques (jamais après consonne) ; `[disputed]` pour le facteur qui explique la variation observée après voyelle.
 
 ---
 
