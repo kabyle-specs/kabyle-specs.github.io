@@ -8,6 +8,13 @@
   "updated": "2026-08-22"
     },
     {
+  "title": "Kabyle Nominal State Opposition (Addad Ilelli vs Addad Amaruz)",
+  "path": "specs/kabyle-nominal-state-specs.md",
+  "summary": "Deterministic morphophonological mutation tables (masculine and feminine) and a binary syntactic trigger matrix for the Free State (Addad Ilelli) vs Construct State (Addad Amaruz) alternation, resolving the post-verbal subject / direct object ambiguity and the 'd' copula-vs-coordinator homograph. Documents a closed, non-derivable lexicalized class of invariable ta- feminines (taddart, tafat, tasa, tadla, tadimt, tasga; Naït-Zerrad 2001) pending corpus validation, plus a CI/CD minimal-pair test suite.",
+  "status": "draft",
+  "updated": "2026-09-06"
+    },
+    {
   "title": "Kabyle Pronouns and Clitics",
   "path": "specs/kabyle-pronouns-clitics-specs.md",
   "summary": "Empirically-validated inventory, ordering, and allomorphy rules for Kabyle pronominal clitics: object (direct/indirect), possessive, directional (ventif/andatif), demonstrative, and reflexive forms. Documents strict clitic ordering [V/Part + IO + DO + DIR], proclisis triggers (ad, ur, i, ara, la, mi, ay), phonologically conditioned allomorphs (-is/-s, -d/-id, -n/-in, aɣ/ɣ, kent/went), and reflexive nouns (iman/yiman) with possessive suffixes. Validated against 756 774 sentences from the Tatoeba Kabyle cleaned corpus and cross-checked with community affix inventories.",
