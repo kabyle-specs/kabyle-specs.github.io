@@ -1,6 +1,6 @@
-# Spécification de l'Opposition d'État en Kabyle (Taqbaylit) : État Libre vs. État d'Annexion
+# Spécification de l'Opposition d'État en Kabyle (Taqbaylit) : État Libre vs. État d'Annexion — v0.1-draft
 
-**Auteurs** : Athmane Mokraoui (butterflyoffire), locuteur natif kabyle, mainteneur des ressources NLP kabyles ; structuration algorithmique et synthèse bibliographique.  
+**Auteurs** : Athmane Mokraoui (boffire), locuteur natif kabyle, mainteneur des ressources NLP kabyles ; structuration algorithmique et synthèse bibliographique.  
 **Date** : Septembre 2026  
 **Version** : 0.1-draft  
 **Statut** : Document de spécification normative et algorithmique.  
@@ -57,10 +57,18 @@ La présente spécification s'appuie sur le consensus établi par les travaux ma
    > Démonstration empirique sur corpus oral que l'alternance d'état n'est pas réductible à un cas morphologique classique (nominatif/accusatif), mais constitue une catégorie typologique autonome régissant la référence et la syntaxe de l'énoncé.
 4. **Naït-Zerrad, Kamal (2001)** — *Grammaire moderne du kabyle, tajerrumt tatrart n teqbaylit*, Éditions Karthala.
    > Référence normative pour la transcription orthographique standard INALCO et le traitement des groupes consonantiques au féminin ($ta- \to t-$ vs. $te-$).
-5. **Achab, Karim (2003, 2012)** — *Alternation of state in Berber*, in J. Lecarme (ed.), *Research in Afroasiatic Grammar II* ; *La morphologie du nom en kabyle*.
+5. **Achab, Karim (2003, 2012, 2020)** — *Alternation of state in Berber*, in J. Lecarme (ed.), *Research in Afroasiatic Grammar II* ; *La morphologie du nom en kabyle* ; *Anti-Agreement in Amazigh (Berber) as Genitive Constructions*, McGill Working Papers in Linguistics 26(1).
    > Modélisation formelle du statut préfixal de la voyelle initiale nominale et des relations de rection génitive ($n$).
 6. **Galand, Lionel (1964, 2002)** — *L'énoncé verbal en berbère* ; *Études de linguistique berbère*, Peeters.
    > Théorisation du nom à l'état d'annexion comme « expansion de référence » explicitant l'affixe personnel verbal.
+7. **Mihuc, Sarah (2020)** — *Kabyle noun-initial a and the construct state*, McGill Working Papers in Linguistics 26(1).
+   > Source directement centrée sur le phénomène couvert par cette spécification (voyelle initiale nominale et état construit) ; référence de préférence à Achab (2020) pour la règle du sujet préverbal topicalisé (§4.2.2), ce dernier portant sur l'anti-accord et les constructions génitives.
+8. **Felice, Lydia (2020)** — *On the Case System of Kabyle*, McGill Working Papers in Linguistics 26(1).
+   > Analyse du marquage casuel du kabyle en lien avec l'alternance d'état ; utilisée en §1.1 et en arrière-plan de la discussion `Case`/`State` (§6).
+9. **Belkadi, Aicha (2024)** — *On State and Case in Berber: A Typological Perspective*, in *The Handbook of Berber Linguistics*, Springer.
+   > Synthèse typologique récente, utile pour arbitrer les points encore contestés de la présente spécification (notamment §4.2.4 sur la préposition `ar`).
+10. **Ben Si Saïd, Samir (2022)** — *Noun formation in Kabyle Berber*, *Journal of African Languages and Linguistics* 43(2), pp. 285 sqq.
+    > Référence complémentaire pour la morphologie nominale générale, à consulter pour étendre le §3 au-delà de l'alternance d'état stricte.
 
 ---
 
@@ -112,7 +120,7 @@ Les catégories suivantes **ne subissent jamais de mutation d'état** et conserv
    * `lweqt` (temps), `lqahwa` (café), `ṭṭabla` (table), `ssuq` (marché).
    * *Exemple* : *deg **ssuq***, *tasarut n **ṭṭabla***.
 5. **Noms féminins invariables en `ta-` (classe lexicalisée, Naït-Zerrad 2001)** :
-   * `taddart` (village), `tafat` (lumière), `tasa` (foie), `tadimt` (couvercle)
+   * `taddart` (village), `tafat` (lumière), `tasa` (foie), `tadimt` (couvercle), `tadla` (petite gerbe), `tasga` (côté/région).
    * Ces noms conservent leur forme d'État Libre à l'identique en contexte d'annexion, **sans aucune mutation de la voyelle initiale**, contrairement à des noms de structure syllabique apparemment comparable comme `tagrest` → `tegrest` (§3.2).
    * *Exemple* : *seg **taddart*** (jamais `*seg teddart`), *deg **tafat*** (jamais `*deg tefat`).
    * **Statut** : `LEXICALISÉ — NON DÉRIVABLE`. Naït-Zerrad présente cette classe par énumération plutôt que par règle phonologique productive ; aucune règle connue ne prédit de façon fiable pourquoi ces noms échappent à la mutation alors que d'autres noms féminins de structure syllabique voisine (`tagrest`) y sont soumis. Cette liste doit être traitée comme un **lexique fermé à valider et compléter par comptage sur corpus** (voir §8, L05), et non comme le résultat d'une règle à généraliser à tout nom féminin en `ta-` + consonne géminée ou groupe lourd.
@@ -151,7 +159,7 @@ Toutes les prépositions kabyles régissent l'état d'annexion (à l'exception u
 * **Violation IA** : `*deg axxam`, `*ɣer tamurt`, `*s uzzal`.
 
 #### 3. Le complément déterminatif d'un nom relié par `n` (Génitif)
-Le second terme d'un syntagme nominal génitif introduit par la particule de relation $n$ est obligatoirement à l'EA (Achab 2003).
+Le second terme d'un syntagme nominal génitif introduit par la particule de relation $n$ est obligatoirement à l'EA (Achab 2003, 2020).
 * **Correct** : *axxam n **w**ergaz*, *tasarut n **t**burt*, *aman n **w**anẓar*.
 * **Violation IA** : `*axxam n argaz`, `*tasarut n tabburt`.
 
@@ -177,7 +185,7 @@ L'objet direct verbal direct n'est jamais à l'état d'annexion, quelle que soit
 * **Violation IA** : `*Iwala weqcic.` (Confusion fatale entre sujet et objet).
 
 #### 2. Le sujet pré-verbal topicalisé (Ordre SVO ou clivée)
-Lorsque le sujet est placé avant le verbe pour des raisons discursives ou dans une clivée, il est à l'État Libre (Mammeri 1976 ; Achab 2020).
+Lorsque le sujet est placé avant le verbe pour des raisons discursives ou dans une clivée, il est à l'État Libre (Mammeri 1976 ; Mihuc 2020).
 * **Correct** : ***A**qcic yekcem.* / *D **a**rgaz i d-yusan.*
 * **Violation IA** : `*Weqcic yekcem.` / `*D wergaz i d-yusan.`
 
