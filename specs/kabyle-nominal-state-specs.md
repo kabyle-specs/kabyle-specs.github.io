@@ -112,7 +112,7 @@ Les catégories suivantes **ne subissent jamais de mutation d'état** et conserv
    * `lweqt` (temps), `lqahwa` (café), `ṭṭabla` (table), `ssuq` (marché).
    * *Exemple* : *deg **ssuq***, *tasarut n **ṭṭabla***.
 5. **Noms féminins invariables en `ta-` (classe lexicalisée, Naït-Zerrad 2001)** :
-   * `taddart` (village), `tafat` (lumière), `tasa` (foie), `tadimt` (couvercle), `tadla` (petite gerbe), `tasga` (côté/région).
+   * `taddart` (village), `tafat` (lumière), `tasa` (foie), `tadimt` (couvercle)
    * Ces noms conservent leur forme d'État Libre à l'identique en contexte d'annexion, **sans aucune mutation de la voyelle initiale**, contrairement à des noms de structure syllabique apparemment comparable comme `tagrest` → `tegrest` (§3.2).
    * *Exemple* : *seg **taddart*** (jamais `*seg teddart`), *deg **tafat*** (jamais `*deg tefat`).
    * **Statut** : `LEXICALISÉ — NON DÉRIVABLE`. Naït-Zerrad présente cette classe par énumération plutôt que par règle phonologique productive ; aucune règle connue ne prédit de façon fiable pourquoi ces noms échappent à la mutation alors que d'autres noms féminins de structure syllabique voisine (`tagrest`) y sont soumis. Cette liste doit être traitée comme un **lexique fermé à valider et compléter par comptage sur corpus** (voir §8, L05), et non comme le résultat d'une règle à généraliser à tout nom féminin en `ta-` + consonne géminée ou groupe lourd.
