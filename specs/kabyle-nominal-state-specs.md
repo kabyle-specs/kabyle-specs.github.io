@@ -138,9 +138,9 @@ Le choix entre État Libre (*Addad ilelli*) et État d'Annexion (*Addad amaruz*)
                     ▼                                                   ▼
          [ ÉTAT D'ANNEXION (EA) ]                            [ ÉTAT LIBRE (EL) ]
          - Sujet post-verbal (VSO)                           - Objet direct verbal (DO)
-         - Régime de préposition (sauf 'ar')                 - Sujet pré-verbal / topicalisé (SVO)
+         - Régime de préposition (sauf 'ar', contesté)     - Sujet pré-verbal / topicalisé (SVO)
          - Complément du nom avec 'n'                        - Prédicat après la copule 'd'
-         - Complément après numéraux                         - Régime de la préposition 'ar'
+         - Complément après numéraux                         - Régime de la préposition 'ar' (contesté, voir §4.2.4)
          - Après le 'd' de coordination ("et")              - Forme isolée / Vocatif avec 'a'
 ```
 
@@ -154,7 +154,7 @@ Lorsque le sujet lexical suit le verbe dont il est l'argument, il apparaît obli
 * **Violation IA** : `*Yekcem aqcic.` / `*Tekcem tamettut.`
 
 #### 2. Le complément d'une préposition simple liée
-Toutes les prépositions kabyles régissent l'état d'annexion (à l'exception unique de *ar*, voir §4.2) : `deg` (dans), `seg` / `si` (de), `ɣer` (vers), `ɣef` (sur), `fell` (sur), `s` (au moyen de), `ger` (entre), `zdat` (devant), `ddaw` (sous), `nnig` (au-dessus).
+Toutes les prépositions kabyles régissent l'état d'annexion : `deg` (dans), `seg` / `si` (de), `ɣer` (vers), `ɣef` (sur), `fell` (sur), `s` (au moyen de), `ger` (entre), `zdat` (devant), `ddaw` (sous), `nnig` (au-dessus). L'exception traditionnellement attribuée à *ar* (§4.2.4) est **contestée** ; une source secondaire attribue plutôt une exception à *s* en emploi directionnel (voir §4.2.4 et L06) — statut à trancher avant tout usage normatif.
 * **Correct** : *deg **w**exxam*, *ɣer **t**murt*, *seg **y**isariwen*, *s **w**uzzal*.
 * **Violation IA** : `*deg axxam`, `*ɣer tamurt`, `*s uzzal`.
 
@@ -194,10 +194,17 @@ Dans les prédications non-verbales d'identification ou d'ascription introduites
 * **Correct** : *D **a**qcic.* (C'est un garçon) / *D **t**amettut.* (C'est une femme).
 * **Violation IA** : `*D weqcic.` (Agrammatical au sens de "c'est un garçon").
 
-#### 4. Le complément de la préposition d'orientation limitative `ar` (« jusqu'à »)
-La préposition `ar` est la **seule exception** du système prépositionnel kabyle : elle régit obligatoirement l'État Libre (Chaker 1988).
-* **Correct** : *ar **a**zekka* (à demain / jusqu'à demain), *ar **t**ameddit* (jusqu'au soir).
-* **Violation IA** : `*ar wezekka`.
+#### 4. ⚠️ CONTESTÉ — Le complément de la préposition d'orientation limitative `ar` (« jusqu'à »)
+**Statut** : `CONTESTÉ — NON CONFIRMÉ PAR SOURCE PRIMAIRE PAGINÉE`. La rédaction initiale de cette spécification affirmait que `ar` est la seule préposition kabyle à régir l'État Libre (Chaker 1988). Une vérification croisée n'a pas permis de retrouver cette règle sourcée précisément (page) chez Chaker ou Naït-Zerrad. Une source secondaire trouvée en ligne affirme au contraire que l'exception porte sur **`s` en emploi directionnel** (« vers »), et non sur `ar` :
+> *« Toutes les prépositions, à l'exception de « s » de direction [...] : Iruḥ **s axxam** (ici le nom `axxam` n'a pas changé d'état). »*
+
+Cette hypothèse alternative distinguerait donc un `s` instrumental (« au moyen de », régissant l'EA — cf. §4.1.2) d'un `s` directionnel homographe (« vers », régissant l'EL).
+
+Par ailleurs, l'exemple `ar azekka` est lui-même fragile : `azekka` (« demain ») apparaît très majoritairement en usage comme **adverbe temporel figé**, ce qui ne permet pas de trancher s'il s'agit d'un effet de la préposition `ar` ou simplement d'une forme adverbiale gelée hors du système d'alternance d'état.
+
+**Recommandation avant de figer une règle `MUST`** : interroger le corpus de 700k phrases sur les contextes `ar + Nom` et `s + Nom` (emploi directionnel identifiable par le verbe de mouvement régissant), consulter Naït-Zerrad (2001) page par page, et si possible solliciter Belkadi (2024) qui traite spécifiquement la typologie Case/State en berbère. Ne pas inclure cette règle dans un filtre anti-hallucination tant qu'elle n'est pas confirmée par au moins une source primaire paginée.
+* **Forme documentée (non contestée)** : *ar **t**ameddit* (jusqu'au soir) — à revérifier également.
+* **Forme proposée sous réserve** : *ar **a**zekka* (à confirmer — pourrait être un adverbe figé plutôt qu'un test valide de la règle).
 
 #### 5. La forme d'isolation, de citation et le vocatif
 Le mot cité de manière isolée ou précédé de l'interpellation vocative `a` est obligatoirement à l'EL.
@@ -292,7 +299,7 @@ Pour garantir la non-régression des parseurs et évaluer l'absence d'hallucinat
 | **TS04** | `Iwala weqcic amcic.` | `*Iwala aqcic amcic.` | Contraste Sujet vs. Objet | Le sujet VSO doit porter `State=Cons`, l'objet `State=Abs` |
 | **TS05** | `Yekcem ɣer wexxam.` | `*Yekcem ɣer axxam.` | Préposition `ɣer` | Régime prépositionnel obligatoirement en `State=Cons` |
 | **TS06** | `Seg tmurt ɣer temdint.` | `*Seg tamurt ɣer temdint.` | Prépositions `seg` / `ɣer` | Chute de voyelle féminine obligatoire en `State=Cons` |
-| **TS07** | `Ar azekka.` | `*Ar wezekka.` | Préposition d'orientation `ar` | La préposition `ar` exige rigoureusement `State=Abs` |
+| **TS07** | *(retiré du jeu obligatoire — voir §4.2.4 et L06)* | — | Préposition d'orientation `ar` | Statut `CONTESTÉ` : ne pas encoder en `MUST` avant validation par source primaire paginée ou corpus |
 | **TS08** | `Axxam n wergaz.` | `*Axxam n argaz.` | Complément du nom avec `n` | Régime génitif obligatoirement en `State=Cons` |
 | **TS09** | `Sin wussan.` | `*Sin ussan.` | Numéral cardinal direct | Quantifié post-numéral obligatoirement en `State=Cons` |
 | **TS10** | `Tlata n wussan.` | `*Tlata n ussan.` | Numéral cardinal avec relateur `n` | Expansion quantifiée obligatoirement en `State=Cons` |
@@ -314,6 +321,7 @@ Pour garantir la non-régression des parseurs et évaluer l'absence d'hallucinat
 | **L03** | **Degré d'intégration des emprunts** | Conventionnel | Classifier la frontière exacte entre emprunts intégrés mutables (*ṭṭabla* $\to$ *n ṭṭabla*) et emprunts récents traités en `X`. |
 | **L04** | **Collision acoustique avec préposition $s$** | Phonologique | Traiter la fusion graphique et le sandhi $s + w- \to [f]$ ou $[sw]$ dans une spec G2P dédiée. |
 | **L05** | **Classe des féminins invariables en `ta-`** (§3.3.5 : `taddart`, `tafat`, `tasa`, `tadla`, `tadimt`, `tasga`) | Documenté (Naït-Zerrad 2001), non dérivable par règle | Interroger le corpus de 700k phrases pour chaque lemme dans les contextes `deg/seg/ɣer/s + N` afin de mesurer le taux réel de non-mutation et repérer d'éventuels lemmes supplémentaires de la même classe. |
+| **L06** | **Préposition régissant l'État Libre** (§4.2.4) | Contesté — deux hypothèses concurrentes non arbitrées (`ar` seul selon la v0.1 initiale ; `s` directionnel selon une source secondaire) | Consulter Naït-Zerrad (2001) et Belkadi (2024) avec pagination précise ; interroger le corpus sur `ar + N`, `s + N` (emploi directionnel vs instrumental) et vérifier si `azekka` se comporte comme un nom alternant ou comme un adverbe figé. Ne pas réintégrer de règle `MUST` dans le jeu de tests CI/CD avant résolution. |
 
 ---
 
