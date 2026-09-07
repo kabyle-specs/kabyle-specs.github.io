@@ -12,7 +12,7 @@
   "path": "specs/kabyle-nominal-state-specs.md",
   "summary": "Deterministic morphophonological mutation tables (masculine and feminine) and a binary syntactic trigger matrix for the Free State (Addad Ilelli) vs Construct State (Addad Amaruz) alternation, resolving the post-verbal subject / direct object ambiguity and the 'd' copula-vs-coordinator homograph. Documents a closed, non-derivable lexicalized class of invariable ta- feminines (taddart, tafat, tasa, tadla, tadimt, tasga; Naït-Zerrad 2001) pending corpus validation, plus a CI/CD minimal-pair test suite.",
   "status": "draft",
-  "updated": "2026-09-06"
+  "updated": "2026-09-07"
     },
     {
   "title": "Kabyle Pronouns and Clitics",
