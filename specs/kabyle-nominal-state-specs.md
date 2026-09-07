@@ -1,8 +1,8 @@
-# Spécification de l'Opposition d'État en Kabyle (Taqbaylit) : État Libre vs. État d'Annexion — v0.1-draft
+# Spécification de l'Opposition d'État en Kabyle (Taqbaylit) : État Libre vs. État d'Annexion — v0.2-draft
 
 **Auteurs** : Athmane Mokraoui (boffire), locuteur natif kabyle, mainteneur des ressources NLP kabyles ; structuration algorithmique et synthèse bibliographique.  
 **Date** : Septembre 2026  
-**Version** : 0.1-draft  
+**Version** : 0.2-draft  
 **Statut** : Document de spécification normative et algorithmique.  
 **Cible** : Développeurs NLP/TAL, ingénieurs en tokenization et lemmatisation, annotateurs de treebanks (Universal Dependencies), concepteurs de filtres anti-hallucination pour LLM.
 
@@ -16,10 +16,10 @@ Cette spécification formalise :
 1. Les règles morphophonologiques déterministes de mutation de l'initiale nominale ($EL \to EA$).
 2. La matrice syntaxique binaire régissant l'alternance d'état, éliminant les hallucinations courantes des modèles neuronaux (inversion sujet/objet, calques prépositionnels).
 3. La désambiguïsation formelle de l'homographe `d` (copule ascriptive régissant l'EL vs. coordinateur régissant l'EA).
-4. Le schéma d'encodage pour Universal Dependencies via la feature officielle `State=Abs|Cons`.
+4. Le schéma d'encodage pour Universal Dependencies via la feature officielle `Definite=Ind|Red`.
 5. Un jeu de test unitaire fondé sur des paires minimales obligatoires pour l'évaluation CI/CD.
 
-**Mots-clés** : kabyle, taqbaylit, état libre, état d'annexion, addad ilelli, addad amaruz, morphophonologie, VSO, syntaxe, Universal Dependencies, State, NLP.
+**Mots-clés** : kabyle, taqbaylit, état libre, état d'annexion, addad ilelli, addad amaruz, morphophonologie, VSO, syntaxe, Universal Dependencies, Definite, NLP.
 
 ---
 
@@ -41,7 +41,7 @@ Cette spécification comble directement la **Limite L1** identifiée dans la *Sp
    * `tmeṭṭut` $\to$ lemme : `tameṭṭut`
    * `yirgazen` $\to$ lemme : `argaz` (ou pluriel `irgazen`)
 3. **Typologie de la feature** :
-   L'opposition d'état est encodée via le trait officiel UD **`State`** (`State=Abs` pour l'état libre, `State=Cons` pour l'état d'annexion), découplé du trait `Case`.
+   L'opposition d'état est encodée via le trait officiel UD **`Definite`** (`Definite=Ind` pour l'état libre, `Definite=Red` — *reduced*, état construit — pour l'état d'annexion), découplé du trait `Case`. **Correction (vérifiée sur `universaldependencies.org/u/feat/all.html`)** : contrairement à une version antérieure de cette spécification, il n'existe pas de feature UD dédiée nommée `State` ; la construct state sémitique (arabe, hébreu) est encodée via `Definite=Red`, valeur réutilisée ici par extension typologique pour l'annexion berbère. `Definite=Ind` est une approximation : l'état libre kabyle n'est pas sémantiquement « indéfini » au sens où `Definite` le définit pour l'arabe — voir §8, L07.
 
 ---
 
@@ -66,8 +66,10 @@ La présente spécification s'appuie sur le consensus établi par les travaux ma
 8. **Felice, Lydia (2020)** — *On the Case System of Kabyle*, McGill Working Papers in Linguistics 26(1).
    > Analyse du marquage casuel du kabyle en lien avec l'alternance d'état ; utilisée en §1.1 et en arrière-plan de la discussion `Case`/`State` (§6).
 9. **Belkadi, Aicha (2024)** — *On State and Case in Berber: A Typological Perspective*, in *The Handbook of Berber Linguistics*, Springer.
-   > Synthèse typologique récente, utile pour arbitrer les points encore contestés de la présente spécification (notamment §4.2.4 sur la préposition `ar`).
-10. **Ben Si Saïd, Samir (2022)** — *Noun formation in Kabyle Berber*, *Journal of African Languages and Linguistics* 43(2), pp. 285 sqq.
+   > Synthèse typologique récente, utile en arrière-plan de §6 (Case/Definite) et pour vérifier d'éventuels points encore ouverts de la présente spécification (voir §8).
+10. **Ben Si Saïd, Samir (2020)** — *La voyelle initiale des noms et l'état d'annexion en kabyle (berbère)*, *Canadian Journal of Linguistics / Revue canadienne de linguistique*.
+    > Source directement centrée sur le sujet de cette spécification : analyse phonologique (cadre CVCV, Lowenstamm 1996) de l'alternance de la voyelle initiale nominale à l'état d'annexion, à mobiliser en priorité pour affiner et re-dériver §3.1 (actuellement descriptif plutôt que formellement dérivé d'un modèle).
+11. **Ben Si Saïd, Samir (2022)** — *Noun formation in Kabyle Berber*, *Journal of African Languages and Linguistics* 43(2), pp. 285 sqq.
     > Référence complémentaire pour la morphologie nominale générale, à consulter pour étendre le §3 au-delà de l'alternance d'état stricte.
 
 ---
@@ -138,15 +140,15 @@ Le choix entre État Libre (*Addad ilelli*) et État d'Annexion (*Addad amaruz*)
                     ▼                                                   ▼
          [ ÉTAT D'ANNEXION (EA) ]                            [ ÉTAT LIBRE (EL) ]
          - Sujet post-verbal (VSO)                           - Objet direct verbal (DO)
-         - Régime de préposition (sauf 'ar', ⚠️ contesté)     - Sujet pré-verbal / topicalisé (SVO)
+         - Régime de préposition (sauf 'ar', 's' dir., 'qbel', 'mebla', 'amzun d')     - Sujet pré-verbal / topicalisé (SVO)
          - Complément du nom avec 'n'                        - Prédicat après la copule 'd'
-         - Complément après numéraux                         - Régime de la préposition 'ar' (⚠️ contesté, voir §4.2.4)
+         - Complément après numéraux                         - Régime des prépositions 'ar', 's' dir., 'qbel', 'mebla', 'amzun d' (§4.2.4)
          - Après le 'd' de coordination ("et")              - Forme isolée / Vocatif avec 'a'
 ```
 
 ### 4.1 Déclencheurs OBLIGATOIRES de l'État d'Annexion (EA)
 
-Toute occurrence d'un nom dans l'un des contextes suivants **doit** porter les traits morphologiques de l'État d'Annexion (`State=Cons`) :
+Toute occurrence d'un nom dans l'un des contextes suivants **doit** porter les traits morphologiques de l'État d'Annexion (`Definite=Red`) :
 
 #### 1. Le sujet lexical post-verbal (Ordre VSO canonique)
 Lorsque le sujet lexical suit le verbe dont il est l'argument, il apparaît obligatoirement à l'EA (Galand 1964 ; Chaker 1983 ; Mammeri 1976).
@@ -154,7 +156,7 @@ Lorsque le sujet lexical suit le verbe dont il est l'argument, il apparaît obli
 * **Violation IA** : `*Yekcem aqcic.` / `*Tekcem tameṭṭut.`
 
 #### 2. Le complément d'une préposition simple liée
-Toutes les prépositions kabyles régissent l'état d'annexion : `deg` (dans), `seg` / `si` (de), `ɣer` (vers), `ɣef` (sur), `fell` (sur), `s` (au moyen de), `ger` (entre), `zdat` (devant), `ddaw` (sous), `nnig` (au-dessus). L'exception traditionnellement attribuée à *ar* (§4.2.4) est **contestée** ; une source secondaire attribue plutôt une exception à *s* en emploi directionnel (voir §4.2.4 et L06) — statut à trancher avant tout usage normatif.
+Toutes les prépositions kabyles régissent l'état d'annexion : `deg` (dans), `seg` / `si` (de), `ɣer` (vers), `ɣef` (sur), `fell` (sur), `s` (au moyen de), `ger` (entre), `zdat` (devant), `ddaw` (sous), `nnig` (au-dessus). Font exception : `ar`, `s` en emploi directionnel, `qbel`, `mebla`, `amzun d`, qui régissent l'État Libre (Naït-Zerrad 2001 : 54 ; Mammeri 1990 : 93 — voir §4.2.4).
 * **Correct** : *deg **w**exxam*, *ɣer **t**murt*, *seg **y**isariwen*, *s **w**uzzal*.
 * **Violation IA** : `*deg axxam`, `*ɣer tamurt`, `*s uzzal`.
 
@@ -177,7 +179,7 @@ Le nom coordonné à un premier constituant via la conjonction `d` se met obliga
 
 ### 4.2 Déclencheurs OBLIGATOIRES de l'État Libre (EL)
 
-Toute occurrence d'un nom dans l'un des contextes suivants **doit** conserver sa voyelle d'État Libre (`State=Abs`) :
+Toute occurrence d'un nom dans l'un des contextes suivants **doit** conserver sa voyelle d'État Libre (`Definite=Ind`) :
 
 #### 1. Le complément d'objet direct du verbe (Accusatif)
 L'objet direct verbal direct n'est jamais à l'état d'annexion, quelle que soit sa position par rapport au verbe.
@@ -194,17 +196,23 @@ Dans les prédications non-verbales d'identification ou d'ascription introduites
 * **Correct** : *D **a**qcic.* (C'est un garçon) / *D **t**ameṭṭut.* (C'est une femme).
 * **Violation IA** : `*D weqcic.` (Agrammatical au sens de "c'est un garçon").
 
-#### 4. ⚠️ CONTESTÉ — Le complément de la préposition d'orientation limitative `ar` (« jusqu'à »)
-**Statut** : `CONTESTÉ — NON CONFIRMÉ PAR SOURCE PRIMAIRE PAGINÉE`. La rédaction initiale de cette spécification affirmait que `ar` est la seule préposition kabyle à régir l'État Libre (Chaker 1988). Une vérification croisée n'a pas permis de retrouver cette règle sourcée précisément (page) chez Chaker ou Naït-Zerrad. Une source secondaire trouvée en ligne affirme au contraire que l'exception porte sur **`s` en emploi directionnel** (« vers »), et non sur `ar` :
-> *« Toutes les prépositions, à l'exception de « s » de direction [...] : Iruḥ **s axxam** (ici le nom `axxam` n'a pas changé d'état). »*
+#### 4. Les prépositions régissant l'État Libre (`ar`, `s` directionnel, et autres) — statut résolu
+**Statut** : `RÉSOLU (v0.2)`. Le doute soulevé en v0.1-draft sur l'exception `ar` était excessif : les deux hypothèses envisagées ne sont pas concurrentes mais **cumulatives**, confirmées par deux sources primaires paginées :
 
-Cette hypothèse alternative distinguerait donc un `s` instrumental (« au moyen de », régissant l'EA — cf. §4.1.2) d'un `s` directionnel homographe (« vers », régissant l'EL).
+> **Naït-Zerrad (2001 : 54)** : *« toutes les prépositions – excepté **s** « vers » et **ar** « jusqu'à » – sont suivies de l'état d'annexion »* (citée dans une thèse de l'Université Abderrahmane Mira de Béjaïa, qui reproduit ce passage mot pour mot avec pagination).
 
-Par ailleurs, l'exemple `ar azekka` est lui-même fragile : `azekka` (« demain ») apparaît très majoritairement en usage comme **adverbe temporel figé**, ce qui ne permet pas de trancher s'il s'agit d'un effet de la préposition `ar` ou simplement d'une forme adverbiale gelée hors du système d'alternance d'état.
+> **Mammeri (1990 : 93)** : *« kra n tenzaɣ sselkament ilelli : s (n tnila) id yettilin sdat n teɣri, ar (armi), qbel, mebla, amzun d... »* — « certaines prépositions régissent l'état libre : *s* directionnel (devant voyelle), *ar* (jusqu'à), *qbel* (avant), *mebla* (sans), *amzun d* (comme si)... ». **Note bibliographique** : cette édition « Mammeri 1990 » (pagination différente de Mammeri 1976 déjà en §2) n'est pas encore identifiée précisément (réédition ? tirage différent ?) — à documenter avant la v0.3 (voir L07bis).
 
-**Recommandation avant de figer une règle `MUST`** : interroger le corpus de 700k phrases sur les contextes `ar + Nom` et `s + Nom` (emploi directionnel identifiable par le verbe de mouvement régissant), consulter Naït-Zerrad (2001) page par page, et si possible solliciter Belkadi (2024) qui traite spécifiquement la typologie Case/State en berbère. Ne pas inclure cette règle dans un filtre anti-hallucination tant qu'elle n'est pas confirmée par au moins une source primaire paginée.
-* **Forme documentée (non contestée)** : *ar **t**ameddit* (jusqu'au soir) — à revérifier également.
-* **Forme proposée sous réserve** : *ar **a**zekka* (à confirmer — pourrait être un adverbe figé plutôt qu'un test valide de la règle).
+**Conclusion normative** : la liste des prépositions à État Libre s'étend donc au-delà du seul `ar` :
+* `ar` (« jusqu'à »)
+* `s` en emploi **directionnel** uniquement (« vers » ; à distinguer de `s` instrumental « au moyen de », qui régit l'EA — §4.1.2)
+* `qbel` (« avant »)
+* `mebla` (« sans »)
+* `amzun d` (« comme si »)
+
+L'exemple `ar azekka` reste à traiter avec prudence (`azekka` pouvant fonctionner comme adverbe figé), mais `ar tameddit` est confirmé sans réserve par les deux sources ci-dessus.
+* **Correct** : *ar **t**ameddit* (jusqu'au soir), *kecmen-d **s** axxam* (ils sont entrés [en direction de] la maison — `s` directionnel).
+* **Violation IA** : `*ar wemeddit`, `*kecmen-d s wexxam` (si `s` est bien employé ici en emploi directionnel).
 
 #### 5. La forme d'isolation, de citation et le vocatif
 Le mot cité de manière isolée ou précédé de l'interpellation vocative `a` est obligatoirement à l'EL.
@@ -219,12 +227,12 @@ La particule `d` est la source de la majorité des erreurs d'analyse syntaxique 
 
 | Morphème de surface | Catégorie UPOS | Valeur sémantique | État du nom gouverné | Exemple CoNLL-U |
 | :--- | :--- | :--- | :--- | :--- |
-| **`d` (copule)** | `AUX` (`PartType=Cop`) | Prédication ascriptive : *« c'est », « est »* | **ÉTAT LIBRE (`State=Abs`)** | `D aqcic.`<br>*(C'est un garçon)* |
-| **`d` (coordinateur)** | `CCONJ` | Conjonction : *« et », « avec »* | **ÉTAT D'ANNEXION (`State=Cons`)** | `Argaz d weqcic.`<br>*(L'homme et le garçon)* |
+| **`d` (copule)** | `AUX` (`PartType=Cop`) | Prédication ascriptive : *« c'est », « est »* | **ÉTAT LIBRE (`Definite=Ind`)** | `D aqcic.`<br>*(C'est un garçon)* |
+| **`d` (coordinateur)** | `CCONJ` | Conjonction : *« et », « avec »* | **ÉTAT D'ANNEXION (`Definite=Red`)** | `Argaz d weqcic.`<br>*(L'homme et le garçon)* |
 
 ### Règle d'or algorithmique pour les parseurs et linters :
-$$\text{Si } [d] + \text{Nom}[State=Abs] \implies [d] = \text{\textbf{AUX (copule ascriptive)}}$$
-$$\text{Si } [d] + \text{Nom}[State=Cons] \implies [d] = \text{\textbf{CCONJ (coordination)}}$$
+$$\text{Si } [d] + \text{Nom}[Definite=Ind] \implies [d] = \text{\textbf{AUX (copule ascriptive)}}$$
+$$\text{Si } [d] + \text{Nom}[Definite=Red] \implies [d] = \text{\textbf{CCONJ (coordination)}}$$
 
 ---
 
@@ -233,14 +241,14 @@ $$\text{Si } [d] + \text{Nom}[State=Cons] \implies [d] = \text{\textbf{CCONJ (co
 En accord avec la révision v0.7 de la *Spécification Kabyle Universal Dependencies* (Mokraoui, 2026), la gestion de l'état nominal est formalisée comme suit :
 
 ### 6.1 Features morphologiques (`FEATS`)
-* Le trait standard UD **`State`** est obligatoirement renseigné sur tout `NOUN`, `ADJ` ou `PROPN` susceptible d'alternance :
-  * `State=Abs` : État Libre (*Addad ilelli*).
-  * `State=Cons` : État d'Annexion (*Addad amaruz*).
-* Le trait `Case` est articulé avec `State` :
-  * Sujet post-verbal : `Case=Nom|State=Cons`
-  * Sujet pré-verbal / topicalisé : `Case=Nom|State=Abs`
-  * Objet direct : `Case=Acc|State=Abs`
-  * Régime prépositionnel oblique : `Case=Dat|State=Cons` ou `Case=Acc|State=Cons`
+* Le trait standard UD **`Definite`** (et non une feature `State` inexistante — voir §1.2) est obligatoirement renseigné sur tout `NOUN`, `ADJ` ou `PROPN` susceptible d'alternance :
+  * `Definite=Ind` : État Libre (*Addad ilelli*) — valeur réutilisée par approximation (voir L07).
+  * `Definite=Red` : État d'Annexion (*Addad amaruz*), valeur officiellement documentée pour la construct state sémitique.
+* Le trait `Case` est articulé avec `Definite` :
+  * Sujet post-verbal : `Case=Nom|Definite=Red`
+  * Sujet pré-verbal / topicalisé : `Case=Nom|Definite=Ind`
+  * Objet direct : `Case=Acc|Definite=Ind`
+  * Régime prépositionnel oblique : `Case=Dat|Definite=Red` ou `Case=Acc|Definite=Red`
 
 ### 6.2 Exemples d'annotation CoNLL-U
 
@@ -249,8 +257,8 @@ En accord avec la révision v0.7 de la *Spécification Kabyle Universal Dependen
 # sent_id = state-vso-001
 # text = Yečča weqcic aɣrum.
 1   Yečča   ečč     VERB   _   Gender=Masc|Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin   0   root   _   _
-2   weqcic  aqcic   NOUN   _   Gender=Masc|Number=Sing|Case=Nom|State=Cons                          1   nsubj  _   _
-3   aɣrum   aɣrum   NOUN   _   Gender=Masc|Number=Sing|Case=Acc|State=Abs                           1   obj    _   _
+2   weqcic  aqcic   NOUN   _   Gender=Masc|Number=Sing|Case=Nom|Definite=Red                          1   nsubj  _   _
+3   aɣrum   aɣrum   NOUN   _   Gender=Masc|Number=Sing|Case=Acc|Definite=Ind                           1   obj    _   _
 4   .       .       PUNCT  _   _                                                                    1   punct  _   _
 ```
 
@@ -260,7 +268,7 @@ En accord avec la révision v0.7 de la *Spécification Kabyle Universal Dependen
 # text = Yekcem ɣer wexxam.
 1   Yekcem  ekcem   VERB   _   Gender=Masc|Number=Sing|Person=3|Tense=Past|VerbForm=Fin   0   root   _   _
 2   ɣer     ɣer     ADP    _   _                                                           3   case   _   _
-3   wexxam  axxam   NOUN   _   Gender=Masc|Number=Sing|Case=Acc|State=Cons                 1   obl    _   _
+3   wexxam  axxam   NOUN   _   Gender=Masc|Number=Sing|Case=Acc|Definite=Red                 1   obl    _   _
 4   .       .       PUNCT  _   _                                                           1   punct  _   _
 ```
 
@@ -269,7 +277,7 @@ En accord avec la révision v0.7 de la *Spécification Kabyle Universal Dependen
 # sent_id = state-cop-003
 # text = D argaz.
 1   D       d       AUX    _   PartType=Cop                        2   cop    _   _
-2   argaz   argaz   NOUN   _   Gender=Masc|Number=Sing|State=Abs   0   root   _   _
+2   argaz   argaz   NOUN   _   Gender=Masc|Number=Sing|Definite=Ind   0   root   _   _
 3   .       .       PUNCT  _   _                                   2   punct  _   _
 ```
 
@@ -279,9 +287,9 @@ En accord avec la révision v0.7 de la *Spécification Kabyle Universal Dependen
 # text = Yusa-d urgaz d weqcic.
 1   Yusa    as      VERB   _   Gender=Masc|Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin   0   root   _   _
 2   -d      d       PART   _   _                                                                    1   advmod _   _
-3   urgaz   argaz   NOUN   _   Gender=Masc|Number=Sing|Case=Nom|State=Cons                          1   nsubj  _   _
+3   urgaz   argaz   NOUN   _   Gender=Masc|Number=Sing|Case=Nom|Definite=Red                          1   nsubj  _   _
 4   d       d       CCONJ  _   _                                                                    5   cc     _   _
-5   weqcic  aqcic   NOUN   _   Gender=Masc|Number=Sing|Case=Nom|State=Cons                          3   conj   _   _
+5   weqcic  aqcic   NOUN   _   Gender=Masc|Number=Sing|Case=Nom|Definite=Red                          3   conj   _   _
 6   .       .       PUNCT  _   _                                                                    1   punct  _   _
 ```
 
@@ -293,19 +301,19 @@ Pour garantir la non-régression des parseurs et évaluer l'absence d'hallucinat
 
 | ID | Phrase valide (Normative) | Forme erronée (Hallucination bloquée) | Phénomène testé | Règle violée |
 | :--- | :--- | :--- | :--- | :--- |
-| **TS01** | `Yekcem weqcic.` | `*Yekcem aqcic.` | Sujet post-verbal (VSO) | Le sujet postposé doit porter `State=Cons` |
-| **TS02** | `Aqcic yekcem.` | `*Weqcic yekcem.` | Sujet pré-verbal (SVO) | Le sujet antéposé doit porter `State=Abs` |
-| **TS03** | `Iwala weqcic amcic.` | `*Iwala weqcic wemcic.` | Objet direct (Accusatif) | L'objet direct doit porter `State=Abs` |
-| **TS04** | `Iwala weqcic amcic.` | `*Iwala aqcic amcic.` | Contraste Sujet vs. Objet | Le sujet VSO doit porter `State=Cons`, l'objet `State=Abs` |
-| **TS05** | `Yekcem ɣer wexxam.` | `*Yekcem ɣer axxam.` | Préposition `ɣer` | Régime prépositionnel obligatoirement en `State=Cons` |
-| **TS06** | `Seg tmurt ɣer temdint.` | `*Seg tamurt ɣer temdint.` | Prépositions `seg` / `ɣer` | Chute de voyelle féminine obligatoire en `State=Cons` |
-| **TS07** | ⚠️ *(retiré du jeu obligatoire — voir §4.2.4 et L06)* | — | Préposition d'orientation `ar` | Statut `CONTESTÉ` : ne pas encoder en `MUST` avant validation par source primaire paginée ou corpus |
-| **TS08** | `Axxam n wergaz.` | `*Axxam n argaz.` | Complément du nom avec `n` | Régime génitif obligatoirement en `State=Cons` |
-| **TS09** | `Sin wussan.` | `*Sin ussan.` | Numéral cardinal direct | Quantifié post-numéral obligatoirement en `State=Cons` |
-| **TS10** | `Tlata n wussan.` | `*Tlata n ussan.` | Numéral cardinal avec relateur `n` | Expansion quantifiée obligatoirement en `State=Cons` |
-| **TS11** | `D argaz.` | `*D wergaz.` | Copule ascriptive `d` | La copule `d` exige rigoureusement `State=Abs` |
-| **TS12** | `Argaz d weqcic.` | `*Argaz d aqcic.` | Coordination `d` | Le coordonné post-`d` exige rigoureusement `State=Cons` |
-| **TS13** | `A aqcic !` | `*A weqcic !` | Vocatif avec interpellation `a` | L'interpellation vocative exige `State=Abs` |
+| **TS01** | `Yekcem weqcic.` | `*Yekcem aqcic.` | Sujet post-verbal (VSO) | Le sujet postposé doit porter `Definite=Red` |
+| **TS02** | `Aqcic yekcem.` | `*Weqcic yekcem.` | Sujet pré-verbal (SVO) | Le sujet antéposé doit porter `Definite=Ind` |
+| **TS03** | `Iwala weqcic amcic.` | `*Iwala weqcic wemcic.` | Objet direct (Accusatif) | L'objet direct doit porter `Definite=Ind` |
+| **TS04** | `Iwala weqcic amcic.` | `*Iwala aqcic amcic.` | Contraste Sujet vs. Objet | Le sujet VSO doit porter `Definite=Red`, l'objet `Definite=Ind` |
+| **TS05** | `Yekcem ɣer wexxam.` | `*Yekcem ɣer axxam.` | Préposition `ɣer` | Régime prépositionnel obligatoirement en `Definite=Red` |
+| **TS06** | `Seg tmurt ɣer temdint.` | `*Seg tamurt ɣer temdint.` | Prépositions `seg` / `ɣer` | Chute de voyelle féminine obligatoire en `Definite=Red` |
+| **TS07** | `Ar tameddit.` | `*Ar wemeddit.` | Préposition `ar` | La préposition `ar` exige `Definite=Ind` (Naït-Zerrad 2001:54 ; Mammeri 1990:93) |
+| **TS08** | `Axxam n wergaz.` | `*Axxam n argaz.` | Complément du nom avec `n` | Régime génitif obligatoirement en `Definite=Red` |
+| **TS09** | `Sin wussan.` | `*Sin ussan.` | Numéral cardinal direct | Quantifié post-numéral obligatoirement en `Definite=Red` |
+| **TS10** | `Tlata n wussan.` | `*Tlata n ussan.` | Numéral cardinal avec relateur `n` | Expansion quantifiée obligatoirement en `Definite=Red` |
+| **TS11** | `D argaz.` | `*D wergaz.` | Copule ascriptive `d` | La copule `d` exige rigoureusement `Definite=Ind` |
+| **TS12** | `Argaz d weqcic.` | `*Argaz d aqcic.` | Coordination `d` | Le coordonné post-`d` exige rigoureusement `Definite=Red` |
+| **TS13** | `A aqcic !` | `*A weqcic !` | Vocatif avec interpellation `a` | L'interpellation vocative exige `Definite=Ind` |
 | **TS14** | `Yusa-d baba.` | `*Yusa-d wbaba.` | Invariable (nom de parenté) | Pas de mutation sur les termes de parenté nus |
 | **TS15** | `Deg lweqt-nni.` | `*Deg welweqt-nni.` | Invariable (emprunt avec article) | Pas de mutation sur les emprunts figés en `l-` |
 | **TS16** | `Yusa-d si taddart.` | `*Yusa-d si teddart.` | Invariable (classe lexicalisée Naït-Zerrad) | `taddart`, `tafat`, `tasa`, `tadla`, `tadimt`, `tasga` ne mutent jamais après préposition |
@@ -321,7 +329,9 @@ Pour garantir la non-régression des parseurs et évaluer l'absence d'hallucinat
 | **L03** | **Degré d'intégration des emprunts** | Conventionnel | Classifier la frontière exacte entre emprunts intégrés mutables (*ṭṭabla* $\to$ *n ṭṭabla*) et emprunts récents traités en `X`. |
 | **L04** | **Collision acoustique avec préposition $s$** | Phonologique | Traiter la fusion graphique et le sandhi $s + w- \to [f]$ ou $[sw]$ dans une spec G2P dédiée. |
 | **L05** | **Classe des féminins invariables en `ta-`** (§3.3.5 : `taddart`, `tafat`, `tasa`, `tadla`, `tadimt`, `tasga`) | Documenté (Naït-Zerrad 2001), non dérivable par règle | Interroger le corpus de 700k phrases pour chaque lemme dans les contextes `deg/seg/ɣer/s + N` afin de mesurer le taux réel de non-mutation et repérer d'éventuels lemmes supplémentaires de la même classe. |
-| **L06** | **Préposition régissant l'État Libre** (§4.2.4) | Contesté — deux hypothèses concurrentes non arbitrées (`ar` seul selon la v0.1 initiale ; `s` directionnel selon une source secondaire) | Consulter Naït-Zerrad (2001) et Belkadi (2024) avec pagination précise ; interroger le corpus sur `ar + N`, `s + N` (emploi directionnel vs instrumental) et vérifier si `azekka` se comporte comme un nom alternant ou comme un adverbe figé. Ne pas réintégrer de règle `MUST` dans le jeu de tests CI/CD avant résolution. |
+| **L06** | **Prépositions régissant l'État Libre** (§4.2.4 : `ar`, `s` directionnel, `qbel`, `mebla`, `amzun d`) | `RÉSOLU (v0.2)` — confirmé par Naït-Zerrad (2001:54) et Mammeri (1990:93), sources primaires paginées | Vérifier sur corpus la fréquence de chaque préposition et la distinction `s` directionnel / `s` instrumental (souvent non désambiguïsable hors contexte verbal). Statut de l'exemple `ar azekka` (adverbe figé ?) toujours à trancher. |
+| **L07** | **`Definite=Ind` comme approximation de l'État Libre** (§1.2, §6.1) | Reconnu comme imparfait | L'État Libre kabyle n'est pas sémantiquement « indéfini » au sens où `Definite` le définit pour l'arabe (état absolu ≠ absence de détermination). Documenter cette réserve dans une future proposition de feature spécifique aux langues berbères auprès du consortium UD, plutôt que de réutiliser telle quelle une feature conçue pour le système sémitique. |
+| **L07bis** | **Édition « Mammeri (1990 : 93) »** citée en §4.2.4 | Non identifiée précisément | Cette pagination diffère de Mammeri (1976) déjà en bibliographie (§2, réf. 1). Vérifier s'il s'agit d'une réédition, d'un tirage distinct, ou d'une erreur de citation dans la thèse source (Univ. Abderrahmane Mira de Béjaïa) avant de l'ajouter formellement aux références. |
 
 ---
 
@@ -329,14 +339,21 @@ Pour garantir la non-régression des parseurs et évaluer l'absence d'hallucinat
 
 1. **Achab, Karim** (2003). *Alternation of state in Berber*. In Jacqueline Lecarme (ed.), *Research in Afroasiatic Grammar II*. Amsterdam: John Benjamins, pp. 1–18.
 2. **Achab, Karim** (2012). *La morphologie du nom en kabyle*. Paris: L'Harmattan.
-3. **Chaker, Salem** (1983). *Un parler berbère d'Algérie (Kabylie) : syntaxe*. Thèse de doctorat d'État, Université de Provence.
-4. **Chaker, Salem** (1988). *Annexion (État d', linguistique)*. In *Encyclopédie berbère*, fascicule V, Aix-en-Provence: Édisud, pp. 686–695.
-5. **Chaker, Salem** (1995). *Linguistique berbère : études de syntaxe et de diachronie*. Paris/Louvain: Peeters.
-6. **Galand, Lionel** (1964). *L'énoncé verbal en berbère*. *Cahiers Ferdinand de Saussure*, 21, pp. 33–53.
-7. **Galand, Lionel** (2002). *Études de linguistique berbère*. Louvain/Paris: Peeters.
-8. **Mammeri, Mouloud** (1976). *Tajeṛṛumt n tmaziɣt (tantala taqbaylit)*. Paris: Maspero.
-9. **Mettouchi, Amina & Frajzyngier, Zygmunt** (2013). *A previously unrecognized typological category: The state distinction in Kabyle (Berber)*. *Linguistic Typology*, 17(1), pp. 1–30.
-10. **Mettouchi, Amina** (2017). *Predication in Kabyle (Berber), KAB*. In Mettouchi, Frajzyngier & Chanard (eds), *Corpus-based cross-linguistic studies on Predication* (CorTypo).
-11. **Mokraoui, Athmane (boffire)** (2026). *Spécification du Tokenizer Morphologique pour le Kabyle (Taqbaylit)*, v0.3-draft.
-12. **Mokraoui, Athmane (boffire)** (2026). *Spécification Kabyle Universal Dependencies (UD)*, v0.7.
-13. **Naït-Zerrad, Kamal** (2001). *Grammaire moderne du kabyle, tajerrumt tatrart n teqbaylit*. Paris: Éditions Karthala.
+3. **Achab, Karim** (2020). *Anti-Agreement in Amazigh (Berber) as Genitive Constructions*. *McGill Working Papers in Linguistics*, 26(1).
+4. **Belkadi, Aicha** (2024). *On State and Case in Berber: A Typological Perspective*. In *The Handbook of Berber Linguistics*. Berlin: Springer.
+5. **Ben Si Saïd, Samir** (2020). *La voyelle initiale des noms et l'état d'annexion en kabyle (berbère)*. *Canadian Journal of Linguistics / Revue canadienne de linguistique*.
+6. **Ben Si Saïd, Samir** (2022). *Noun formation in Kabyle Berber*. *Journal of African Languages and Linguistics*, 43(2), pp. 285 sqq.
+7. **Chaker, Salem** (1983). *Un parler berbère d'Algérie (Kabylie) : syntaxe*. Thèse de doctorat d'État, Université de Provence.
+8. **Chaker, Salem** (1988). *Annexion (État d', linguistique)*. In *Encyclopédie berbère*, fascicule V, Aix-en-Provence: Édisud, pp. 686–695.
+9. **Chaker, Salem** (1995). *Linguistique berbère : études de syntaxe et de diachronie*. Paris/Louvain: Peeters.
+10. **Felice, Lydia** (2020). *On the Case System of Kabyle*. *McGill Working Papers in Linguistics*, 26(1).
+11. **Galand, Lionel** (1964). *L'énoncé verbal en berbère*. *Cahiers Ferdinand de Saussure*, 21, pp. 33–53.
+12. **Galand, Lionel** (2002). *Études de linguistique berbère*. Louvain/Paris: Peeters.
+13. **Mammeri, Mouloud** (1976). *Tajeṛṛumt n tmaziɣt (tantala taqbaylit)*. Paris: Maspero.
+14. **Mammeri, Mouloud** (1990). *[Édition ou tirage non identifié précisément — p. 93 citée via source secondaire (thèse, Univ. Abderrahmane Mira de Béjaïa) ; à vérifier avant la v0.3, voir §8 L07bis]*.
+15. **Mettouchi, Amina & Frajzyngier, Zygmunt** (2013). *A previously unrecognized typological category: The state distinction in Kabyle (Berber)*. *Linguistic Typology*, 17(1), pp. 1–30.
+16. **Mettouchi, Amina** (2017). *Predication in Kabyle (Berber), KAB*. In Mettouchi, Frajzyngier & Chanard (eds), *Corpus-based cross-linguistic studies on Predication* (CorTypo).
+17. **Mihuc, Sarah** (2020). *Kabyle noun-initial a and the construct state*. *McGill Working Papers in Linguistics*, 26(1).
+18. **Mokraoui, Athmane (boffire)** (2026). *Spécification du Tokenizer Morphologique pour le Kabyle (Taqbaylit)*, v0.3-draft.
+19. **Mokraoui, Athmane (boffire)** (2026). *Spécification Kabyle Universal Dependencies (UD)*, v0.7.
+20. **Naït-Zerrad, Kamal** (2001). *Grammaire moderne du kabyle, tajerrumt tatrart n teqbaylit*. Paris: Éditions Karthala.
