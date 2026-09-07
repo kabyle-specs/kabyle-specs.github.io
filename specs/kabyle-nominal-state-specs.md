@@ -194,7 +194,7 @@ Dans les prédications non-verbales d'identification ou d'ascription introduites
 * **Correct** : *D **a**qcic.* (C'est un garçon) / *D **t**ameṭṭut.* (C'est une femme).
 * **Violation IA** : `*D weqcic.` (Agrammatical au sens de "c'est un garçon").
 
-#### 4. ⚠️ CONTESTÉ — Le complément de la préposition d'orientation limitative `ar` (« jusqu'à »)
+#### 4. CONTESTÉ — Le complément de la préposition d'orientation limitative `ar` (« jusqu'à »)
 **Statut** : `CONTESTÉ — NON CONFIRMÉ PAR SOURCE PRIMAIRE PAGINÉE`. La rédaction initiale de cette spécification affirmait que `ar` est la seule préposition kabyle à régir l'État Libre (Chaker 1988). Une vérification croisée n'a pas permis de retrouver cette règle sourcée précisément (page) chez Chaker ou Naït-Zerrad. Une source secondaire trouvée en ligne affirme au contraire que l'exception porte sur **`s` en emploi directionnel** (« vers »), et non sur `ar` :
 > *« Toutes les prépositions, à l'exception de « s » de direction [...] : Iruḥ **s axxam** (ici le nom `axxam` n'a pas changé d'état). »*
 
