@@ -138,9 +138,9 @@ Le choix entre État Libre (*Addad ilelli*) et État d'Annexion (*Addad amaruz*)
                     ▼                                                   ▼
          [ ÉTAT D'ANNEXION (EA) ]                            [ ÉTAT LIBRE (EL) ]
          - Sujet post-verbal (VSO)                           - Objet direct verbal (DO)
-         - Régime de préposition (sauf 'ar', contesté)     - Sujet pré-verbal / topicalisé (SVO)
+         - Régime de préposition (sauf 'ar', ⚠️ contesté)     - Sujet pré-verbal / topicalisé (SVO)
          - Complément du nom avec 'n'                        - Prédicat après la copule 'd'
-         - Complément après numéraux                         - Régime de la préposition 'ar' (contesté, voir §4.2.4)
+         - Complément après numéraux                         - Régime de la préposition 'ar' (⚠️ contesté, voir §4.2.4)
          - Après le 'd' de coordination ("et")              - Forme isolée / Vocatif avec 'a'
 ```
 
@@ -194,7 +194,7 @@ Dans les prédications non-verbales d'identification ou d'ascription introduites
 * **Correct** : *D **a**qcic.* (C'est un garçon) / *D **t**ameṭṭut.* (C'est une femme).
 * **Violation IA** : `*D weqcic.` (Agrammatical au sens de "c'est un garçon").
 
-#### 4. CONTESTÉ — Le complément de la préposition d'orientation limitative `ar` (« jusqu'à »)
+#### 4. ⚠️ CONTESTÉ — Le complément de la préposition d'orientation limitative `ar` (« jusqu'à »)
 **Statut** : `CONTESTÉ — NON CONFIRMÉ PAR SOURCE PRIMAIRE PAGINÉE`. La rédaction initiale de cette spécification affirmait que `ar` est la seule préposition kabyle à régir l'État Libre (Chaker 1988). Une vérification croisée n'a pas permis de retrouver cette règle sourcée précisément (page) chez Chaker ou Naït-Zerrad. Une source secondaire trouvée en ligne affirme au contraire que l'exception porte sur **`s` en emploi directionnel** (« vers »), et non sur `ar` :
 > *« Toutes les prépositions, à l'exception de « s » de direction [...] : Iruḥ **s axxam** (ici le nom `axxam` n'a pas changé d'état). »*
 
@@ -299,7 +299,7 @@ Pour garantir la non-régression des parseurs et évaluer l'absence d'hallucinat
 | **TS04** | `Iwala weqcic amcic.` | `*Iwala aqcic amcic.` | Contraste Sujet vs. Objet | Le sujet VSO doit porter `State=Cons`, l'objet `State=Abs` |
 | **TS05** | `Yekcem ɣer wexxam.` | `*Yekcem ɣer axxam.` | Préposition `ɣer` | Régime prépositionnel obligatoirement en `State=Cons` |
 | **TS06** | `Seg tmurt ɣer temdint.` | `*Seg tamurt ɣer temdint.` | Prépositions `seg` / `ɣer` | Chute de voyelle féminine obligatoire en `State=Cons` |
-| **TS07** | *(retiré du jeu obligatoire — voir §4.2.4 et L06)* | — | Préposition d'orientation `ar` | Statut `CONTESTÉ` : ne pas encoder en `MUST` avant validation par source primaire paginée ou corpus |
+| **TS07** | ⚠️ *(retiré du jeu obligatoire — voir §4.2.4 et L06)* | — | Préposition d'orientation `ar` | Statut `CONTESTÉ` : ne pas encoder en `MUST` avant validation par source primaire paginée ou corpus |
 | **TS08** | `Axxam n wergaz.` | `*Axxam n argaz.` | Complément du nom avec `n` | Régime génitif obligatoirement en `State=Cons` |
 | **TS09** | `Sin wussan.` | `*Sin ussan.` | Numéral cardinal direct | Quantifié post-numéral obligatoirement en `State=Cons` |
 | **TS10** | `Tlata n wussan.` | `*Tlata n ussan.` | Numéral cardinal avec relateur `n` | Expansion quantifiée obligatoirement en `State=Cons` |
