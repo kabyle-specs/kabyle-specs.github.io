@@ -38,7 +38,7 @@ Cette spécification comble directement la **Limite L1** identifiée dans la *Sp
 2. **Lemmatisation canonique** :
    Le lemme d'entrée dans les dictionnaires, lemmatiseurs et lexiques d'analyse est **toujours l'État Libre (EL)**.
    * `wexxam` $\to$ lemme : `axxam`
-   * `tmettut` $\to$ lemme : `tamettut`
+   * `tmeṭṭut` $\to$ lemme : `tameṭṭut`
    * `yirgazen` $\to$ lemme : `argaz` (ou pluriel `irgazen`)
 3. **Typologie de la feature** :
    L'opposition d'état est encodée via le trait officiel UD **`State`** (`State=Abs` pour l'état libre, `State=Cons` pour l'état d'annexion), découplé du trait `Case`.
@@ -97,7 +97,7 @@ Les noms féminins commencent par le morphème discontinu $t-...(-t)$. La mutati
 
 | Préfixe EL | Environnement phonologique | Mutation $EL \to EA$ | Exemple EL | Exemple EA |
 | :--- | :--- | :--- | :--- | :--- |
-| **`ta-`** | Base débutant par une consonne simple (chute régulière de la voyelle) | $ta- \to \mathbf{t-}$ + consonne | `tamettut` (femme)<br>`tamurt` (pays) | `tmettut`<br>`tmurt` |
+| **`ta-`** | Base débutant par une consonne simple (chute régulière de la voyelle) | $ta- \to \mathbf{t-}$ + consonne | `tameṭṭut` (femme)<br>`tamurt` (pays) | `tmeṭṭut`<br>`tmurt` |
 | **`ta-`** | Base débutant par une géminée ou un groupe de consonnes lourd | $ta- \to \mathbf{te-}$ (maintien du schwa d'appui) | `tagrest` (hiver) | `tegrest` |
 | **`ti-`** | Chute de la voyelle ou relâchement en schwa | $ti- \to \mathbf{te-} / \mathbf{t-}$ | `tislit` (mariée)<br>`tiddi` (taille) | `teslit`<br>`teddi` |
 | **`ti-`** | Pluriels féminins réguliers | $ti- \to \mathbf{t-} / \mathbf{te-}$ (souvent invariable orthographiquement) | `tilawin` (femmes)<br>`tullas` (filles) | `tlawin` / `tilawin`<br>`tullas` / `tellas` |
@@ -150,8 +150,8 @@ Toute occurrence d'un nom dans l'un des contextes suivants **doit** porter les t
 
 #### 1. Le sujet lexical post-verbal (Ordre VSO canonique)
 Lorsque le sujet lexical suit le verbe dont il est l'argument, il apparaît obligatoirement à l'EA (Galand 1964 ; Chaker 1983 ; Mammeri 1976).
-* **Correct** : *Yekcem **w**eqcic.* / *Tekcem **t**mettut.*
-* **Violation IA** : `*Yekcem aqcic.` / `*Tekcem tamettut.`
+* **Correct** : *Yekcem **w**eqcic.* / *Tekcem **t**meṭṭut.*
+* **Violation IA** : `*Yekcem aqcic.` / `*Tekcem tameṭṭut.`
 
 #### 2. Le complément d'une préposition simple liée
 Toutes les prépositions kabyles régissent l'état d'annexion : `deg` (dans), `seg` / `si` (de), `ɣer` (vers), `ɣef` (sur), `fell` (sur), `s` (au moyen de), `ger` (entre), `zdat` (devant), `ddaw` (sous), `nnig` (au-dessus). L'exception traditionnellement attribuée à *ar* (§4.2.4) est **contestée** ; une source secondaire attribue plutôt une exception à *s* en emploi directionnel (voir §4.2.4 et L06) — statut à trancher avant tout usage normatif.
@@ -170,8 +170,8 @@ Le second terme d'un syntagme nominal génitif introduit par la particule de rel
 
 #### 5. Après la particule de coordination `d` (« et », « avec »)
 Le nom coordonné à un premier constituant via la conjonction `d` se met obligatoirement à l'EA (Chaker 1983).
-* **Correct** : *argaz d **w**emcic-is* (l'homme et son chat), *nekk d **t**mettut-iw* (moi et ma femme).
-* **Violation IA** : `*argaz d amcic-is`, `*nekk d tamettut-iw`.
+* **Correct** : *argaz d **w**emcic-is* (l'homme et son chat), *nekk d **t**meṭṭut-iw* (moi et ma femme).
+* **Violation IA** : `*argaz d amcic-is`, `*nekk d tameṭṭut-iw`.
 
 ---
 
@@ -191,7 +191,7 @@ Lorsque le sujet est placé avant le verbe pour des raisons discursives ou dans 
 
 #### 3. Le prédicat après la copule ascriptive `d`
 Dans les prédications non-verbales d'identification ou d'ascription introduites par la copule `d` (Mettouchi 2017), le nom attribut est obligatoirement à l'EL.
-* **Correct** : *D **a**qcic.* (C'est un garçon) / *D **t**amettut.* (C'est une femme).
+* **Correct** : *D **a**qcic.* (C'est un garçon) / *D **t**ameṭṭut.* (C'est une femme).
 * **Violation IA** : `*D weqcic.` (Agrammatical au sens de "c'est un garçon").
 
 #### 4. ⚠️ CONTESTÉ — Le complément de la préposition d'orientation limitative `ar` (« jusqu'à »)
