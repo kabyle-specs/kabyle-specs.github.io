@@ -8,6 +8,13 @@
   "updated": "2026-08-22"
     },
     {
+      "title": "Taqbaylit-ToBI: Prosodic and Intonation Specification",
+      "path": "specs/taqbaylit-tobi.md",
+      "summary": "Autosegmental-Metrical (AM/ToBI) prosodic framework for Kabyle (Taqbaylit): Intonation Units (UI) demarcation, boundary tones (L-L%, L-H%, H-H%), focus-driven pitch excursion (L+H* with post-focal compression in clefts), phrasal head prominence, 5-level break index hierarchy (0 to 4) strictly modeling clitic cohesion and genitive construct state (addad amaruz), and acoustic duration ratios (geminates ×1.8–2.3, pre-pausal lengthening) for neural TTS (FastSpeech 2, VITS) and ASR alignment.",
+      "status": "draft",
+      "updated": "2026-09-09"
+    },
+    {
   "title": "Kabyle Nominal State Opposition (Addad Ilelli vs Addad Amaruz)",
   "path": "specs/kabyle-nominal-state-specs.md",
   "summary": "Deterministic morphophonological mutation tables (masculine and feminine) and a binary syntactic trigger matrix for the Free State (Addad Ilelli) vs Construct State (Addad Amaruz) alternation, resolving the post-verbal subject / direct object ambiguity and the 'd' copula-vs-coordinator homograph. Documents a closed, non-derivable lexicalized class of invariable ta- feminines (taddart, tafat, tasa, tadla, tadimt, tasga; Naït-Zerrad 2001) pending corpus validation, plus a CI/CD minimal-pair test suite.",
