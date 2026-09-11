@@ -8,6 +8,13 @@
   "updated": "2026-08-22"
     },
     {
+  "title": "Dallet–Kabyle Canonical Lexicon Specification",
+  "path": "specs/dallet-kabyle-spec.md",
+  "summary": "Canonical data model for transforming Jean-Marie Dallet's digitized Kabyle-French dictionary into a traceable, interoperable lexical resource: editorial typology (lexical entries, redirects, variants, subarticles), provenance tracking, structural root derivation from letters[].roots[].articles[] hierarchy, empirical POS evidence hierarchy (explicit-nature / structural-strong / structural-weak / candidate), redirect resolution with ambiguous-sense handling, and export formats (JSONL, CSV, SQLite). Validated against 13 975 articles from DigitizedDallet (dataModelVersion 8). Bridges Kabyle orthography, lemmatization, UD, and G2P specs.",
+  "status": "draft",
+  "updated": "2026-09-11"
+    },
+    {
       "title": "Taqbaylit-ToBI: Prosodic and Intonation Specification",
       "path": "specs/taqbaylit-tobi.md",
       "summary": "Autosegmental-Metrical (AM/ToBI) prosodic framework for Kabyle (Taqbaylit): Intonation Units (UI) demarcation, boundary tones (L-L%, L-H%, H-H%), focus-driven pitch excursion (L+H* with post-focal compression in clefts), phrasal head prominence, 5-level break index hierarchy (0 to 4) strictly modeling clitic cohesion and genitive construct state (addad amaruz), and acoustic duration ratios (geminates ×1.8–2.3, pre-pausal lengthening) for neural TTS (FastSpeech 2, VITS) and ASR alignment.",
