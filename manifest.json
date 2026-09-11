@@ -9,7 +9,7 @@
     },
     {
   "title": "Dallet–Kabyle Canonical Lexicon Specification",
-  "path": "specs/dallet-kabyle-spec.md",
+  "path": "specs/dallet_lexicon_canonical_spec.md",
   "summary": "Canonical data model for transforming Jean-Marie Dallet's digitized Kabyle-French dictionary into a traceable, interoperable lexical resource: editorial typology (lexical entries, redirects, variants, subarticles), provenance tracking, structural root derivation from letters[].roots[].articles[] hierarchy, empirical POS evidence hierarchy (explicit-nature / structural-strong / structural-weak / candidate), redirect resolution with ambiguous-sense handling, and export formats (JSONL, CSV, SQLite). Validated against 13 975 articles from DigitizedDallet (dataModelVersion 8). Bridges Kabyle orthography, lemmatization, UD, and G2P specs.",
   "status": "draft",
   "updated": "2026-09-11"
