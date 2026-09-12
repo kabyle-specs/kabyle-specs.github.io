@@ -8,6 +8,13 @@
   "updated": "2026-08-22"
     },
     {
+  "title": "Kabyle Grammatical Error Correction (GEC) Specification",
+  "path": "specs/kabyle-gec-spec.md",
+  "summary": "Specification for a modular, low-resource grammatical error correction (GEC) system for Kabyle (Taqbaylit). Covers nominal state EL/EA, clitic segmentation and ordering, negation and ara disambiguation, orthographic normalization, lexical and dialectal variation, annotation compatible with morphological tokenization and UD/CoNLL-U, synthetic and human-validated training data, hybrid rule-based and statistical modeling, evaluation protocols, abstention, and anti-hallucination safeguards.",
+  "status": "draft",
+  "updated": "2026-09-12"
+    },
+    {
   "title": "Dallet–Kabyle Canonical Lexicon Specification",
   "path": "specs/dallet_lexicon_canonical_spec.md",
   "summary": "Canonical data model for transforming Jean-Marie Dallet's digitized Kabyle-French dictionary into a traceable, interoperable lexical resource.",
