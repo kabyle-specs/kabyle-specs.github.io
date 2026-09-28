@@ -2,13 +2,35 @@
 
 **Auteurs** : Athmane Mokraoui (boffire), locuteur natif kabyle, mainteneur des ressources NLP kabyles ; structuration technique et recherche documentaire.
 
-**Date** : 29 juillet 2026
+**Date** : 27 septembre 2026
 
-**Version** : 0.3-draft
+**Version** : 0.4.1-draft
 
 **Statut** : En cours de validation native — certains points sont marqués **[À VALIDER]** et nécessitent confirmation ou correction par le locuteur natif.
 
 **Cible** : Développeurs de dispositions de clavier, ingénieurs système d'exploitation, mainteneurs de correcteurs orthographiques, traducteurs Weblate, chercheurs en NLP.
+
+---
+
+## Changelog (v0.4-draft → v0.4.1-draft)
+
+Vérification web des points restés en `[À VALIDER]`/L9 dans la v0.4 :
+- **§6.2** : les touches mortes MSKLC sont confirmées natives et fonctionnelles sous Windows 10 (source SIL), mais des dysfonctionnements réels sont attestés (dépôt GitHub `microsoft/windows-drivers-rs`, cas ErgoL). L'attribution de ces bugs au TSF, présente dans les versions antérieures, est retirée faute de source la corroborant.
+- **§6.3** : les affirmations sur Ukelele (création native de touches mortes, support `<deadKey>`) sont confirmées par sa fiche produit et par des dispositions `.keylayout` réelles publiées pour d'autres langues.
+- **L9/L10 (§11)** : reformulées pour distinguer ce qui est confirmé de ce qui reste non sourcé.
+- **Relecture complète** : suppression de tous les émojis (§4.4, §7.2) au profit de libellés textuels ; correction d'une erreur introduite dans la v0.4 (le circonflexe est à **droite** de la touche P sur AZERTY, et non à gauche : §5.2, §6.1, L7) ; retrait de l'attribution au TSF restée dans le tableau de §4.4 et en L1 ; signalement de deux incohérences de l'exemple XKB de §6.1 (touche `<AE01>`, ligne `<AD03>`) en `[À VALIDER]`.
+
+## Changelog (v0.3-draft → v0.4-draft)
+
+Cette révision corrige plusieurs affirmations factuelles inexactes ou non vérifiées de la v0.3, et documente un premier profil de référence Android concret :
+
+- **§4.2** : la justification de `^`+`q`→ɣ était erronée (`q` n'est pas une touche « disponible » réservée aux emprunts, c'est une lettre kabyle native — cf. §2.1 et le mot *Taqbaylit* lui-même). Justification reformulée.
+- **§5.2** : position du `^` sur AZERTY précisée et sourcée (à droite de la touche P, et non sur la touche `9`).
+- **§5.3** : correction sur QWERTY US — Shift+6 produit un circonflexe isolé, sans effet de touche morte, sauf sous la variante **US-International**.
+- **§6.1** : clarification ajoutée avant l'exemple XKB pour lever la contradiction apparente avec le principe de touche morte unique du KIM (§4.3).
+- **§6.4** : retrait de la mention d'une « Gboard Keyboard API » non confirmée ; remplacement par le mécanisme réel (IME Android / `InputMethodService`) ; clarification du mécanisme iOS (Custom Keyboard Extension).
+- **§6.4.1 (nouvelle)** : documentation d'un profil de référence Android concret (disposition WM Keyboard), avec ses écarts assumés par rapport au KIM théorique.
+- **§11, L3** : reformulée pour refléter les mécanismes réels plutôt qu'une limite imprécise.
 
 ---
 
@@ -150,7 +172,7 @@ Le **KIM** définit un mapping logique entre séquences de frappe et caractères
 |----------|----------|---------|-----|---------|
 | `^` + `a` | ɛ | U+025B | e ouvert | `a` = voyelle ouverte, proximité phonétique avec /ʕ/ |
 | `^` + `A` | Ɛ | U+0190 | E ouvert | Majuscule |
-| `^` + `q` | ɣ | U+0263 | gamma latin | `q` = touche disponible (emprunts uniquement) |
+| `^` + `q` | ɣ | U+0263 | gamma latin | Touche mnémotechnique arbitraire ; sans lien avec un quelconque statut d'emprunt — `q` est une lettre kabyle native (cf. §2.1, ex. *Taqbaylit*), simplement libre de tout autre usage dans le KIM |
 | `^` + `Q` | Ɣ | U+0194 | Gamma latin | Majuscule |
 | `^` + `c` | č | U+010D | c caron | `c` de base + caron |
 | `^` + `C` | Č | U+010C | C caron | Majuscule |
@@ -179,12 +201,12 @@ Le **KIM** définit un mapping logique entre séquences de frappe et caractères
 
 | Critère | `^` (circonflexe) | AltGr | `=` (Lexilogos) |
 |---------|-------------------|-------|-----------------|
-| Standard ISO | ✅ Touche morte native | ⚠️ Modificateur, pas touche morte | ❌ Astuce web |
-| Portabilité OS | ✅ Windows, Linux, macOS | ⚠️ Conflits TSF sous Windows | ❌ Nécessite JavaScript |
-| AZERTY | ✅ Présent nativement | ⚠️ Saturé (€, {, [, \|) | ✅ Présent |
-| QWERTY | ✅ Présent nativement | ⚠️ Saturé | ✅ Présent |
-| Bépo / ErgoL | ✅ Présent nativement | ⚠️ Mapping différent | ⚠️ Non standard |
-| Conflit kabyle | ✅ Aucun (pas de voyelles circonflexes) | ⚠️ Conflits possibles | ⚠️ Utilisé en mathématiques |
+| Standard ISO | Oui : touche morte native | Réserve : modificateur, pas touche morte | Non : astuce web |
+| Portabilité OS | Oui : Windows, Linux, macOS | Réserve : dysfonctionnements possibles sous Windows (cause non sourcée, cf. §6.2) | Non : nécessite JavaScript |
+| AZERTY | Oui : présent nativement | Réserve : saturé (€, {, [, \|) | Oui : présent |
+| QWERTY | Oui : présent nativement (variante US-International uniquement) | Réserve : saturé | Oui : présent |
+| Bépo / ErgoL | Oui : présent nativement | Réserve : mapping différent | Réserve : non standard |
+| Conflit kabyle | Oui : aucun (pas de voyelles circonflexes) | Réserve : conflits possibles | Réserve : utilisé en mathématiques |
 
 ---
 
@@ -205,13 +227,13 @@ La spec ne privilégie aucun layout physique. Elle définit des **profils de com
 
 L'Algérie utilise officiellement le clavier AZERTY. La diaspora kabyle en France et en Belgique est majoritairement sur AZERTY. Ce profil est le **référent de compatibilité par défaut**.
 
-**Placement de la touche morte `^`** : sur AZERTY, le circonflexe est en haut à gauche (touche `9`, accessible sans Shift sur la plupart des AZERTY français). C'est une position peu ergonomique mais standard.
+**Placement de la touche morte `^`** : sur AZERTY, le circonflexe est une touche morte native, positionnée à droite de la touche P sur un clavier AZERTY français standard. C'est une position en bordure de rangée, moins centrale que les lettres fréquentes, mais elle est standard et déjà connue de tout locuteur AZERTY, ce qui limite la friction d'apprentissage.
 
 **[À VALIDER]** : Faut-il déplacer la touche morte `^` vers une position plus accessible (ex. point-virgule `;`) sur le profil AZERTY-kab, ou conserver le placement standard pour ne pas perturber les habitudes ?
 
 ### 5.3 QWERTY-kab (profil secondaire)
 
-Pour la diaspora kabyle en Amérique du Nord et dans les pays anglophones. Le circonflexe est sur la touche `6` en QWERTY US, accessible sans Shift.
+Pour la diaspora kabyle en Amérique du Nord et dans les pays anglophones. Sur QWERTY US **standard**, Shift+6 produit un simple accent circonflexe isolé (caractère autonome, sans effet de combinaison), et non une touche morte. Le comportement de touche morte n'existe que sous la variante **US-International** : dans cette variante, ^ (Shift-6) agit comme préfixe qui se combine avec la voyelle suivante (par exemple ^ + a → â). Le profil QWERTY-kab suppose donc soit que l'utilisateur active cette variante US-International, soit qu'il reproduise ce comportement via un pilote de clavier personnalisé (XKB sous Linux, AutoHotkey sous Windows, etc.) ; ce n'est pas un comportement natif du QWERTY US par défaut.
 
 ### 5.4 BÉPO-kab et ErgoL-kab (profils optionnels)
 
@@ -236,23 +258,27 @@ Ces profils sont **optionnels et expérimentaux**. Ils sont mentionnés dans cet
 - XKB supporte nativement les **touches mortes** et les **niveaux** (Shift, AltGr, Shift+AltGr).
 - Intégration transparente avec tous les environnements de bureau (GNOME, KDE, etc.).
 
-**Exemple de configuration XKB (touche morte `^`)** :
+**Note de cohérence avec le KIM** : l'exemple ci-dessous illustre une couche d'accès **direct et optionnelle** (Level 3/4, via AltGr), fournie en complément du mécanisme de base. Elle ne remplace pas le KIM décrit en §4, qui repose exclusivement sur la séquence `^` + lettre et reste la seule méthode garantie sans ambiguïté sur toutes les plateformes ; l'accès direct par AltGr est un raccourci propre à l'implémentation XKB, à activer en connaissance de cause si l'on souhaite éviter la double frappe de la touche morte.
+
+**Exemple de configuration XKB (touche morte `^` + accès direct optionnel)** :
 ```
 partial alphanumeric_keys
 xkb_symbols "kab" {
     include "fr(azerty)"
     name[Group1] = "Kabyle (Taqbaylit)";
 
-    // Déclaration de la touche morte ^ (circonflexe) comme dead key
-    // Sur AZERTY, la touche 9 produit ^ en tant que dead key
+    // La disposition fr(azerty) fournit déjà une touche morte circonflexe
+    // (dead_circumflex) sur la touche à droite de P.
+    // [À VALIDER] : vérifier dans le fichier de symboles XKB la touche exacte
+    // avant toute redéfinition ; la version 0.3 la plaçait sur <AE01>
+    // (touche &/1), ce qui contredisait la position AZERTY décrite en §5.2.
     // Mapping KIM : ^ + lettre → caractère spécial
 
-    key <AE01> { [ ampersand, 1, dead_circumflex, dead_caron ] };
-
-    // Niveau 3 (AltGr) et 4 (Shift+AltGr) pour accès direct optionnel
+    // Niveau 3 (AltGr) et 4 (Shift+AltGr) pour accès direct optionnel,
+    // en complément du KIM — pas en remplacement
     key <AD01> { [ a, A, U025B, U0190 ] };      // a → ɛ, Ɛ
     key <AD02> { [ z, Z, U1E93, U1E92 ] };      // z → ẓ, Ẓ
-    key <AD03> { [ e, E, EuroSign, U0190 ] };   // e standard
+    key <AD03> { [ e, E, EuroSign, U0190 ] };   // [À VALIDER] ɛ absent du niveau 3 (occupé par EuroSign) : incohérent avec les autres lignes
     key <AD04> { [ r, R, U1E5B, U1E5A ] };      // r → ṛ, Ṛ
     key <AD05> { [ t, T, U1E6D, U1E6C ] };      // t → ṭ, Ṭ
     key <AD06> { [ y, Y, U0263, U0194 ] };      // y → ɣ, Ɣ
@@ -270,16 +296,16 @@ xkb_symbols "kab" {
 
 **Format** : Fichier `.klc` (Keyboard Layout Creator) ou `.dll` compilé.
 
-**Problèmes connus** :
-- Les touches mortes complexes peuvent entrer en conflit avec le **TSF** (Text Services Framework) de Windows.
-- Windows 10/11 ne supporte pas nativement les touches mortes personnalisées sans outil tiers (MSKLC).
+**Confirmé** : MSKLC permet nativement de définir des **touches mortes** (`dead keys`), fonctionnalité documentée par SIL Language Technology et par plusieurs guides indépendants ; l'outil fonctionne sous Windows 10 malgré l'absence de mention officielle de cette version sur son site. Des dysfonctionnements réels et documentés touchent cependant cette fonctionnalité : un fil de discussion du dépôt GitHub officiel `microsoft/windows-drivers-rs` rapporte que MSKLC « ne fonctionne pas très bien avec les touches mortes », précisément dans le cadre d'un pilote pour la disposition ErgoL — un cas d'usage proche de celui de cette spec. Un autre témoignage indépendant signale que les fichiers `KBD*.DLL` générés « ne fonctionnent pas correctement, en particulier la fonctionnalité de touche morte », avec un bug précis reconnu par Microsoft sur la touche `&`.
+
+**Non confirmé** : l'attribution de ces dysfonctionnements au **TSF** (Text Services Framework) spécifiquement. La documentation officielle de Windows décrit le rôle général du TSF (saisie de texte avancée, reconnaissance vocale/écriture), mais aucune source consultée ne relie ce composant aux bugs de touches mortes observés dans MSKLC. Cette attribution est donc retirée de cette version jusqu'à confirmation par une source technique dédiée.
 
 **Solution recommandée** :
-- Utiliser **Microsoft Keyboard Layout Creator (MSKLC)** v1.4 pour générer le fichier `.dll`.
+- Utiliser **Microsoft Keyboard Layout Creator (MSKLC)** v1.4 pour générer le fichier `.dll`, en connaissance des bugs de touches mortes documentés ci-dessus (éviter notamment la touche `&`).
 - Définir le circonflexe comme **touche morte native** (`dead key`) dans MSKLC.
-- Si TSF pose problème, alternative : utiliser **AutoHotkey** pour le mapping dynamique `^ + lettre`.
+- Si des dysfonctionnements apparaissent, alternative : utiliser **AutoHotkey** pour le mapping dynamique `^ + lettre`.
 
-**[À VALIDER]** : Le mécanisme de touches mortes natives est-il fonctionnellement préférable aux raccourcis directs (AltGr+lettre) sous Windows ?
+**[À VALIDER]** : Le mécanisme de touches mortes natives est-il fonctionnellement préférable aux raccourcis directs (AltGr+lettre) sous Windows, compte tenu des bugs documentés ? Question de compromis ergonomique, à trancher par test utilisateur plutôt que par recherche documentaire.
 
 ### 6.3 macOS (Ukelele / .keylayout)
 
@@ -287,7 +313,9 @@ xkb_symbols "kab" {
 
 **Particularités** :
 - macOS utilise le système de **keylayouts** XML avec support des touches mortes via `<deadKey>`.
-- L'outil **Ukelele** (SIL International) permet de créer des dispositions graphiquement.
+- L'outil **Ukelele** (SIL International) permet de créer des dispositions graphiquement, avec création de touches mortes intégrée nativement.
+
+**Confirmé** : ces deux affirmations sont corroborées par la fiche produit d'Ukelele et par plusieurs dépôts communautaires publiant des dispositions `.keylayout` réelles utilisant `<deadKey>` pour d'autres langues (kannada, allemand, slovène notamment).
 
 **Exemple de touche morte macOS** :
 ```xml
@@ -304,9 +332,12 @@ xkb_symbols "kab" {
 </keyMapSelect>
 ```
 
+
 ### 6.4 Android / iOS
 
-**Recommandation** : Création d'un clavier virtuel via le **Gboard Keyboard API** ou une application Flutter dédiée.
+**Recommandation** : sur Android, la voie technique standard est un **IME (Input Method Editor)**, implémenté via `InputMethodService`, le mécanisme natif du système pour tout clavier tiers — c'est cette voie qu'emprunte par exemple WM Keyboard. Aucune API publique dédiée de Gboard permettant à des tiers de définir des dispositions personnalisées n'a pu être identifiée à ce jour ; toute mention d'une telle API doit être retirée tant qu'elle n'est pas confirmée par la documentation officielle de Google.
+
+Sur iOS, les claviers tiers passent par le mécanisme officiel des **Custom Keyboard Extensions** (disponible depuis iOS 8) : l'extension doit être intégrée à une application, elle-même soumise à l'App Store pour être distribuée, puis activée par l'utilisateur dans les réglages système du clavier. Il ne s'agit donc pas d'une impossibilité technique, mais d'une contrainte de distribution : contrairement à Android, pas de sideloading simple, et une extension ne fonctionne qu'associée à une app conteneur.
 
 **Contrainte critique** : Le **tiret** `-` (U+002D) doit être **visible et accessible en permanence** sur la rangée principale du clavier virtuel Android. Le kabyle utilise intensivement le tiret pour :
 - Les clitiques préverbaux : `a-`, `ad-`, `i-`, `t-`
@@ -314,6 +345,18 @@ xkb_symbols "kab" {
 - Les noms composés : `Ameṛṛan-nneɣ`, `Taqbaylit-Aqerru`
 
 Un clavier kabyle qui masque le tiret derrière une touche `?123` ou un long-press est **inacceptable** pour la saisie fluide.
+
+### 6.4.1 Profil de référence Android
+
+Un exemple d'implémentation concrète a été développé pour **WM Keyboard** (`asset_kab.wmlayout.json`, format `wmkeyboard-layout`), illustrant les arbitrages nécessaires entre le KIM idéal (§4.2) et les contraintes d'un clavier virtuel à écran tactile.
+
+**Écarts assumés par rapport au KIM.** Le KIM prévoit `^`+`a`→ɛ et `^`+`q`→ɣ. Sur un clavier virtuel, il est plus naturel que chaque lettre de base porte directement ses variantes spéciales en appui long (`longPress`) plutôt que de passer par une touche morte dédiée, qui coûte une frappe supplémentaire sur écran tactile. Dans ce profil, ɛ est en appui long sur `e`, et ɣ sur `g` — un choix qui suit la proximité visuelle et le confort de frappe à une main plutôt que la logique de composition du KIM. Cet écart doit être documenté ici comme le mapping de référence pour Android, et non traité comme une simple variation locale non spécifiée.
+
+**Critère d'ordre des appuis longs.** Quand une touche porte plusieurs variantes en appui long (par ex. `g` → ǧ, ɣ), l'ordre doit suivre la fréquence décroissante mesurée en §7.2, car le premier élément de la liste sert aussi d'indice visuel affiché directement sur la touche, sans action de l'utilisateur. Avec ɣ à 2,825 % contre ǧ à 0,268 % (§7.2), l'ordre correct est `["ɣ", "ǧ"]`, et non l'inverse — l'inverse afficherait en évidence le caractère le plus rare des deux.
+
+**Le tiret.** Conformément à la règle de §6.4, le tiret `-` (U+002D) doit figurer en accès direct sur la rangée principale des lettres, jamais en appui long ni derrière la bascule `?123`.
+
+**Validation anti-faux-amis.** Avant publication, tout fichier de disposition doit être vérifié programmatiquement pour s'assurer qu'aucun caractère grec ou cyrillique (§3) ne s'est substitué à un caractère latin kabyle — via une normalisation Unicode NFC et un contrôle du bloc Unicode de chaque glyphe utilisé, en `label` comme en `longPress`.
 
 ---
 
@@ -341,29 +384,29 @@ Cette analyse est basée **uniquement** sur le corpus Tatoeba kabyle (`sentences
 
 | Caractère | Unicode | Occurrences | Fréquence (%) | Seuil | Recommandation | Position dominante |
 |-----------|---------|-------------|---------------|-------|----------------|-------------------|
-| **ɣ** | U+0263 | 531 010 | **2,825** | > 2% | 🟡 Level 3 / Dead key accessible | Initiale (38,96%) |
-| **ḍ** | U+1E0D | 173 277 | **0,922** | 0,1–1% | 🔴 Level 4 / Compose | Finale (57,78%) |
-| **ḥ** | U+1E25 | 125 087 | **0,665** | 0,1–1% | 🔴 Level 4 / Compose | Médiane (75,99%) |
-| **ɛ** | U+025B | 90 896 | **0,484** | 0,1–1% | 🔴 Level 4 / Compose | Médiane (87,33%) |
-| **ṛ** | U+1E5B | 80 332 | **0,427** | 0,1–1% | 🔴 Level 4 / Compose | Médiane (76,15%) |
-| **ṭ** | U+1E6D | 66 407 | **0,353** | 0,1–1% | 🔴 Level 4 / Compose | Médiane (86,16%) |
-| **č** | U+010D | 54 975 | **0,292** | 0,1–1% | 🔴 Level 4 / Compose | Médiane (85,92%) |
-| **ẓ** | U+1E93 | 52 385 | **0,279** | 0,1–1% | 🔴 Level 4 / Compose | Médiane (84,09%) |
-| **ǧ** | U+01E7 | 50 317 | **0,268** | 0,1–1% | 🔴 Level 4 / Compose | Médiane (87,60%) |
-| **ṣ** | U+1E63 | 30 281 | **0,161** | 0,1–1% | 🔴 Level 4 / Compose | Médiane (82,74%) |
-| **Ɛ** | U+0190 | 13 792 | **0,073** | < 0,1% | ⚪ RARE — Compose | Initiale (>99%) |
-| **Ḥ** | U+1E24 | 10 539 | **0,056** | < 0,1% | ⚪ RARE — Compose | Initiale (>99%) |
-| **Ɣ** | U+0194 | 10 408 | **0,055** | < 0,1% | ⚪ RARE — Compose | Initiale (>99%) |
-| **Ṛ** | U+1E5A | 4 513 | **0,024** | < 0,1% | ⚪ RARE — Compose | Initiale (>99%) |
-| **Ẓ** | U+1E92 | 4 173 | **0,022** | < 0,1% | ⚪ RARE — Compose | Initiale (>99%) |
-| **Ṭ** | U+1E6C | 3 085 | **0,016** | < 0,1% | ⚪ RARE — Compose | Initiale (>99%) |
-| **Č** | U+010C | 1 862 | **0,010** | < 0,1% | ⚪ RARE — Compose | Initiale (100%) |
-| **Ǧ** | U+01E6 | 1 533 | **0,008** | < 0,1% | ⚪ RARE — Compose | Initiale (>99%) |
-| **Ḍ** | U+1E0C | 1 132 | **0,006** | < 0,1% | ⚪ RARE — Compose | Initiale (>98%) |
-| **Ṣ** | U+1E62 | 726 | **0,004** | < 0,1% | ⚪ RARE — Compose | Initiale (>99%) |
+| **ɣ** | U+0263 | 531 010 | **2,825** | > 2% | Level 3 / Dead key accessible | Initiale (38,96%) |
+| **ḍ** | U+1E0D | 173 277 | **0,922** | 0,1–1% | Level 4 / Compose | Finale (57,78%) |
+| **ḥ** | U+1E25 | 125 087 | **0,665** | 0,1–1% | Level 4 / Compose | Médiane (75,99%) |
+| **ɛ** | U+025B | 90 896 | **0,484** | 0,1–1% | Level 4 / Compose | Médiane (87,33%) |
+| **ṛ** | U+1E5B | 80 332 | **0,427** | 0,1–1% | Level 4 / Compose | Médiane (76,15%) |
+| **ṭ** | U+1E6D | 66 407 | **0,353** | 0,1–1% | Level 4 / Compose | Médiane (86,16%) |
+| **č** | U+010D | 54 975 | **0,292** | 0,1–1% | Level 4 / Compose | Médiane (85,92%) |
+| **ẓ** | U+1E93 | 52 385 | **0,279** | 0,1–1% | Level 4 / Compose | Médiane (84,09%) |
+| **ǧ** | U+01E7 | 50 317 | **0,268** | 0,1–1% | Level 4 / Compose | Médiane (87,60%) |
+| **ṣ** | U+1E63 | 30 281 | **0,161** | 0,1–1% | Level 4 / Compose | Médiane (82,74%) |
+| **Ɛ** | U+0190 | 13 792 | **0,073** | < 0,1% | RARE — Compose | Initiale (>99%) |
+| **Ḥ** | U+1E24 | 10 539 | **0,056** | < 0,1% | RARE — Compose | Initiale (>99%) |
+| **Ɣ** | U+0194 | 10 408 | **0,055** | < 0,1% | RARE — Compose | Initiale (>99%) |
+| **Ṛ** | U+1E5A | 4 513 | **0,024** | < 0,1% | RARE — Compose | Initiale (>99%) |
+| **Ẓ** | U+1E92 | 4 173 | **0,022** | < 0,1% | RARE — Compose | Initiale (>99%) |
+| **Ṭ** | U+1E6C | 3 085 | **0,016** | < 0,1% | RARE — Compose | Initiale (>99%) |
+| **Č** | U+010C | 1 862 | **0,010** | < 0,1% | RARE — Compose | Initiale (100%) |
+| **Ǧ** | U+01E6 | 1 533 | **0,008** | < 0,1% | RARE — Compose | Initiale (>99%) |
+| **Ḍ** | U+1E0C | 1 132 | **0,006** | < 0,1% | RARE — Compose | Initiale (>98%) |
+| **Ṣ** | U+1E62 | 726 | **0,004** | < 0,1% | RARE — Compose | Initiale (>99%) |
 
 **Observations clés** :
-- **ɣ** est le seul caractère spécial à dépasser le seuil de 2 % (2,825 %). Il mérite un accès **Level 3** (AltGr) ou une touche morte très accessible.
+- **ɣ** est le seul caractère spécial à dépasser le seuil de 2 % (2,825 %). Il mérite un accès **Level 3** (AltGr) ou une touche morte très accessible, et — sur clavier virtuel mobile (§6.4.1) — la première position dans toute liste d'appui long où il apparaît.
 - Tous les autres spéciaux sont sous 1 %, ce qui justifie pleinement le mécanisme de **touche morte unique** `^` pour l'ensemble.
 - Les **majuscules spéciales** sont quasi-exclusivement en position initiale (>99 %), ce qui confirme leur placement sur `Shift` + touche morte + lettre.
 
@@ -531,14 +574,16 @@ Ajouter un **tag `keyboard-layout`** aux datasets kabyle pour indiquer la dispos
 
 | ID | Limite | Statut |
 |----|--------|--------|
-| L1 | **Windows TSF** : les touches mortes personnalisées peuvent entrer en conflit avec le Text Services Framework | À tester sur Windows 10/11 |
+| L1 | **Windows** : dysfonctionnements documentés des touches mortes MSKLC (cf. §6.2) ; l'hypothèse d'un conflit avec le Text Services Framework n'est pas sourcée | À tester sur Windows 10/11 |
 | L2 | **macOS** : la création de bundles `.keylayout` nécessite Ukelele et une signature éventuelle | À développer |
-| L3 | **Mobile** : iOS ne permet pas les claviers tiers natifs sans app store | Alternative : clavier web |
+| L3 | **Mobile** : Android passe par un IME natif (`InputMethodService`) — voie déjà empruntée par WM Keyboard (cf. §6.4.1) ; iOS impose une Custom Keyboard Extension distribuée via une app soumise à l'App Store, sans sideloading simple | Confirmé — documenté en §6.4 et §6.4.1 |
 | L4 | **Liste complète des 29 faux amis** : seuls les 6 principaux sont documentés ici | Extension nécessaire |
 | L5 | **Tifinagh** : cette spec ne couvre pas le clavier Tifinagh (écriture berbère originelle) | Spec séparée souhaitable |
 | L6 | **Corpus représentatif** : l'analyse de fréquence repose uniquement sur Tatoeba (790K phrases isolées) | À compléter avec Weblate, CV transcriptions, corpus littéraires |
-| L7 | **Placement AZERTY-kab** : la touche morte `^` est en haut à gauche sur AZERTY, peu ergonomique | [À VALIDER] : déplacement optionnel ? |
+| L7 | **Placement AZERTY-kab** : la touche morte `^` est à droite de P sur AZERTY, en bordure de rangée | [À VALIDER] : déplacement optionnel ? |
 | L8 | **Bépo/ErgoL** : profils définis conceptuellement mais non implémentés | Contribution communautaire souhaitée |
+| L9 | **Windows (§6.2)** : les touches mortes MSKLC sont confirmées comme fonctionnalité native, mais des dysfonctionnements réels sont documentés (dépôt `microsoft/windows-drivers-rs`, cas ErgoL) ; leur attribution au TSF n'est en revanche pas sourcée et a été retirée | Partiellement confirmé — attribution TSF non sourcée |
+| L10 | **macOS (§6.3)** : les affirmations sur Ukelele et le support natif de `<deadKey>` sont confirmées par la fiche produit et des dispositions `.keylayout` réelles publiées | Confirmé |
 
 ---
 
@@ -557,7 +602,13 @@ Ajouter un **tag `keyboard-layout`** aux datasets kabyle pour indiquer la dispos
 11. **Association Bépo** (2026). *Disposition de clavier Bépo*. https://bepo.fr/
 12. **ErgoL** (2026). *Disposition ergonomique optimisée*. https://ergol.org/
 13. **Tatoeba Project** (2026). *Sentences dump*. https://downloads.tatoeba.org/exports/sentences.tar.bz2
+14. **Wikipedia** (2026). *AZERTY*. https://en.wikipedia.org/wiki/AZERTY — position de la touche morte circonflexe.
+15. **Wikipedia** (2026). *Dead key*. https://en.wikipedia.org/wiki/Dead_key — comportement de la touche morte circonflexe sous US-International.
+16. **Apple Developer Documentation** (2026). *Custom Keyboard Extensions* — mécanisme de distribution des claviers tiers sous iOS depuis iOS 8.
+17. **SIL Language Technology** (2026). *Microsoft Keyboard Layout Creator*. https://lingtransoft.info/node/730 — confirme le support natif des touches mortes et la compatibilité Windows 10.
+18. **microsoft/windows-drivers-rs** (GitHub, 2026). Discussion sur les dysfonctionnements de MSKLC avec les touches mortes, cas d'usage ErgoL. https://www.github.com/microsoft/windows-drivers-rs/discussions/61
+19. **AlternativeTo** (2026). *Ukelele* — fiche produit confirmant la création native de touches mortes. https://alternativeto.net/software/ukelele/about
 
 ---
 
-*Document rédigé dans le cadre du développement des ressources NLP pour la langue kabyle. Les points marqués [À VALIDER] nécessitent une décision du locuteur natif ou des tests utilisateur avant publication définitive. L'analyse de fréquence de la Section 7 est un test pilote sur corpus Tatoeba et ne prétend pas à l'exhaustivité.*
+*Document rédigé dans le cadre du développement des ressources NLP pour la langue kabyle. Les points marqués [À VALIDER] nécessitent une décision du locuteur natif ou des tests utilisateur avant publication définitive. L'analyse de fréquence de la Section 7 est un test pilote sur corpus Tatoeba et ne prétend pas à l'exhaustivité. Cette version (0.4-draft) corrige plusieurs affirmations de la v0.3 identifiées comme non vérifiées ou erronées lors d'une revue technique ; les sections encore marquées comme non vérifiées (§6.2, §6.3 — cf. L9) devront faire l'objet d'une vérification équivalente avant la prochaine révision.*
