@@ -61,7 +61,7 @@ Dans l'architecture logicielle universelle (ASR, TTS, LLM), les ambiguïtés all
 
 À l'instar de l'italien (où la lettre *s* note [s] ou [z], et les voyelles *e/o* notent deux degrés d'aperture sans modification de l'alphabet) ou du français (*sac* [s] vs *rose* [z]), le système repose sur un pipeline à trois couches découplées :
 
-$$\text{Surface orthographique canonique } (\textit{abrid}) \xrightarrow{\text{Analyse morphologique + G2P}} \text{Transcription phonétique API } ([\text{a}\beta\text{ri}\eth]) \xrightarrow{\text{Synthèse}} \text{Acoustique}$$
+**Pipeline :** surface orthographique canonique (*abrid*) → analyse morphologique + G2P → transcription phonétique API ([aβrið]) → synthèse acoustique.
 
 Modifier la couche orthographique pour y coder des états phonétiques de surface détruit l'interopérabilité des modèles et les analyseurs morphologiques.
 
@@ -77,7 +77,7 @@ Le son kabyle spirantisé est produit par le rapprochement des **deux lèvres (b
 
 * **Élucidation historique des fausses attestations en `[v]`** :
   Certains mémoires universitaires locaux mentionnent superficiellement `v` en citant des travaux pionniers (ex: Chaker 1971). L'examen philologique démontre qu'il s'agit d'**artefacts dactylographiques** liés à l'indisponibilité des polices API sur les machines à écrire et premiers traitements de texte (où `β` était typographié `v`, `ð` typographié avec le cyrillique `Ә`, et `θ` avec le thêta `ϴ`).
-* Dans l'ensemble des publications académiques de référence avec typographie scientifique (Chaker 2004 p. 4058, 2015 doc. P33 ; Kossmann & Stroomer 1997 p. 464 ; Allaoua 1994 p. 64), le symbole phonétique utilisé est formellement **[β]** (ou la graphie berbérisante sous-lignée $\underline{b}$).
+* Dans l'ensemble des publications académiques de référence avec typographie scientifique (Chaker 2004 p. 4058, 2015 doc. P33 ; Kossmann & Stroomer 1997 p. 464 ; Allaoua 1994 p. 64), le symbole phonétique utilisé est formellement **[β]** (ou la graphie berbérisante sous-lignée `b`).
 
 ### 2.3 Préservation de la symétrie du système consonantique [ATTESTÉ]
 La spirantisation touche l'ensemble des occlusives simples kabyles :
@@ -102,8 +102,8 @@ Si `v` était employé pour transcrire le [β] autochtone :
 ### 2.5 Préservation de la morphologie et de la lemmatisation [NORMATIF]
 Le kabyle repose sur une morphologie sémitique/afro-asiatique à base de racines consonantiques. L'introduction de `v` brise l'intégrité paradigmatique des verbes lors des alternances régulières simple/géminée :
 * Verbe *bḍu* (partager) :
-  * Accompli : *yebḍa* (racine avec consonne simple $\to$ prononcé [jə**β**ðˤa]).
-  * Inaccompli / Intensif : *yebṭṭu* (racine avec consonne tendue dé-spirantisée $\to$ prononcé [jə**b**tˤːu]).
+  * Accompli : *yebḍa* (racine avec consonne simple → prononcé [jə**β**ðˤa]).
+  * Inaccompli / Intensif : *yebṭṭu* (racine avec consonne tendue dé-spirantisée → prononcé [jə**b**tˤːu]).
 * **Conséquence d'une graphie avec *v*** : Le lemme verrait sa racine éclatée en `V-Ḍ` (*yevḍa*) et `B-Ṭ` (*yebṭṭu*). Les lemmatiseurs automatiques, les analyseurs syntaxiques et les dictionnaires électroniques échoueraient à relier ces formes à une entrée unique.
 
 ---
@@ -154,8 +154,8 @@ La résolution phonétique de toute occurrence de la lettre `b` en kabyle est **
 | **R0 — Défaut natif** | Tous les autres contextes | **[β]** |
 
 #### Justification linguistique des cas d'élicitation
-- **Cas réguliers natifs (R0 $\to$ [β])** : *abaluẓ* (intervocalique), *itbir* (post-consonantique), *tabarda* (intervocalique), *yebra* (pré-consonantique), *yebda* (pré-consonantique), *yebḍa* (pré-consonantique).
-- **Cas d'emprunt ou de gémination historique (R3 $\to$ [b])** :
+- **Cas réguliers natifs (R0 → [β])** : *abaluẓ* (intervocalique), *itbir* (post-consonantique), *tabarda* (intervocalique), *yebra* (pré-consonantique), *yebda* (pré-consonantique), *yebḍa* (pré-consonantique).
+- **Cas d'emprunt ou de gémination historique (R3 → [b])** :
   - *taberwiṭ* : emprunt direct au français (« brouette »), non assujetti aux lois de dérivation du fonds proto-berbère [ATTESTÉ : Kossmann & Stroomer §23.5.1].
   - *iṣub* : verbe issu de la racine empruntée à l'arabe *ṣubb* (descendre / verser), consonne finale étymologiquement tendue.
   - *ibub* : racine verbale à inaccompli géminé *yebabb*, conservation de l'occlusion par alternance morphologique interne.
@@ -230,7 +230,7 @@ def realize_kabyle_b(word: str, index: int, custom_exceptions: Set[str] = None) 
 ### 4.3 Traitement des jonctions de syntagmes (Phonétique syntactique) [NOTE TECHNIQUE]
 
 1. **Particule génitive `n` + mot à initiale `b`** (*tamurt n baba*) :
-   Phonologiquement `/n/ + /b/`. L'assimilation régressive de lieu et de sonorité produit en chaîne parlée une fermeture occlusive nasalisée : `[n] + [β]` $\to$ **[mb]** (ex: prononcé phonétiquement *tamurt m-baba*, voire avec gémination nasale complète *tamurt m-maba* selon les variantes régionales).
+   Phonologiquement `/n/ + /b/`. L'assimilation régressive de lieu et de sonorité produit en chaîne parlée une fermeture occlusive nasalisée : `[n] + [β]` → **[mb]** (ex: prononcé phonétiquement *tamurt m-baba*, voire avec gémination nasale complète *tamurt m-maba* selon les variantes régionales).
 2. **Prépositions locatives `di` / `deg`** (*di baba*, *deg baba*) :
    L'initiale du morphème lexical conserve sa règle autonome par défaut : **[β]**.
 
@@ -243,8 +243,8 @@ L'audit conduit sur le corpus textuel kabyle normalisé `taqbaylit/tatoeba-kabyl
 
 1. **Couverture des règles phonotactiques sur la lettre `b`** :
    * **Règle R0 (Spirante [β] par défaut)** : **84,91 %** des occurrences totales de *b*.
-   * **Règle R2 (Gémination `bb` $\to$ [b])** : **14,56 %** des occurrences.
-   * **Règle R1 (Contact post-nasal `mb` $\to$ [b])** : **0,53 %** des occurrences.
+   * **Règle R2 (Gémination `bb` → [b])** : **14,56 %** des occurrences.
+   * **Règle R1 (Contact post-nasal `mb` → [b])** : **0,53 %** des occurrences.
    * *Conclusion* : Les règles structurelles directes (R0 + R1 + R2) modélisent **100 % du lexique natif** sans ambiguïté.
 2. **Statut statistique marginal du graphème `v`** :
    * Le graphème `v` apparaît dans seulement **446 formes lexicales distinctes sur 90 918** (soit **0,10 %** du lexique).
@@ -261,7 +261,7 @@ L'audit conduit sur le corpus textuel kabyle normalisé `taqbaylit/tatoeba-kabyl
 ### 6.2 Spécifications pour les claviers et correcteurs orthographiques [NORMATIF]
 * **Disposition standard** : La touche `b` est la touche par défaut du système alphabétique. La touche `v` doit être présente pour permettre la saisie des emprunts légitimes.
 * **Moteur d'auto-correction** : Tout mot natif saisi avec `v` doit déclencher une règle de correction automatique immédiate vers `b` :
-  $$\text{Regex de détection : } \backslash\text{b}([\text{a-z}\text{A-ZÀ-ÿ\u0190\u025B\u0263\u0194}]*)[vV]([\text{a-z}\text{A-ZÀ-ÿ\u0190\u025B\u0263\u0194}]*)\backslash\text{b}$$
+  **Regex de détection :** `\b([a-zA-ZÀ-ÿƐɛɣƔ]*)[vV]([a-zA-ZÀ-ÿƐɛɣƔ]*)\b`
   Si le mot ne figure pas dans le dictionnaire blanc des emprunts légitimes en `v`, proposer ou substituer automatiquement `v` par `b`.
 
 ---
@@ -272,7 +272,7 @@ L'audit conduit sur le corpus textuel kabyle normalisé `taqbaylit/tatoeba-kabyl
 |---|---|
 | *« Les locuteurs entendent un son 'v', donc il faut l'écrire 'v'. »* | **Biais d'assimilation auditive.** Le kabyle n'articule aucun contact dento-labial dans ce contexte : le son est bilabial [β]. L'alphabet note les phonèmes d'une langue, non les approximations auditives de locuteurs influencés par le système phonologique français. |
 | *« Les machines ont besoin d'explicite, séparer b et v aiderait l'apprentissage automatique. »* | **Erreur d'architecture logicielle.** Dans toutes les langues (italien, anglais, français), la phonétisation contextuelle est déléguée aux modules G2P. Réécrire le texte d'entraînement déconnecte le modèle de la totalité des corpus historiques et détruit les représentations morphologiques des tokeniseurs. |
-| *« Des mémoires de linguistique utilisent 'v' pour transcrire la spirante. »* | **Artefact dactylographique.** Ces mémoires reproduisaient des polycopiés d'avant l'ère Unicode où le caractère grec $\beta$ était indisponible sur machine à écrire. Les éditions académiques publiées utilisent formellement **[β]**. |
+| *« Des mémoires de linguistique utilisent 'v' pour transcrire la spirante. »* | **Artefact dactylographique.** Ces mémoires reproduisaient des polycopiés d'avant l'ère Unicode où le caractère grec **β** était indisponible sur machine à écrire. Les éditions académiques publiées utilisent formellement **[β]**. |
 | *« Si une alternance existe entre [b] et [β], c'est la preuve qu'il faut deux lettres. »* | **Confusion entre phonème et allophone.** Le français possède deux prononciations pour la lettre *s* (*sac* [s] vs *rose* [z]) et deux pour la suite *ch* (*chaos* [k] vs *chat* [ʃ]) sans jamais avoir introduit de lettres artificielles dans l'orthographe usuelle. |
 
 ---
@@ -282,7 +282,7 @@ L'audit conduit sur le corpus textuel kabyle normalisé `taqbaylit/tatoeba-kabyl
 ### Sources scientifiques analysées et intégrées au standard
 
 1. **Allaoua, Madjid (1994)**, « Variations phonétiques et phonologiques en kabyle », *Études et Documents Berbères*, n° 11, pp. 63–76. DOI : [10.3917/edb.011.0063](https://doi.org/10.3917/edb.011.0063). *(Description de l'opposition fondamentale consonne simple vs tendue et analyse distributionnelle de la spirantisation)*.
-2. **Chaker, Salem (2004)**, « Kabylie : La langue », *Encyclopédie berbère*, fascicule XXVI, Aix-en-Provence, Édisud, pp. 4055–4066. *(Confirmation de la table de spirantisation p. 4058 : $b > \underline{b} \text{ [β]}$, $d > \underline{d} \text{ [ð]}$, $g > \underline{g} \text{ [ʝ]}$, $t > \underline{t} \text{ [θ]}$, $k > \underline{k} \text{ [ç]}$)*.
+2. **Chaker, Salem (2004)**, « Kabylie : La langue », *Encyclopédie berbère*, fascicule XXVI, Aix-en-Provence, Édisud, pp. 4055–4066. *(Confirmation de la table de spirantisation p. 4058 : `b` → [β], `d` → [ð], `g` → [ʝ], `t` → [θ], `k` → [ç])*.
 3. **Chaker, Salem (2015)**, « Phonologie & phonétique », *Encyclopédie berbère*, fascicule 37, document P33, pp. 6220–6258. *(Étude pan-berbère des systèmes phonologiques et allophoniques)*.
 4. **Dallet, Jean-Marie (1982)**, *Dictionnaire kabyle-français (parler des At Mangellat)*, Paris, SELAF. *(Ouvrage lexicographique de référence établissant l'intégrité de la racine B dans le lexique kabyle)*.
 5. **Kossmann, Maarten & Stroomer, Harry (1997)**, « Berber Phonology », in Alan S. Kaye (dir.), *Phonologies of Asia and Africa*, Winona Lake, Eisenbrauns, pp. 461–475. *(Analyse formelle de la spirantisation des occlusives nord-berbères et du comportement phonologique des emprunts, §23.5.1)*.
