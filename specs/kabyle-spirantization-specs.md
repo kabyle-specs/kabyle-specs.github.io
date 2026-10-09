@@ -81,13 +81,14 @@ Le son kabyle spirantisé est produit par le rapprochement des **deux lèvres (b
 
 ### 2.3 Préservation de la symétrie du système consonantique [ATTESTÉ]
 La spirantisation touche l'ensemble des occlusives simples kabyles :
-$$\begin{aligned}
-/b/ &\longrightarrow [\beta] \\
-/d/ &\longrightarrow [\eth] \\
-/t/ &\longrightarrow [\theta] \\
-/k/ &\longrightarrow [\ccedil] \\
-/g/ &\longrightarrow [\ʝ]
-\end{aligned}$$
+
+| Phonème | Réalisation spirantisée |
+|---|---|
+| `/b/` | **[β]** |
+| `/d/` | **[ð]** |
+| `/t/` | **[θ]** |
+| `/k/` | **[ç]** |
+| `/g/` | **[ʝ]** |
 
 Remplacer graphiquement `b` par `v` romprait arbitrairement la symétrie du système : pour être cohérent, il faudrait remplacer `d` par `ð` (ou *dh*), `t` par `θ` (ou *th*), `k` par `ç` et `g` par `ʝ`. Une telle dérive transformerait l'orthographe usuelle en alphabet phonétique international, la rendant illisible et impraticable.
 
