@@ -143,12 +143,14 @@ Dans la synthèse normative du Centre de recherche berbère (K. Naït-Zerrad, r�
 ### 4.1 Modélisation théorique de la règle
 La résolution phonétique de toute occurrence de la lettre `b` en kabyle est **entièrement déterministe** et obéit à la cascade ordonnée suivante :
 
-$$\text{Occurrence } b \longrightarrow \begin{cases}
-\textbf{R3 (Lexique)} & \text{Si mot } \in \text{Lexique d'emprunts non-assimilés} \implies \mathbf{[b]} \\
-\textbf{R2 (Gémination)} & \text{Si graphème contigu } = \text{'b' (forme } bb) \implies \mathbf{[b]} \\
-\textbf{R1 (Post-nasale)} & \text{Si précédé immédiatement de 'm'} \implies \mathbf{[b]} \\
-\textbf{R0 (Défaut natif)} & \text{Dans TOUS les autres contextes} \implies \mathbf{[\beta]}
-\end{cases}$$
+**Occurrence du graphème `b` → réalisation phonétique**
+
+| Priorité | Condition | Réalisation |
+|---|---|---|
+| **R3 — Lexique** | Le mot appartient au lexique des emprunts non assimilés | **[b]** |
+| **R2 — Gémination** | Le graphème contigu forme `bb` | **[b]** |
+| **R1 — Post-nasale** | `b` est précédé immédiatement de `m` | **[b]** |
+| **R0 — Défaut natif** | Tous les autres contextes | **[β]** |
 
 #### Justification linguistique des cas d'élicitation
 - **Cas réguliers natifs (R0 $\to$ [β])** : *abaluẓ* (intervocalique), *itbir* (post-consonantique), *tabarda* (intervocalique), *yebra* (pré-consonantique), *yebda* (pré-consonantique), *yebḍa* (pré-consonantique).
