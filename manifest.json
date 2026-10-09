@@ -8,6 +8,13 @@
   "updated": "2026-08-22"
     },
     {
+      "title": "Kabyle Spirantization and Status of Letter B vs V",
+      "path": "specs/kabyle-spirantization-specs.md",
+      "summary": "Normative phonological specification and deterministic G2P decision cascade for the bilabial spirantization of /b/ ([β]) vs contextual stops ([b]) in Kabyle (Taqbaylit). Formalizes the structural unity of northern Berber spirantization (/b d t g k/), refutes the pseudo-orthographic use of 'v' for native roots, preserves root-consonant integrity across aspectual gemination (e.g., yebḍa vs yebṭṭu), reserves 'v' exclusively for recent loanwords (0.10% lexical occurrence on Tatoeba), and specifies a 4-tier G2P resolution algorithm (R0 default [β], R1 post-m, R2 geminate, R3 lexical exception dictionary) with Python implementation.",
+      "status": "draft",
+      "updated": "2026-10-09"
+    },
+    {
   "title": "Kabyle Grammatical Error Correction (GEC) Specification",
   "path": "specs/kabyle-gec-spec.md",
   "summary": "Specification for a modular, low-resource grammatical error correction (GEC) system for Kabyle (Taqbaylit). Covers nominal state EL/EA, clitic segmentation and ordering, negation and ara disambiguation, orthographic normalization, lexical and dialectal variation, annotation compatible with morphological tokenization and UD/CoNLL-U, synthetic and human-validated training data, hybrid rule-based and statistical modeling, evaluation protocols, abstention, and anti-hallucination safeguards.",
